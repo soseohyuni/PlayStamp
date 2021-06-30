@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.test.playList.IPlayListDAO"><!-- implements IPlayListDAO -->
+	<!-- list()  -->
+	<!--@@ resultSet 이 따로 있어서 ArrayList 가 아니라 MemberDTO 임!  -->
+	<select id="getIngMusicalList" resultType="com.test.playList.PlayList">
+		SELECT PLAY_CD, PLAY_IMG
+		FROM TBL_PLAY
+		WHERE STATE_CD=2 AND GENRE_CD=1
+		ORDER BY PLAY_START DESC
+	</select><!-- 여기서의 name 이나 id 는 고유해야 한다. -->
+	
+	<select id="getWillMusicalList" resultType="com.test.playList.PlayList">
+		SELECT PLAY_CD, PLAY_IMG
+		FROM TBL_PLAY
+		WHERE STATE_CD=1 AND GENRE_CD=1
+		ORDER BY PLAY_START DESC
+	</select><!-- 여기서의 name 이나 id 는 고유해야 한다. -->
+	
+	<select id="getEdMusicalList" resultType="com.test.playList.PlayList">
+		SELECT PLAY_CD, PLAY_IMG
+		FROM TBL_PLAY
+		WHERE STATE_CD=3 AND GENRE_CD=1
+		ORDER BY PLAY_START DESC
+	</select><!-- 여기서의 name 이나 id 는 고유해야 한다. -->
+	
+	<select id="getIngDramaList" resultType="com.test.playList.PlayList">
+		SELECT PLAY_CD, PLAY_IMG
+		FROM TBL_PLAY
+		WHERE STATE_CD=2 AND GENRE_CD=2
+		ORDER BY PLAY_START DESC
+	</select><!-- 여기서의 name 이나 id 는 고유해야 한다. -->
+	
+	<select id="getWillDramaList" resultType="com.test.playList.PlayList">
+		SELECT PLAY_CD, PLAY_IMG
+		FROM TBL_PLAY
+		WHERE STATE_CD=1 AND GENRE_CD=2
+		ORDER BY PLAY_START DESC
+	</select><!-- 여기서의 name 이나 id 는 고유해야 한다. -->
+	
+	<select id="getEdDramaList" resultType="com.test.playList.PlayList">
+		SELECT PLAY_CD, PLAY_IMG, PLAY_START
+		FROM TBL_PLAY
+		WHERE STATE_CD=3 AND GENRE_CD=2
+		ORDER BY PLAY_START DESC
+	</select><!-- 여기서의 name 이나 id 는 고유해야 한다. -->
+	
+	
+</mapper>
