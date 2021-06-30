@@ -11,7 +11,7 @@
 <!-- Favicon -->
 <link rel="icon" type="image/x-icon" href="bootstrap/assets/favicon.ico" />
 
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 <link rel="stylesheet"
@@ -59,41 +59,35 @@
 			<div class="row">
 
 				<!-- Logo -->
-				<div class="col-lg-2 col-sm-3 col-3 order-1 logo_container">
+				<div class="col-lg-2 order-1 logo_container">
 					<div class="logo_container1">
 						<a href=""><img alt="로고" src="<%=cp%>/images/logo_typo.svg"></a>
 					</div>
 				</div>
 
 				<!-- Main Nav Menu -->
-				<div class="col-lg-5 col-sm-3 col-3 order-2">
+				<div class="col-lg-5 order-2">
 					<div class="main_nav_menu">
 						<ul class="standard_dropdown main_nav_dropdown">
-							<li><a href="#">마이스페이스<i class="fas fa-chevron-down"></i></a></li>
-							<li><a href="#">공연정보<i class="fas fa-chevron-down"></i></a></li>
-							<li><a href="blog.html">좌석정보<i
-									class="fas fa-chevron-down"></i></a></li>
-							<li><a href="contact.html">티켓 양도<i
-									class="fas fa-chevron-down"></i></a></li>
+							<li><a href="#">마이스페이스</a></li>
+							<li><a href="#">공연정보</a></li>
+							<li><a href="blog.html">좌석정보</a></li>
+							<li><a href="contact.html">티켓 양도</a></li>
 						</ul>
 					</div>
 				</div>
 
 				<!-- Search -->
-				<div
-					class="col-lg-4 col-9 order-lg-3 order-3 text-lg-left text-right">
+				<div class="col-lg-4 order-3 text-right">
 					<div class="header_search">
 						<div class="header_search_content">
 							<div class="header_search_form_container">
-								<form action="#" class="header_search_form clearfix">
+								<form action="#" class="header_search_form">
 									<input type="search" required="required"
 										class="header_search_input"
 										placeholder="공연을 검색해보세요!">
-									<button type="submit" class="header_search_button trans_300"
-										value="Submit">
-										<img
-											src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918770/search.png"
-											alt="">
+									<button type="submit" class="header_search_button" value="Submit">
+										<img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918770/search.png" alt="">
 									</button>
 								</form>
 							</div>

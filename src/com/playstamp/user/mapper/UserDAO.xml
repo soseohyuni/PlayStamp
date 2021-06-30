@@ -3,8 +3,8 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
-<mapper namespace="com.playstamp.user.IUserDAO">
-	
+<mapper namespace="com.playstamp.user.controller.IUserDAO">
+				   
 	<!-- 유저 입력 아이디 중복체크 -->
 	<select id="userIdCheck" parameterType="String" resultType="int">
 		SELECT COUNT(*) AS COUNT 
@@ -13,9 +13,20 @@
 	</select>
 	
 	<!-- 회원가입 완료되어 유저 정보 인서트 -->
-	<!-- <insert id="userInsert" parameterType="User">
-		EXEC PRC_USER_INSERT(#{userId}, #{userNm}, #{userTel}
-		, #{userPw}, #{userNick}, #{userMail}, SYSDATE, #{userImg});
+	
+	<!-- 1) 기본 인서트 테스트 -> 성공 
+	<insert id="userInsert">
+		INSERT INTO TBL_USERINFO(USER_CD, USER_ID, USER_NM, USER_TEL
+		, USER_PW, USER_NICK, USER_MAIL, USER_IMG)
+		VALUES ('10', #{userId}, #{userNm}, #{userTel}, #{userPw}, #{userNick}, #{userMail}, 'URL')
 	</insert> -->
+	
+	<!-- 2) 프로시저 테스트 -->
+	<insert id="userInsertProcedure" statementType="CALLABLE">
+		{
+			CALL PRC_USER_INSERT(#{userId}, #{userNm}, #{userTel}, #{userPw}, 
+			#{userNick}, #{userMail}, 'UURL')
+		}
+	</insert>
 
 </mapper>

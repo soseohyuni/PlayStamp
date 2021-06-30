@@ -145,58 +145,49 @@ String cp = request.getContextPath();
 
 		
 		<!-- 입력 폼 -->
-		<form id="form" class="container userSignUpForm" method="post">
+		<form id="form" action="completeSignup.action" class="container userSignUpForm" method="post">
 			<div id="content">
 				<!-- 아이디/닉네임/이름/비밀번호 입력 및 확인 -->
 				<div class="joinInputBox">
 					<h3 class="joinTitle">아이디</h3>
-					<input type="text" id="userId" class="chkInput" maxlength="20" required="required">
+					<input type="text" id="userId" name="userId" class="chkInput" maxlength="20" required="required">
 					<button class="btn chkBtn" id="idChkBtn" name="unCheck">중복확인</button>
 					<img id="okId" alt="ok" src="images/yes.png" style="height: 40px; display:none;">
 				</div>
 
 				<div class="joinInputBox">
 					<h3 class="joinTitle">닉네임</h3>
-					<input type="text" id="userNick" maxlength="20" required="required">
+					<input type="text" id="userNick" name="userNick" maxlength="20" required="required">
 				</div>
 
 				<div class="joinInputBox">
 					<h3 class="joinTitle">비밀번호</h3>
-					<input type="text" id="userPw" maxlength="20" required="required">
+					<input type="text" id="userPw" name="userPw" maxlength="20" required="required">
 				</div>
 
 				<div class="joinInputBox">
 					<h3 class="joinTitle">비밀번호 확인</h3>
-					<input type="text" id="userPw2" maxlength="20" required="required">
+					<input type="text" id="userPw2" name="userPw2" maxlength="20" required="required">
 				</div>
 
 				<div class="joinInputBox">
 					<h3 class="joinTitle">이름</h3>
-					<input type="text" id="userNm" maxlength="20" required="required">
+					<input type="text" id="userNm" name="userNm" maxlength="20" required="required">
 				</div>
 
 				<!-- 전화번호 입력 -->
-				<div class="phoneInput">
+				<div class="joinInputBox">
 					<h3 class="joinTitle">
 						<label for="id">전화번호</label>
 					</h3>
-					<input type="text" id="userTel1" class="phoneInputBox" maxlength="3" required="required">&ensp;- 
-					<input type="text" id="userTel2" class="phoneInputBox" maxlength="4">&ensp;- 
-					<input type="text" id="userTel3" class="phoneInputBox" maxlength="4">
+					<input type="text" id="userTel" name="userTel" maxlength="3" required="required"> 
 				</div>
 
 				<!-- 이메일 입력 및 인증 -->
 				<div class="emailInput">
-					<h3 class="joinTitle">
-						<label for="id">이메일</label>
-					</h3>
-					<input type="text" id="userMail" class="emailInputBox"
-						maxlength="20">&ensp;@ <select class="emailInputBox">
-						<option value="1">직접입력</option>
-						<option value="naver.com" selected="selected">naver.com</option>
-						<option value="naver.com">naver.com</option>
-					</select>
-					<button class="btn" id="emailCheck">인증번호 받기</button>
+					<h3 class="joinTitle">이메일</h3>
+					<input type="text" id="userMail" class="emailInputBox" name="userMail" maxlength="20">
+					<button class="btn">인증번호 받기</button>
 				</div>
 
 				<div class="emailCheck">
@@ -206,7 +197,7 @@ String cp = request.getContextPath();
 				</div>
 				
 				<div>
-					<input id="signUpBtn" type="button" class="btn" value="가입하기"  onclick="formCheck();">
+					<input id="signUpBtn" type="submit" class="btn" value="가입하기">
 					<input id="cancelBtn" type="button" class="btn" value="취소하기">
 				</div>
 				<br>

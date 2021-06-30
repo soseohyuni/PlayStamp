@@ -11,6 +11,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>제발 ,,</h1>
+<h1>아이디 : ${user.userId }</h1>
+<h1>닉네임 : ${user.userNick }</h1>
+<h1>비밀번호 : ${user.userPw }</h1>
+<h1>이름 : ${user.userNm }</h1>
+<h1>전화번호 : ${user.userTel }</h1>
+<h1>이메일 : ${user.userMail }</h1>
+
 </body>
 </html>

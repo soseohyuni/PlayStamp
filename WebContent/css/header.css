@@ -255,55 +255,6 @@ section {
     display: none
 }
 
-.top_bar_contact {
-    display: inline-block
-}
-
-.top_bar_contact_item {
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 56px;
-    margin-right: 40px
-}
-
-.top_bar_contact_item:not(:first-child) {
-    margin-right: 0px
-}
-
-.top_bar_contact_item a {
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 56px;
-    color: #000;
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -ms-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease
-}
-
-.top_bar_contact_item a:hover {
-    color: #8a8a8a
-}
-
-.top_bar_contact_item:last-child {
-    margin-right: 0px
-}
-
-.top_bar_icon {
-    display: inline-block;
-    margin-right: 14px;
-    -webkit-transform: translateY(-2px);
-    -moz-transform: translateY(-2px);
-    -ms-transform: translateY(-2px);
-    -o-transform: translateY(-2px);
-    transform: translateY(-2px)
-}
-
-.top_bar_menu {
-    display: inline-block
-}
-
 .top_bar_dropdown li {
     padding-left: 13px;
     padding-right: 13px
@@ -713,8 +664,6 @@ select option {
     width: 100%;
     height: 60px
 }
-
-
 
 .main_nav_dropdown li {
     margin-right: 35px

@@ -1,18 +1,21 @@
 package com.playstamp.user.controller;
 
+
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.playstamp.user.IUserDAO;
 import com.playstamp.user.User;
+
 
 
 @Controller
@@ -70,15 +73,23 @@ public class UserController
 		return str;
 	}
 	
-	@ResponseBody
+	
+	//@ResponseBody
 	@RequestMapping(value="/completeSignup.action", method=RequestMethod.POST)
-	public String userInsert(User user)
-	{
-		String result = "OK";
-
+	public String userInsert(@ModelAttribute("user") User user) throws ClassNotFoundException, SQLException 
+	{ 
+		String result = "";
 		
-		return result;
+		IUserDAO dao = sqlSession.getMapper(IUserDAO.class);
+		//dao.userInsert(user);
+	 
+		dao.userInsertProcedure(user);
+		
+		result = "/NewFile.jsp";
+	
+		return result; 
 	}
+	 
 
 	 
 }
