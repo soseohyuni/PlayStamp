@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>DramList.jsp</title>
+<title>MusicalList.jsp</title>
 <style type="text/css">
 	.play
 	{
@@ -40,9 +40,9 @@
 
 <script type="text/javascript">
 	
-	var list = "";
-	var rep = 0;
-	var params = "";
+	var list = "";	// ajax 가 반환하는 list 객체 받을 변수
+	var params = ""; // playstate를 키값과 밸류값으로 갖는 자바스크립트 객체
+	var j = 0;		// 50개씩 출력해 주기 위해 반복문 변수에 곱해 줄 변수
 	
 	$(function()
 	{	
@@ -59,8 +59,9 @@
 		
 			// 버튼 클릭시 params 변수 해당 버튼의 value 값으로 초기화
 			var params = { "playState" : playState.val() };
-
-			ajaxRequest(params);			
+			
+			ajaxRequest(params);
+			
 		});
 			
 		// 버튼 클릭시마다 호출됨
@@ -75,16 +76,14 @@
 				{
 					list = data.result;
 					var temp = "";
-					var num=0;	//-- 버튼 클릭할 때 여기루 감
-					rep=1;
-					
-					
+					j=1;
+							
 					var dheight = $(document).height();
 					
 					$("<table>").appendTo("#result");
 					
 					// 초기 게시물 20 개 구성
-					for(var i=num; i<50; i++, num++)
+					for(var i=0; i<50; i++)
 					{
 						// 한 줄에 다섯 개씩 출력
 						if (i%5==0)
@@ -96,15 +95,17 @@
 								+ list[i].play_img + "' class='playImg'></a><td>").appendTo("#result");
 								
 						// 테스트 
-						$("<td>" + num + "<td>").appendTo("#result"); 
+						$("<td>" + i + "<td>").appendTo("#result"); 
 						
 						if (i%5==4)
 							$("</tr>").appendTo("#result");	
 					} //→ ajax 는 초기 게시물 구성하고, 버튼을 새로 클릭하지 않는 이상 더이상 호출되지 않음
 					
-					// 마우스 스크롤할 때 발동함
-					
+					// 자바스크립트 파라미터에 객체가 들어갈 수 없다고 함.
+					// 때문에 자바스크립트 객체를 함수의 파라미터로 전달하기 위해서는
+					// JSON.stringify 메소드를 통해.. String 형태로 바꾸어 주어야 한다고 함.
 					var data = JSON.stringify(list);
+					
 					infinite(data);
 					
 					
@@ -120,6 +121,7 @@
 		
 	});
 	
+	//@@ 무한스크롤 구현
 	function infinite(data)
 	{
 		$(window).scroll(function()
@@ -128,15 +130,10 @@
 			var sheight = $(window).scrollTop() + $(window).height();
 			var length = list.length;
 			
-			$(".playState").click(function()
-			{
-				rep = 1;
-			});
-			
 			// 스크롤이 바닥에 닿으면
 			if(dheight == sheight)
 			{		
-				for(var i=50*rep ; i<50 + (50*rep); i++)
+				for(var i=50*j ; i<(50*j)+50; i++)
 				{
 					// 데이터를 다 출력하면 무한 스크롤 이벤트 해제
 					if (i == list.length)
@@ -158,7 +155,8 @@
 						$("</tr>").appendTo("#result");	
 				}
 				
-				rep = rep + 1;
+				// 새로운 50개 데이터 모두 출력 후 다음 구간의 50 개 받아올 수 있도록 j를 증가시킴
+				j = j + 1;
 			}
 			
 		});
@@ -168,7 +166,7 @@
 </script>
 </head>
 <body>
-<div>
+<div style="width: 1300;">
 	<!-- 상단바 -->
 	<div>
 		<c:import url="header.jsp"></c:import>
@@ -204,7 +202,6 @@
 	
 	<!-- 리스트 출력 예정 -->
 	<div id="result">
-	
 	</div>
 </div>
 
