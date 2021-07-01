@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>AddReviewSeatForm.jsp</title>
+<title>MyReviewSeatUpdateForm.jsp</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <!-- 별점 기능을 위한 아이콘을 CDN 방식으로 추가 -->
@@ -92,7 +92,7 @@
    $(function(){
       $('#view').barrating({
         theme: 'fontawesome-stars'
-        , initialRating: 5
+        , initialRating: 3
         , onSelect: function(value, text, event){
     		// 클릭한 별점은 value로 받음
     		alert(value);
@@ -103,7 +103,7 @@
    $(function() {
       $('#seat').barrating({
         theme: 'fontawesome-stars'
-        , initialRating: 5
+        , initialRating: 2
         , onSelect: function(value, text, event){
     		// 클릭한 별점은 value로 받음
     		alert(value);
@@ -125,7 +125,7 @@
    $(function() {
       $('#light').barrating({
         theme: 'fontawesome-stars'
-        , initialRating: 5
+        , initialRating: 4
         , onSelect: function(value, text, event){
     		// 클릭한 별점은 value로 받음
     		alert(value);
@@ -138,14 +138,13 @@
 <body>
 	<div id="textbox">
 		<h5>
-			<img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">리뷰 추가하기
+			<img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">리뷰 수정하기
 		</h5>
 		<hr>
 	</div>
 	<div class="center">
-		<h5>(이전페이지에서 넘어온 공연명)를 관람하셨군요!</h5>
-		<h5>플레이 스탬프에서 더 많은 정보들이 공유될 수 있도록, 관람하신 좌석에 대한 정보를 기입해주세요!</h5>
-		<h5>해당 좌석 리뷰 정보는 일반회원 이상 등급에 한해 공개됩니다.</h5>
+		<h5>좌석 정보를 수정해주세요.</h5>
+		<h5>수정사항이 없다면 하단의 상세리뷰 수정하러가기 버튼을 클릭해주세요.</h5>
 	</div>
 	<br>
 	<br>
@@ -161,13 +160,13 @@
 				<br>
 				<div>
 					<select class="selectpicker" id="floor" name="floor">
-						<option>-</option>
+						<option>기존선택층</option>
 						<c:forEach var="a" begin="1" end="5" step="1">
 							<option value="${a }">${a }</option>
 						</c:forEach>
 					</select> 층 &nbsp;&nbsp;&nbsp;&nbsp;
 					<select class="selectpicker" id="area" name="area">
-						<option>-</option>
+						<option>기존선택구역</option>
 						<option value="A">A</option>
 						<option value="B">B</option>
 						<option value="C">C</option>
@@ -187,7 +186,7 @@
 						<option value="아">아</option>
 					</select> 구역 <br><br>
 					<select class="selectpicker" id="line" name="line">
-						<option>-</option>
+						<option>기존선택열</option>
 						<c:forEach var="a" begin="1" end="30" step="1">
 							<option value="${a }">${a }</option>
 						</c:forEach>
@@ -219,7 +218,7 @@
 						<option value="Z">Z</option>
 						<option value="OP">OP</option>
 					</select> 열&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="text" id="num" class="num" placeholder="좌석번호">
+					<input type="text" id="num" class="num" value="20">
 					<br>
 				</div>
 			</div><!-- box1 -->
@@ -282,18 +281,17 @@
 			</div>
 			<div class="center">
 				<textarea id="review" cols="55" rows="5" style="resize: none;"
-				placeholder="좌석에 대한 자세한 리뷰를 입력해주세요."></textarea>
+				value="기존에 입력했던 좌석리뷰"></textarea>
 			</div>
 			<br>
 			<br>
 			<br>
 			<div class="center">
 				<button type="submit" id="center" class="btn btn-primary">상세
-					리뷰 작성하러 가기</button>
+					리뷰 수정하러 가기</button>
 			</div>
 		</form>
 	</div>
-
 
 </body>
 </html>

@@ -6,11 +6,12 @@ public class Play
 {
 	private String play_cd, theater_cd;	//-- 공연 코드, 공연장 코드
 	private int genre_cd;				//-- 공연 장르 코드
-	private int state_cd;				//-- 공연 상태코드
 	private String mng_cd, play_nm;		//-- 관리자코드, 공연명
 	private Date play_start, play_end; 	//-- 공연 시작일자, 공연 종료일자
 	private String play_img, play_cast;	//-- 포스터, 출연진
 	private Date playRegister;			//-- 등록일
+	
+	// getter, setter 구성
 	public String getPlay_cd()
 	{
 		return play_cd;
@@ -34,14 +35,6 @@ public class Play
 	public void setGenre_cd(int genre_cd)
 	{
 		this.genre_cd = genre_cd;
-	}
-	public int getState_cd()
-	{
-		return state_cd;
-	}
-	public void setState_cd(int state_cd)
-	{
-		this.state_cd = state_cd;
 	}
 	public String getMng_cd()
 	{

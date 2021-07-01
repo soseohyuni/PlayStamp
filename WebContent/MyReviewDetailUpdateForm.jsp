@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>AddReviewDetailForm.jsp</title>
+<title>MyReviewDetailUpdateForm.jsp</title>
 <!-- 부트스트랩 css -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!-- 제이쿼리 script -->
@@ -135,7 +135,7 @@
 	$(function(){
 	    $('#rating').barrating({
 	      theme: 'fontawesome-stars'
-	      , initialRating: 5
+	      , initialRating: 4
 	      , onSelect: function(value, text, event){
 	  			// 클릭한 별점은 value로 받음
 	  			alert(value);
@@ -144,109 +144,11 @@
 	 });
    
 </script>
-<script type="text/javascript">
-	
-	// 사진 업로드 버튼 클릭시 파일 업로드할 수 있도록 구현
-	const browseBtn = document.querySelector('.browse-btn');
-	const realInput = document.querySelector('#real-input');
-	
-	browseBtn.addEventListener('click',()=>{
-		realInput.click();
-	});
-	
-	function readInputFile(e){
-	    var sel_files = [];
-	    
-	    sel_files = [];
-	    $('#imagePreview').empty();
-	    
-	    var files = e.target.files;
-	    var fileArr = Array.prototype.slice.call(files);
-	    var index = 0;
-	    
-	    fileArr.forEach(function(f){
-	    	if(!f.type.match("image/.*")){
-	        	alert("이미지 확장자만 업로드 가능합니다.");
-	            return;
-	        };
-	        if(files.length < 11){
-	        	sel_files.push(f);
-	            var reader = new FileReader();
-	            reader.onload = function(e){
-	            	var html = `<a id=img_id_${index}><img src=${e.target.result} data-file=${f.name} /></a>`;
-	                $('imagePreview').append(html);
-	                index++;
-	            };
-	            reader.readAsDataURL(f);
-	        }
-	    })
-	    if(files.length > 11){
-	    	alert("최대 10장까지 업로드 할 수 있습니다.");
-	    }
-	}
-
-	$('#real-input').on('change',readInputFile);
-	
-</script>
-<script type="text/javascript">
-
-	var sel_file;
-	
-	$(document).ready(function()
-	{
-		$("#input.img").on("change", handleImgFileSelect);
-	});
-	
-	function handleImgFileSelect(e)
-	{
-		var files = e.target.files;
-		var filesArr = Array.prototype.slice.call(files);
-		
-		filesArr.forEach(function(f)
-		{
-			if(!f.type.match("image.*"))
-			{
-				alert("확장자는 이미지 확장자만 가능합니다.");
-				return;
-			}
-			
-			sel_file = f;
-			
-			var reader = new FileReader();
-			reader.onload = function(e)
-			{
-				$("#img").attr("src", e.target.result);
-			}
-			reader.readAsDataURL(f);
-		});
-	}
-
-</script>
-<script type="text/javascript">
-
-	// 사진 업로드
-	$(function() {
-    $("#uploadFile").on("change", function(){
-        var files = !!this.files ? this.files : [];
-        if (!files.length || !window.FileReader) return; 
- 
-        if (/^image/.test( files[0].type)){ 
-            var reader = new FileReader(); 
-            reader.readAsDataURL(files[0]); 
- 
-            reader.onloadend = function(){ 
-             $('.imagePreview').css("background-image", "url("+this.result+")"); 
-            };
-        }
-    });
-});
-
-</script>
 </head>
 <body>
 
 <div id="textbox">
-	<h5><img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">리뷰 추가하기</h5>
+	<h5><img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">리뷰 수정하기</h5>
 	<hr>
 </div>
 <br><br>
