@@ -8,7 +8,6 @@ public class PlayList
 	{
 		this.play_cd = play_cd;
 		this.play_img = play_img;
-
 	}
 	
 	public String getPlay_cd()
@@ -29,8 +28,5 @@ public class PlayList
 	public void setPlay_img(String play_img)
 	{
 		this.play_img = play_img;
-	}
-
-	
-	
+	}	
 }

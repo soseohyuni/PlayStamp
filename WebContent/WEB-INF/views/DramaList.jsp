@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>MusicalList.jsp</title>
+<title>DramList.jsp</title>
 <style type="text/css">
 	.play
 	{
@@ -59,9 +59,8 @@
 		
 			// 버튼 클릭시 params 변수 해당 버튼의 value 값으로 초기화
 			var params = { "playState" : playState.val() };
-			
-			ajaxRequest(params);
-			
+
+			ajaxRequest(params);			
 		});
 			
 		// 버튼 클릭시마다 호출됨
@@ -69,14 +68,14 @@
 		{	
 			$.ajax({
 				type:"POST",
-				url: "musicalprint.action",
+				url: "dramaprint.action",
 				dataType: "json",
 				data: params,
 				success: function(data)
 				{
 					list = data.result;
 					var temp = "";
-					var num=0;
+					var num=0;	//-- 버튼 클릭할 때 여기루 감
 					rep=1;
 					
 					
@@ -97,7 +96,7 @@
 								+ list[i].play_img + "' class='playImg'></a><td>").appendTo("#result");
 								
 						// 테스트 
-						$("<td>" + i + "<td>").appendTo("#result"); 
+						$("<td>" + num + "<td>").appendTo("#result"); 
 						
 						if (i%5==4)
 							$("</tr>").appendTo("#result");	
@@ -205,6 +204,7 @@
 	
 	<!-- 리스트 출력 예정 -->
 	<div id="result">
+	
 	</div>
 </div>
 

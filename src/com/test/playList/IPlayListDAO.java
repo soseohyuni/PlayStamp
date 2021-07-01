@@ -14,7 +14,5 @@ public interface IPlayListDAO
 	public ArrayList<PlayList> getMusicalList(String playState) throws SQLException;
 
 	// 공연완료인 연극 출력 메소드
-	public ArrayList<PlayList> getDramaList(PlayList playList) throws SQLException;
-	
-	
+	public ArrayList<PlayList> getDramaList(String playState) throws SQLException;	
 }
