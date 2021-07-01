@@ -44,9 +44,8 @@
 	{
 		//var params = { "playState" : "공연예정" };
 		// 최초 요청시 페이지 표시
-		//ajaxRequest();
-
-		
+		//var count = 0;
+		//var time = 100;
 		
 		// 버튼 클릭시 상태 변경하며 이동
 		$(".playState").click(function()		
@@ -58,10 +57,17 @@
 			var params = { "playState" : playState.val() };
 			
 			// 공연을 20 개씩 출력하기 위해 값을 저장할 전역 변수
-			var count = 0;
-			var time =20;
-				
+			//var count = 0;
+			//var time =20;
+			
+			ajaxRequest(params);
 			//-------------------------- ajax 
+			
+		});
+			
+		// 버튼 클릭시마다 호출됨
+		function ajaxRequest(params)
+		{	
 			$.ajax({
 				type:"POST",
 				url: "musicallist.action",
@@ -70,7 +76,77 @@
 				success: function(data)
 				{
 					var list = data.result;
+					var temp = "";
+					var num=0;	//-- 버튼 클릭할 때 여기루 감
+					//var rep=1;
+					var rep=1;
 					
+					
+					var dheight = $(document).height();
+					
+					$("<table>").appendTo("#result");
+					
+					// 초기 게시물 20 개 구성
+					for(var i=num; i<50; i++, num++)
+					{
+						// 한 줄에 다섯 개씩 출력
+						//if (i%5==0)
+							$("<tr>").appendTo("#result");
+						
+						// get 방식으로 공연코드를 넘겨 줌으로써 클릭시 공연 상세정보로 이동할 수 있도록 함
+						/* $("<td><a href='playdetail.action?play_cd="
+								+ list[i].play_cd + "'>" + "<img src='"
+								+ list[i].play_img + "' class='playImg'></a><td>").appendTo("#result");  */
+								
+						// 테스트 
+						$("<td>" + num + "<td>").appendTo("#result"); 
+						
+						//if (i%5==4)
+							$("</tr>").appendTo("#result");	
+					} //→ ajax 는 초기 게시물 구성하고, 버튼을 새로 클릭하지 않는 이상 더이상 호출되지 않음
+					
+					//var rep = 1;
+					// 마우스 스크롤할 때 발동함
+					$(window).scroll(function()
+					{					
+						var dheight = $(document).height();
+						var sheight = $(window).scrollTop() + $(window).height();
+						var length = list.length;
+						//var rep = 0// 스크롤 할 때 여기로 감.. 
+						
+						$(".playState").click(function()
+						{
+							rep = 1;	
+						});
+						
+						// 스크롤이 바닥에 닿으면
+						if(dheight == sheight)
+						{	//rep=1;
+						
+							for(var i=50*rep ; i<50 + (50*rep); i++)
+							{
+								// 한 줄에 다섯 개씩 출력
+								//if (i%5==0)
+									$("<tr>").appendTo("#result");
+								
+								/* // get 방식으로 공연코드를 넘겨 줌으로써 클릭시 공연 상세정보로 이동할 수 있도록 함
+								$("<td><a href='playdetail.action?play_cd="
+										+ list[i].play_cd + "'>" + "<img src='"
+										+ list[i].play_img + "' class='playImg'></a><td>").appendTo("#result");  */
+								
+								// 테스트
+								$("<td>" + i + "<td>").appendTo("#result"); 
+								
+								//if (i%5==4)
+									$("</tr>").appendTo("#result");	
+							}
+							
+							rep = rep + 1;
+						}
+						
+					});
+					
+					$("</table>").appendTo("#result");
 
 				}, error : function(e)
 				{
@@ -78,68 +154,11 @@
 				}
 				
 			});
-			
-			paging();
-			
+		}
 		
 	});
  
-		function paging()
-		{
-			var temp = "";
 			
-			var dheight = $(document).height();
-			
-			$("<table>").appendTo("#result");
-			
-			// 초기 게시물 20 개 구성
-			for(var i=0; i<20; i++, count++)
-			{
-				// 한 줄에 다섯 개씩 출력
-				if (i%5==0)
-					$("<tr>").appendTo("#result");
-				
-				// get 방식으로 공연코드를 넘겨 줌으로써 클릭시 공연 상세정보로 이동할 수 있도록 함
-				$("<td><a href='playdetail.action?play_cd="
-						+ list[i].play_cd + "'>" + "<img src='"
-						+ list[i].play_img + "' class='playImg'></a><td>").appendTo("#result"); 
-				
-				if (i%5==4)
-					$("</tr>").appendTo("#result");	
-			}
-			
-			$(window).scroll(function()
-			{					
-				var dheight = $(document).height();
-				var sheight = $(window).scrollTop() + $(window).height();
-				var length = list.length;
-				
-				if(dheight == sheight && (count+time) < (length))
-				{							
-					for(var i=time; i<(count+time); i++)
-					{
-						// 한 줄에 다섯 개씩 출력
-						if (i%5==0)
-							$("<tr>").appendTo("#result");
-						
-						// get 방식으로 공연코드를 넘겨 줌으로써 클릭시 공연 상세정보로 이동할 수 있도록 함
-						$("<td><a href='playdetail.action?play_cd="
-								+ list[i].play_cd + "'>" + "<img src='"
-								+ list[i].play_img + "' class='playImg'></a><td>").appendTo("#result"); 
-						
-						if (i%5==4)
-							$("</tr>").appendTo("#result");	
-					}
-					
-					time+=20;
-				}
-				
-			});
-			
-			$("</table>").appendTo("#result");
-		}
-			
-	});    	
 </script>
 </head>
 <body>
