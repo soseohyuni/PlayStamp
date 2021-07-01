@@ -12,125 +12,8 @@ String cp = request.getContextPath();
 <link href="<%=cp%>/css/usersignup.css" rel="stylesheet">
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script src="<%=cp%>/js/sign.js"></script>
 <script type="text/javascript">
-
-	$(function()
-	{
-		// 입력 실시간 폼 체크
-		
-		
-		
-		$('#userId').keyup(function(){
-			
-		});
-		
-		
-		//-- 아이디 중복체크(아직 영문, 특수문자 검사 x)
-		$("#idChkBtn").click(function()
-		{
-				var userId = $("#userId").val();
-		
-				$.ajax(
-				{
-					url: "checkSignup.action"
-				  , type: "POST"
-				  , data: {"userId": $('#userId').val()}
-				  , success : function(data)
-				    {
-					  if (data=="YES")
-					  {
-						  $("#idChkBtn").hide();
-						  $("#okId").css("display", "inline-block");
-					  }
-					  else if(data=="NO")
-					  {
-						  alert("이미 사용중인 아이디입니다.");
-						  $("#userId").focus();
-						  $("#userId").css("border-color", "red");
-					  }
-					},
-					error : function(request,status,error)
-					{
-				        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-				    }
-				});
-				
-		
-				//-- 비밀번호 일치 확인
-				$("#userPw2").blur(function()
-				{
-					if($('#userPw').val() != $('#userPw2').val())
-					{
-						if($('#userPw2').val()!='')
-						{
-						    alert("비밀번호가 일치하지 않습니다.");
-						    
-							$('#userPw2').val('');
-							$('#userPw2').focus();
-							$('#userPw2').css("border-color", "red");
-					    }
-					}
-				 }); //-- 비밀번호 확인 끝	   
-
-		});//-- 아이디 중복 체크 끝
-		
-	});
-	
-	
-	/*
-	function formCheck()
-	{
-		
-		//alert(queryString);
-		
-		$.ajax(
-		{
-		    url: "checkSignup.action"
-		  , data : $("#form").serialize()
-		  , type: "POST"
-		  , async:false
-	      , data: dataEncode
-	      , dataType : 'json'
-	      , success: function(obj){
-				alesr("bb");
-		   },
-		   error: function()
-		   {
-				alert('### 통신 에러 ###');
-		   });
-		}); 
-
-		// 회원가입 처리
-		var form = $("#form")[0];        
-        var formData = new FormData($("#form"));
-        
-        //alert(formData);  -- Object
-        alert(formData.has('#userId'));
-        
-		$.ajax(
-		{
-			cache : false
-		  , url: "checkSignup.action"
-		  , data : formData
-		  , type: "POST"
-		  , processData: false
-	      , contentType: false
-	      , success: function(obj){
-				if(obj == 'OK')
-				{
-					alert('회원가입 성공!');
-				} else {
-					alert('*** 회원가입 실패 ***');
-				}
-		   },
-		   error: function()
-		   {
-				alert('### 통신 에러 ###');
-		   }
-		)}; 
-	}*/
-	
-	
 	
 </script>
 </head>
@@ -145,14 +28,15 @@ String cp = request.getContextPath();
 
 		
 		<!-- 입력 폼 -->
-		<form id="form" action="completeSignup.action" class="container userSignUpForm" method="post">
+		<form id="form" action="completeSignup.action" class="container userSignUpForm" method="post" onsubmit="return checkForm()">
 			<div id="content">
 				<!-- 아이디/닉네임/이름/비밀번호 입력 및 확인 -->
 				<div class="joinInputBox">
 					<h3 class="joinTitle">아이디</h3>
-					<input type="text" id="userId" name="userId" class="chkInput" maxlength="20" required="required">
+					<input type="text" id="userId" name="userId" class="chkInput" required="required">
 					<button class="btn chkBtn" id="idChkBtn" name="unCheck">중복확인</button>
 					<img id="okId" alt="ok" src="images/yes.png" style="height: 40px; display:none;">
+					<span id="checkId"></span>
 				</div>
 
 				<div class="joinInputBox">
@@ -168,6 +52,7 @@ String cp = request.getContextPath();
 				<div class="joinInputBox">
 					<h3 class="joinTitle">비밀번호 확인</h3>
 					<input type="text" id="userPw2" name="userPw2" maxlength="20" required="required">
+					<span id="checkPw"></span>
 				</div>
 
 				<div class="joinInputBox">
@@ -178,7 +63,7 @@ String cp = request.getContextPath();
 				<!-- 전화번호 입력 -->
 				<div class="joinInputBox">
 					<h3 class="joinTitle">
-						<label for="id">전화번호</label>
+						<label for="id">전화번호('-' 없이 번호만 입력해주세요.)</label>
 					</h3>
 					<input type="text" id="userTel" name="userTel" maxlength="3" required="required"> 
 				</div>
@@ -187,6 +72,7 @@ String cp = request.getContextPath();
 				<div class="emailInput">
 					<h3 class="joinTitle">이메일</h3>
 					<input type="text" id="userMail" class="emailInputBox" name="userMail" maxlength="20">
+					<span id="checkMail"></span>
 					<button class="btn">인증번호 받기</button>
 				</div>
 
