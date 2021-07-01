@@ -50,7 +50,7 @@ public class PlayListController
 		  
 		  Map<String, Object> map = new HashMap<String, Object>();
 		  
-		  ArrayList<PlayList> list = dao.getIngMusicalList();
+		  ArrayList<PlayList> list = dao.getEdMusicalList();
 		  map.put("result", list);
 		  
 		  return map;

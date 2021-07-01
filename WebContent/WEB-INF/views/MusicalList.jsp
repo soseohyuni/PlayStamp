@@ -42,16 +42,20 @@
 
 	$(function()
 	{
-
-			request();	
+		// 최초 요청시 페이지 표시
+		ajaxRequest();
 
 		
 		
 	});
 	
-	function request()
+	function ajaxRequest()
 	{   
-	$.ajax({
+		// 공연을 20 개씩 출력하기 위해 값을 저장할 전역 변수
+		var count = 0;
+		var time =20;
+		
+		$.ajax({
 			type:"post",
 			url: "musicallist.action",
 			dataType: "json",
@@ -60,22 +64,55 @@
 				var list = data.result;
 				var temp = "";
 				
-				temp += "<table>";
+				var dheight = $(document).height();
 				
-				for(var i=0; i<list.length; i++)
+				$("<table>").appendTo("#result");
+				
+				// 초기 게시물 20 개 구성
+				for(var i=0; i<20; i++, count++)
 				{
 					// 한 줄에 다섯 개씩 출력
 					if (i%5==0)
-						temp += "<tr>";
+						$("<tr>").appendTo("#result");
 					
 					// get 방식으로 공연코드를 넘겨 줌으로써 클릭시 공연 상세정보로 이동할 수 있도록 함
-					temp += "<td><a href='playdetail.action?playCd=" + list[i].playCd + "'>" + "<img src='" + list[i].playImg + "' class='playImg'></a><td>"; 
+					$("<td><a href='playdetail.action?playCd="
+							+ list[i].playCd + "'>" + "<img src='"
+							+ list[i].playImg + "' class='playImg'></a><td>").appendTo("#result"); 
 					
 					if (i%5==4)
-						temp += "</tr>";		
+						$("</tr>").appendTo("#result");	
 				}
-				temp += "</table>";
-				$("#result").html(temp);
+				
+				$(window).scroll(function()
+				{					
+					var dheight = $(document).height();
+					var sheight = $(window).scrollTop() + $(window).height();
+					var length = list.length;
+					
+					if(dheight == sheight && (count+time) < (length))
+					{							
+						for(var i=time; i<(count+time); i++)
+						{
+							// 한 줄에 다섯 개씩 출력
+							if (i%5==0)
+								$("<tr>").appendTo("#result");
+							
+							// get 방식으로 공연코드를 넘겨 줌으로써 클릭시 공연 상세정보로 이동할 수 있도록 함
+							$("<td><a href='playdetail.action?playCd="
+									+ list[i].playCd + "'>" + "<img src='"
+									+ list[i].playImg + "' class='playImg'></a><td>").appendTo("#result"); 
+							
+							if (i%5==4)
+								$("</tr>").appendTo("#result");	
+						}
+						
+						time+=20;
+					}
+					
+				});
+				
+				$("</table>").appendTo("#result");
 
 			}, error : function(e)
 			{
@@ -122,8 +159,10 @@
 	</select>
 	</div>
 	
-<div id="result">
-
+	<!-- 리스트 출력 예정 -->
+	<div id="result">
+	
+	</div>
 </div>
 
 </body>
