@@ -61,7 +61,7 @@
 				<!-- Logo -->
 				<div class="col-lg-2 order-1 logo_container">
 					<div class="logo_container1">
-						<a href=""><img alt="로고" src="<%=cp%>/images/logo_typo.svg"></a>
+						<a href="main.action"><img alt="로고" src="<%=cp%>/images/logo_typo.svg"></a>
 					</div>
 				</div>
 
@@ -69,7 +69,7 @@
 				<div class="col-lg-5 order-2">
 					<div class="main_nav_menu">
 						<ul class="standard_dropdown main_nav_dropdown">
-							<li><a href="#">마이스페이스</a></li>
+							<li><a href="myspace.action">마이스페이스</a></li>
 							<li><a href="#">공연정보</a></li>
 							<li><a href="blog.html">좌석정보</a></li>
 							<li><a href="contact.html">티켓 양도</a></li>

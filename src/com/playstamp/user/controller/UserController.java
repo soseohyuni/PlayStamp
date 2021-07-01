@@ -5,9 +5,14 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -74,7 +79,6 @@ public class UserController
 	}
 	
 	
-	//@ResponseBody
 	@RequestMapping(value="/completeSignup.action", method=RequestMethod.POST)
 	public String userInsert(@ModelAttribute("user") User user) throws ClassNotFoundException, SQLException 
 	{ 
@@ -85,11 +89,20 @@ public class UserController
 	 
 		dao.userInsertProcedure(user);
 		
-		result = "/NewFile.jsp";
+		result = "WEB-INF/views/main/Welcome.jsp";
 	
 		return result; 
 	}
-	 
-
+	
+	@RequestMapping(value="/login.action", method=RequestMethod.POST)
+	public String login(HttpServletRequest request, User user) throws SQLException
+	{ 
+		String result = "";
+		
+		System.out.println("정상진입");
+		System.out.println(user);
+	
+		return result; 
+	}
 	 
 }

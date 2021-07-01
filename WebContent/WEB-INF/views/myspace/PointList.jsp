@@ -8,13 +8,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>나의 포인트</title>
 </head>
 <body>
-<h1>${user.userNick }님 환영합니다!</h1>
-<h2>홈으로 안내하는 버튼</h2>
-
-
-<h2>${name }</h2>
+<!-- 메뉴 영역 -->
+	<div>
+		<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
+	</div>
+	
 </body>
 </html>

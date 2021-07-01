@@ -14,6 +14,19 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+<script type="text/javascript">
+
+	$(function ()
+	{
+		$("#login").click(function()
+		{
+			$("#loginForm").attr("action", "/login.action");
+	        $("#loginForm").submit();
+		});
+	});
+
+</script>
 </head>
 <body>
 
@@ -23,21 +36,21 @@
     	<br><img onclick="location.href='main.action'" src="images/logo_typo.svg" style="cursor:pointer; width:300px;"><br> 
     </div>
     
-    <form action="" method="post">
+    <form id="loginForm" method="post">
 	    <div class="mt-4 text-center">
 	        <h6 style="font-weight: bold;">로그인 하기</h6>
 	        <div class="mt-3 inputbox"> 
-	        	<input type="text" class="form-control" name="" placeholder="아이디"> <i class="fa fa-user"></i> 
+	        	<input type="text" class="form-control" name="userId" placeholder="아이디"> <i class="fa fa-user"></i> 
 	        </div>
 	        <div class="inputbox"> 
-	        	<input type="text" class="form-control" name="" placeholder="패스워드"> <i class="fa fa-lock"></i> 
+	        	<input type="text" class="form-control" name="userPw" placeholder="패스워드"> <i class="fa fa-lock"></i> 
 	        </div>
 	    </div>
 	    <div class="d-flex justify-content-between">
 	        <div class="form-check"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"> <label class="form-check-label" for="flexCheckDefault"> 관리자 </label> </div>
 	    </div>
 	    <div class="mt-2"> 
-	    	<button class="btn btn-primary btn-block" id="login">로그인</button>
+	    	<input type="button" class="btn btn-primary btn-block" id="login">로그인
 	    </div>
 	    <div class="mt-2"> 
 	    	<button class="btn btn-primary btn-block" id="naverLogin">
