@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,22 +42,19 @@ public class PlayListController
 	
 	// /memberlist.action
 	//@@ Model 도 되고.. ModelMap 을 써두 됨. setAttribute 만 되면 되니깐
-	
-	
-	
-	  
+		  
 	  @RequestMapping(value="/musicallist.action", method= {RequestMethod.POST, RequestMethod.GET})
-	  public @ResponseBody Map<String, Object> getMusicalList() throws SQLException
+	  public @ResponseBody Map<String, Object> getMusicalList(@RequestParam Map<String, Object> param) throws SQLException
 	  {
 		  IPlayListDAO dao = sqlSession.getMapper(IPlayListDAO.class);
 		  
 		  Map<String, Object> map = new HashMap<String, Object>();
 		  
-		  ArrayList<PlayList> list = dao.getEdMusicalList();
+		  ArrayList<PlayList> list = dao.getMusicalList((String)param.get("playState"));
 		  map.put("result", list);
 		  
-		  return map;
 		  
+		  return map;	  
 	  }
 	  
 	  @RequestMapping(value="/musicalhome.action")

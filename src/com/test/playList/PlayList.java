@@ -2,33 +2,35 @@ package com.test.playList;
 
 public class PlayList
 {
-	private String playCd, playImg;
+	private String play_cd, play_img;
 	
-	PlayList(String playCd, String playImg)
+	PlayList(String play_cd, String play_img)
 	{
-		this.playCd = playCd;
-		this.playImg = playImg;
+		this.play_cd = play_cd;
+		this.play_img = play_img;
+
 	}
 	
-	public String getPlayCd()
+	public String getPlay_cd()
 	{
-		return playCd;
+		return play_cd;
 	}
 
-	public void setPlayCd(String playCd)
+	public void setPlay_cd(String play_cd)
 	{
-		this.playCd = playCd;
+		this.play_cd = play_cd;
 	}
 
-	public String getPlayImg()
+	public String getPlay_img()
 	{
-		return playImg;
+		return play_img;
 	}
 
-	public void setPlayImg(String playImg)
+	public void setPlay_img(String play_img)
 	{
-		this.playImg = playImg;
+		this.play_img = play_img;
 	}
+
 	
 	
 }
