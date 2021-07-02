@@ -26,4 +26,34 @@ public class MySpaceController
 
 		return result;
 	}
+	
+	@RequestMapping("/myprofile.action")
+	public String myProfileView()
+	{
+		String result = "";
+		
+		result = "/WEB-INF/views/myspace/MyProfileForm.jsp";
+
+		return result;
+	}
+	
+	@RequestMapping("/dropform.action")
+	public String dropView()
+	{
+		String result = "";
+		
+		result = "/WEB-INF/views/myspace/DropForm.jsp";
+
+		return result;
+	}
+	
+	@RequestMapping("/dropcashcheck.action")
+	public String dropCashCheckView()
+	{
+		String result = "";
+		
+		result = "/WEB-INF/views/myspace/DropCashCheck.jsp";
+
+		return result;
+	}
 }
