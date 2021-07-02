@@ -9,11 +9,10 @@
 <head>
 <meta charset="UTF-8">
 <title>MyReviewSeatUpdateForm.jsp</title>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link href="<%=cp%>/css/header.css" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <!-- 별점 기능을 위한 아이콘을 CDN 방식으로 추가 -->
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 <!-- 별점 이미지 파일을 다운받은 뒤 css폴더에 추가해 경로 지정 -->
 <link rel="stylesheet" href="<%=cp %>/css/fontawesome-stars.css">
 <script type="text/javascript" src="<%=cp%>/js/ajax.js"></script>
@@ -31,6 +30,7 @@
 	{
 		margin: 0 auto;
 		text-align: center;
+		width: 411px;
 	}
 	.reviewleft
 	{
@@ -136,12 +136,17 @@
 </script>
 </head>
 <body>
+	<!-- 헤더 추가 -->
+	<div>
+		<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
+	</div>
+	
 	<div id="textbox">
 		<h5>
 			<img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">리뷰 수정하기
 		</h5>
 		<hr>
-	</div>
+	</div><br><br><br>
 	<div class="center">
 		<h5>좌석 정보를 수정해주세요.</h5>
 		<h5>수정사항이 없다면 하단의 상세리뷰 수정하러가기 버튼을 클릭해주세요.</h5>
@@ -287,11 +292,11 @@
 			<br>
 			<br>
 			<div class="center">
-				<button type="submit" id="center" class="btn btn-primary">상세
+				<button type="submit" id="center" class="btn btn-info">상세
 					리뷰 수정하러 가기</button>
 			</div>
 		</form>
 	</div>
-
+<br><br><br><br>
 </body>
 </html>

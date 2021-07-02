@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>MyLikeCommentReviewList.jsp</title>
+<link href="<%=cp%>/css/header.css" rel="stylesheet">
 <!-- 탭 설정을 위한 jQuery UI 추가 -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
@@ -47,6 +48,10 @@
 </script>
 </head>
 <body>
+<!-- 헤더 추가 -->
+<div>
+	<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
+</div>
 <div id="textbox">
 	<h5>
 		<img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">
@@ -54,6 +59,7 @@
 	</h5>
 	<hr>
 </div>
+<br><br><br>
 <div id="content">
 	<div id="tabs">
 			<ul>

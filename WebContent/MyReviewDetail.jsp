@@ -9,10 +9,11 @@
 <head>
 <meta charset="UTF-8">
 <title>MyReviewDetail.jsp</title>
-<!-- 부트스트랩, 제이쿼리 -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=cp%>/css/header.css" rel="stylesheet">
+<!-- 부트스트랩 적용을 위한 3줄: 제이쿼리 스크립트 포함 -->
+<link rel="stylesheet" href="<%=cp %>/css/bootstrap.min.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<%=cp %>/js/bootstrap.min.js"></script>
 <!-- 별점 기능을 위한 아이콘을 CDN 방식으로 추가 -->
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 <!-- 별점 이미지 파일을 다운받은 뒤 css폴더에 추가해 경로 지정 -->
@@ -22,32 +23,12 @@
 <!-- 별점 콜백 함수 호출을 위해 js 폴더에 추가해 경로 지정 -->
 <script src="<%=cp %>/js/jquery.barrating.min.js"></script>
 <style type="text/css">
-	.center
-	{
-		margin:0 auto;
-		text-align: center;
-	}
 	#content 
 	{
 	    width: 1300px;
+	    margin:0 auto;
 	}
-	.box1 
-	{
-		margin-left: 380px;
-		width: 300px;
-		float: left;
-		margin-right: 20px;
-	}
-	.box2 
-	{
-		width: 600px;
-		float: left;
-	}
-	textarea
-	{
-		width: 600px;
-	}
-	#reviewdetail
+#reviewdetail
 	{
 		display: block;
 	    width: 100%;
@@ -60,11 +41,16 @@
 	}
 	.imagePreview 
 	{
-		width: 200px;
-		height: 270px;
+		width: 250px;
+		height: 300px;
 	  	background-position: center center;
 	  	background-size: cover;
 	  	-webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, .3);
+	  	text-align:center;
+	}
+	#rating
+	{
+		text-align: left;
 	}
 	.subtitle
 	{
@@ -87,7 +73,33 @@
 	}
 	th
 	{
-		width: 80px;
+		width: 115px;
+	}
+	.form-control
+	{
+		height: 30px;
+	}
+	#reviewTitle
+	{
+		font-size: 30px;
+		text-align: center;
+	}
+	#info
+	{
+		font-size: 15px;
+		text-align: right;
+	}
+    #img { text-align:center;} 
+    #reviewdetailtable td { height:20px; }
+    #reviewdetailtable { width:60%; margin: auto; }
+    #uploadFile { text-align:center;}
+    #updateDeleteBtn
+	{
+		width: 410px;
+	}
+	.updateDeleteBtn
+	{
+		text-align: center;
 	}
 </style>
 <script type="text/javascript">
@@ -130,45 +142,84 @@
 </script>
 </head>
 <body>
+<!-- 헤더 추가 -->
+<div>
+	<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
+</div>
+	
+	
 <div id="textbox">
 	<h5>
-		<img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">리뷰 정보
+		<img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">나의 리뷰 정보
 	</h5>
 	<hr>
 </div>
 <br><br>
-<div id="content">
-	<div class="box1">
-		<br>
-		<img src="" class="imagePreview">
-		<br><br>
-		<select id="rating">
-					<option value="1">1</option>
-				  	<option value="2">2</option>
-				  	<option value="3">3</option>
-				  	<option value="4">4</option>
-				  	<option value="5">5</option>
-		</select>
-		<br>
-		<div>
-			<b>좌석 위치</b>
-		</div>
-		<br>
-		<div>
-			<input type="text" id="floor" class="seat" value="" readonly="readonly"> 층 &nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="text" id="area" class="seat" value="" readonly="readonly"> 구역 <br><br>
-		</div>
-		<div>
-			<input type="text" id="line" class="seat" value="" readonly="readonly"> 열&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="text" id="num" class="seat" readonly="readonly"> 번호
-			<br>
-		</div><br>
-		<div>
-			<b>좌석 별점</b>
-		</div><br>
-		<table>
+
+<div class="content">
+	<form class="content">
+		<table class="table table-borderless" id="reviewdetailtable">
 			<tr>
-				<th>시야</th>
+				<td colspan="6" id="info">작성일자: 2021년 6월 20일  조회수: 22</td>
+			</tr>
+			<tr>
+				<td colspan="2" rowspan="7" style="width:50px; margin:0 auto;">
+					<br>
+					<!-- 첨부 사진 보기 -->
+					<div class="imagePreview"></div>
+				</td>
+				<th colspan="4" id="reviewTitle">리뷰 제목은 이렇게 나옵니다.</th>
+			</tr>
+			<tr>
+				<th>공연명</th>
+				<td colspan="3">공연명은 이렇게 나옵니다.</td>
+			</tr>
+			<tr>
+				<th>공연 날짜</th>
+				<td colspan="3">2021년 6월 10일</td>
+			</tr>
+			<tr>
+				<th>공연 시간</th>
+				<td colspan="3">18:00</td>
+			</tr>
+			<tr>
+				<th>공연 장소</th>
+				<td colspan="3">샤롯데씨어터</td>
+			</tr>
+			<tr>
+				<th>출연진</th>
+				<td colspan="3">옥주현, 윤공주, 윤형렬, 민영기</td>
+			</tr>
+			<tr>
+				<th>티켓 금액</th>
+				<td colspan="3">130,000</td>
+			</tr>
+			<tr>
+				<th style="text-align:center;">공연 평점</th>
+				<td>
+					<select id="rating"">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+					</select>
+				</td>
+				<th>함께 본 사람</th>
+				<td>친구</td>
+			</tr>
+			<tr>
+				<th colspan="2">좌석 위치</th>
+				<th colspan="3">좌석 별점</th>
+			</tr>
+			<tr>
+				<td>
+					<input type="text" id="floor" class="seat" value="" readonly="readonly"> 층
+				</td>
+				<td>
+					<input type="text" id="area" class="seat" value="" readonly="readonly"> 구역
+				</td>
+				<td>시야</td>
 				<td>
 					<select id="view">
 							<option value="1">1</option>
@@ -178,9 +229,7 @@
 							<option value="5">5</option>
 					</select>
 				</td>
-			</tr>
-			<tr>
-				<th>좌석</th>
+				<td>좌석</td>
 				<td>
 					<select id="seat">
 							<option value="1">1</option>
@@ -192,7 +241,13 @@
 				</td>
 			</tr>
 			<tr>
-				<th>음향</th>
+				<td>
+					<input type="text" id="line" class="seat" value="" readonly="readonly"> 열
+				</td>
+				<td>
+					<input type="text" id="num" class="seat" readonly="readonly"> 번호
+				</td>
+				<td>음향</td>
 				<td>
 					<select id="sound">
 							<option value="1">1</option>
@@ -202,9 +257,7 @@
 							<option value="5">5</option>
 					</select>
 				</td>
-			</tr>
-			<tr>
-				<th>조명</th>
+				<td>조명</td>
 				<td>
 					<select id="light">
 							<option value="1">1</option>
@@ -215,63 +268,28 @@
 					</select>
 				</td>
 			</tr>
+			<tr>
+				<th colspan="6">좌석 리뷰</th>
+			</tr>
+			<tr>
+				<td colspan="6"><textarea id="seatreview" cols="55" rows="5"
+				readonly class="form-control"></textarea></td>
+			</tr>
+			<tr>
+				<th colspan="6">공연 상세 리뷰</th>
+			</tr>
+			<tr>
+				<td colspan="6"><textarea id="reviewdetail" cols="55" rows="10"
+				readonly class="form-control"></textarea></td>
+			</tr>
 		</table>
 		<br><br>
-		<div>
-			<button type="button" id="btnUpdate" class="btn btn-primary">수정하기</button>
-			<button type="button" id="btnDelete" class="btn btn-danger">삭제하기</button>
-		</div>
-	</div><!-- box1 -->
-	<div class="box2">
-		<table class="table">
-			<tr>
-				<td colspan="2" id="reviewtitle">리뷰 제목은 이렇게 나옵니다.</td>
-			</tr>
-			<tr>
-				<th class="subtitle">공연명</th>
-				<td>공연명은 이렇게 나옵니다.</td>
-			</tr>
-			<tr>
-				<th class="subtitle">공연 날짜</th>
-				<td>2021년 6월 10일</td>
-			</tr>
-			<tr>
-				<th class="subtitle">공연 시간</th>
-				<td>18:00</td>
-			</tr>
-			<tr>
-				<th class="subtitle">공연 장소</th>
-				<td>샤롯데씨어터</td>
-			</tr>
-			<tr>
-				<th class="subtitle">출연진</th>
-				<td>옥주현, 윤공주, 윤형렬, 민영기</td>
-			</tr>
-			<tr>
-				<th class="subtitle">티켓 금액</th>
-				<td>130,000</td>
-			</tr>
-			<tr>
-				<th class="subtitle">함께 본 사람</th>
-				<td>친구</td>
-			</tr>
-		</table>
-	</div><!-- box2 -->	
-	<br><br><br><br><br>
-	<div>
-		<b>좌석 리뷰</b>
+	</form>
+	<div class="updateDeleteBtn">
+		<button type="submit" id="updateDeleteBtn" class="btn btn-info">리뷰 수정하기</button>
+		<button type="submit" id="updateDeleteBtn" class="btn btn-danger">리뷰 삭제하기</button>
 	</div>
-	<div>
-		<textarea id="review" rows="5" value="" readonly="readonly"></textarea>
-	</div>
-	<br><br>
-	<div>
-		<b>공연 상세 리뷰</b>
-	</div>
-	<div>
-		<textarea id="review" rows="10" value="" readonly="readonly"></textarea>
-	</div>
-</div>
+</div><!-- close #content -->
 <br><br><br><br><br><br><br><br>
 
 </body>

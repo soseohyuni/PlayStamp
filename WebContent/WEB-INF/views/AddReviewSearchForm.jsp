@@ -18,7 +18,17 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="css/header.css">
+	
 <style type="text/css">
+#wrapper { 
+	width: 100%; 
+	height: 100%; 
+	align-content: center; 
+}
+#wrapper .container{
+	width:1300px;
+}
 h3, div {
 	text-align: center;
 }
@@ -28,6 +38,10 @@ h5 {
 }
 
 #search {
+	width: 700px;
+	margin: 0 auto;
+}
+#nextBtn{
 	width: 700px;
 	margin: 0 auto;
 }
@@ -88,6 +102,10 @@ h5 {
 </script>
 </head>
 <body>
+<!-- 헤더 추가 -->
+<div>
+	<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
+</div>
 
 <div id="textbox">
 	<h5>
@@ -95,28 +113,30 @@ h5 {
 	</h5>
 	<hr>
 </div>
-
-<div>
-	<!-- 다음 단계로 이동 버튼 클릭 시 사용자가 선택한 공연코드를 가지고 좌석 리뷰 작성 페이지로 이동 -->
-	<form action="addreviewseatform.action" role="form" method="post">
-		<h3>관람하신 공연명을 검색하여 선택해주세요</h3>
-	    <br>
-		<br>
-		<input type="text" id="search" class="control" placeholder="공연을 검색해보세요!">
-		
-		<!-- 스크립트 단에 전달할 공연정보 hidden 속성으로 구성 -->
-		<!-- 스크립트에는 공연명만 전달하고, 공연코드는 사용자가 선택했을 때
-		     value2로 가지고 있던 공연코드를 다음 페이지에 submit 한다. -->
-		<c:forEach var="play" items="${list }">
-			<input type="hidden" id="play_nm" name="play_nm" value1="${play.play_nm }" value2="${play.play_cd }"/>
-			<input type="hidden" id="theater_cd" name="theater_cd" value="${play.theater_cd }"/>
-		</c:forEach>
-		<br><br>
-		<div>
-			<button type="submit" id="nextBtn" class="btn btn-primary btn-lg"
-			value="${play.play_cd }">다음 단계로</button>
-		</div>
-	</form>
+<br><br><br><br><br>
+<div id="wrapper">
+	<div class="container">
+			<!-- 다음 단계로 이동 버튼 클릭 시 사용자가 선택한 공연코드를 가지고 좌석 리뷰 작성 페이지로 이동 -->
+		<form action="addreviewseatform.action" role="form" method="post">
+			<h2>관람하신 공연명을 검색하여 선택해주세요</h2>
+		    <br>
+			<br>
+			<input type="text" id="search" class="form-control" placeholder="공연을 검색해보세요!">
+			
+			<!-- 스크립트 단에 전달할 공연정보 hidden 속성으로 구성 -->
+			<!-- 스크립트에는 공연명만 전달하고, 공연코드는 사용자가 선택했을 때
+			     value2로 가지고 있던 공연코드를 다음 페이지에 submit 한다. -->
+			<c:forEach var="play" items="${list }">
+				<input type="hidden" id="play_nm" name="play_nm" value1="${play.play_nm }" value2="${play.play_cd }"/>
+				<input type="hidden" id="theater_cd" name="theater_cd" value="${play.theater_cd }"/>
+			</c:forEach>
+			<br><br>
+			<div>
+				<button type="submit" id="nextBtn" class="btn btn-primary"
+				value="${play.play_cd }">다음 단계로</button>
+			</div>
+		</form>
+	</div>
 </div>
 
 </body>

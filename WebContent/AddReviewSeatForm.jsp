@@ -9,16 +9,15 @@
 <head>
 <meta charset="UTF-8">
 <title>AddReviewSeatForm.jsp</title>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link href="<%=cp%>/css/header.css" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <!-- 별점 기능을 위한 아이콘을 CDN 방식으로 추가 -->
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 <!-- 별점 이미지 파일을 다운받은 뒤 css폴더에 추가해 경로 지정 -->
 <link rel="stylesheet" href="<%=cp %>/css/fontawesome-stars.css">
 <script type="text/javascript" src="<%=cp%>/js/ajax.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <!-- 별점 콜백 함수 호출을 위해 js 폴더에 추가해 경로 지정 -->
 <script src="<%=cp %>/js/jquery.barrating.min.js"></script>
 <style type="text/css">
@@ -31,6 +30,7 @@
 	{
 		margin: 0 auto;
 		text-align: center;
+		width: 411px;
 	}
 	.reviewleft
 	{
@@ -136,12 +136,17 @@
 </script>
 </head>
 <body>
+	<!-- 헤더 추가 -->
+	<div>
+		<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
+	</div>
+	
 	<div id="textbox">
 		<h5>
 			<img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">리뷰 추가하기
 		</h5>
 		<hr>
-	</div>
+	</div><br><br><br>
 	<div class="center">
 		<h5>(이전페이지에서 넘어온 공연명)를 관람하셨군요!</h5>
 		<h5>플레이 스탬프에서 더 많은 정보들이 공유될 수 있도록, 관람하신 좌석에 대한 정보를 기입해주세요!</h5>
@@ -281,19 +286,19 @@
 				<b>좌석 리뷰</b>
 			</div>
 			<div class="center">
-				<textarea id="review" cols="55" rows="5" style="resize: none;"
+				<textarea id="review" cols="53" rows="5" style="resize: none;"
 				placeholder="좌석에 대한 자세한 리뷰를 입력해주세요."></textarea>
 			</div>
 			<br>
 			<br>
 			<br>
 			<div class="center">
-				<button type="submit" id="center" class="btn btn-primary">상세
+				<button type="submit" id="center" class="btn btn-info">상세
 					리뷰 작성하러 가기</button>
 			</div>
 		</form>
 	</div>
-
+<br><br><br><br>
 
 </body>
 </html>
