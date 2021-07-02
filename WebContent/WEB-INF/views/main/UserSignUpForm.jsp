@@ -28,7 +28,7 @@ String cp = request.getContextPath();
 
 		
 		<!-- 입력 폼 -->
-		<form id="form" action="completeSignup.action" class="container userSignUpForm" method="post" onsubmit="return checkForm()">
+		<form id="form" action="completesignup.action" class="container userSignUpForm" method="post" onsubmit="return checkForm()">
 			<div id="content">
 				<!-- 아이디/닉네임/이름/비밀번호 입력 및 확인 -->
 				<div class="joinInputBox">

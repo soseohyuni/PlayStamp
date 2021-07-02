@@ -18,9 +18,14 @@
 	</div>
 	
 	<div id="wrapper">
+		
 		<div class="container">
+		
 			<div id="pageTitle" class="container">나의 프로필</div>
+			
 			<div id="pForm" >
+			
+				<!-- left -->
 				<div id="profileImg">
 					<div id="userImg"><img class="profile" alt="" src="images/profile.png"></div>
 					<div>우수회원</div>
@@ -28,6 +33,7 @@
 					<div>320p</div>
 				</div>
 				
+				<!-- right -->
 				<div id="profileInput">
 					<table>
 					<tr>

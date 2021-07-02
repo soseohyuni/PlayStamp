@@ -26,6 +26,7 @@ $(function()
 		// 올바른 형식일 때
 		else {
 			$("#checkId").text("유효한 아이디 형식입니다.").css("color", "green");
+			idFlag = true;
 			
 			$("#idChkBtn").click(function() // 올바른 형식일 때 클릭해야 작동
 			{

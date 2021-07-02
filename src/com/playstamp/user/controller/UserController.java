@@ -79,7 +79,7 @@ public class UserController
 	}
 	
 	
-	@RequestMapping(value="/completeSignup.action", method=RequestMethod.POST)
+	@RequestMapping(value="/completesignup.action", method=RequestMethod.POST)
 	public String userInsert(@ModelAttribute("user") User user) throws ClassNotFoundException, SQLException 
 	{ 
 		String result = "";

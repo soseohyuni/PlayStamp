@@ -10,6 +10,14 @@
 <meta charset="UTF-8">
 <title>마이스페이스</title>
 <link href="<%=cp%>/css/myspace.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+<style type="text/css">
+	body { font-family: Georgia, "Malgun Gothic", serif; }
+</style>
 </head>
 <body>
 <!-- 메뉴 영역 -->
@@ -19,30 +27,40 @@
 	
 	<div id="wrapper">
 		<!-- 1층 -->
+		
 		<div id="firstArea" class="container">
 			<div id="profile" class="myspace">
-				<div class="profileBox"><img class="profile" alt="" src="images/profile.png"></div>
-				<div>
-					<div class="userNick">뮤뮤덕</div>
+				<div class="profileBox"><img class="profileImg" alt="" src="images/profile.png"></div>
+				<div class="userInfoBox">
+					<span class="sTitle">뮤뮤덕</span><span class="label label-primary">우수회원</span>
 					<div class="userMail">mumuu@naver.com</div>
-					<a href="myprofile.action"><div class="listArea">더보기</div></a>
+					<div class="listArea"><a href="myprofile.action">더보기</a></div>
 				</div>
 			</div>
+			
 			<div class="line"></div>
+			
 			<div id="listArea" class="myspace">
-				<div>
-					<div class="listArea">현재 내 포인트 ></div>
-					<div class="listArea"><a href="pointlist.action">320 P</a></div>
-				</div>
-				<div>
-					<div class="listArea">현재 내 캐시 ></div>
-					<div class="listArea"><a href="cashlist.action"">320 P</a></div>
+				<div id="list1" style="display: flex; align-items: center;">
+						<div class="listArea sTitle">현재 내 포인트 ></div>
+						<div class="listArea aTitle"><a href="cashlist.action"">320 P</a></div>
 				</div>
 			</div>
+			
 			<div class="line"></div>
-			<div id="addReview" class="myspace">
-				리뷰 추가하기
+			
+			<div id="listArea" class="myspace">
+					<div id="list1" style="display: flex; align-items: center;">
+						<div class="listArea sTitle">현재 내 캐시 ></div>
+						<div class="listArea aTitle"><a href="cashlist.action"">320 P</a></div>
+					</div>
 			</div>
+		</div>
+		
+		<!-- 리뷰 추가하기 -->
+		<div id="addReview" class="container">
+				<button type="button" class="btn btn-primary btn-lg btn-block"
+				style="margin-bottom: 50px;">+ 리뷰 추가하기</button>
 		</div>
 		
 		<!-- 2층 -->
@@ -50,11 +68,11 @@
 			<div class="outBox">
 				<div id="box1" class="inBox inBox1">
 					<div class="sTitle"><a>나의 관람 리뷰></a></div>
-					<div class="counting"><a href="#">72개</a></div>
+					<div class="aTitle"><a href="#">72개</a></div>
 				</div>
 				<div id="box2" class="inBox inBox2">
 					<div class="sTitle"><a>나의 찜리스트></a></div>
-					<div class="counting"><a href="#">24개</a></div>
+					<div class="aTitle"><a href="#">24개</a></div>
 				</div>
 			</div>
 			<div class="outBox">
@@ -67,9 +85,6 @@
 				</div>
 			</div>
 		</div>
-		
-		<!-- 3층 -->
-		<div id="thirdArea" class="container">나의 관람 캘린더</div>
 		
 	</div>
 	

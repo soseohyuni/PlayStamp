@@ -9,12 +9,46 @@
 <head>
 <meta charset="UTF-8">
 <title>HOME</title>
+<link href="<%=cp%>/css/myspace.css" rel="stylesheet">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 </head>
 <body>
 
 <!-- 메뉴 영역 -->
 	<div>
 		<c:import url="header.jsp"></c:import>
+	</div>
+	
+	
+	<div id="wrapper">
+		<div class="container">
+		
+			<div id="pageTitle" class="container">리뷰 리뷰</div>
+			<div class="row">
+				<div class="col-lg-3 col-xs-6 col-md-3">
+					<a href="#" class="thumbnail">
+					<img src="<%=cp%>/images/wicked.jpg" alt="...">
+				    </a>
+				</div>
+				<div class="col-lg-3 col-xs-6 col-md-3">
+					<a href="#" class="thumbnail">
+					<img src="<%=cp%>/images/dog.jpg" alt="...">
+				    </a>
+				</div>
+				<div class="col-lg-3 col-xs-6 col-md-3">
+					<a href="#" class="thumbnail">
+					<img src="<%=cp%>/images/redbook.jpg" alt="...">
+				    </a>
+				</div>
+				<div class="col-lg-3 col-xs-6 col-md-3">
+					<a href="#" class="thumbnail">
+					<img src="<%=cp%>/images/wicked.jpg" alt="...">
+				    </a>
+				</div>
+			</div>
+		</div>
 	</div>
 
 </body>
