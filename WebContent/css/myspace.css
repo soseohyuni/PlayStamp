@@ -1,0 +1,127 @@
+@charset "UTF-8";
+
+#wrapper { 
+	width: 100%; 
+	height: 100%; 
+	align-content: center; 
+
+}
+#wrapper .container{
+	width:1300px;
+}
+
+
+#profile { width: 33%; }
+#listArea {  width: 33%; text-align: center;}
+#addReview { width: 33%; text-align: center;}
+
+#firstArea, #secondArea, #thirdArea {
+	display: flex; 
+	align-items: center; 
+	padding-bottom: 50px; 
+}
+
+#container .myspace { flex: 1; }
+
+.myspace { padding: 20px;}
+
+.myspace, .listArea {
+	width: 100%; 
+	display: inline-block; 
+	align-items: center;
+}
+
+.line {
+	border-left: 1px solid #999; 
+	width: 0.1px; 
+	height: 50px;
+}
+
+#secondArea .outBox{width: 100%; padding-bottom: 50px;}
+#secondArea > div:first-child {margin-right: 30px;}
+
+.inBox { 
+	background-color: #999;  
+	height: 100px; 
+	border-radius: 20px; 
+	background-color: #fafafa; 
+	padding: 20px;
+}
+
+
+.inBox1 { margin-bottom: 30px; }
+.counting { 
+	font-size: 28px; 
+	font-weight: bold; 
+	text-align: right;
+}
+
+.bTitle { 
+	font-size: 28px; 
+	font-weight: bold; 
+	text-align: right; 
+}
+
+.mTitle{ 
+	line-height: 60px; 
+	float: left; 
+	width:50%; 
+	font-size: 22px;  
+	font-weight: bold; 
+	text-align: left;
+}
+
+.sTitle{ font-weight: bold; }
+
+.grade {
+	line-height: 60px; 
+	float: right; 
+	width:50%; 
+	font-size: 22px; 
+	text-align: right;
+}
+
+.profileBox {
+   width: 80px;
+   height: 80px; 
+   border-radius: 70%;
+   overflow: hidden;
+   border: 2px solid blue;
+}
+.profile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+
+/*		나의 프로필		*/
+
+#pageTitle
+{
+	font-size: 24px;
+	margin: 48px 0 32px 0;
+	font-weight: bold;
+}
+
+/**/
+
+
+#cashTable {
+	margin-top: 30px;
+}
+
+#userImg {
+	width: 200px;
+   height: 200px; 
+   border-radius: 70%;
+   overflow: hidden;
+   border: 4px solid blue;
+}
+
+#profileImg { width: 40%; }
+#profileInput { width: 60%;}
+
+#pForm {display: flex;}
+##pForm > div {flex: 1;}

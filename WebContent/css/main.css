@@ -2,7 +2,7 @@
 
 body, p, div, span, input, table, th, td, select
 {
-	font-size: 18px;
+	font-size: 18pt;
 	font-family: 맑은 고딕;
 	color: #343;
 }
@@ -44,3 +44,4 @@ body, p, div, span, input, table, th, td, select
 	color: orange;
 	background-color: #778877;
 }
+

@@ -8,7 +8,7 @@ public class MSeatDTO
 	{
 		this.viewrating = viewrating;
 		this.lightrating = lightrating;
-		this.soundrating = soundrating;dfvds
+		this.soundrating = soundrating;
 		this.seatrating = seatrating;
 	}
 
