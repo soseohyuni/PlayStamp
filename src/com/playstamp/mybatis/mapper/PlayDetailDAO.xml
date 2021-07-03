@@ -31,13 +31,13 @@
 	</select>
 	
 	<select id="getPlayDetail" resultType="com.playstamp.playdetail.PlayDetail">
-		SELECT PLAY_CD, PLAY_NM, PLAY_START, PLAY_END, THEATER, PLAY_CAST
+		SELECT PLAY_CD, PLAY_NM, PLAY_START, PLAY_END, THEATER, PLAY_CAST, PLAY_IMG
 		FROM VIEW_PLAYDETAIL
 		WHERE PLAY_CD=#{play_cd}
 	</select>
 	
 	<select id="getPlayRevPre" resultType="com.playstamp.playdetail.PlayRevPre" parameterType="string">
-		SELECT PLAY_CD, PLAY_IMG, RATING_CD, PLAY_NM, CONTENTS, LCOUNT, CCOUNT, USER_NICK
+		SELECT PLAY_CD, PLAY_IMG, RATING_CD, PLAY_NM, CONTENTS, LCOUNT, CCOUNT, USER_NICK, TITLE
 		FROM VIEW_PLAYREV
 		WHERE PLAY_CD=#{play_cd}
 	</select>

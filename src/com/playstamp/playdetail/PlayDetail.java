@@ -2,7 +2,7 @@ package com.playstamp.playdetail;
 
 public class PlayDetail
 {
-	private String play_cd, play_nm, play_start, play_end, theater, play_cast;
+	private String play_cd, play_nm, play_start, play_end, theater, play_cast, play_img;
 
 	public String getPlay_cd()
 	{
@@ -63,4 +63,15 @@ public class PlayDetail
 	{
 		this.play_cast = play_cast;
 	}
+
+	public String getPlay_img()
+	{
+		return play_img;
+	}
+
+	public void setPlay_img(String play_img)
+	{
+		this.play_img = play_img;
+	}
+
 }

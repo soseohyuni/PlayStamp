@@ -2,7 +2,7 @@ package com.playstamp.playdetail;
 
 public class PlayRevPre
 {
-	private String play_cd, play_img, rating_cd, play_nm, contents, lcount, ccount, user_nick;
+	private String play_cd, play_img, rating_cd, play_nm, contents, lcount, ccount, user_nick, title;
 
 	public String getPlay_cd()
 	{
@@ -82,5 +82,15 @@ public class PlayRevPre
 	public void setUser_nick(String user_nick)
 	{
 		this.user_nick = user_nick;
+	}
+
+	public String getTitle()
+	{
+		return title;
+	}
+
+	public void setTitle(String title)
+	{
+		this.title = title;
 	}
 }

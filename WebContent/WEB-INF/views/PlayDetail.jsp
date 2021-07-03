@@ -34,6 +34,8 @@
 	
 	#table { margin: auto; width: 80%;}
 	
+	#seatRevTbl { text-align: center;}
+	
 </style>
 <script type="text/javascript">
 	$(function()
@@ -70,14 +72,15 @@
 				<c:forEach var="playDetail" items="${playDetailList }">
 					<tr>
 						<td rowspan="4">
-						<div id="img"><img src="http://www.kopis.or.kr/upload/pfmPoster/PF_PF174380_210507_102341.gif" style="height: 240px;"></div>
+						<div id="img"><img src="${playDetail.play_img }" style="height: 240px;"></div>
 						</td>
 						<td>공연명</td>
 						<td><input type="text" disabled="disabled" value="${playDetail.play_nm}" }></td>
 					</tr>
 					<tr>
 						<td>공연기간</td>
-						<td><input type="text" disabled="disabled" value="${playDetail.play_start}"></td>
+						<td><input type="text" disabled="disabled" value="${playDetail.play_start} ~ ${playDetail.play_end}"
+						style="width: 200px;"></td>
 					</tr>
 					<tr>
 						<td>공연장소</td>
@@ -110,7 +113,24 @@
 				</ul>
 				<div class="tab-content">
 					  <div class="tab-pane fade show active" id="playReview">
-					  	<table>
+					  	<table class="table table-borderless">
+					  		<c:forEach var="playRevPre" items="${playRevPreList }">
+						  		<tr>
+									<td rowspan="2"><img src="${playRevPre.play_img}" width="100px"></td>
+									<td colspan="3">${playRevPre.title }</td>
+						  		</tr>
+						  		<tr>
+						  			<td colspan="3">${playRevPre.contents}</td>
+						  		</tr>
+						  		<tr>
+						  			<td>${playRevPre.rating_cd}</td>
+						  			<td>${playRevPre.lcount}</td>
+						  			<td>${playRevPre.ccount}</td>
+						  			<td>${playRevPre.user_nick}</td>
+						  		</tr>	
+						  	</c:forEach>	  		
+					  	</table>
+					  	<%-- <table>
 					  		<tr>
 					  			<th>공연이미지</th>
 					  			<th>평점</th>
@@ -131,10 +151,38 @@
 					  				<td>${playRevPre.user_nick}</td>					  				
 					  			</tr>
 					    	</c:forEach>
-					  	</table>
+					  	</table> --%>
 					  </div>
 					  <div class="tab-pane fade" id="seatReview">
-					    <table>
+					  	<table class="table table-condensed id="seatRevTbl">
+					  		<tr>
+					  			<td rowspan="2"></td>
+					  			<td rowspan="2">유저 아이콘 들어갈 자리</td>
+					  			<td><input type="text" value="1층 B구역 13열 12번" disabled="disabled"></td>
+					  		</tr>
+					  		<tr>
+					  			<td><input type="text" value="마리앙투아네트" disabled="disabled">
+					  			<input type="text" value="2021.07.13" disabled="disabled"></td>
+					  		</tr>
+					  		<tr>
+					  			<td>시야</td>
+					  			<td>★★★★★</td>
+					  			<td rowspan="4"><textarea rows="7%" cols="50%"></textarea></td>
+					  		</tr>
+					  		<tr>
+					  			<td>좌석</td>
+					  			<td>★★★★★</td>
+					  		</tr>
+					  		<tr>
+					  			<td>조명</td>
+					  			<td>★★★★★</td>
+					  		</tr>
+					  		<tr>
+					  			<td>음향</td>
+					  			<td>★★★★★</td>
+					  		</tr>  		
+					  	</table>
+					    <%-- <table>
 					  		<tr>
 					  			<th>층</th>
 					  			<th>구역</th>
@@ -163,7 +211,7 @@
 					  				<td>${seatRev.sound_rating}</td>					  				
 					  			</tr>
 					    	</c:forEach>
-					  	</table>
+					  	</table> --%>
 					  </div>
 				</div>
 			</div>
