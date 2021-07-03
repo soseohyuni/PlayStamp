@@ -13,15 +13,24 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+
 </head>
 <body>
 
-<!-- 메뉴 영역 -->
+	<!-- 메뉴 영역 -->
 	<div>
 		<c:import url="header.jsp"></c:import>
 	</div>
 	
+	<%
+		Object user = session.getAttribute("id");
+		String userId = (String)user;
+		
+		Object nick = request.getAttribute("userNick");
+		String userNick = (String)nick;
 	
+	%>
 	<div id="wrapper">
 	
 		<div class="container">
@@ -32,7 +41,7 @@
 		  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
 		</div>
 		
-			<div id="pageTitle" class="container">리뷰 리뷰</div>
+			<!-- <div id="pageTitle" class="container">제목제목</div> -->
 			<div class="row">
 				<div class="col-lg-3 col-xs-6 col-md-3">
 					<a href="#" class="thumbnail">

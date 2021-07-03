@@ -17,16 +17,16 @@
 
 <script type="text/javascript">
 
-	function loginCheck()
+	var msg = "${msg}";
+	
+	$(function ()
 	{
-		// 관리자 체크가 안되어있을 때는 체크박스를 변경하고 submit
-		if(!$("#admin").prop("checked"))
-		{
-			$("#admin").val(0);
-			$("#admin").prop("checked", true);
-			$("#loginForm").submit();
-		}
-	}
+		if(msg=="fail")
+			$("#loginFail").text("아이디 또는 비밀번호가 잘못됐습니다.").css("color", "red");
+		
+		if(msg=="nonUser")
+			alert("로그인 후 이용 가능한 서비스입니다.");
+	});
 
 </script>
 </head>
@@ -38,7 +38,7 @@
     	<br><img onclick="location.href='main.action'" src="images/logo_typo.svg" style="cursor:pointer; width:300px;"><br> 
     </div>
     
-    <form action="login.action" id="loginForm" method="post" onsubmit="return loginCheck()">
+    <form action="login.action" id="loginForm" method="post">
 	    <div class="mt-4 text-center">
 	        <h6 style="font-weight: bold;">로그인 하기</h6>
 	        <div class="mt-3 inputbox"> 
@@ -46,6 +46,7 @@
 	        </div>
 	        <div class="inputbox"> 
 	        	<input type="text" class="form-control" name="userPw" id="userPw" placeholder="패스워드" required="required"> <i class="fa fa-lock"></i> 
+	        	<span id="loginFail"></span>
 	        </div>
 	    </div>
 	    <div class="d-flex justify-content-between">

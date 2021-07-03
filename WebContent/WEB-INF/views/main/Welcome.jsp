@@ -9,12 +9,28 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="<%=cp%>/css/myspace.css" rel="stylesheet">
 </head>
 <body>
-<h1>${user.userNick }님 환영합니다!</h1>
-<h2>홈으로 안내하는 버튼</h2>
 
-
-<h2>${userNick }님</h2>
+	<!-- 메뉴 영역 -->
+	<div>
+		<c:import url="header.jsp"></c:import>
+	</div>
+	
+	<div id="wrapper">
+		<div class="container">
+			<div class="dropText">
+				<h4>
+					<mark><b>회원가입이 완료됐습니다!<br>
+					로그인 후 플레이 스탬프의 다양한 서비스를 경험해보세요!:></mark>
+				</h4>
+			<a href="signinform.action">
+				<button>로그인하기</button>
+			</a>
+			</div>
+		</div>
+	</div>
+	
 </body>
 </html>

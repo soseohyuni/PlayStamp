@@ -26,7 +26,7 @@ body { background-color: #f2f2f2; }
 }
 
 #content, #termsAgree {
-    width: 460px;
+    width: 540px;
     margin: 0 auto;
 }
 
@@ -40,8 +40,11 @@ ul {
     padding-inline-start: 0;
 }
 
+input {height: 56px !important; width: 100%;}
 
-input
+#chk { width:20px !important;}
+
+/* input
 {
 	display: block;
     position: relative;
@@ -51,7 +54,7 @@ input
     padding: 8px 100px 10px 14px;
     background: #fff;
     box-sizing: border-box;
-}
+} */
 
 button
 {

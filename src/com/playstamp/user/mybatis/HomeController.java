@@ -1,4 +1,4 @@
-package com.playstamp.user.controller;
+package com.playstamp.user.mybatis;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

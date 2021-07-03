@@ -3,6 +3,13 @@
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
+<%
+		Object user = session.getAttribute("id");
+		String userId = (String)user;
+		
+		Object nick = session.getAttribute("nick");
+		String userNick = (String)nick;
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,24 +18,36 @@
 <!-- Favicon -->
 <link rel="icon" type="image/x-icon" href="bootstrap/assets/favicon.ico" />
 
+<!-- <link rel="stylesheet" href="css/bootstrap.min.css">-->
 <link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
-<link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-<script type="text/javascript"
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+
 </head>
 <body>
 
-<div class="super_container">
 
 <!-- header -->
 <header class="header">
+
+
+		<%-- 
+		
+		<%if(session_id == null) {%>		
+			<!-- 로그인 이전 화면 -->
+			<label>아이디</label>
+			<input type='text' size='7' name='mid'/>
+			<label>암호</label>
+			<input type='password' size='7' name='pwd'/>
+			<input type='button' value='로그인' id='btnLogin'/>
+		<%}else{ %>	
+			<!-- 로그인 이후 화면 -->
+			<span><%=(session_id == null)? "손님" : session_id %> 방가...방가...</span>
+			<input type='button' value='로그아웃' id='btnLogout'/>
+		<%} %> 
+		
+		--%>
+
 
 	<!-- Top Bar -->
 	<div class="top_bar">
@@ -36,13 +55,22 @@
 			<div class="row">
 				<div class="col d-flex flex-row">
 					<div class="top_bar_content ml-auto">
-						<div class="top_bar_user">
+					<div class="top_bar_user">
+						<%if(userId == null) {%>
 							<div class="bar_line">
 								<a href="signupform.action">회원가입</a>
 							</div>
 							<div class="bar_line">
 								<a href="signinform.action">로그인</a>
 							</div>
+						<%} else{ %>
+							<div class="bar_line">
+								<a href="myspace.action"><b><%= userNick %></b>님</a>
+							</div>
+							<div class="bar_line">
+								<a href="logout.action">로그아웃</a>
+							</div>
+						<%} %>
 							<div>
 								<a href="#">고객센터</a>
 							</div>
@@ -69,8 +97,10 @@
 				<div class="col-lg-5 order-2">
 					<div class="main_nav_menu">
 						<ul class="standard_dropdown main_nav_dropdown">
+						
 							<li><a href="myspace.action">마이스페이스</a></li>
-							<li><a href="#">공연정보</a></li>
+							
+							<li><a href="musicallist.action">공연정보</a></li>
 							<li><a href="blog.html">좌석정보</a></li>
 							<li><a href="contact.html">티켓 양도</a></li>
 						</ul>
@@ -98,7 +128,6 @@
 		</div>
 	</div>
 	</header>
-</div>
 
 </body>
 </html>

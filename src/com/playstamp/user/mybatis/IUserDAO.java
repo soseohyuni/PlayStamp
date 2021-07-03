@@ -1,4 +1,4 @@
-package com.playstamp.user.controller;
+package com.playstamp.user.mybatis;
 
 import java.sql.SQLException;
 import java.util.List;

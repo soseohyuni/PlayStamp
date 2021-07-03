@@ -2,20 +2,30 @@ var idFlag = false;
 var pwFlag = false;
 var mailFlag = false;
 
+
 function checkForm()
 {
-    if(idFlag==false) {
+	if(idFlag==false) {
 		alert("아이디를 다시 확인 해주세요.");
         return false;
     }
+	 
+	if(!$("#chkAll").prop("checked"))
+	{
+		$("#terms").text("체크해야 가입이 가넝");
+		return false;
+	}
 }
 
 $(function()
-{
+{	
+	//-- 아이디 체크 시작
 	$("#userId").on("input", function()
 	{	
 		var idRegex = /^[A-Za-z0-9]{4,12}$/;
 		var userId = $("#userId").val();
+		
+		alert("dd");
 		
 		// 잘못된 형식일 때
 		if(!idRegex.test(userId)){
@@ -41,6 +51,7 @@ $(function()
    					  {
    						  $("#idChkBtn").hide();
    						  $("#userId").css("border-color", "blue");
+   						  alert($("#checkId").val());
    						  idFlag = true;
    					  }
    					  else if(data=="NO")
@@ -59,8 +70,10 @@ $(function()
 			});//-- 아이디 중복 체크 끝
 			
 		}//-- else 끝
+		
 
 	});//-- id 체크 끝
+	
 	
 	//-- 이메일 체크 시작
 	$("#userMail").on("input", function()
@@ -82,17 +95,20 @@ $(function()
 		
 		if($('#userPw').val() != $('#userPw2').val())
 		{
-			if($('#userPw2').val()!='')
-			{
-				$("#checkPw").text("유효한 아이디 형식입니다.").css("color", "green");
-			    
-				$('#userPw2').val('');
-				$('#userPw2').focus();
-				$('#userPw2').css("border-color", "red");
-				
-				pwFlag = false;
-		    }
+			$("#checkPw").text("비밀번호가 일치하지 않습니다.").css("color", "red");
+		    
+			$('#userPw2').val('');
+			$('#userPw2').focus();
+			$('#userPw2').css("border-color", "red");
+			
+			pwFlag = false;
 		}
+		else if($('#userPw').val() == $('#userPw2').val())
+		{
+			$("#checkPw").text("비밀번호가 일치합니다.").css("color", "green");
+			pwFlag = true;
+		}
+		
 	 }); //-- 비밀번호 체크 끝
 
 
