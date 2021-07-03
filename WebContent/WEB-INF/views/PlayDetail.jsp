@@ -19,18 +19,21 @@
 	
 	#playTable td {	width:100px; height:20px;
 					text-align: center;}
-	
-	#playTable { width:60%; margin: auto; }
-	
+		
 	#tab { width: 60%; margin: auto; }
 	
 	.tab-content { border: 0.3px solid gray; }
 	
-	#pageTitle { float: left; }
+	#pageTitle { float: left; margin: auto;}
 	
 	#backList { float: right;}
 	
-	#container { width: 1300px;}
+	.container { width: 1300px;}
+	
+	#header { margin: auto;}
+	
+	#table { margin: auto; width: 80%;}
+	
 </style>
 <script type="text/javascript">
 	$(function()
@@ -44,13 +47,14 @@
 </head>
 
 <body>
+<div class="container">
 <!-- 상단바 -->
-	<div>
+	<div id="header">
 		<c:import url="/WEB-INF/views/header.jsp"></c:import>
 	</div>
 <!-- 내용 출력 시작 -->	
-	<div id="wrapper" style="width: 100%;">
-		<div class="container">
+	<div id="wrapper">
+		<div>
 		
 		<!-- 메뉴 -->
 			<div id="pageTitle" class="container">공연 상세 정보
@@ -61,34 +65,36 @@
 			
 			
 		<!-- 공연 상세 출력 -->
-			<div id="top">
+			<div id="table">
 				<table class="table table-borderless" id="playTable">
+				<c:forEach var="playDetail" items="${playDetailList }">
 					<tr>
-						<td colspan="3" rowspan="5">
+						<td rowspan="4">
 						<div id="img"><img src="http://www.kopis.or.kr/upload/pfmPoster/PF_PF174380_210507_102341.gif" style="height: 240px;"></div>
 						</td>
 						<td>공연명</td>
-						<td><input type="text" disabled="disabled"></td>
+						<td><input type="text" disabled="disabled" value="${playDetail.play_nm}" }></td>
 					</tr>
 					<tr>
 						<td>공연기간</td>
-						<td><input type="text" disabled="disabled"></td>
+						<td><input type="text" disabled="disabled" value="${playDetail.play_start}"></td>
 					</tr>
 					<tr>
 						<td>공연장소</td>
-						<td><input type="text" disabled="disabled"></td>
+						<td><input type="text" disabled="disabled" value="${playDetail.theater}"></td>
 					</tr>
 					<tr>
 						<td>출연진</td>
-						<td><input type="text" disabled="disabled"></td>
+						<td><input type="text" disabled="disabled" value="${playDetail.play_cast}"
+						style="width: 500px;"></td>
 					</tr>
+
 					<tr>
-						<td colspan="2">찜리스트에 저장 ♡</td>
+						<td>★★★★★</td>
+						<td></td>
+						<td>찜리스트에 저장 ♡</td>
 					</tr>
-					<tr>
-						<td colspan="3">★★★★★</td>
-						<td colspan="2"></td>
-					</tr>			
+				</c:forEach>			
 				</table>
 			</div>
 			
@@ -104,14 +110,65 @@
 				</ul>
 				<div class="tab-content">
 					  <div class="tab-pane fade show active" id="playReview">
-					    <p>페이징 처리 된 공연 리뷰가 출력될 화면입니당동.</p><!-- 여기에 페이징 처리 된 리뷰 출력 -->
+					  	<table>
+					  		<tr>
+					  			<th>공연이미지</th>
+					  			<th>평점</th>
+					  			<th>공연명</th>
+					  			<th>리뷰내용</th>
+					  			<th>좋아요수</th>
+					  			<th>댓글수</th>
+					  			<th>닉네임</th>
+					  		</tr>
+					  		<c:forEach var="playRevPre" items="${playRevPreList }">
+					    		<tr>
+					  				<td><img src="${playRevPre.play_img}"></td>
+					  				<td>${playRevPre.rating_cd}</td>
+					  				<td>${playRevPre.play_nm}</td>
+					  				<td>${playRevPre.contents}</td>
+					  				<td>${playRevPre.lcount}</td>
+					  				<td>${playRevPre.ccount}</td>
+					  				<td>${playRevPre.user_nick}</td>					  				
+					  			</tr>
+					    	</c:forEach>
+					  	</table>
 					  </div>
 					  <div class="tab-pane fade" id="seatReview">
-					    <p>페이징 처리 된 좌석 리뷰가 출력될 화면입니당동.</p><!-- 여기에 페이징 처리 된 리뷰 출력 -->
+					    <table>
+					  		<tr>
+					  			<th>층</th>
+					  			<th>구역</th>
+					  			<th>열</th>
+					  			<th>번호</th>
+					  			<th>공연명</th>
+					  			<th>공연일</th>
+					  			<th>내용</th>
+					  			<th>시야평점</th>
+					  			<th>좌석평점</th>
+					  			<th>조명평점</th>
+					  			<th>음향평점</th>
+					  		</tr>
+					  		<c:forEach var="seatRev" items="${seatRevList }">
+					    		<tr>
+					  				<td>${seatRev.seat_flow}</td>
+					  				<td>${seatRev.seat_area}</td>
+					  				<td>${seatRev.seat_line}</td>
+					  				<td>${seatRev.seat_num}</td>
+					  				<td>${seatRev.play_nm}</td>
+					  				<td>${seatRev.play_dt}</td>
+					  				<td>${seatRev.seat_rev}</td>					  				
+					  				<td>${seatRev.view_rating}</td>					  				
+					  				<td>${seatRev.seat_rating}</td>					  				
+					  				<td>${seatRev.light_rating}</td>					  				
+					  				<td>${seatRev.sound_rating}</td>					  				
+					  			</tr>
+					    	</c:forEach>
+					  	</table>
 					  </div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 </body>
 </html>

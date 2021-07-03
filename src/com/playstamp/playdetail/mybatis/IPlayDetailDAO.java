@@ -11,11 +11,11 @@ public interface IPlayDetailDAO
 {
 	// 5대 공연 좌석 리뷰인지 체크하는 메소드
 	//(일종의 DelCheck 처럼 참조관계를 확인하는 메소드로, 0보다 클 경우 5대 공연 좌석 리뷰임을 의미)
-	public int getMseatCheck(String play_cd) throws SQLException;
+	public Integer getMseatCheck(String play_cd) throws SQLException;
 
 	// 일반 공연 좌석 리뷰인지 체크하는 메소드
 	// (상동)
-	public int getSeatCheck(String play_cd) throws SQLException;
+	public Integer getSeatCheck(String play_cd) throws SQLException;
 	
 	// getSeatCheck, getMseatCheck 값을 바탕으로
 	// 해당 공연이 5대 공연장에서 진행될 경우, 5대 공연장  테이블을 조회해좌석 리뷰를 보여주는 메소드

@@ -61,7 +61,7 @@
 				<!-- Logo -->
 				<div class="col-lg-2 col-sm-3 col-3 order-1 logo_container">
 					<div class="logo_container1">
-						<a href=""><img alt="로고" src="<%=cp%>/images/logo_typo.svg"></a>
+						<a href="main.action"><img alt="로고" src="<%=cp%>/images/logo_typo.svg"></a>
 					</div>
 				</div>
 
