@@ -11,7 +11,7 @@
 
 	<!-- ① 기존 코드 -->
 	<!-- ※ Annotation 표기법으로 Controller 객체를 등록한다. -->
-    <context:component-scan base-package="com.playstamp" />
+    <context:component-scan base-package="com.playstamp.*" />
     
 	<!-- ③ mybatis 설정 중 ... dataSource 를 등록하는 과정에서 생겨나는 추가 코드 -->
 	<!-- ※ mybatis 를 사용하기 위한 환경 설정 추가 2 → SimpleDriverDataSource -->

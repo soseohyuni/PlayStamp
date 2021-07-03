@@ -15,6 +15,6 @@
 <h2>홈으로 안내하는 버튼</h2>
 
 
-<h2>${name }</h2>
+<h2>${userNick }님</h2>
 </body>
 </html>

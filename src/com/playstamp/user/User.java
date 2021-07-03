@@ -4,6 +4,9 @@
 */
 package com.playstamp.user;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class User
 {
 	private String userId, userNm, userTel, userPw

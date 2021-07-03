@@ -26,55 +26,75 @@
 			<div id="pForm" >
 			
 				<!-- left -->
-				<div id="profileImg">
-					<div id="userImg"><img class="profile" alt="" src="images/profile.png"></div>
-					<div>우수회원</div>
-					<div>현재 포인트</div>
-					<div>320p</div>
+				<div id="profileImg profileImg-b">
+					<div class="userInfo" id="userImg"><img class="profileImg"  alt="" src="images/profile.png"></div>
+					<div class="userInfo">우수회원</div>
+					<div class="userInfo sTitle">현재 포인트</div>
+					<div class="userInfo aTitle">320p</div>
 				</div>
 				
 				<!-- right -->
 				<div id="profileInput">
-					<table>
-					<tr>
-						<th>닉네임 *</th>
-						<td><input value="뮤뮤덕"></td>
-					</tr>
-					<tr>
-						<th>아이디</th>
-						<td><input></td>
-					</tr>
-					<tr>
-						<th>이메일</th>
-						<td><input></td>
-					</tr>
-					<tr>
-						<th>이름</th>
-						<td><input></td>
-					</tr>
-					<tr>
-						<th>핸드폰번호</th>
-						<td><input></td>
-					</tr>
-					<tr>
-						<th>비밀번호</th>
-						<td><input></td>
-					</tr>
-					<tr>
-						<th>비밀번호 확인</th>
-						<td><input></td>
-					</tr>
-					<tr>
-						<td><button>수정하기</button><td>
-					</tr>
-					</table>
-					</div>
+				
+					<form class="form-horizontal">
+						  <div class="form-group">
+						    <label for="inputEmail3" class="col-sm-4 control-label">닉네임</label>
+						    <div class="col-sm-10">
+						      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+						    </div>
+						  </div>
+						  <div class="form-group">
+						    <label for="inputPassword3" class="col-sm-4 control-label">아이디</label>
+						    <div class="col-sm-10">
+						      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+						    </div>
+						  </div>
+						  <div class="form-group">
+						    <label for="inputPassword3" class="col-sm-4 control-label">이름</label>
+						    <div class="col-sm-10">
+						      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+						    </div>
+						  </div>
+						  <div class="form-group">
+						    <label for="inputPassword3" class="col-sm-4 control-label">이메일</label>
+						    <div class="col-sm-10">
+						      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+						    </div>
+						  </div>
+						  <div class="form-group">
+						    <label for="inputPassword3" class="col-sm-4 control-label">전화번호</label>
+						    <div class="col-sm-10">
+						      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+						    </div>
+						  </div>
+						  <div class="form-group">
+						    <label for="inputPassword3" class="col-sm-4 control-label">비밀번호</label>
+						    <div class="col-sm-10">
+						      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+						    </div>
+						    <div class="form-group">
+							    <label for="inputPassword3" class="col-sm-4 control-label">비밀번호 확인</label>
+							    <div class="col-sm-10">
+							      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+							    </div>
+						  	</div>
+						  </div>
+						  
+						  
+						  <div class="form-group">
+						    <div class="col-sm-offset-2 col-sm-10">
+						      <button type="button" class="btn btn-primary btn-lg btn-block"
+							style="margin-top: 50px;">정보 수정하기</button>
+						    </div>
+						  </div>
+						</form>
+				
 				</div>
-			
-			<hr>
-			<a href="dropform.action">탈퇴하기</a>
-			
+				
 			</div>
+			<hr>
+				<a href="dropform.action">탈퇴하기</a>
+		</div>
 	</div>
 	
 </body>

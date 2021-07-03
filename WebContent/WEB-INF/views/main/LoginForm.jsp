@@ -17,14 +17,16 @@
 
 <script type="text/javascript">
 
-	$(function ()
+	function loginCheck()
 	{
-		$("#login").click(function()
+		// 관리자 체크가 안되어있을 때는 체크박스를 변경하고 submit
+		if(!$("#admin").prop("checked"))
 		{
-			$("#loginForm").attr("action", "/login.action");
-	        $("#loginForm").submit();
-		});
-	});
+			$("#admin").val(0);
+			$("#admin").prop("checked", true);
+			$("#loginForm").submit();
+		}
+	}
 
 </script>
 </head>
@@ -36,21 +38,21 @@
     	<br><img onclick="location.href='main.action'" src="images/logo_typo.svg" style="cursor:pointer; width:300px;"><br> 
     </div>
     
-    <form id="loginForm" method="post">
+    <form action="login.action" id="loginForm" method="post" onsubmit="return loginCheck()">
 	    <div class="mt-4 text-center">
 	        <h6 style="font-weight: bold;">로그인 하기</h6>
 	        <div class="mt-3 inputbox"> 
-	        	<input type="text" class="form-control" name="userId" placeholder="아이디"> <i class="fa fa-user"></i> 
+	        	<input type="text" class="form-control" name="userId" id="userId"placeholder="아이디" required="required"> <i class="fa fa-user"></i> 
 	        </div>
 	        <div class="inputbox"> 
-	        	<input type="text" class="form-control" name="userPw" placeholder="패스워드"> <i class="fa fa-lock"></i> 
+	        	<input type="text" class="form-control" name="userPw" id="userPw" placeholder="패스워드" required="required"> <i class="fa fa-lock"></i> 
 	        </div>
 	    </div>
 	    <div class="d-flex justify-content-between">
-	        <div class="form-check"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"> <label class="form-check-label" for="flexCheckDefault"> 관리자 </label> </div>
+	        <div class="form-check"><input type="checkbox" id="admin" name="admin" value="1"><label for="admin">관리자</label></div>
 	    </div>
 	    <div class="mt-2"> 
-	    	<input type="button" class="btn btn-primary btn-block" id="login">로그인
+	    	<button type="submit" class="btn btn-primary btn-block" id="login">로그인</button>
 	    </div>
 	    <div class="mt-2"> 
 	    	<button class="btn btn-primary btn-block" id="naverLogin">

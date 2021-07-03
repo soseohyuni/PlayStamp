@@ -57,7 +57,7 @@
 	<div class="header_main">
 		<div class="container">
 			<div class="row">
-
+				
 				<!-- Logo -->
 				<div class="col-lg-2 order-1 logo_container">
 					<div class="logo_container1">

@@ -23,7 +23,14 @@
 	
 	
 	<div id="wrapper">
+	
 		<div class="container">
+		
+		<div class="jumbotron" style="margin: 0 0 40px 0 !important;">
+		  <h1>Hello, world!</h1>
+		  <p>...</p>
+		  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+		</div>
 		
 			<div id="pageTitle" class="container">리뷰 리뷰</div>
 			<div class="row">

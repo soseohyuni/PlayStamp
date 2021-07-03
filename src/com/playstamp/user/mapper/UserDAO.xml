@@ -31,11 +31,11 @@
 	</insert>
 	
 	
-	<!-- 로그인 -->
-	<!-- <select id="login" resultType="package com.playstamp.use.User">
-		SELECT USER_ID, USER_NM, USER_TEL, USER_NICK, USER_MAIL
+	<!-- 유저 로그인 -->
+	<select id="userLogin" resultType="String">
+		SELECT USER_NICK
 		FROM TBL_USERINFO 
-		where USER_ID = #{userId} AND USER_PW = #{userPw}
-	</select>  -->
+		where USER_ID = #{arg0} AND USER_PW = #{arg1}
+	</select>
 
 </mapper>

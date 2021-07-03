@@ -2,8 +2,6 @@ package com.playstamp.user.controller;
 
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.playstamp.user.User;
-
 
 
 @Controller
@@ -95,13 +92,42 @@ public class UserController
 	}
 	
 	@RequestMapping(value="/login.action", method=RequestMethod.POST)
-	public String login(HttpServletRequest request, User user) throws SQLException
+	public String userLogin(HttpServletRequest request, @RequestParam("userId") String userId, @RequestParam("userPw") String userPw
+					  , @RequestParam("admin") String admin, Model model) throws SQLException
 	{ 
 		String result = "";
 		
-		System.out.println("정상진입");
-		System.out.println(user);
-	
+		// 세션은 사용자의 프로필 / 모델은 페이지에서 사용할 데이터.
+		System.out.println(admin);
+		if (admin.equals("1")) // 관리자로 로그인
+		{
+			// 관리자 테이블 조회 해야 함
+			// ...
+			
+			System.out.println("관리자 로그인 성공");
+			result = "WEB-INF/views/main/Welcome.jsp";
+		}
+		else if (admin.equals("0")) // 사용자로 로그인 시도
+		{
+			System.out.println("사용자로 로그인 시도");
+			
+			// 유저 테이블 조회
+			IUserDAO dao = sqlSession.getMapper(IUserDAO.class);
+			String str = dao.userLogin(userId, userPw);
+			
+			if(str!=null) // 테이블 정보가 일치 == 로그인 성공
+			{
+				System.out.println("사용자로 로그인 성공");
+				
+				// 세션 얻어오기
+				HttpSession session = request.getSession();
+				session.setAttribute("id", userId);
+				model.addAttribute("userNick", str);
+				
+				result = "WEB-INF/views/main/Main.jsp";
+			}
+		}
+		
 		return result; 
 	}
 	 
