@@ -72,32 +72,27 @@ h5 {
 	//   한 번에 데이터를 가져와서 키보드 입력 값에 따라 보여주는 정보를 달리 한다.
 	$(function()
 	{
-		var arr = new Array();
+		var arr = new Array();		//-- 사용자가 선택한 공연 객체가 담길 배열
+		
 		// 사용자에게는 play 객체의 play_nm(=value1, 공연명+기간) 만 보여준다.
 		// 해당 공연명을 클릭하면 하단에서는 같은 객체의 공연 코드 값도 저장한다.
-		$("input[name=play_nm]").each(function(index, item)
+
+		$("input[name=playlist]").each(function(index, item)
 		{
-			arr.push($(item).attr("value1"));
+			arr.push($(item).attr("value"));		//-- 공연명 배열에 넣기
 		});
 		
 		$("#search").autocomplete
 		({
-			source: arr
+			source: arr,
+			minLength: 2,
+			select : function(event, ui)
+			{
+				// 하단의 숨겨진 공연명 속성에 사용자가 선택한 공연명 전달
+				$("#play_nm").val(ui.item.value);
+			}
 		});
 	});
-
-	/*
-	// 다음 단계로 이동 버튼 클릭 시
-	// 리뷰식별 테이블에 INSERT, 사용자코드도 submit 시 전달 필요
-	// ※ 리뷰식별코드 생성하면서 INSERT하고 그 식별코드를 다음 페이지로 바로 전달 할 수 있다. (selectKey)
-	$(function()
-	{
-		$("#nextBtn").click(function()
-		{
-			$(location).attr("href", "addreviewseatform.action?play_cd=" + $(this).val());
-		});
-	});
-	*/
 
 </script>
 </head>
@@ -117,23 +112,23 @@ h5 {
 <div id="wrapper">
 	<div class="container">
 			<!-- 다음 단계로 이동 버튼 클릭 시 사용자가 선택한 공연코드를 가지고 좌석 리뷰 작성 페이지로 이동 -->
-		<form action="addreviewseatform.action" role="form" method="post">
+		<form action="addreviewseatform.action" method="post">
 			<h2>관람하신 공연명을 검색하여 선택해주세요</h2>
 		    <br>
 			<br>
 			<input type="text" id="search" class="form-control" placeholder="공연을 검색해보세요!">
 			
 			<!-- 스크립트 단에 전달할 공연정보 hidden 속성으로 구성 -->
-			<!-- 스크립트에는 공연명만 전달하고, 공연코드는 사용자가 선택했을 때
-			     value2로 가지고 있던 공연코드를 다음 페이지에 submit 한다. -->
+			 
 			<c:forEach var="play" items="${list }">
-				<input type="hidden" id="play_nm" name="play_nm" value1="${play.play_nm }" value2="${play.play_cd }"/>
-				<input type="hidden" id="theater_cd" name="theater_cd" value="${play.theater_cd }"/>
+				<input type="hidden" id="playlist" name="playlist" value="${play.play_nm }"/>
 			</c:forEach>
 			<br><br>
+			<input type="hidden" id="play_nm" name="play_nm">
+			<!-- 임시로 유저아이디 다음 페이지에 넘기기 -->
+			<input type="hidden" id="user_cd" name="user_cd" value="U00001">
 			<div>
-				<button type="submit" id="nextBtn" class="btn btn-primary"
-				value="${play.play_cd }">다음 단계로</button>
+				<button type="submit" id="nextBtn" class="btn btn-info">다음 단계로</button>
 			</div>
 		</form>
 	</div>
