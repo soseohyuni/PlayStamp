@@ -10,8 +10,9 @@ String cp = request.getContextPath();
 <meta charset="UTF-8">
 <title>MSeatMain.jsp</title>
 <%-- <link rel="stylesheet" href="<%=cp %>/css/mseat.css"> --%>
-<script type="text/javascript" src="<%=cp%>/js/jquery-3.6.0.min.js"></script>
-
+<%-- <script type="text/javascript" src="<%=cp%>/js/jquery-3.6.0.min.js"></script> --%>
+<script type="text/javascript" src="<%=cp %>/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
 
 <link rel="stylesheet"
@@ -124,7 +125,7 @@ body {
 	align-content: center;
 	margin: 0 auto;
 	justify-content: center;
-	font-weight: bold;
+	/* font-weight: bold; */
 	align: center;
 }
 
@@ -132,15 +133,14 @@ body {
 	margin: 0;
 	padding: 0.5rem 1rem;
 	font-size: 1rem;
-	font-weight: 400;
+	font-weight: bold;
 	text-align: center;
-	text-decoration: none;
+	/* text-decoration: none; */
 	display: inline-block;
 	width: 150px;
-	border: none;
-	border-radius: 4px;
-	background: #608FBF;
-	color: white;
+	border-radius: 2em;
+	background-color: white;
+	border-color: orange;
 }
 
 .seatImg {
@@ -274,9 +274,11 @@ body {
 
 			$(".seatRating").show();
 			
-			if(seatName>=9 && seatName<=12)
+			if(seatName>=1 && seatName<=8)
+				$(".seatRating").css("top", "100px").css("left", "40px");
+			else if(seatName>=9 && seatName<=12)
 				$(".seatRating").css("top", "420px").css("left", "750px");
-			if(seatName>=13)
+			else if(seatName>=13)
 				$(".seatRating").css("top", "650px").css("left", "40px");
 			
 			$.ajaxSetup(
@@ -371,11 +373,11 @@ body {
 	<br>
 	<!-- 공연장 버튼 -->
 	<div class="theather" style="text-align: center;">
-		<a href="javascript:openFrame(1);" class="btn-theater">예술의전당</a>&emsp;
-		<a href="javascript:openFrame(2);" class="btn-theater">블루스퀘어</a>&emsp;
-		<a href="javascript:openFrame(3);" class="btn-theater">충무아트센터</a>&emsp;
-		<a href="javascript:openFrame(4);" class="btn-theater">디큐브아트센터</a>&emsp;
-		<a href="javascript:openFrame(5);" class="btn-theater">샤롯데씨어터</a>
+		<button type="button" onclick="javascript:openFrame(1);" class="btn-theater">예술의전당</button>&emsp;
+		<button type="button" onclick="javascript:openFrame(2);" class="btn-theater">블루스퀘어</button>&emsp;
+		<button type="button" onclick="javascript:openFrame(3);" class="btn-theater">충무아트센터</button>&emsp;
+		<button type="button" onclick="javascript:openFrame(4);" class="btn-theater">디큐브아트센터</button>&emsp;
+		<button type="button" onclick="javascript:openFrame(5);" class="btn-theater">샤롯데씨어터</button>
 	</div>
 
 	<br />

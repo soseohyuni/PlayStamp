@@ -3,13 +3,14 @@ package com.playstamp.mseat.mybatis;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.playstamp.mseat.MSeatDTO;
+import com.playstamp.mseat.MSeat;
 
 public interface IMSeatDAO
 {
 	// 예술의전당 좌석평점 리스트
-	public ArrayList<MSeatDTO> listSac(String seatName) throws SQLException;
+	public ArrayList<MSeat> listSac(String seatName) throws SQLException;
 	
+	/*
 	// 블루스퀘어 좌석평점 리스트
 	public ArrayList<MSeatDTO> listBs(String seatName) throws SQLException;
 	
@@ -21,4 +22,5 @@ public interface IMSeatDAO
 	
 	// 샤롯데씨어터 좌석평점 리스트
 	public ArrayList<MSeatDTO> listClt(String seatName) throws SQLException;
+	*/
 }

@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.playstamp.mseat.MSeatDTO;
-
+import com.playstamp.mseat.MSeat;
 
 @Controller
 public class MSeatController
@@ -36,7 +35,7 @@ public class MSeatController
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		  
-		ArrayList<MSeatDTO> listSac = dao.listSac((String)param.get("seatName"));
+		ArrayList<MSeat> listSac = dao.listSac((String)param.get("seatName"));
 		
 		// 테스트
 		//System.out.println((String)param.get("seatName"));

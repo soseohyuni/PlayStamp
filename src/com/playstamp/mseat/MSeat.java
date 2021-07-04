@@ -1,10 +1,13 @@
 package com.playstamp.mseat;
 
-public class MSeatDTO
+import org.springframework.stereotype.Repository;
+
+
+public class MSeat
 {
 	private String viewrating, lightrating, soundrating, seatrating;
 	
-	MSeatDTO(String viewrating, String lightrating, String soundrating, String seatrating)
+	MSeat(String viewrating, String lightrating, String soundrating, String seatrating)
 	{
 		this.viewrating = viewrating;
 		this.lightrating = lightrating;

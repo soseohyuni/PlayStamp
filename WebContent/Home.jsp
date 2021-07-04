@@ -11,8 +11,9 @@
 <title>Home.jsp</title>
 <link rel="stylesheet" href="<%=cp %>/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=cp %>/css/myspace.css">
-<script type="text/javascript" src="<%=cp %>/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <!-- 별점 기능을 위한 아이콘을 CDN 방식으로 추가 -->
@@ -142,17 +143,6 @@
 	}
 	
 </style>
-<script type="text/javascript">
-
-
-$(function() {
-   $('#lighttest').barrating({
-     theme: 'fontawesome-stars'
-     , initialRating: 5
-   });
-});
-
-</script>
 </head>
 <body>
 
@@ -170,19 +160,9 @@ $(function() {
         <p><a class="btn btn-primary btn-lg" href="#" role="button">리뷰 추가하기</a></p>
    	  </div>
 	</div>
-	
-	<div>
-	<select id="lighttest">
-		<option value="1">1</option>
-		<option value="2">2</option>
-		<option value="3">3</option>
-		<option value="4">4</option>
-		<option value="5">5</option>
-	</select>
-	</div>
-	
+
 	<!-- 리뷰 많은 공연순 정렬 -->
-    <div id="highreviewSorting" class="container">
+    <div id="highReviewSorting" class="container">
        <div id="pageTitle1" class="container"><img src="images/smileicon.png" style="width:2%;"> 리뷰 많은 공연순<br><br></div>
        <div id="imgContainer" class="row">
           <div class="col-lg-3 col-xs-6 col-md-3">
