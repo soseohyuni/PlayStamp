@@ -8,7 +8,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>PlayReviewDetail.jsp</title>
+
+<title>PlayDetail.jsp</title>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
@@ -30,8 +31,6 @@
 	#backList { float: right;}
 	
 	#container { width: 1300px;}
-	
-	#reviewDetail { text-align: center; }
 </style>
 <script type="text/javascript">
 	$(function()
@@ -93,12 +92,6 @@
 				</table>
 			</div>
 			
-			<!-- 공연 리뷰 상세 -->
-			공연 상세 리뷰
-			<br><br>
-			<div id="reviewDetail">
-				<textarea rows="8%" cols="98%"></textarea>
-			</div>			
 			<!-- 탭 -->
 			<div id="tab">
 				<ul class="nav nav-tabs">
