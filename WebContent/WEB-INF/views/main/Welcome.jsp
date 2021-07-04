@@ -22,7 +22,7 @@
 		<div class="container">
 			<div class="dropText">
 				<h4>
-					<mark><b>회원가입이 완료됐습니다!<br>
+					<mark><b>회원가입이 완료됐습니다!</b><br>
 					로그인 후 플레이 스탬프의 다양한 서비스를 경험해보세요!:></mark>
 				</h4>
 			<a href="signinform.action">

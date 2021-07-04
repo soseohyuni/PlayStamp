@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.playstamp.user.User;
 
@@ -75,6 +74,7 @@ public class UserController
 		return str;
 	}
 	
+	// 사용자 회원가입 완료
 	@RequestMapping(value="/completesignup.action", method=RequestMethod.POST)
 	public String userInsert(@ModelAttribute("user") User user) throws ClassNotFoundException, SQLException 
 	{ 
@@ -126,7 +126,7 @@ public class UserController
 			{
 				System.out.println("사용자로 로그인 성공");
 				
-				// 세션 얻어오기
+				// 세션 저장하기
 				HttpSession session = request.getSession();
 				session.setAttribute("id", id);
 				session.setAttribute("nick", str);
@@ -138,6 +138,7 @@ public class UserController
 			else // 로그인 실패
 			{
 				System.out.println("로그인 실패");
+				System.out.println(id + pw);
 				request.setAttribute("msg", "fail");
 				result = "/WEB-INF/views/main/LoginForm.jsp";
 			}
@@ -158,16 +159,4 @@ public class UserController
 		return result;
 	}
 	
-	// 비회원 접근
-	@RequestMapping("/nonuserlogin.action")
-	public String nonUser(HttpServletRequest request)
-	{
-		String result = "";
-		
-		request.setAttribute("msg", "nonUser");
-		result = "/WEB-INF/views/main/LoginForm.jsp";
-				
-		return result;
-	}
-	 
 }

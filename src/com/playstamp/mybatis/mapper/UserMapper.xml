@@ -9,7 +9,7 @@
 	<select id="userIdCheck" parameterType="String" resultType="int">
 		SELECT COUNT(*) AS COUNT 
 		FROM TBL_USERINFO 
-		WHERE USER_ID = #{userId}
+		WHERE USER_ID = #{user_Id}
 	</select>
 	
 	
@@ -25,8 +25,7 @@
 	<!-- 2) 프로시저 테스트 -->
 	<insert id="userInsertProcedure" statementType="CALLABLE">
 		{
-			CALL PRC_USER_INSERT(#{userId}, #{userNm}, #{userTel}, #{userPw}, 
-			#{userNick}, #{userMail}, 'UURL')
+			CALL PRC_USER_INSERT(#{user_Id}, #{user_Nm}, #{user_Tel}, #{user_Pw}, #{user_Nick}, #{user_Mail}, 'UURL')
 		}
 	</insert>
 	
@@ -35,7 +34,23 @@
 	<select id="userLogin" resultType="String">
 		SELECT USER_NICK
 		FROM TBL_USERINFO 
-		where USER_ID = #{arg0} AND USER_PW = #{arg1}
+		WHERE USER_ID = #{arg0} AND USER_PW = #{arg1}
 	</select>
+	
+	
+	<!-- 유저 정보 조회 -->
+	<select id="searchUserInfo" parameterType="String" resultType="com.playstamp.user.User">
+		SELECT *
+		FROM TBL_USERINFO
+		WHERE USER_ID = #{user_Id}
+	</select>
+	
+	
+	<!-- 유저 정보 업데이트 -->
+	<update id="updateUserInfo">
+		UPDATE TBL_USERINFO
+		SET USER_NICK = #{user_Nick}, USER_TEL=#{user_Tel}, USER_PW=#{user_Pw}
+		WHERE USER_ID = #{user_Id}
+	</update>
 
 </mapper>

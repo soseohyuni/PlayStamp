@@ -34,7 +34,7 @@
 	<!-- ⑤ 매퍼 파일 (SampleDAO.xml) 작성 후 마저 등록해서 완성 → mapperLocations -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="localDataSource"></property>
-		<property name="mapperLocations" value="classpath:com/playstamp/user/mybatis/mapper/*.xml"></property>
+		<property name="mapperLocations" value="classpath:com/playstamp/mybatis/mapper/*.xml"></property>
 	</bean>	
 	
 	
@@ -54,16 +54,5 @@
 	   <bean id="interceptor" class="com.playstamp.user.Interceptor"></bean>
 	  </mvc:interceptor>
 	 </mvc:interceptors>
-
-
-
-
-
-
-
-
-
-
-
 
 </beans>

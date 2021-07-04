@@ -119,7 +119,6 @@ String cp = request.getContextPath();
 				$("#checkPw").text("비밀번호가 일치하지 않습니다.").css("color", "red");
 			    
 				$('#userPw2').val('');
-				$('#userPw2').focus();
 				$('#userPw2').css("border-color", "red");
 				
 				pwFlag = false;
@@ -153,30 +152,14 @@ String cp = request.getContextPath();
 				<!-- 아이디/닉네임/이름/비밀번호 입력 및 확인 -->
 				 <div class="form-group">
 				    <h3 class="joinTitle">아이디</h3>
-				    <input type="text" class="form-control" id="userId" name="userId" placeholder="아이디를 입력하세요" required="required">
+				    <input type="text" class="form-control" id="userId" name="user_Id" placeholder="아이디를 입력하세요" required="required">
 				    <button class="btn chkBtn" id="idChkBtn" name="unCheck">중복확인</button>
 				    <span id="checkId"></span>
 				 </div>
-  
-				<div class="joinInputBox">
-					<h3 class="joinTitle">닉네임</h3>
-					<input type="text" id="userNick" name="userNick" maxlength="20" required="required">
-				</div>
-
-				<div class="joinInputBox">
-					<h3 class="joinTitle">비밀번호</h3>
-					<input type="password" id="userPw" name="userPw" maxlength="20" required="required">
-				</div>
-
-				<div class="joinInputBox">
-					<h3 class="joinTitle">비밀번호 확인</h3>
-					<input type="password" id="userPw2" name="userPw2" maxlength="20" required="required">
-					<span id="checkPw"></span>
-				</div>
-
-				<div class="joinInputBox">
+				 
+				 <div class="joinInputBox">
 					<h3 class="joinTitle">이름</h3>
-					<input type="text" id="userNm" name="userNm" maxlength="20" required="required">
+					<input type="text" id="userNm" name="user_Nm" maxlength="20" required="required">
 				</div>
 
 				<!-- 전화번호 입력 -->
@@ -184,13 +167,29 @@ String cp = request.getContextPath();
 					<h3 class="joinTitle">
 						<label for="id">전화번호('-' 없이 번호만 입력해주세요.)</label>
 					</h3>
-					<input type="text" id="userTel" name="userTel" maxlength="11" required="required"> 
+					<input type="text" id="userTel" name="user_Tel" maxlength="11" required="required"> 
+				</div>
+  
+				<div class="joinInputBox">
+					<h3 class="joinTitle">비밀번호</h3>
+					<input type="password" id="userPw" name="user_Pw" maxlength="20" required="required">
+				</div>
+
+				<div class="joinInputBox">
+					<h3 class="joinTitle">비밀번호 확인</h3>
+					<input type="password" id="userPw2" name="user_Pw2" maxlength="20" required="required">
+					<span id="checkPw"></span>
+				</div>
+				
+				<div class="joinInputBox">
+					<h3 class="joinTitle">닉네임</h3>
+					<input type="text" id="userNick" name="user_Nick" maxlength="20" required="required">
 				</div>
 
 				<!-- 이메일 입력 및 인증 -->
 				<div class="emailInput">
 					<h3 class="joinTitle">이메일</h3>
-					<input type="text" id="userMail" class="emailInputBox" name="userMail">
+					<input type="text" id="userMail" class="emailInputBox" name="user_Mail">
 					<span id="checkMail"></span>
 					<button class="btn">인증번호 받기</button>
 				</div>

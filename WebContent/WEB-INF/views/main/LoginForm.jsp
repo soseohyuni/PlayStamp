@@ -42,7 +42,7 @@
 	    <div class="mt-4 text-center">
 	        <h6 style="font-weight: bold;">로그인 하기</h6>
 	        <div class="mt-3 inputbox"> 
-	        	<input type="text" class="form-control" name="userId" id="userId"placeholder="아이디" required="required"> <i class="fa fa-user"></i> 
+	        	<input type="text" class="form-control" name="userId" id="userId" placeholder="아이디" required="required"> <i class="fa fa-user"></i> 
 	        </div>
 	        <div class="inputbox"> 
 	        	<input type="text" class="form-control" name="userPw" id="userPw" placeholder="패스워드" required="required"> <i class="fa fa-lock"></i> 

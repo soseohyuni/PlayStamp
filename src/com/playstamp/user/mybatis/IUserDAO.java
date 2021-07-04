@@ -1,7 +1,6 @@
 package com.playstamp.user.mybatis;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import com.playstamp.user.User;
 
@@ -12,4 +11,6 @@ public interface IUserDAO
 	public int userInsertProcedure(User user) throws SQLException, ClassNotFoundException;
 	
 	public String userLogin(String userId, String userPw) throws SQLException;
+	public User searchUserInfo(String userId) throws SQLException;
+	public void updateUserInfo(User user) throws SQLException;
 }
