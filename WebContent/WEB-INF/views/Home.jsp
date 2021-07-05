@@ -40,6 +40,7 @@
 		border: none;
 		align: left;
 		color: black;
+		background-color: #fafafa;
 	}
 	
 	.reviewComment
@@ -91,6 +92,7 @@
 		white-space: nowrap;
 		overflow: hidden;
   		text-overflow: ellipsis;
+  		border-color: #c2c2c2;
 	}
 	
 	#pageTitle1, #pageTitle2, #pageTitle3
@@ -104,17 +106,25 @@
 	
 	.reviewContent
 	{
-		height: 90px;
-		width: 280px;
+		height: 70.5px;
+		width: 300px;
+		display: block;
 		background-color: #fafafa;
 		
+		left: 14px;
 		font-size: 10pt;
 		color: black;
 		padding: 10px;
 		
-		white-space: nowrap;
+		white-space: pre-line; 
 		overflow: hidden;
   		text-overflow: ellipsis;
+  		
+  		
+  		text-align: justify;
+  		border: 1px solid;
+  		position: relative;
+  		border-color: #c2c2c2;
 	}
 	
 	#imgContainer, #reviewContainer
@@ -175,7 +185,6 @@
 		width: 280px;
 		padding: 0 0 0 0;
 		line-height: 32px;
-		
 	}
 	
 	input:focus
@@ -188,25 +197,26 @@
 		background-color: #fafafa;
 		position: relative;
 		left: 105px;
+		bottom: 5px;
 	}
 	
 </style>
 <script type="text/javascript">
 
-	    //공연 평점을 담을 배열
+	    // 공연 평점을 담을 배열
 	    var array = new Array();
 	    
-	    //각 평점 값 list 에 담기
+	    // 평점 값 list 에 담기
 	    <c:forEach var="list" items="${highLikeSorting}">   
 	    	array.push("${list.rating_cd}");
 	    </c:forEach>
 	    
-	    //별점 제이쿼리
+	    // 별점 제이쿼리
 	    $(function()
 	    {
-	       for (var i = 0; i < array.length; i++)
+	       for (var i=0; i<array.length; i++)
 	       {
-	          //공연 평점을 별점으로 변환
+	          // 공연 평점을 별점으로 변환
 	          $("#rating"+i).barrating(
 	          {
 	             theme: "fontawesome-stars"
@@ -241,7 +251,7 @@
        <div id="imgContainer" class="row">
        		<c:forEach var="listReview" items="${highReviewSorting }" end="3">
 	          <div class="col-lg-3 col-xs-6 col-md-3">
-	             <a href="#" class="thumbnail">
+	             <a href="playdetail.action?play_cd=${listReview.play_cd }" class="thumbnail">
 	               <img src="${listReview.play_img }">
 	             </a>
 	             <div class="playTitle">${listReview.play_nm }</div>
@@ -258,7 +268,7 @@
        	 <c:set var="i" value="0"></c:set>
        	 <c:forEach var="listLike" items="${highLikeSorting }" end="2">
 	       	 <div class="col-lg-4 col-xs-6 col-md-3">
-	             <a href="#" class="thumbnail">
+	             <a href="playreviewdetail.action?playrev_cd=${listLike.playrev_cd }" class="thumbnail">
 	             	 <span class="user">
 			             <img id="userImage" src="${listLike.user_img }">
 						 <input type="text" class="userName" value="${listLike.user_nick }" readonly="readonly"><br>
@@ -274,7 +284,7 @@
 						<option value="5">5</option>
 					 </select>
 					 </span>
-					 <textarea class="reviewContent" readonly="readonly">${listLike.contents }</textarea><br>
+					 <span class="reviewContent">${listLike.contents }</span><br>
 					 <span class="likecomment">
 						 <img src="images/heartblack.png" style="width: 25px;"><input type="text" class="reviewLike" value="${listLike.like_count }" readonly="readonly">
 						 <img src="images/commenticon.png" style="width: 20px;"><input type="text" class="reviewComment" value="${listLike.comment_count }" readonly="readonly"><br>
@@ -294,7 +304,7 @@
        <div id="imgContainer" class="row">
           <c:forEach var="listRate" items="${highRateSorting }" end="3">
 	          <div class="col-lg-3 col-xs-6 col-md-3">
-	             <a href="#" class="thumbnail">
+	             <a href="playdetail.action?play_cd=${listRate.play_cd }" class="thumbnail">
 	               <img src="${listRate.play_img }">
 	             </a>
 	             <div class="playTitle">${listRate.play_nm }</div>
