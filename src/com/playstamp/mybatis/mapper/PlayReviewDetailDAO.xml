@@ -9,4 +9,10 @@
 		FROM VIEW_PLAYREVDETAIL
 		WHERE PLAYREV_CD=#{playrev_cd}
 	</select>
+	
+	<select id="getCommentList" resultType="com.playstamp.playreviewdetail.Comment" parameterType="string">
+		SELECT COMMENT_CD, PLAYREV_CD, WR_DT, COMMENTS, USER_NICK
+		FROM VIEW_COMMENT
+		WHERE PLAYREV_CD=#{playrev_cd}
+	</select>
 </mapper>

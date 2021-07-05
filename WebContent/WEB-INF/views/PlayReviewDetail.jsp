@@ -59,6 +59,7 @@
 <script type="text/javascript">	
 	
 	var playRev = "";
+	var articleNo = "PR00001";
 	
 	<c:forEach var="playReviewDetail" items="${playReviewDetail }">
 		playRev = "${playReviewDetail.rating_cd}"
@@ -73,6 +74,36 @@
 	        , readonly: true
 	    });
 	});
+	
+	//@@ 댓글 콘솔에 찍는 것 테스트 
+	$(function()
+	{
+		getComments();
+	});
+	
+	function getComments()
+	{
+		$.getJSON("comment.action?playrev_cd=" + articleNo, function (data) {
+			   
+			console.log(data); 
+			
+			var str = "";
+			
+			$.each(data, function(i, item){
+				//console.log(item.comment_cd);
+				
+				str += "<li data-replyNo='" + item.comment_cd + "' class='replyLi'>"
+				+   "<p class='commentWriter'>" + item.user_nick + "</p>"
+				+   "<p class='comment'>" + item.comments + "</p>"
+                +   "<button type='button' class='btn btn-xs btn-success' data-toggle='modal' data-target='#modifyModal'>댓글 수정</button>"
+                + "</li>"
+                + "<hr/>";
+
+		        });
+			 
+			 $("#comments").html(str);
+		});
+	}
 </script>
 </head>
 
@@ -168,8 +199,63 @@
 			</c:forEach>
 		</div>
 		
-			<!-- 댓글 ^^ -->
-			<div></div>
+		<!-- 댓글 ^^ -->
+		<div class="col-lg-12">
+			<div>
+                <label for="newReplyWriter"></label>
+                <input type="hidden" id="newReplyWriter" name="replyWriter" placeholder="댓글 작성자를 입력해주세요">
+            </div>
+            <div>
+                <label for="newReplyText">로그인한 사용자의 닉네임</label><br>
+                <input type="text" id="newReplyText" name="replyText" placeholder="내용을 입력해주세요">
+                <button type="button" class="btn">댓글 작성</button>
+            </div>
+        </div>
+        <hr>
+        <div class="box-footer">
+            <ul id="comments">
+
+            </ul>
+        </div>
+        <div class="box-footer">
+            <div class="text-center">
+                <ul class="pagination pagination-sm no-margin">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modifyModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">댓글 수정창</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="replyNo">댓글 번호</label>
+                    <input class="form-control" id="replyNo" name="replyNo" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="replyText">댓글 내용</label>
+                    <input class="form-control" id="replyText" name="replyText" placeholder="댓글 내용을 입력해주세요">
+                </div>
+                <div class="form-group">
+                    <label for="replyWriter">댓글 작성자</label>
+                    <input class="form-control" id="replyWriter" name="replyWriter" readonly>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-success modalModBtn">수정</button>
+                <button type="button" class="btn btn-danger modalDelBtn">삭제</button>
+            </div>
+        </div>
+    </div>
+  </div>
 		</div>
 	</div>
 </div>
