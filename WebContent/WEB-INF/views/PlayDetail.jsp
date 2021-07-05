@@ -37,10 +37,10 @@
 	
 	.tab-content { border: 0.3px solid gray; }
 	
-	#pageTitle { float: left; margin: auto; }
-	
-	#backList { float: right; }
-	
+	.subContainer { text-align: center; }
+	#pageTitle { float: left; font-size: 20px;}	
+	#backList { float: right;}
+		
 	.container { width: 1300px; }
 	
 	#header { margin: auto; }
@@ -172,12 +172,13 @@
 	<div id="wrapper">
 		<div>
 		
+
 		<!-- 메뉴 -->
-			<div id="pageTitle" class="container">공연 상세 정보
+		<div class="subContainer">
+			<span id="pageTitle">공연상세 정보</span>
 			<button type="button" id="backList">목록으로</button>
-			</div>
-			
-			<br><hr>
+			<hr>
+		</div>
 			
 			
 		<!-- 공연 상세 출력 -->
@@ -203,7 +204,7 @@
 					<tr>
 						<td>출연진</td>
 						<td><input type="text" disabled="disabled" value="${playDetail.play_cast}"
-						style="width: 500px;"></td>
+						style="width: 450px;"></td>
 					</tr>
 
 					<tr>
