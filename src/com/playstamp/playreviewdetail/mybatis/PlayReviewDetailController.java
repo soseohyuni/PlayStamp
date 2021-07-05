@@ -86,4 +86,23 @@ public class PlayReviewDetailController
 		
 		return "success";
 	}	
+	
+	//@@ 댓글 삭제
+	@RequestMapping(value="/commentremove.action", method= {RequestMethod.POST, RequestMethod.GET})
+	public @ResponseBody String removeComment(@RequestBody Comment comment) throws SQLException
+	{
+		IPlayReviewDetailDAO dao = sqlSession.getMapper(IPlayReviewDetailDAO.class);	
+		
+		//System.out.println("댓글코드: " + comment.getComment_cd());
+		
+		try
+		{
+			dao.removeComment(comment);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return "success";
+	}	
 }

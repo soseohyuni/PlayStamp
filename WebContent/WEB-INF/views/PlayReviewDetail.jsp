@@ -112,13 +112,32 @@
 			            replyText.val(""); // 댓글 내용 초기화
 			            replyWriter.val(""); // 댓글 작성자 초기화
 					}
-		            // 성공적인 댓글 등록 처리 알림
-		            //if (result == "regSuccess") {
-		            //    alert("댓글 등록 완료!");
-		            //}
-		            //getComments(); // 댓글 목록 출력 함수 호출
-		            //replyText.val(""); // 댓글 내용 초기화
-		            //replyWriter.val(""); // 댓글 작성자 초기화
+		        }
+		    });
+		});
+		
+		//@@ 댓글 삭제 버튼을 눌렀을 때 
+		$("#comments").on("click", ".replyLi button", function()
+		{
+			var reply = $(this).parent();
+			
+			var replyNo = reply.attr("data-replyNo");
+		    
+		 	// AJAX 통신 : POST
+		    $.ajax({
+		        type : "post",
+		        url : "commentremove.action",
+		        contentType: "application/json",
+		        dataType : "text",
+		        data : JSON.stringify({
+		            "comment_cd" : replyNo
+		        }),
+		        success : function (result) {
+		        	
+		        	if (result=="success")
+					{
+		        		getComments(); // 댓글 목록 출력 함수 호출
+					}
 		        }
 		    });
 		});
@@ -139,8 +158,8 @@
 				str += "<li data-replyNo='" + item.comment_cd + "' class='replyLi'>"
 				+   "<p class='commentWriter'>" + item.user_nick + "</p>"
 				+   "<p class='comment'>" + item.comments + "</p>"
-                + "</li>"
-                + "<button type='button' class='btn btn-xs btn-success' data-toggle='modal' data-target='#modifyModal'>댓글 수정</button>"
+                + "<button type='button' class='btn btn-xs btn-success'>댓글 삭제</button>"
+				+ "</li>"
                 + "<hr/>";
 
 		        });

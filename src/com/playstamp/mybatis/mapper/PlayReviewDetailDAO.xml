@@ -14,16 +14,17 @@
 		SELECT COMMENT_CD, PLAYREV_CD, WR_DT, COMMENTS, USER_NICK, USER_CD
 		FROM VIEW_COMMENT
 		WHERE PLAYREV_CD=#{playrev_cd}
+		ORDER BY WR_DT DESC
 	</select>
 	
 	<insert id="addComment">
 		INSERT INTO TBL_COMMENT(COMMENT_CD, PLAYREV_CD, USER_CD, WR_DT, COMMENTS)
-		VALUES(COMMENT_SEQ.NEXTVAL, #{playrev_cd}, #{user_cd}, TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), #{comments})
+		VALUES(COMMENT_SEQ.NEXTVAL, #{playrev_cd}, #{user_cd}, SYSDATE, #{comments})
 	</insert>
 	
-	<select id="searchUserCd" parameterType="string">
-		SELECT USER_CD
-		FROM TBL_USERINFO
-		WHERE USER_NICK=#{user_nick}
-	</select>
+	<delete id="removeComment">
+		DELETE
+		FROM TBL_COMMENT
+		WHERE COMMENT_CD=#{comment_cd}
+	</delete>
 </mapper>
