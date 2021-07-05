@@ -71,7 +71,8 @@
 
 </style>
 <script type="text/javascript">	
-	
+	//@@ 그,, 신고랑 삭제 분기하는 거 테스트용 전역 변수 
+	var test = "";
 	//@@ 공연 평점 받을 변수(제이쿼리에서 써먹어야 하기 때문에 따로 선언)
 	var playRev = "";
 	
@@ -143,30 +144,40 @@
 			var reply = $(this).parent();
 			
 			var replyNo = reply.attr("data-replyNo");
-		    
-		 	// AJAX 통신 : POST
-		    $.ajax({
-		        type : "post",
-		        url : "commentremove.action",
-		        contentType: "application/json",
-		        dataType : "text",
-		        data : JSON.stringify({
-		            "comment_cd" : replyNo
-		        }),
-		        success : function (result) {
-		        	
-		        	if (result=="success")
-					{
-		        		getComments(); // 댓글 목록 출력 함수 호출
-					}
-		        }
-		    });
+			
+			//@@ 한 번 확인해 주고
+			var check = confirm("정말 삭제하시겠어요?");
+			
+			//@@ 확인값이 true 라면
+			if (check)
+			{
+			    $.ajax({
+			        type : "post",
+			        url : "commentremove.action",
+			        contentType: "application/json",
+			        dataType : "text",
+			        data : JSON.stringify({
+			            "comment_cd" : replyNo
+			        }),
+			        success : function (result) {
+			        	
+			        	if (result=="success")
+						{
+			        		getComments(); // 댓글 목록 출력 함수 호출
+						}
+			        }
+			    });
+			}
+			else
+				return;
 		});
 	});
 	
 	//@@ 댓글 목록 출력 함수
 	function getComments()
 	{
+		test = 2;
+		
 		$.getJSON("comment.action?playrev_cd=" + articleNo, function (data) {
 			   
 			console.log(data); 
@@ -175,19 +186,39 @@
 			
 			$.each(data, function(i, item){
 				//console.log(item.comment_cd);
-				
-				str += "<div data-replyNo='" + item.comment_cd + "' class='replyLi'>"
-				+ "<span class='commentWriter'>" + item.user_nick + "</span>"
-				+ "<button type='button' class='btn btn-default'>삭제</button><br><br>"  
-				+ "<span class='comment'>" + item.comments + "</span>"
-				+ "<span class='commentDt'>" + item.wr_dt + "</span><br>"          
-                + "<hr>"
-				+ "</div>"
-                + "<br>";
+				//@@ 댓글을 작성한 사용자일 때만 삭제 버튼 활성화
+				if (test==1)
+				{
+					str += "<div data-replyNo='" + item.comment_cd + "' class='replyLi'>"
+					+ "<span class='commentWriter'>" + item.user_nick + "</span>"
+					+ "<button type='button' class='btn btn-default'>삭제</button><br><br>"
+					+ "<span class='comment'>" + item.comments + "</span>"
+					+ "<span class='commentDt'>" + item.wr_dt + "</span><br>"          
+	                + "<hr>"
+					+ "</div>"
+	                + "<br>";
 
-		        });
+			        
+					$("#comments").html(str);
+				}
+			 	
+				//@@ 아닐 경우는 신고 버튼 활성화. replyLi2 아래의 버튼을 눌렀을 때는 신고 액션이 일어나야 함. 
+				if (test==2)
+				{
+					str += "<div data-replyNo='" + item.comment_cd + "' class='replyLi2'>"
+					+ "<span class='commentWriter'>" + item.user_nick + "</span>"
+					+ "<button type='button' class='btn btn-default'>신고</button><br><br>"
+					+ "<span class='comment'>" + item.comments + "</span>"
+					+ "<span class='commentDt'>" + item.wr_dt + "</span><br>"          
+	                + "<hr>"
+					+ "</div>"
+	                + "<br>";
+
+			    
+					$("#comments").html(str);
+				}
+			});
 			 
-			 	$("#comments").html(str);
 		});
 	}
 
