@@ -75,12 +75,56 @@
 	    });
 	});
 	
-	//@@ 댓글 콘솔에 찍는 것 테스트 
+	//@@ 댓글 기능 처리
 	$(function()
 	{
+		//@@ 댓글 목록 출력
 		getComments();
+		
+		//@@ 댓글 달기 버튼을 눌렀을 때
+		$("#commentAddBtn").on("click", function()
+		{
+			var replyText = $("#newReplyText");
+		    var replyWriter = $("#newReplyWriter");
+		    var hiddenUser = $("#hiddenUser");
+		    
+		    var replyTextVal = replyText.val();
+		    var replyWriterVal = replyWriter.val();
+		    var hiddenUserVal = hiddenUser.val();
+		    
+		 	// AJAX 통신 : POST
+		    $.ajax({
+		        type : "post",
+		        url : "commentadd.action",
+		        contentType: "application/json",
+		        dataType : "text",
+		        data : JSON.stringify({
+		            "playrev_cd" : articleNo,
+		            "comments" : replyTextVal,
+		            "user_nick" : replyWriterVal,
+		            "user_cd" : hiddenUserVal
+		        }),
+		        success : function (result) {
+		        	
+		        	if (result=="success")
+					{
+		        		getComments(); // 댓글 목록 출력 함수 호출
+			            replyText.val(""); // 댓글 내용 초기화
+			            replyWriter.val(""); // 댓글 작성자 초기화
+					}
+		            // 성공적인 댓글 등록 처리 알림
+		            //if (result == "regSuccess") {
+		            //    alert("댓글 등록 완료!");
+		            //}
+		            //getComments(); // 댓글 목록 출력 함수 호출
+		            //replyText.val(""); // 댓글 내용 초기화
+		            //replyWriter.val(""); // 댓글 작성자 초기화
+		        }
+		    });
+		});
 	});
 	
+	//@@ 댓글 목록 출력 함수
 	function getComments()
 	{
 		$.getJSON("comment.action?playrev_cd=" + articleNo, function (data) {
@@ -95,8 +139,8 @@
 				str += "<li data-replyNo='" + item.comment_cd + "' class='replyLi'>"
 				+   "<p class='commentWriter'>" + item.user_nick + "</p>"
 				+   "<p class='comment'>" + item.comments + "</p>"
-                +   "<button type='button' class='btn btn-xs btn-success' data-toggle='modal' data-target='#modifyModal'>댓글 수정</button>"
                 + "</li>"
+                + "<button type='button' class='btn btn-xs btn-success' data-toggle='modal' data-target='#modifyModal'>댓글 수정</button>"
                 + "<hr/>";
 
 		        });
@@ -104,6 +148,7 @@
 			 $("#comments").html(str);
 		});
 	}
+
 </script>
 </head>
 
@@ -201,14 +246,16 @@
 		
 		<!-- 댓글 ^^ -->
 		<div class="col-lg-12">
+				<!-- 로그인한 사용자의 USER_CD 가 들어갈 hidden 타입 인풋 박스 -->
+				<input type="hidden" id="hiddenUser" value="U00004">
 			<div>
                 <label for="newReplyWriter"></label>
-                <input type="hidden" id="newReplyWriter" name="replyWriter" placeholder="댓글 작성자를 입력해주세요">
+                <input type="text" id="newReplyWriter" name="replyWriter" placeholder="여기에 세션에서 따온 사용자 닉네임이 들어갈 예정">
             </div>
             <div>
-                <label for="newReplyText">로그인한 사용자의 닉네임</label><br>
+                <label for="newReplyText"></label><br>
                 <input type="text" id="newReplyText" name="replyText" placeholder="내용을 입력해주세요">
-                <button type="button" class="btn">댓글 작성</button>
+                <button type="button" id="commentAddBtn" class="btn">댓글 달기</button>
             </div>
         </div>
         <hr>

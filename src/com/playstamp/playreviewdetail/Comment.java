@@ -2,7 +2,7 @@ package com.playstamp.playreviewdetail;
 
 public class Comment
 {
-	private String comment_cd, playrev_cd, wr_dt, comments, user_nick;
+	private String comment_cd, playrev_cd, wr_dt, comments, user_nick, user_cd;
 
 	public String getComment_cd()
 	{
@@ -52,5 +52,15 @@ public class Comment
 	public void setUser_nick(String user_nick)
 	{
 		this.user_nick = user_nick;
+	}
+
+	public String getUser_cd()
+	{
+		return user_cd;
+	}
+
+	public void setUser_cd(String user_cd)
+	{
+		this.user_cd = user_cd;
 	}	
 }

@@ -3,7 +3,7 @@ package com.playstamp.playreviewdetail;
 public class PlayReviewDetail
 {
 	private String playrev_cd, rating_cd, play_nm, theater, play_img, title, playrev_dt, play_cast
-	, contents, play_dt, play_time, user_nick, lcount, ccount, companion;
+	, contents, play_dt, play_time, user_nick, lcount, ccount, companion, user_cd;
 
 	
 	public String getRating_cd()
@@ -154,5 +154,15 @@ public class PlayReviewDetail
 	public void setCompanion(String companion)
 	{
 		this.companion = companion;
+	}
+
+	public String getUser_cd()
+	{
+		return user_cd;
+	}
+
+	public void setUser_cd(String user_cd)
+	{
+		this.user_cd = user_cd;
 	}
 }
