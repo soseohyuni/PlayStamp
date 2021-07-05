@@ -38,4 +38,10 @@
 		FROM VIEW_HEARTCOUNT
 		WHERE PLAYREV_CD=#{playrev_cd}
 	</select>
+	
+	<select id="checkHeart" resultType="Integer">
+		SELECT COUNT(*) AS CCOUNT
+		FROM TBL_LIKE
+		WHERE PLAYREV_CD=#{playrev_cd} AND USER_CD=#{user_cd}
+	</select>
 </mapper>

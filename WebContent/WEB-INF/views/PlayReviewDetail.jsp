@@ -106,6 +106,7 @@
 		//@@ 좋아요 버튼을 눌렀을 때
 		$("#heart").on("click", function()
 		{
+			
 			var hiddenUser = $("#hiddenUser");
 		    var hiddenUserVal = hiddenUser.val();
 		    var str = "<i class='fas fa-heart fa-lg'></i>";
@@ -122,7 +123,7 @@
 			            "user_cd" : hiddenUserVal
 			        }),
 			        success : function (result)
-			        {	
+			        {
 			        	$("#lcount").html("");
 			        	$("#lcount").html(result);
 						$("#heart").html("");

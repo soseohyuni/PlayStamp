@@ -105,18 +105,20 @@ public class PlayReviewDetailController
 	public @ResponseBody int addHeart(@RequestBody Like like) throws SQLException
 	{
 		IPlayReviewDetailDAO dao = sqlSession.getMapper(IPlayReviewDetailDAO.class);	
-
 		int result = 0;
-		
 		try
 		{
 			dao.addHeart(like);
+			
 			result = dao.countHeart(like);
+
 		} catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 		
 		return result;
-	}	
+	}
+	
+	
 }

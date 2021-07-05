@@ -25,4 +25,7 @@ public interface IPlayReviewDetailDAO
 	
 	//@@ 좋아요 카운트 메소드
 	public int countHeart(Like like);
+	
+	//@@ 좋아요 중복 체크 메소드
+	public int checkHeart(Like like);
 }
