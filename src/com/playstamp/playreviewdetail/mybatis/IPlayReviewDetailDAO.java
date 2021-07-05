@@ -16,9 +16,6 @@ public interface IPlayReviewDetailDAO
 	//@@ 댓글 추가 메소드
 	public int addComment(Comment comment);
 	
-	//@@ 닉네임을 통한 USER_CD 검색 메소드
-	//public String searchUserCd(String user_nick);
-	
 	//@@ 댓글 코드로 댓글을 삭제하는 메소드
 	public int removeComment(Comment comment);
 }

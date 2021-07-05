@@ -55,11 +55,32 @@
 	#report { float: right;}
 	
 	#reviewEnter{ font-weight: bold;}
+	
+	#commentAddBtn{ width: 15%; float: right;}
+	
+	#newReplyText{width: 82%;}
+	
+	.form-group{width: 100%; margin:auto;}
+	
+	.commentWriter{float: left; font-size: 15pt; font-weight: bold;}
+	.comment {float: left;}
+	
+	.btn{float: right; height: 40px;}
+	.commentDt{float: right; height: 40px;}
+
+
 </style>
 <script type="text/javascript">	
 	
+	//@@ 공연 평점 받을 변수(제이쿼리에서 써먹어야 하기 때문에 따로 선언)
 	var playRev = "";
-	var articleNo = "PR00001";
+	
+	//@@ 현재 url 가져오기 
+	var url = location.href;
+	//@@ 자르기.. 
+	var parameters = ((url.split("?"))[1].split("="))[1];
+	
+	var articleNo = parameters;
 	
 	<c:forEach var="playReviewDetail" items="${playReviewDetail }">
 		playRev = "${playReviewDetail.rating_cd}"
@@ -155,16 +176,18 @@
 			$.each(data, function(i, item){
 				//console.log(item.comment_cd);
 				
-				str += "<li data-replyNo='" + item.comment_cd + "' class='replyLi'>"
-				+   "<p class='commentWriter'>" + item.user_nick + "</p>"
-				+   "<p class='comment'>" + item.comments + "</p>"
-                + "<button type='button' class='btn btn-xs btn-success'>댓글 삭제</button>"
-				+ "</li>"
-                + "<hr/>";
+				str += "<div data-replyNo='" + item.comment_cd + "' class='replyLi'>"
+				+ "<span class='commentWriter'>" + item.user_nick + "</span>"
+				+ "<button type='button' class='btn btn-default'>삭제</button><br><br>"  
+				+ "<span class='comment'>" + item.comments + "</span>"
+				+ "<span class='commentDt'>" + item.wr_dt + "</span><br>"          
+                + "<hr>"
+				+ "</div>"
+                + "<br>";
 
 		        });
 			 
-			 $("#comments").html(str);
+			 	$("#comments").html(str);
 		});
 	}
 
@@ -254,11 +277,11 @@
 		<div class="subContainer2">
 			<c:forEach var="playReviewDetail" items="${playReviewDetail }">
 			<span id="count">
-			<span style="color: #FE2E2E"><i class="fas fa-heart fa-lg"></i></span>&nbsp;${playReviewDetail.ccount }
-			<span style="color: #0080FF"><i class="fa fa-comment fa-lg" aria-hidden="true"></i></span></i>&nbsp;${playReviewDetail.lcount }
-			&nbsp;작성자: ${playReviewDetail.user_nick }			
+			<span style="color: #0080FF"><i class="fa fa-comment fa-lg" aria-hidden="true"></i></span></i>&nbsp;${playReviewDetail.ccount }
+			<span style="color: #FE2E2E"><i class="fas fa-heart fa-lg"></i></span>&nbsp;${playReviewDetail.lcount }
+			&nbsp;&nbsp;작성자: ${playReviewDetail.user_nick }			
 			</span>
-			<button type="button" id="report">리뷰 신고</button>		
+			<button type="button" class="" id="report">리뷰 신고</button>		
 			<hr>
 			</c:forEach>
 		</div>
@@ -268,20 +291,20 @@
 				<!-- 로그인한 사용자의 USER_CD 가 들어갈 hidden 타입 인풋 박스 -->
 				<input type="hidden" id="hiddenUser" value="U00004">
 			<div>
-                <label for="newReplyWriter"></label>
-                <input type="text" id="newReplyWriter" name="replyWriter" placeholder="여기에 세션에서 따온 사용자 닉네임이 들어갈 예정">
+                <p id="newReplyWriter" name="replyWriter">사용자</p>
             </div>
-            <div>
-                <label for="newReplyText"></label><br>
-                <input type="text" id="newReplyText" name="replyText" placeholder="내용을 입력해주세요">
-                <button type="button" id="commentAddBtn" class="btn">댓글 달기</button>
+             <form class="form-inline">
+            <div class="form-group">
+                <input type="text" id="newReplyText" class="form-control" name="replyText" placeholder="내용을 입력해주세요">
+                &nbsp;<button type="button" id="commentAddBtn" class="btn-default form-control">댓글 달기</button>
             </div>
+            </form>
         </div>
         <hr>
         <div class="box-footer">
-            <ul id="comments">
+            <div id="comments">
 
-            </ul>
+            </div>
         </div>
         <div class="box-footer">
             <div class="text-center">
@@ -292,38 +315,6 @@
         </div>
     </div>
   </div>
-
-  <div class="modal fade" id="modifyModal" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">댓글 수정창</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="replyNo">댓글 번호</label>
-                    <input class="form-control" id="replyNo" name="replyNo" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="replyText">댓글 내용</label>
-                    <input class="form-control" id="replyText" name="replyText" placeholder="댓글 내용을 입력해주세요">
-                </div>
-                <div class="form-group">
-                    <label for="replyWriter">댓글 작성자</label>
-                    <input class="form-control" id="replyWriter" name="replyWriter" readonly>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-success modalModBtn">수정</button>
-                <button type="button" class="btn btn-danger modalDelBtn">삭제</button>
-            </div>
-        </div>
-    </div>
-  </div>
-		</div>
-	</div>
 </div>
 </body>
 </html>
