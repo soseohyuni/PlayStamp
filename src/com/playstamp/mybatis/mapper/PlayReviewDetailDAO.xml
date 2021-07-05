@@ -27,4 +27,15 @@
 		FROM TBL_COMMENT
 		WHERE COMMENT_CD=#{comment_cd}
 	</delete>
+	
+	<insert id="addHeart">
+		INSERT INTO TBL_LIKE(LIKE_CD, PLAYREV_CD, USER_CD, LIKE_DT)
+		VALUES(LIKE_SEQ.NEXTVAL, #{playrev_cd}, #{user_cd}, SYSDATE)
+	</insert>
+	
+	<select id="countHeart" resultType="Integer">
+		SELECT LCOUNT
+		FROM VIEW_HEARTCOUNT
+		WHERE PLAYREV_CD=#{playrev_cd}
+	</select>
 </mapper>

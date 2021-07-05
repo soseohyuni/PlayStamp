@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.playstamp.play.PlayList;
 import com.playstamp.play.mybatis.IPlayListDAO;
 import com.playstamp.playreviewdetail.Comment;
+import com.playstamp.playreviewdetail.Like;
 
 @Controller
 public class PlayReviewDetailController
@@ -66,16 +67,9 @@ public class PlayReviewDetailController
 	public @ResponseBody String addComment(@RequestBody Comment comment) throws SQLException
 	{
 		IPlayReviewDetailDAO dao = sqlSession.getMapper(IPlayReviewDetailDAO.class);	
-		
-		//Comment comment = new Comment();
-		
+
 		//System.out.println("닉:" + comment.getUser_nick());
-		
-		//comment.setComments((String)param.get("comments"));
-		//comment.setPlayrev_cd((String)param.get("playState"));
-		//comment.setUser_nick(dao.searchUserCd((String)param.get("user_nick")));
-		
-		//dao.addComment(comment);
+
 		try
 		{
 			dao.addComment(comment);
@@ -104,5 +98,25 @@ public class PlayReviewDetailController
 		}
 		
 		return "success";
+	}	
+	
+	//@@ 좋아요 추가
+	@RequestMapping(value="/heartadd.action", method= {RequestMethod.POST, RequestMethod.GET})
+	public @ResponseBody int addHeart(@RequestBody Like like) throws SQLException
+	{
+		IPlayReviewDetailDAO dao = sqlSession.getMapper(IPlayReviewDetailDAO.class);	
+
+		int result = 0;
+		
+		try
+		{
+			dao.addHeart(like);
+			result = dao.countHeart(like);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return result;
 	}	
 }

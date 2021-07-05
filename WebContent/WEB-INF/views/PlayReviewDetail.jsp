@@ -103,6 +103,34 @@
 		//@@ 댓글 목록 출력
 		getComments();
 		
+		//@@ 좋아요 버튼을 눌렀을 때
+		$("#heart").on("click", function()
+		{
+			var hiddenUser = $("#hiddenUser");
+		    var hiddenUserVal = hiddenUser.val();
+		    var str = "<i class='fas fa-heart fa-lg'></i>";
+		    
+			// AJAX 통신 : POST
+		    $.ajax({
+			        type : "post",
+			        url : "heartadd.action",
+			        contentType: "application/json",
+			        dataType : "text",
+			        data : JSON.stringify
+			        ({
+			            "playrev_cd" : articleNo,
+			            "user_cd" : hiddenUserVal
+			        }),
+			        success : function (result)
+			        {	
+			        	$("#lcount").html("");
+			        	$("#lcount").html(result);
+						$("#heart").html("");
+						$("#heart").html(str);
+		        	}
+		    		});
+		});
+		
 		//@@ 댓글 달기 버튼을 눌렀을 때
 		$("#commentAddBtn").on("click", function()
 		{
@@ -176,7 +204,7 @@
 	//@@ 댓글 목록 출력 함수
 	function getComments()
 	{
-		test = 2;
+		test = 1;
 		
 		$.getJSON("comment.action?playrev_cd=" + articleNo, function (data) {
 			   
@@ -198,7 +226,7 @@
 					+ "</div>"
 	                + "<br>";
 
-			        
+			        $("#ccount").html(data.length);
 					$("#comments").html(str);
 				}
 			 	
@@ -214,7 +242,7 @@
 					+ "</div>"
 	                + "<br>";
 
-			    
+			    	$("#ccount").html(data.length);
 					$("#comments").html(str);
 				}
 			});
@@ -300,16 +328,20 @@
 				<tr>
 					<td colspan="3"><textarea rows="5%" cols="100%" disabled="disabled">${playReviewDetail.contents }</textarea></td>
 				</tr>
+				<tr>
+					<td colspan="7">이 리뷰가 마음에 드시면 하트를 눌러 주세요!&nbsp;<span id="heart" style="color: #FE2E2E"><i class="far fa-heart fa-lg"></i></span></td>
+				</tr>
 				</c:forEach>
 			</table>
 		</div>
+		<br>
 			
 		<!-- 댓글 전 -->
 		<div class="subContainer2">
 			<c:forEach var="playReviewDetail" items="${playReviewDetail }">
 			<span id="count">
-			<span style="color: #0080FF"><i class="fa fa-comment fa-lg" aria-hidden="true"></i></span></i>&nbsp;${playReviewDetail.ccount }
-			<span style="color: #FE2E2E"><i class="fas fa-heart fa-lg"></i></span>&nbsp;${playReviewDetail.lcount }
+			<span style="color: #0080FF"><i class="fa fa-comment fa-lg" aria-hidden="true"></i></span>&nbsp;<span id="ccount"></span>
+			<span style="color: #FE2E2E"><i class="fas fa-heart fa-lg"></i></span>&nbsp;<span id="lcount">${playReviewDetail.lcount }</span>
 			&nbsp;&nbsp;작성자: ${playReviewDetail.user_nick }			
 			</span>
 			<button type="button" class="" id="report">리뷰 신고</button>		
