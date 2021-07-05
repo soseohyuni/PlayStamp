@@ -28,7 +28,7 @@
 	    width: 1300px;
 	    margin:0 auto;
 	}
-#reviewdetail
+	#reviewdetail
 	{
 		display: block;
 	    width: 100%;
@@ -39,7 +39,18 @@
 	    background: #fff;
 	    position: relative;
 	}
-	.imagePreview 
+	#seatreview
+	{
+		display: block;
+	    width: 100%;
+	    height: 100px;
+	    border: solid 1px #dadada;
+	    padding: 10px 14px 10px 14px;
+	    box-sizing: border-box;
+	    background: #fff;
+	    position: relative;
+	}
+	#imagePreview 
 	{
 		width: 250px;
 		height: 300px;
@@ -93,7 +104,11 @@
     #reviewdetailtable td { height:20px; }
     #reviewdetailtable { width:60%; margin: auto; }
     #uploadFile { text-align:center;}
-    #updateDeleteBtn
+    #updateBtn
+	{
+		width: 410px;
+	}
+	#deleteBtn
 	{
 		width: 410px;
 	}
@@ -105,40 +120,69 @@
 <script type="text/javascript">
 
    $(function(){
-	   // 사용자가 작성한 리뷰의 공연별점 받아오기(임의로 3 설정)
-	   var star = 3;
+	   // 사용자가 작성한 리뷰의 공연별점 받아오기
+	   var rating = ${reviewdetail.rating_cd};
+	   var view = ${seatreview.view_rating};
+	   var seat = ${seatreview.seat_rating};
+	   var sound = ${seatreview.sound_rating};
+	   var light = ${seatreview.light_rating};
 	   
 	    $('#rating').barrating({
 	      theme: 'fontawesome-stars'
-	      , initialRating: star
+	      , initialRating: rating
 	      , readonly: true
 	    });
 	    
 	    $('#view').barrating({
 		      theme: 'fontawesome-stars'
-		      , initialRating: star
+		      , initialRating: view
 		      , readonly: true
 		});
 	    
 	    $('#seat').barrating({
 		      theme: 'fontawesome-stars'
-		      , initialRating: star
+		      , initialRating: seat
 		      , readonly: true
 		});
 	    
 	    $('#sound').barrating({
 		      theme: 'fontawesome-stars'
-		      , initialRating: star
+		      , initialRating: sound
 		      , readonly: true
 		});
 	    
 	    $('#light').barrating({
 		      theme: 'fontawesome-stars'
-		      , initialRating: star
+		      , initialRating: light
 		      , readonly: true
 		});
 	 });
    
+</script>
+<script type="text/javascript">
+
+	// 사용자가 업로드한 리뷰 파일 얻어오기 -- 작동X
+	$(document).ready(function()
+	{
+		$("#imagePreview").attr('src', '${reviewdetail.play_img}');
+	});
+	
+</script>
+<script type="text/javascript">
+
+	// 삭제 버튼 클릭시 확인 후 삭제 액션 수행
+	$(function()
+	{
+		$("#deleteBtn").click(function()
+		{
+			if(confirm("선택한 공연 리뷰를 정말 삭제하시겠습니까?"))
+			{
+				$(location).attr("href", "removemyreview.action?rev_distin_cd="
+                					+  $(this).val());
+			}
+		});
+	});
+	
 </script>
 </head>
 <body>
@@ -157,47 +201,47 @@
 <br><br>
 
 <div class="content">
-	<form class="content">
+	<form class="content" action="myreviewseatupdateform.action" method="post">
 		<table class="table table-borderless" id="reviewdetailtable">
 			<tr>
-				<td colspan="6" id="info">작성일자: 2021년 6월 20일  조회수: 22</td>
+				<td colspan="6" id="info">작성일자: ${reviewdetail.playrev_dt }  조회수: ${reviewdetail.view_cnt }</td>
 			</tr>
 			<tr>
 				<td colspan="2" rowspan="7" style="width:50px; margin:0 auto;">
 					<br>
 					<!-- 첨부 사진 보기 -->
-					<div class="imagePreview"></div>
+					<div id="imagePreview"></div>
 				</td>
-				<th colspan="4" id="reviewTitle">리뷰 제목은 이렇게 나옵니다.</th>
+				<th colspan="4" id="reviewTitle" name="reviewTitle">${reviewdetail.title }</th>
 			</tr>
 			<tr>
 				<th>공연명</th>
-				<td colspan="3">공연명은 이렇게 나옵니다.</td>
+				<td colspan="3">${play.play_nm }</td>
 			</tr>
 			<tr>
 				<th>공연 날짜</th>
-				<td colspan="3">2021년 6월 10일</td>
+				<td colspan="3">${reviewdetail.play_dt }</td>
 			</tr>
 			<tr>
 				<th>공연 시간</th>
-				<td colspan="3">18:00</td>
+				<td colspan="3">${reviewdetail.play_time }</td>
 			</tr>
 			<tr>
 				<th>공연 장소</th>
-				<td colspan="3">샤롯데씨어터</td>
+				<td colspan="3">${play.theater }</td>
 			</tr>
 			<tr>
 				<th>출연진</th>
-				<td colspan="3">옥주현, 윤공주, 윤형렬, 민영기</td>
+				<td colspan="3">${reviewdetail.play_cast }</td>
 			</tr>
 			<tr>
 				<th>티켓 금액</th>
-				<td colspan="3">130,000</td>
+				<td colspan="3">${reviewdetail.play_money }</td>
 			</tr>
 			<tr>
 				<th style="text-align:center;">공연 평점</th>
 				<td>
-					<select id="rating"">
+					<select id="rating">
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -206,7 +250,7 @@
 					</select>
 				</td>
 				<th>함께 본 사람</th>
-				<td>친구</td>
+				<td>${reviewdetail.companion }</td>
 			</tr>
 			<tr>
 				<th colspan="2">좌석 위치</th>
@@ -214,14 +258,14 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="text" id="floor" class="seat" value="" readonly="readonly"> 층
+					<input type="text" id="floor" class="seat" value="${seatreview.seat_flow }" readonly="readonly"> 층
 				</td>
 				<td>
-					<input type="text" id="area" class="seat" value="" readonly="readonly"> 구역
+					<input type="text" id="area" class="seat" value="${seatreview.seat_area }" readonly="readonly"> 구역
 				</td>
 				<td>시야</td>
 				<td>
-					<select id="view">
+					<select id="view" name="view">
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -231,7 +275,7 @@
 				</td>
 				<td>좌석</td>
 				<td>
-					<select id="seat">
+					<select id="seat" name="seat">
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -242,14 +286,14 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="text" id="line" class="seat" value="" readonly="readonly"> 열
+					<input type="text" id="line" class="seat" value="${seatreview.seat_line }" readonly="readonly"> 열
 				</td>
 				<td>
-					<input type="text" id="num" class="seat" readonly="readonly"> 번호
+					<input type="text" id="num" class="seat" value="${seatreview.seat_num }" readonly="readonly"> 번호
 				</td>
 				<td>음향</td>
 				<td>
-					<select id="sound">
+					<select id="sound" name="sound">
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -259,7 +303,7 @@
 				</td>
 				<td>조명</td>
 				<td>
-					<select id="light">
+					<select id="light" name="light">
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -273,22 +317,27 @@
 			</tr>
 			<tr>
 				<td colspan="6"><textarea id="seatreview" cols="55" rows="5"
-				readonly class="form-control"></textarea></td>
+				readonly="readonly" class="form-control">${seatreview.seat_rev }</textarea></td>
 			</tr>
 			<tr>
 				<th colspan="6">공연 상세 리뷰</th>
 			</tr>
 			<tr>
 				<td colspan="6"><textarea id="reviewdetail" cols="55" rows="10"
-				readonly class="form-control"></textarea></td>
+				readonly="readonly" class="form-control">${reviewdetail.contents}</textarea></td>
 			</tr>
 		</table>
+		<input type="hidden" id="userImg" value="${reviewdetail.play_img}">
+		<!-- 수정시 넘겨야 할 데이터: 좌석리뷰의 리뷰식별코드 -->
+		<input type="hidden" id="rev_distin_cd" name="rev_distin_cd" value="${seatreview.rev_distin_cd }">
+		
 		<br><br>
+		<div class="updateDeleteBtn">
+			<button type="submit" id="updateBtn" class="btn btn-info" value="${seatreview.rev_distin_cd }">리뷰 수정하기</button>
+			<button type="button" id="deleteBtn" class="btn btn-danger" value="${seatreview.rev_distin_cd }">리뷰 삭제하기</button>
+		</div>
 	</form>
-	<div class="updateDeleteBtn">
-		<button type="submit" id="updateDeleteBtn" class="btn btn-info">리뷰 수정하기</button>
-		<button type="submit" id="updateDeleteBtn" class="btn btn-danger">리뷰 삭제하기</button>
-	</div>
+
 </div><!-- close #content -->
 <br><br><br><br><br><br><br><br>
 

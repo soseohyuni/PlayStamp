@@ -9,13 +9,13 @@
 <head>
 <meta charset="UTF-8">
 <title>AddReviewDetailForm.jsp</title>
+<!-- 달력 선택 기능을 위한 jquery UI 추가 -->
+<link rel="stylesheet" type="text/css" href="<%=cp %>/css/jquery-ui.css">
+<script type="text/javascript" src="<%=cp%>/js/jquery-ui.js"></script>
 <!-- 부트스트랩 적용을 위한 3줄: 제이쿼리 스크립트 포함 -->
 <link rel="stylesheet" href="<%=cp %>/css/bootstrap.min.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="<%=cp %>/js/bootstrap.min.js"></script>
-<!-- 달력 선택 기능을 위한 jquery UI 추가 -->
-<link rel="stylesheet" href="<%=cp %>/css/jquery-ui.css">
-<script type="text/javascript" src="<%=cp%>/js/jquery-ui.js"></script>
 <!-- 별점 기능을 위한 아이콘을 CDN 방식으로 추가 -->
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 <!-- 별점 이미지 파일을 다운받은 뒤 css폴더에 추가해 경로 지정 -->
@@ -35,22 +35,6 @@
 	{
 		margin: 0 auto;
 	}
-	.error_next_box 
-	{
-	    margin-top: 9px;
-	    font-size: 12px;
-	    color: red;    
-	    display: none;
-	}
-	#alertTxt 
-	{
-	    position: absolute;
-	    top: 19px;
-	    right: 38px;
-	    font-size: 12px;
-	    color: red;
-	    display: none;
-	}
 	#reviewdetail
 	{
 		display: block;
@@ -62,7 +46,7 @@
 	    background: #fff;
 	    position: relative;
 	}
-	.imagePreview 
+	#imagePreview 
 	{
 		width: 210px;
 		height: 270px;
@@ -119,15 +103,13 @@
 </style>
 <script type="text/javascript">
 	
-	var star = 3;
 	// 별점 선택하기
 	$(function(){
-	    $('#rating').barrating({
+	    $('#rating_cd').barrating({
 	      theme: 'fontawesome-stars'
-	      , initialRating: star
+	      , initialRating: 5
 	      , onSelect: function(value, text, event){
-	  			// 클릭한 별점은 value로 받음
-	  			alert(value);
+	    	  $('#rating_cd').val(value).prop("selected", true);
 	  		}
 	    });
 	 });
@@ -135,9 +117,16 @@
 </script>
 <script type="text/javascript">
 
+	// 처음 imagePreview 부분에 공연 포스터 넣어주기
+	$(function()
+	{
+		var url = $("#getplay_img").val();
+		$("#imagePreview").attr("src", url);
+	});
+	
 	// 사진 업로드
 	$(function() {
-	    $("#uploadFile").on("change", function(){
+	    $("#play_img").on("change", function(){
 	        var files = !!this.files ? this.files : [];
 	        if (!files.length || !window.FileReader) return; 
 	 
@@ -146,7 +135,7 @@
 	            reader.readAsDataURL(files[0]); 
 	 
 	            reader.onloadend = function(){ 
-	             $('.imagePreview').css("background-image", "url("+this.result+")"); 
+	             $('#imagePreview').css("background-image", "url("+this.result+")"); 
 	            };
 	        }
 	    });
@@ -156,7 +145,7 @@
 <script type="text/javascript">
 
 	// 날짜를 달력에서 선택할 수 있도록 설정
-	$("#date").datepicker(
+	$("#play_dt").datepicker(
 	{
 		dateFormat: "yy-mm-dd"
 		, changeMonth: true
@@ -179,54 +168,54 @@
 <br><br>
 
 <div class="content">
-	<form action="" method="post" class="content">
+	<form action="addreviewdetail.action" method="post" class="content">
 		<table class="table table-borderless" id="reviewdetailtable">
 			<tr>
 				<td colspan="2" rowspan="7" style="width:50px; margin:0 auto;">
 					<!-- 첨부 사진 미리보기 -->
-					<div class="imagePreview"></div>
+					<div id="imagePreview"></div>
 					<br> <!-- 선택한 사진 이름 보기 --> 
-					<input type="file" id="uploadFile" name="image" class="img" accept="img/*" />
+					<input type="file" id="play_img" name="play_img" class="img" accept="img/*" />
 				</td>
 				<th>제목</th>
 				<td>
-					<input type="text" id="reviewtitle" class="form-control" maxlength="50" required="required">
+					<input type="text" id="title" name="title" class="form-control" maxlength="50" required="required">
 				</td>
 			</tr>
 			<tr>
 				<th>공연명</th>
 				<td><input type="text" id="playname" class="form-control"
-					value="" readonly></td>
+					value="${play.play_nm }" readonly></td>
 			</tr>
 			<tr>
 				<th>공연 날짜</th>
-				<td><input type="text" id="date" class="form-control" value=""
+				<td><input type="text" id="play_dt" name="play_dt" class="form-control"
 					required="required"></td>
 			</tr>
 			<tr>
 				<th>공연 시간</th>
-				<td><input type="text" id="starttime" class="form-control">
+				<td><input type="text" id="play_time" name="play_time" class="form-control">
 				</td>
 			</tr>
 			<tr>
 				<th>공연 장소</th>
-				<td><input type="text" id="place" class="form-control" value=""
+				<td><input type="text" id="place" class="form-control" value="${theater_nm }"
 					readonly></td>
 			</tr>
 			<tr>
 				<th>출연진</th>
-				<td><input type="text" id="cast" class="form-control" value="">
+				<td><input type="text" id="play_cast" name="play_cast" class="form-control" value="${play.play_cast }">
 				</td>
 			</tr>
 			<tr>
 				<th>티켓 금액</th>
-				<td><input type="text" id="money" class="form-control">
+				<td><input type="text" id="play_money" name="play_money" class="form-control">
 				</td>
 			</tr>
 			<tr>
 				<th style="text-align:center;">공연 평점</th>
 				<td>
-					<select id="rating"">
+					<select id="rating_cd"" name="rating_cd">
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -235,19 +224,29 @@
 					</select>
 				</td>
 				<th>함께 본 사람</th>
-				<td>셀렉트박스로 리스트 가져오기 (c:foreach)</td>
+				<td>
+				<select id="companion_cd" name="companion_cd">
+				<c:forEach var="c" items="${companion}">
+					<c:set var="a" value="${a+1 }"/>
+					<option value="${a }">${c.companion }</option>
+				</c:forEach>
+				</select>
+				</td>
 			</tr>
 			<tr>
 				<th colspan="4">공연 상세 리뷰</th>
 			</tr>
 			<tr>
-				<td colspan="4"><textarea id="reviewdetail" cols="55" rows="10" style="resize: none;" class="form-control"></textarea></td>
+				<td colspan="4"><textarea id="contents" name="contents" cols="55" rows="10" style="resize: none;" class="form-control"></textarea></td>
 			</tr>
 		</table>
 		<br><br>
 		<div class="finishBtn">
 			<button type="submit" id="finishBtn" class="btn btn-info">리뷰 추가 완료하기</button>
 		</div>
+		<!-- 이전 페이지로 넘겨받은 데이터 -->
+		<input type="hidden" id="rev_distin_cd" name="rev_distin_cd" value="${rev_distin_cd }">
+		<input type="hidden" id="getplay_img" name="getplay_img" value="${play.play_img }">
 	</form>
 </div><!-- close #content -->
 
