@@ -225,7 +225,15 @@
 	           });
 	       }
 	    }); 
-
+	    
+	    /* 
+	    function nextImg()
+	    {
+	    	<c:forEach var="list" items="${highReviewSorting}" begin="4" end="7">   
+		    	array.push("${list.pc}");
+		    </c:forEach>
+	    }
+		 */
 </script>
 
 </head>
@@ -249,6 +257,7 @@
     <div id="highReviewSorting" class="container">
        <div id="pageTitle1" class="container"><img src="images/smileicon.png" style="width:2%;"> 리뷰 많은 공연순<br><br></div>
        <div id="imgContainer" class="row">
+       		<div id="reviewFirstSorting">
        		<c:forEach var="listReview" items="${highReviewSorting }" end="3">
 	          <div class="col-lg-3 col-xs-6 col-md-3">
 	             <a href="playdetail.action?play_cd=${listReview.play_cd }" class="thumbnail">
@@ -257,8 +266,12 @@
 	             <div class="playTitle">${listReview.play_nm }</div>
 	          </div>
 	         </c:forEach>
+	         </div>
        </div>
     </div>
+    <a href="javascript:prevImg();" id="prevImg" class="btn btn-default" style="background-color: red;"></a>
+    <a href="javascript:nextImg();" id="nextImg" class="btn btn-default" style="background-color: blue;"></a>
+    <!-- <button type="button" id="nextImg" class="btn btn-default" style="background-color: blue;"></button> -->
     <br><br><br><br><br><br>
     
     <!-- 좋아요 많은 리뷰순 리스트 출력 -->
