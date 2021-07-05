@@ -96,6 +96,10 @@ String cp = request.getContextPath();
 		});//-- id 체크 끝
 		
 		
+		
+		
+		
+		
 		//-- 이메일 체크 시작
 		$("#userMail").on("input", function()
 		{
@@ -109,6 +113,58 @@ String cp = request.getContextPath();
 			}
 	
 		});
+		
+		//인증번호 알림창 가림
+		$("#alert-success-email").hide();
+		$("#alert-danger-email").hide();
+		//true일시 전송
+		
+		var checkCode = false;
+		
+		//인증번호를 저장할 변수
+		var code = "";
+		
+		//인증번호 이메일 전송
+		$("#mailCheckBtn").on("click",function(e){
+			e.preventDefault();
+			var email = $("input[name='email']").val();
+			var checkBox = $(".mail_check_input");
+			
+			$.ajax({
+				type:"GET",
+				url : "/mailcheck.action",
+				data : {email : email},
+				contentType :"text/plain;charset=UTF-8",
+				success : function(data){ //인증번호를 가져옴
+					checkBox.attr("disabled",false); //인증번호 입력 가능
+					checkBox.val(''); // 기존에 값이 있었으면 지워줌
+					$("#alert-success-email").hide();
+					$("#alert-danger-email").hide();
+					checkCode = false;
+					code = data; // 인증번호를 변수에 저장
+				}
+			});
+		});
+		
+		//인증코드 입력 시 동일성 확인
+		$(".mail_check_input").keyup(function() {
+			var inputCode = $(".mail_check_input").val();
+			if (inputCode != "" || code != "") {
+				if (inputCode == code) {
+					$("#alert-success-email").show();
+					$("#alert-danger-email").hide();
+					$(".mail_check_input").attr("disabled",true); //인증번호 입력 멈춤
+					checkCode = true;
+				} else {
+					$("#alert-success-email").hide();
+					$("#alert-danger-email").show();
+					checkCode = false;
+				}
+			}
+		});
+		
+		
+		
 		
 		//-- 비밀번호 일치 확인
 		$("#userPw2").blur(function()
@@ -186,20 +242,45 @@ String cp = request.getContextPath();
 					<input type="text" id="userNick" name="user_Nick" maxlength="20" required="required">
 				</div>
 
-				<!-- 이메일 입력 및 인증 -->
+
+				<!-- 이메일 입력 및 인증 
 				<div class="emailInput">
 					<h3 class="joinTitle">이메일</h3>
 					<input type="text" id="userMail" class="emailInputBox" name="user_Mail">
 					<span id="checkMail"></span>
+					
 					<button class="btn">인증번호 받기</button>
 				</div>
-
+				-->
+				
+				
+				
+				<!-- 이메일인증 -->
+				<div class="form-group">
+					<label for="email">이메일 인증</label> 
+					<input type="text" id="userMail" name="user_Mail" class="form-control" placeholder="Enter email">
+					<span id="checkMail"></span>
+				</div>
+				<div class="form-inline mb-3">
+					<div class="mail_check_input_box" id="mail_check_input_box_false">
+						<input type="text" class="mail_check_input form-control col-8" disabled="disabled">
+						<button id="mailCheckBtn" class="btn btn-outline-primary btn-sm">인증번호 전송</button>
+					</div>
+				</div>
+				<!-- 인증번호 확인 -->
+				<div class="alert alert-success" id="alert-success-email">인증번호가 일치합니다.</div>
+				<div class="alert alert-danger" id="alert-danger-email">인증번호가 일치하지 않습니다.</div>
+		
+		
+		
+				<!-- 
 				<div class="emailCheck">
 					<input type="text" id="emailCheck" class="emailInputBox"
 						maxlength="20" placeholder="인증번호 4자리 입력">
 					<button class="btn" id="emailCheck2">확인</button>
 				</div>
-				
+				 -->
+				 
 				<div class="checkbox">
 				  <label>
 				    <input type="checkbox" name="chk" id="chk">

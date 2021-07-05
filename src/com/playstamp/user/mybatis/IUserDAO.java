@@ -11,6 +11,4 @@ public interface IUserDAO
 	public int userInsertProcedure(User user) throws SQLException, ClassNotFoundException;
 	
 	public String userLogin(String userId, String userPw) throws SQLException;
-	public User searchUserInfo(String userId) throws SQLException;
-	public void updateUserInfo(User user) throws SQLException;
 }

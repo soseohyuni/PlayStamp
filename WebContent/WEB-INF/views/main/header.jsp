@@ -6,9 +6,6 @@
 <%
 		Object user = session.getAttribute("id");
 		String userId = (String)user;
-		
-		Object nick = session.getAttribute("nick");
-		String userNick = (String)nick;
 %>
 <!DOCTYPE html>
 <html>
@@ -48,7 +45,7 @@
 		
 		--%>
 
-
+<%-- <%= userNick %> --%>
 	<!-- Top Bar -->
 	<div class="top_bar">
 		<div class="container">
@@ -65,7 +62,7 @@
 							</div>
 						<%} else{ %>
 							<div class="bar_line">
-								<a href="myspace.action"><b><%= userNick %></b>님</a>
+								<a href="myspace.action"><b>${sessionScope.nick }</b>님</a>
 							</div>
 							<div class="bar_line">
 								<a href="logout.action">로그아웃</a>
@@ -99,7 +96,6 @@
 						<ul class="standard_dropdown main_nav_dropdown">
 						
 							<li><a href="myspace.action">마이스페이스</a></li>
-							
 							<li><a href="musicallist.action">공연정보</a></li>
 							<li><a href="blog.html">좌석정보</a></li>
 							<li><a href="contact.html">티켓 양도</a></li>

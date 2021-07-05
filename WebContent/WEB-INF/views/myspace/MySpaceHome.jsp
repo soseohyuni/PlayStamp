@@ -3,13 +3,8 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
-	
-	Object user = session.getAttribute("id");
-	String userId = (String)user;
-	
-	Object nick = request.getAttribute("userNick");
-	String userNick = (String)nick;
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,9 +27,9 @@
 		
 		<div id="firstArea" class="container">
 			<div id="profile" class="myspace">
-				<div class="profileBox"><img class="profileImg" alt="" src="images/default_profile.png"></div>
+				<div class="profileBox"><img class="profileImg" onerror="this.src='<%=cp%>/images/default_profile.png'" src="${userInfo.user_Img }"></div>
 				<div class="userInfoBox">
-					<span class="sTitle"><%= userNick %></span><span class="label label-primary">우수회원</span>
+					<span class="sTitle">${sessionScope.nick }</span><span class="label label-primary">${sessionScope.grade }</span>
 					<div class="userMail">mumuu@naver.com</div>
 					<div class="listArea"><a href="myprofile.action">더보기</a></div>
 				</div>
@@ -45,7 +40,7 @@
 			<div id="listArea" class="myspace">
 				<div id="list1" style="display: flex; align-items: center;">
 						<div class="listArea sTitle">현재 내 포인트 ></div>
-						<div class="listArea aTitle"><a href="cashlist.action">320 P</a></div>
+						<div class="listArea aTitle"><a href="pointlist.action">320 P</a></div>
 				</div>
 			</div>
 			

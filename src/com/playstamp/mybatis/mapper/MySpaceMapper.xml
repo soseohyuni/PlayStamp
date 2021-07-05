@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.playstamp.myspace.mybatis.IMyspaceDAO">
+	
+	<!-- 유저 정보 조회 -->
+	<select id="searchUserInfo" parameterType="String" resultType="com.playstamp.user.User">
+		SELECT *
+		FROM TBL_USERINFO
+		WHERE USER_ID = #{user_Id}
+	</select>
+	
+	
+	<!-- 유저 정보 업데이트 -->
+	<update id="updateUserInfo">
+		UPDATE TBL_USERINFO
+		SET USER_NICK = #{user_Nick}, USER_TEL=#{user_Tel}, USER_PW=#{user_Pw}
+		WHERE USER_ID = #{user_Id}
+	</update>
+	
+	
+	<!-- 유저 프로필 업데이트 -->
+	<update id="updateUserImg">
+		UPDATE TBL_USERINFO
+		SET USER_IMG = #{arg1}
+		WHERE USER_ID = #{arg0}
+	</update>
+	
+	<!-- 유저 포인트 조회 -->
+	<select id="userPointList" parameterType="String" resultType="com.playstamp.myspace.Point">
+		SELECT NVL(POINT_Y, '관리자 등록') AS POINT_Y, POINT_DT, POINT, SUM(POINT) OVER(ORDER BY POINT_DT) AS USER_POINT
+		FROM 
+		(SELECT POINT_Y, POINT_DT, POINT
+		FROM TBL_POINT P LEFT JOIN TBL_POINT_Y PY
+		ON PY.POINT_Y_CD = P.POINT_Y_CD
+		    LEFT JOIN TBL_USERINFO U
+		    ON P.USER_CD = U.USER_CD
+		WHERE U.USER_ID = #{arg0}
+		UNION
+		SELECT NULL, GTPOINT_DT AS POINT_DT, GTPOINT AS POINT
+		FROM TBL_GTPOINT GT LEFT JOIN TBL_USERINFO U
+		ON GT.USER_CD = U.USER_CD
+		WHERE U.USER_ID = #{arg0}) I
+		ORDER BY POINT_DT DESC
+	</select>
+	
+	<!-- 유저 캐시 조회 -->
+	<select id="userCashList" parameterType="String" resultType="com.playstamp.myspace.Cash">
+		SELECT CASH_Y, CASH_DT, CASH, USER_CASH
+		FROM VIEW_CASH_LIST
+		WHERE USER_ID = #{arg0}
+		ORDER BY CASH_DT DESC
+	</select>
+	
+	<!-- 좋아요 개수 -->
+	<select id="countingLike" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM VIEW_LIKE_COUNT
+		WHERE USER_ID=#{arg0}
+	</select>
+	
+
+</mapper>

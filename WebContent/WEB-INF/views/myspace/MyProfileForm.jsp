@@ -13,8 +13,13 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
 
+
+
 	$(function ()
 	{
+		$("#userUpImg").on("change", handleImgFileSelect);
+		
+		
 		//-- 비밀번호 일치 확인
 		$("#userPw2").blur(function()
 		{
@@ -39,6 +44,28 @@
 
 	});
 	
+	
+	//-- 첨부 이미지 미리보기에 반영되기 전 확장자 체크
+	function handleImgFileSelect(e) 
+	{
+	    var files = e.target.files;
+	    var filesArr = Array.prototype.slice.call(files);
+
+	    filesArr.forEach(function(f) {
+	        if(!f.type.match("image.*")) {
+	            alert("이미지 파일만 첨부해주세요.");
+	            return;
+	        }
+
+	        sel_file = f;
+	        var reader = new FileReader();
+	        reader.onload = function(e) {
+	            $("#imgWrap").attr("src", e.target.result);
+	        }
+	        reader.readAsDataURL(f);
+	    });
+	}
+	
 	function checkUpdateForm()
 	{
 		
@@ -61,14 +88,35 @@
 			<div id="pForm" >
 			
 				<!-- left -->
-				<div id="profileImg profileImg-b">
-					<div class="userInfo" id="userImg"><img class="profileImg"  alt="" src="images/profile.png"></div>
-					<input type="file" id="fileInput">
-					<div class="userInfo">우수회원</div>
+				<div id="profileImg profileImg-b" >
+					
+					<!-- 프로필사진 -->
+					<form action="UserImgUpload" method="post" enctype="multipart/form-data">
+						<div class="profileImg" id="userImg">
+		                    <img id="imgWrap" onerror="this.src='<%=cp%>/images/default_profile.png'" 
+							src="${userInfo.user_Img }">
+						</div>
+					
+						<div>
+							<input type="file" name="userImg" id="userUpImg">
+						</div>
+						
+						<input type="hidden" name="userId" value="${sessionScope.id }">
+						
+						<div>
+							<br>
+							<input class="btn btn-primary" type="submit">사진 변경
+						</div>
+					
+					</form>
+					
+					<div class="userInfo">${sessionScope.grade }</div>
 					<div class="userInfo sTitle">현재 포인트</div>
-					<div class="userInfo aTitle">320p</div>
+					<div class="userInfo aTitle">320p</div> 
+					
 				</div>
-				
+					
+					
 				<!-- right -->
 				<div id="profileInput">
 				

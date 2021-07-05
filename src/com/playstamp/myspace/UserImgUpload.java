@@ -1,0 +1,69 @@
+package com.playstamp.myspace;
+
+import java.io.File;
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+@WebServlet("/UserImgUpload")
+public class UserImgUpload extends HttpServlet {
+	private static final long serialVersionUID = 1L; 
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+		/*
+		// 파일이 저장되는 실제 경로 
+		
+		String realPath = request.getServletContext().getRealPath("upload");
+		System.out.println(realPath);
+		
+		// 위 경로의 디렉토리가 존재하지 않으면 새로 생성 
+		File dir = new File(realPath); 
+		if (!dir.exists()) { dir.mkdirs(); } // 파일크기 제한 설정 (15mb) 
+		int sizeLimit = 15 * 1024 * 1024; // MultipartRequest 객체를 생성하면 파일 업로드 수행 
+		
+		MultipartRequest multpartRequest = new MultipartRequest(request
+				, realPath, sizeLimit, "utf-8", new DefaultFileRenamePolicy()); // 업로드한 파일명 가져오기 
+		
+		String fileName = multpartRequest.getFilesystemName("userImg"); 
+		
+		HttpSession session= request.getSession();
+	    session.setAttribute("fileName", fileName);
+
+		response.sendRedirect("myprofile.action"); 
+		*/
+		
+		String realPath = request.getServletContext().getRealPath("upload");
+		
+		String fileName = null;
+	    String contextPath = request.getServletContext().getContextPath();
+	    String userProfile = null;
+	    
+	    // 위 경로의 디렉토리가 존재하지 않으면 새로 생성 
+		File dir = new File(realPath); 
+		if (!dir.exists()) { dir.mkdirs(); } // 파일크기 제한 설정 (15mb) 
+		int sizeLimit = 15 * 1024 * 1024; // MultipartRequest 객체를 생성하면 파일 업로드 수행 
+		
+		MultipartRequest multpartRequest = new MultipartRequest(request
+				, realPath, sizeLimit, "utf-8", new DefaultFileRenamePolicy()); // 업로드한 파일명 가져오기 
+		
+		fileName = multpartRequest.getFilesystemName("userImg"); 
+		
+		userProfile = contextPath + "/upload/" + fileName;
+
+		HttpSession session= request.getSession();
+	    session.setAttribute("userProfile", userProfile);
+	    
+		response.sendRedirect("uploadimg.action"); 
+		
+	} 
+}
+
