@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -27,6 +27,13 @@
 
 <style type="text/css">
 	
+	.ratingContainer
+	{
+		position: relative;
+        right: 87px;
+        size: 120px;
+	}
+	
 	.reviewComment, .reviewLike
 	{
 		width: 25px;
@@ -35,14 +42,28 @@
 		color: black;
 	}
 	
-	.userName
+	.reviewComment
+	{
+		margin-left: 5px;
+	}
+	
+	.user
 	{
 		font-weight: bold;
-		font-size: 20px;
+		font-size: 16px;
 		border: none;
 		background-color: #fafafa;
 		color: black;
 		padding: 5px;
+		right: 20px;
+		position: relative;
+		margin-top: 5px;
+	}
+	
+	.userName
+	{
+		background-color: #fafafa;
+		border: none;
 	}
 	
 	#userImage
@@ -60,15 +81,21 @@
 		text-align: center;
 		padding: 1px;
 		border-radius: 1em;
-		font-size: 15pt;
+		font-size: 12pt;
 		font-weight: bold;
 		color: black;
 		padding: 5px;
+		margin-top: 10px;
+		width: 280px;
+		
+		white-space: nowrap;
+		overflow: hidden;
+  		text-overflow: ellipsis;
 	}
 	
 	#pageTitle1, #pageTitle2, #pageTitle3
 	{
-		font-size: 18px;
+		font-size: 15px;
 		font-weight: bold;
 		left: 70px;
 		margin-bottom: 0px;
@@ -84,6 +111,10 @@
 		font-size: 10pt;
 		color: black;
 		padding: 10px;
+		
+		white-space: nowrap;
+		overflow: hidden;
+  		text-overflow: ellipsis;
 	}
 	
 	#imgContainer, #reviewContainer
@@ -111,6 +142,10 @@
 	{
 		font-size: 15px;
 		font-weight: bold;
+		overflow: hidden;
+  		text-overflow: ellipsis;
+  		width: 245px;
+  		white-space: nowrap;
 	}
 		
 	.reviewTitle
@@ -123,6 +158,10 @@
 		color: black;
 		padding-top: 10px;
 		text-align: left;
+		
+		white-space: nowrap;
+		overflow: hidden;
+  		text-overflow: ellipsis;
 	}
 	
 	.playRating
@@ -146,47 +185,39 @@
 	
 	.likecomment
 	{
-		text-align: left;
-		align: left;
 		background-color: #fafafa;
+		position: relative;
+		left: 105px;
 	}
 	
 </style>
 <script type="text/javascript">
-	
 
-	//var list = new Array();
-	
-	<c:forEach var="itemList" items="${highLikeSorting }">
-		alert("${itemList.rating_cd}");
-	</c:forEach>
-	
-	
-
-	/*
-	let list = [];
-	<c:forEach var="item" items="${highLikeSorting}" varStatus="status">
-		list.push("${item}");
-	</c:forEach>
-
-	
-	<c:foreach items="${highLikeSorting}" var="item"> 
-		list.push("${item}"); 
-	</c:foreach>
-	
-	
-   // 추가한 제이쿼리 플러그인의 콜백함수 호출
-   $(function(){
- 
-      $('#avgRating').barrating({
-        theme: 'fontawesome-stars'
-        , initialRating: list[5]
-        , readonly : true
-      });
-   });
-   */
+	    //공연 평점을 담을 배열
+	    var array = new Array();
+	    
+	    //각 평점 값 list 에 담기
+	    <c:forEach var="list" items="${highLikeSorting}">   
+	    	array.push("${list.rating_cd}");
+	    </c:forEach>
+	    
+	    //별점 제이쿼리
+	    $(function()
+	    {
+	       for (var i = 0; i < array.length; i++)
+	       {
+	          //공연 평점을 별점으로 변환
+	          $("#rating"+i).barrating(
+	          {
+	             theme: "fontawesome-stars"
+	               , initialRating: array[i]
+	               , readonly: true
+	           });
+	       }
+	    }); 
 
 </script>
+
 </head>
 <body>
 
@@ -202,7 +233,7 @@
         <p>공연 관람을 기록하고 공유해보세요</p>
         <p><a class="btn btn-primary btn-lg" href="#" role="button">리뷰 추가하기</a></p>
    	  </div>
-	</div>
+	</div><br><br>
 
 	<!-- 리뷰 많은 공연순 리스트 출력 -->
     <div id="highReviewSorting" class="container">
@@ -218,14 +249,15 @@
 	         </c:forEach>
        </div>
     </div>
-    <br><br>
+    <br><br><br><br><br><br>
     
     <!-- 좋아요 많은 리뷰순 리스트 출력 -->
     <div id="highLikeSorting" class="container">
        <div id="pageTitle2" class="container"><img src="images/hearticon.png" style="width:2%;"> 좋아요 많은 리뷰순<br><br></div>
        <div id="reviewContainer" class="row" style="height: 350px;">
+       	 <c:set var="i" value="0"></c:set>
        	 <c:forEach var="listLike" items="${highLikeSorting }" end="2">
-	       	 <div class="col-lg-4 col-xs-6 col-md-3" >
+	       	 <div class="col-lg-4 col-xs-6 col-md-3">
 	             <a href="#" class="thumbnail">
 	             	 <span class="user">
 			             <img id="userImage" src="${listLike.user_img }">
@@ -233,26 +265,28 @@
 					 </span>
 					 <input type="text" class="playName" value="${listLike.play_nm }" readonly="readonly"><br>
 					 <input type="text" class="reviewTitle" value="${listLike.title }" readonly="readonly"><br>
-					 <%-- <input type="text" class="playRating" value="${listLike.rating_cd }" readonly="readonly"><br> --%>
-					 <select id="avgRating">
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-						</select>
+					 <span class="ratingContainer" style="display: block">
+					 <select id="rating${i}">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					 </select>
+					 </span>
 					 <textarea class="reviewContent" readonly="readonly">${listLike.contents }</textarea><br>
 					 <span class="likecomment">
-						 <img src="images/blackhearticon.png" style="width: 24px;"><input type="text" class="reviewLike" value="${listLike.like_count }" readonly="readonly">
-						 <img src="images/commenticon.png" style="width: 24px;"><input type="text" class="reviewComment" value="${listLike.comment_count }" readonly="readonly"><br>
+						 <img src="images/heartblack.png" style="width: 25px;"><input type="text" class="reviewLike" value="${listLike.like_count }" readonly="readonly">
+						 <img src="images/commenticon.png" style="width: 20px;"><input type="text" class="reviewComment" value="${listLike.comment_count }" readonly="readonly"><br>
 					 </span>
 	             </a>
 	         </div>
+	     <c:set var="i" value="${i+1}"></c:set>
          </c:forEach>
        </div>
     </div><!-- clsoe #highLikeSorting -->
     
-    <br><br>
+    <br><br><br><br><br><br>
     
     <!-- 평점 높은 공연순 리스트 출력 -->
     <div id="highRateSorting" class="container">
@@ -268,6 +302,8 @@
 	      </c:forEach>
        </div>
     </div><!-- close #highRateSorting -->
+    
+    <br><br><br>
     
 </div><!-- close #wrapper -->
 
