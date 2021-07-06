@@ -11,7 +11,7 @@
 <!-- Favicon -->
 <link rel="icon" type="image/x-icon" href="bootstrap/assets/favicon.ico" />
 
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 <link rel="stylesheet"
@@ -38,10 +38,10 @@
 					<div class="top_bar_content ml-auto">
 						<div class="top_bar_user">
 							<div class="bar_line">
-								<a href="#">회원가입</a>
+								<a href="signupform.action">회원가입</a>
 							</div>
 							<div class="bar_line">
-								<a href="loginform.action">로그인</a>
+								<a href="signinform.action">로그인</a>
 							</div>
 							<div>
 								<a href="#">고객센터</a>
@@ -61,7 +61,7 @@
 				<!-- Logo -->
 				<div class="col-lg-2 col-sm-3 col-3 order-1 logo_container">
 					<div class="logo_container1">
-						<a href="main.action"><img alt="로고" src="<%=cp%>/images/logo_typo.svg"></a>
+						<a href=""><img alt="로고" src="<%=cp%>/images/logo_typo.svg"></a>
 					</div>
 				</div>
 
