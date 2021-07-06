@@ -169,7 +169,7 @@
 <div style="width: 1300;">
 	<!-- 상단바 -->
 	<div>
-		<c:import url="header.jsp"></c:import>
+		<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
 	</div>
 	
 	<!-- 뮤지컬/연극 버튼 -->

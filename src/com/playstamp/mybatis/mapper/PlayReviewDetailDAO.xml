@@ -44,4 +44,10 @@
 		FROM TBL_LIKE
 		WHERE PLAYREV_CD=#{playrev_cd} AND USER_CD=#{user_cd}
 	</select>
+	
+	<delete id="delHeart">
+		DELETE
+		FROM TBL_LIKE
+		WHERE PLAYREV_CD=#{playrev_cd} AND USER_CD=#{user_cd}
+	</delete>
 </mapper>

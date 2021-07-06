@@ -166,7 +166,7 @@
 <div class="container">
 <!-- 상단바 -->
 	<div id="header">
-		<c:import url="/WEB-INF/views/header.jsp"></c:import>
+		<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
 	</div>
 <!-- 내용 출력 시작 -->	
 	<div id="wrapper">

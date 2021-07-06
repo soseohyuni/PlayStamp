@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +30,27 @@ public class PlayReviewDetailController
 	private SqlSession sqlSession;
 	
 	@RequestMapping(value="playreviewdetail.action", method=RequestMethod.GET)
-	public String sendPlayReviewDetail(HttpServletRequest request, ModelMap model) throws SQLException
+	public String sendPlayReviewDetail(HttpServletRequest request, ModelMap model, HttpSession session) throws SQLException
 	{
 		IPlayReviewDetailDAO dao = sqlSession.getMapper(IPlayReviewDetailDAO.class);
 		
 		String playrev_cd = request.getParameter("playrev_cd");
+		
+		String user_cd = (String)session.getAttribute("code");
+		
+		Like like = new Like();
+		
+		like.setPlayrev_cd(playrev_cd);
+		like.setUser_cd(user_cd);
+		
+		//@@ 좋아요 체크 메소드 
+		int checkHeart = 0;
+		
+		//@@ 있을 경우 1, 없을 경우 0 반환
+		if (dao.checkHeart(like) != 0)
+			checkHeart = 1;
+			
+		model.addAttribute("checkHeart",checkHeart);
 		
 		//System.out.println(playrev_cd);
 		// addAttribute 를 통해 전송
@@ -41,7 +58,7 @@ public class PlayReviewDetailController
 		
 		//@@ 코멘트 리스트 전송 구문도 추가
 		model.addAttribute("commentList", dao.getCommentList(playrev_cd));
-		
+	
 		return "WEB-INF/views/PlayReviewDetail.jsp";
 	}
 
@@ -100,17 +117,34 @@ public class PlayReviewDetailController
 		return "success";
 	}	
 	
-	//@@ 좋아요 추가
-	@RequestMapping(value="/heartadd.action", method= {RequestMethod.POST, RequestMethod.GET})
-	public @ResponseBody int addHeart(@RequestBody Like like) throws SQLException
+	//@@ 좋아요 버튼 클릭시 
+	@RequestMapping(value="/heartclick.action", method= {RequestMethod.POST, RequestMethod.GET})
+	public @ResponseBody Map<String, Object> addHeart(@RequestBody Like like, HttpSession session) throws SQLException
 	{
 		IPlayReviewDetailDAO dao = sqlSession.getMapper(IPlayReviewDetailDAO.class);	
-		int result = 0;
+		Map<String, Object> result = new HashMap<String, Object>(); 
+		
+		int returnValue = 0;
+		
 		try
-		{
-			dao.addHeart(like);
+		{	
+			//@@ 이미 좋아요를 눌렀을 경우
+			if (dao.checkHeart(like)!=0)
+			{
+				// 좋아요를 삭제하고 
+				dao.delHeart(like);
+				// 0을 반환
+				returnValue = 0;
+			}
+			else if(dao.checkHeart(like)==0)
+			{
+				dao.addHeart(like);
+				returnValue = 1;
+			}
 			
-			result = dao.countHeart(like);
+			
+			result.put("lcount", dao.countHeart(like));
+			result.put("returnValue", returnValue);
 
 		} catch (Exception e)
 		{
@@ -119,6 +153,23 @@ public class PlayReviewDetailController
 		
 		return result;
 	}
+	
+	/*
+	 * //@@ 좋아요 삭제
+	 * 
+	 * @RequestMapping(value="/heartdel.action", method= {RequestMethod.POST,
+	 * RequestMethod.GET}) public @ResponseBody int delHeart(@RequestBody Like like,
+	 * HttpSession session) throws SQLException { IPlayReviewDetailDAO dao =
+	 * sqlSession.getMapper(IPlayReviewDetailDAO.class); int result = 0;
+	 * 
+	 * try { dao.delHeart(like);
+	 * 
+	 * result = dao.countHeart(like);
+	 * 
+	 * } catch (Exception e) { e.printStackTrace(); }
+	 * 
+	 * return result; }
+	 */
 	
 	
 }
