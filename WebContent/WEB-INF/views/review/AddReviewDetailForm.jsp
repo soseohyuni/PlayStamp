@@ -125,6 +125,7 @@
 	});
 	
 	// 사진 업로드
+	/*
 	$(function() {
 	    $("#play_img").on("change", function(){
 	        var files = !!this.files ? this.files : [];
@@ -140,6 +141,7 @@
 	        }
 	    });
 	});
+	*/
 
 </script>
 <script type="text/javascript">
@@ -168,7 +170,7 @@
 <br><br>
 
 <div class="content">
-	<form action="addreviewdetail.action" method="post" class="content">
+	<form action="addreviewdetail.action" method="post" class="content" enctype="multipart/form-data">
 		<table class="table table-borderless" id="reviewdetailtable">
 			<tr>
 				<td colspan="2" rowspan="7" style="width:50px; margin:0 auto;">

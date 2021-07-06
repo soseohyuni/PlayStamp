@@ -154,7 +154,7 @@
 	<br>
 	<br>
 	<div id="container">
-		<form action="/addreviewdetail.action" method="post">
+		<form action="myreviewdetailupdateform.action" method="post">
 			
 			<!-- 5대 공연장인 경우 이미지 로드 + 구역 입력받기 분기
 			     c:choose문으로 만들어둔 것 나중에 추가할 것 (지금은 주석이 안먹음) -->
@@ -285,15 +285,13 @@
 				<b>좌석 리뷰</b>
 			</div>
 			<div class="center">
-				<textarea id="review" cols="55" rows="5" style="resize: none;"
-				value="기존에 입력했던 좌석리뷰"></textarea>
+				<textarea id="review" cols="55" rows="5" style="resize: none;">${seatreview.seat_rev }</textarea>
 			</div>
 			<br>
 			<br>
 			<br>
 			<div class="center">
-				<button type="submit" id="center" class="btn btn-info">상세
-					리뷰 수정하러 가기</button>
+				<button type="submit" id="center" class="btn btn-info">상세 리뷰 수정하러 가기</button>
 			</div>
 		</form>
 	</div>

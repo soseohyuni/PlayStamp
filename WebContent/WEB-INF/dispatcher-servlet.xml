@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xsi:schemaLocation="
         http://www.springframework.org/schema/beans 
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
         http://www.springframework.org/schema/context 
-        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd"
+    xmlns:mvc="http://www.springframework.org/schema/mvc">
+
 
 	<!-- ① 기존코드 -->
 	<!-- ※ Annotation 표기법으로 Controller를 등록한다. -->
@@ -29,7 +33,7 @@
 	<!-- ⑤ 매퍼 파일 작성 후 마저 등록해서 완성 → mapperLocations -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="localDataSource"></property>
-		<property name="mapperLocations" value="classpath:com/playstamp/review/mybatis/mapper/*.xml"></property>
+		<property name="mapperLocations" value="classpath:com/playstamp/mybatis/mapper/*.xml"></property>
 	</bean>
 
 	<!-- ⑥ sqlSession 등록 과정에서 생겨나는 추가 코드 -->
@@ -37,5 +41,31 @@
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory"></constructor-arg>
 	</bean>
+	
+	<!-- Configures Handler Interceptors -->
+    <mvc:interceptors>
+     <mvc:interceptor>
+   
+      <mvc:mapping path="/myspace.action"/>
+   
+      <bean id="interceptor" class="com.playstamp.user.Interceptor"></bean>
+     </mvc:interceptor>
+    </mvc:interceptors>
+    
+     <!-- email 인증 관련   -->
+     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="username" value="shyunnkk@gmail.com"/>
+        <property name="password" value="tjgusS1212" />
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.debug">true</prop>
+            </props>
+        </property>
+    </bean>
 
 </beans>
