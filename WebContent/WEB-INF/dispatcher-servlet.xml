@@ -15,11 +15,11 @@
 	<!--       이 과정에서 Front Controller 가 갖고 있는 확장자의 형태로 구성한다. -->
 	<!--    - 『class=""』 속성은 Controller 객체의 클래스 경로 및 이름을 등록한다. -->
 	
-	<context:component-scan base-package="com.playstamp.*"/>
+	<context:component-scan base-package="com.playstamp.home.mybatis"/>
+	<context:component-scan base-package="com.playstamp.mseat.mybatis"/>
     <!-- → 『base-package』 속성에 Controller 객체가 포함된 패키지 경로를 지정한다. -->
     <!-- 이러한 패키지 경로를 알려줄테니까 이안에 설계도를 읽어서
     필요에 따라 그 설계도에 따라 만들어서 쓰면 돼 -->
-    
     
     <context:annotation-config />
 
