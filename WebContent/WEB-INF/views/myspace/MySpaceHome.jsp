@@ -29,8 +29,8 @@
 			<div id="profile" class="myspace">
 				<div class="profileBox"><img class="profileImg" onerror="this.src='<%=cp%>/images/default_profile.png'" src="${userInfo.user_Img }"></div>
 				<div class="userInfoBox">
-					<span class="sTitle">${sessionScope.nick }</span><span class="label label-primary">${sessionScope.grade }</span>
-					<div class="userMail">mumuu@naver.com</div>
+					<span class="sTitle">${userInfo.user_Nick }</span><span class="label label-primary">${sessionScope.grade }</span>
+					<div class="userMail">${userInfo.user_Mail }</div>
 					<div class="listArea"><a href="myprofile.action">더보기</a></div>
 				</div>
 			</div>

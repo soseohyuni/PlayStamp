@@ -27,25 +27,6 @@
 <!-- header -->
 <header class="header">
 
-
-		<%-- 
-		
-		<%if(session_id == null) {%>		
-			<!-- 로그인 이전 화면 -->
-			<label>아이디</label>
-			<input type='text' size='7' name='mid'/>
-			<label>암호</label>
-			<input type='password' size='7' name='pwd'/>
-			<input type='button' value='로그인' id='btnLogin'/>
-		<%}else{ %>	
-			<!-- 로그인 이후 화면 -->
-			<span><%=(session_id == null)? "손님" : session_id %> 방가...방가...</span>
-			<input type='button' value='로그아웃' id='btnLogout'/>
-		<%} %> 
-		
-		--%>
-
-<%-- <%= userNick %> --%>
 	<!-- Top Bar -->
 	<div class="top_bar">
 		<div class="container">

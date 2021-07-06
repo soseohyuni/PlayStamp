@@ -20,14 +20,4 @@ public class HomeController
 		return result;
 	}
 	
-	@RequestMapping("/myspace.action")
-	public String myspaceView()
-	{
-		String result = "";
-		
-		result = "/WEB-INF/views/myspace/MySpaceHome.jsp";
-
-		return result;
-	}
-	
 }

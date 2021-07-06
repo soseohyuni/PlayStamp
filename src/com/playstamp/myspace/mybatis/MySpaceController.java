@@ -28,6 +28,29 @@ public class MySpaceController
 	@Autowired
 	private SqlSession sqlSession;
 	
+	
+	@RequestMapping("/myspace.action")
+	public String myspaceView(HttpSession session, ModelMap model) throws SQLException
+	{
+		String result = "";
+		
+		// 세션 객체 안에 있는 ID 정보 저장
+		String userId = (String)session.getAttribute("id");
+		System.out.println("회원 세션에서 얻은 아이디 : " + userId);
+		
+		// 회원 정보 보기 호출
+		IMyspaceDAO dao = sqlSession.getMapper(IMyspaceDAO.class);
+		User userInfo = dao.searchUserInfo(userId);
+		
+		// 얻어온 정보 저장
+		model.addAttribute("userInfo", userInfo);
+		System.out.println("얻은 유저 정보 : " + userInfo.getJoin_Dt());
+				
+		result = "/WEB-INF/views/myspace/MySpaceHome.jsp";
+
+		return result;
+	}
+	
 	// 사용자 포인트 내역
 	@RequestMapping("/pointlist.action")
 	public String userPointList(HttpSession session, ModelMap model)
@@ -46,7 +69,10 @@ public class MySpaceController
 		pointList = dao.userPointList(userId);
 		
 		// 리스트 제일 앞에 있는 값 꺼내기 = 현재 포인트
-		int userPoint = Integer.parseInt(pointList.get(0).getUser_point());
+		int userPoint = 0;
+		if( pointList.size()!=0){
+			userPoint = Integer.parseInt(pointList.get(0).getUser_point());
+		}
 		
 		// addAttribute 를 통해 전송
 		model.addAttribute("pointList", pointList);
@@ -73,7 +99,10 @@ public class MySpaceController
 		cashList = dao.userCashList(userId);
 		
 		// 리스트 제일 앞에 있는 값 꺼내기 = 현재 캐시
-		int userCash = Integer.parseInt(cashList.get(0).getUser_cash());
+		int userCash = 0;
+		if( cashList.size()!=0){
+			userCash = Integer.parseInt(cashList.get(0).getUser_cash());
+		}
 		
 		// addAttribute 를 통해 전송
 		model.addAttribute("cashList", cashList);

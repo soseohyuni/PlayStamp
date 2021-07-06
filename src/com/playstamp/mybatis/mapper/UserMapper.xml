@@ -28,4 +28,12 @@
 		WHERE USER_ID = #{arg0} AND USER_PW = #{arg1}
 	</select>
 	
+	
+	<!-- 관리자 로그인 -->
+	<select id="managerLogin" resultType="String">
+		SELECT MNG_NICK
+		FROM TBL_MANAGER 
+		WHERE MNG_ID = #{arg0} AND MNG_PW = #{arg1}
+	</select>
+	
 </mapper>

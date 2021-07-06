@@ -20,13 +20,14 @@
 	
 	<div id="wrapper">
 		<div class="container">
-			<div class="dropText">
-				<h4>
+		<div style="margin:0 auto;"><img style="width: 100%;" alt="" src="<%=cp%>/images/welcome.png"></div>
+			<div>
+				<h4 style="text-align: center; line-height: 200%; margin-bottom:20px;">
 					<mark><b>회원가입이 완료됐습니다!</b><br>
 					로그인 후 플레이 스탬프의 다양한 서비스를 경험해보세요!:></mark>
 				</h4>
 			<a href="signinform.action">
-				<button>로그인하기</button>
+				<button type="button" class="btn btn-primary btn-lg btn-block" style="width: 50%; margin: 0 auto;">로그인하기</button>
 			</a>
 			</div>
 		</div>

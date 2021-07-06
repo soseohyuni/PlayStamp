@@ -1,6 +1,5 @@
 package com.playstamp.user.mybatis;
 
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +30,9 @@ public class UserController
 {
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	//-- 로그인 페이지로 이동
 	@RequestMapping("/signinform.action")
@@ -81,23 +84,25 @@ public class UserController
 	}
 	
 	// 이메일 인증
-	@RequestMapping(value="/mailcheck.action", method=RequestMethod.GET)
-	public String mailCheck(String email)
+	@ResponseBody
+	@RequestMapping(value="/mailcheck.action", method=RequestMethod.POST)
+	public String mailCheck(@RequestParam("email") String email)
 	{
-		System.out.println("이메일 데이터 전송확인");
-		System.out.println("인증 메일 : "+email);
+		//System.out.println("이메일 데이터 전송확인");
+		//System.out.println("인증 메일 : " + email);
 		
 		Random random = new Random();
 		int checkNum = random.nextInt(888888)+111111; // 111111 - 999999
-		System.out.println("인증번호 : "+checkNum);
+		//System.out.println("인증번호 : " + checkNum);
 		
-		//이메일 보내기
-		String setFrom = "shyunnkk@gmail.com";
+ 		String setFrom = "shyunnkk@gmail.com";
 		String toEmail = email;
-		String title = "독거노인 회원가입 인증 이메일 입니다.";
-		String content = "독거노인에 가입해주셔서 감사합니다."+ "<br/><br/>"+"인증 번호는 "+checkNum+" 입니다.<br/>"+
-							"해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+		String title = "플레이스탬프 인증코드";
+		String content = "플레이스탬프 인증코드입니다." 
+					   + "<br/><br/>" + "인증 번호 : " + checkNum + "<br/>"
+					   + "회원가입 페이지에 인증코드를 입력해주세요:>";
         try {
+        	
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
             helper.setFrom(setFrom);
@@ -111,6 +116,8 @@ public class UserController
         }
         
         String num = Integer.toString(checkNum);
+        
+        //System.out.println("인증번호 : " + num);
         return num;
 	}
 	
@@ -147,21 +154,36 @@ public class UserController
 		// 테스트(admin 체크 안 하면 null 로 넘어오는 것 확인)
 		//System.out.println("admin="+ admin);
 		
+		IUserDAO userDao = sqlSession.getMapper(IUserDAO.class);
+		String str = "";
+		
 		if (admin!=null) // 관리자로 로그인 시도
 		{
-			// 관리자 테이블 조회 해야 함
-			// ...
+			System.out.println("관리자로 로그인 시도");
 			
-			System.out.println("관리자 로그인 성공");
-			result = "WEB-INF/views/main/Welcome.jsp";
+			// 관리자 테이블 조회
+			str = userDao.managerLogin(id, pw);
+			
+			if (str!=null)
+			{
+				System.out.println("관리자 로그인 성공");
+				// 추후 관리자 페이지로 변경
+				result = "WEB-INF/views/main/Welcome.jsp";
+			}
+			else
+			{
+				System.out.println("관리자 로그인 실패");
+				request.setAttribute("msg", "fail");
+				result = "/WEB-INF/views/main/LoginForm.jsp";
+			}
+			
 		}
 		else // 사용자로 로그인 시도
 		{
 			System.out.println("사용자로 로그인 시도");
 			
 			// 유저 테이블 조회
-			IUserDAO userDao = sqlSession.getMapper(IUserDAO.class);
-			String str = userDao.userLogin(id, pw);
+			str = userDao.userLogin(id, pw);
 			
 			if(str!=null) // 테이블 정보가 일치 == 로그인 성공
 			{
@@ -183,8 +205,12 @@ public class UserController
 				ArrayList<Point> pointList = new ArrayList<Point>();
 				pointList = dao.userPointList(userId);
 				
+				int userPoint = 0;
+				
 				// 리스트 제일 앞에 있는 값 꺼내기 = 현재 포인트
-				int userPoint = Integer.parseInt(pointList.get(0).getUser_point());
+				if( pointList.size()!=0){
+					userPoint = Integer.parseInt(pointList.get(0).getUser_point());
+				}
 				
 				// 좋아요 개수 받아오기
 				int countingLike = dao.countingLike(userId);
@@ -200,7 +226,7 @@ public class UserController
 					grade = "준회원";
 				else if(userPoint < 0)
 					grade = "어둠회원";
-				else
+				else if(countingLike == 0 || userPoint == 0 )
 					grade = "뉴비";
 				
 				System.out.println("포인트 : " + userPoint + " | 좋아요 : " + countingLike + " | 등급 : " + grade);
@@ -216,7 +242,6 @@ public class UserController
 			else // 로그인 실패
 			{
 				System.out.println("로그인 실패");
-				System.out.println(id + pw);
 				request.setAttribute("msg", "fail");
 				result = "/WEB-INF/views/main/LoginForm.jsp";
 			}

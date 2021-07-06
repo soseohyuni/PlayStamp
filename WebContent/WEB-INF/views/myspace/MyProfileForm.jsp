@@ -105,7 +105,7 @@
 						
 						<div>
 							<br>
-							<input class="btn btn-primary" type="submit">사진 변경
+							<input class="btn btn-primary" type="submit" val="변경하기">
 						</div>
 					
 					</form>
