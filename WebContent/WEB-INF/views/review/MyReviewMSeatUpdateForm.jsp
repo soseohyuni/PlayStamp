@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>AddReviewSeatForm.jsp</title>
+<title>MyReviewMSeatUpdateForm.jsp</title>
 <link href="<%=cp%>/css/header.css" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <!-- 별점 기능을 위한 아이콘을 CDN 방식으로 추가 -->
@@ -106,9 +106,11 @@
 
    // 추가한 제이쿼리 플러그인의 콜백함수 호출
    $(function(){
+	   var view_rating = ${mseatreview.view_rating};
+	   
       $('#view_rating').barrating({
         theme: 'fontawesome-stars'
-        , initialRating: 5
+        , initialRating: view_rating
         , onSelect: function(value, text, event){
     		// value 로 받은 클릭한 별점을 selectbox에 전달
         	$('#view_rating').val(value).prop("selected", true);
@@ -116,10 +118,12 @@
       });
    });
    
-   $(function() {
+   $(function(){
+	   var seat_rating = ${mseatreview.seat_rating};
+		   
       $('#seat_rating').barrating({
         theme: 'fontawesome-stars'
-        , initialRating: 5
+        , initialRating: seat_rating
         , onSelect: function(value, text, event){
         	// value 로 받은 클릭한 별점을 selectbox에 전달
         	$('#seat_rating').val(value).prop("selected", true);
@@ -128,9 +132,11 @@
    });
    
    $(function() {
+	  var sound_rating = ${mseatreview.sound_rating};
+	   
       $('#sound_rating').barrating({
         theme: 'fontawesome-stars'
-        , initialRating: 5
+        , initialRating: sound_rating
         , onSelect: function(value, text, event){
         	// value 로 받은 클릭한 별점을 selectbox에 전달
         	$('#sound_rating').val(value).prop("selected", true);
@@ -138,10 +144,13 @@
       });
    });
    
+   
    $(function() {
+	   var light_rating = ${mseatreview.light_rating};
+	   
       $('#light_rating').barrating({
         theme: 'fontawesome-stars'
-        , initialRating: 5
+        , initialRating: light_rating
         , onSelect: function(value, text, event){
         	// value 로 받은 클릭한 별점을 selectbox에 전달
         	$('#light_rating').val(value).prop("selected", true);
@@ -149,39 +158,53 @@
       });
    });
    
-   // 5대 공연장인 경우 hidden 속성 보이게 하기
+   // 5대 공연장인 경우 이미지 속성 다르게 보이게 하기
    $(function()
 	{
 		var theaterCd = $("#theater_cd").val();
 		
+		// 5대 공연장인 경우 나타나는 구역에 select값 설정
+		$('#mseat_sort_cd').val(mseat_sort_cd).prop("selected", true);
+		
 		if(theaterCd == 'FC000011')		//-- 디큐브아트센터
 		{
 			$("#img").attr("src", "http://www.kopis.or.kr/upload/pfmPoster/PF_PF165400_200701_113032.gif");
-			$("#hidden1").show();
-			$("#hidden2").show();
+
 		}else if(theaterCd == 'FC000031')	//-- 블루스퀘어
 		{
 			$("#img").attr("src", "http://www.kopis.or.kr/upload/pfmPoster/PF_PF165400_200701_113032.gif");
-			$("#hidden1").show();
-			$("#hidden2").show();
+
 		}else if(theaterCd == 'FC000012')	//-- 샤롯데씨어터
 		{
 			$("#img").attr("src", "http://www.kopis.or.kr/upload/pfmPoster/PF_PF165400_200701_113032.gif");
-			$("#hidden1").show();
-			$("#hidden2").show();	
+		
 		}else if(theaterCd == 'FC000001')	//-- 예술의전당
 		{
 			$("#img").attr("src", "http://www.kopis.or.kr/upload/pfmPoster/PF_PF165400_200701_113032.gif");
-			$("#hidden1").show();
-			$("#hidden2").show();
+
 		}else if(theaterCd == 'FC000014')	//-- 충무아트센터
 		{
 			$("#img").attr("src", "http://www.kopis.or.kr/upload/pfmPoster/PF_PF165400_200701_113032.gif");
-			$("#hidden1").show();
-			$("#hidden2").show();
 		}
 	});
    
+</script>
+<script type="text/javascript">
+	
+	// 5대 공연장 구역 + 좌석 위치 (층, 구역, 열) selectbox 값 선택되어있도록 만들기
+	$(function() {
+	  
+	  var mseat_sort_cd = $("#getmseat_sort_cd").val();
+	  var seat_flow = $("#getseat_flow").val();
+	  var seat_area = $("#getseat_area").val();
+	  var seat_line = $("#getseat_line").val();
+	  
+	  $('#mseat_sort_cd').val(mseat_sort_cd).prop("selected", true);
+	  $('#seat_flow').val(seat_flow).prop("selected", true);
+	  $('#seat_area').val(seat_area).prop("selected", true);
+	  $('#seat_line').val(seat_line).prop("selected", true);
+	});
+		
 </script>
 </head>
 <body>
@@ -192,27 +215,26 @@
 	
 	<div id="textbox">
 		<h5>
-			<img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">리뷰 추가하기
+			<img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">좌석 리뷰 수정하기
 		</h5>
 		<hr>
 	</div><br><br><br>
 	<div class="center">
-		<h5>관람하신 공연은 <span id="highlight">${play.play_nm }</span>입니다.</h5>
-		<h5>플레이 스탬프에서 더 많은 정보들이 공유될 수 있도록, 관람하신 좌석에 대한 정보를 기입해주세요!</h5>
-		<h5>해당 좌석 리뷰 정보는 일반회원 이상 등급에 한해 공개됩니다.</h5>
+		<h5>좌석 정보를 수정해주세요.</h5>
+		<h5>수정사항이 없다면 하단의 상세리뷰 수정하러가기 버튼을 클릭해주세요.</h5>
 	</div>
 	<br>
 	<br>
 	<div id="container">
-		<form action="addreviewdetailform.action" method="post">
+		<form action="myreviewdetailupdateform.action" method="post">
 			<table class="table table-borderless" id="reviewseattable">
-				<tr class="hidden" id="hidden1">
+				<tr>
 					<td colspan="6">
 						<!-- 공연장에 따라 달라짐 -->
 						<img src="" id="img" class="img">
 					</td>
 				</tr>
-				<tr class="hidden" id="hidden2">
+				<tr>
 					<th colspan="3" style="text-align:right;">구역선택</th>
 					<td colspan="3" style="text-align:left;">
 						<select class="selectpicker" id="mseat_sort_cd" name="mseat_sort_cd">
@@ -314,7 +336,7 @@
 						</select> 열
 					</td>
 					<td>
-						<input type="text" id="seat_num" name="seat_num" placeholder="좌석번호" required="required">
+						<input type="text" id="seat_num" name="seat_num" value="${mseatreview.seat_num }">
 					</td>
 					<td>음향</td>
 					<td>
@@ -342,21 +364,20 @@
 				</tr>
 				<tr>
 					<td colspan="6">
-						<textarea id="seat_rev" name="seat_rev" cols="120" rows="5" style="resize: none;"
-						placeholder="좌석에 대한 자세한 리뷰를 입력해주세요."></textarea>
+						<textarea id="seat_rev" name="seat_rev" cols="120" rows="5" style="resize: none;">${mseatreview.seat_rev }</textarea>
 					</td>
 				</tr>
-			</table>
-
+			</table> 
+			<input type="hidden" id="getmseat_sort_cd" name="getmseat_sort_cd" value="${mseatreview.mseat_sort_cd }">
+			<input type="hidden" id="getseat_flow" name="getseat_flow" value="${mseatreview.seat_flow }">
+			<input type="hidden" id="getseat_area" name="getseat_area" value="${mseatreview.seat_area }">
+			<input type="hidden" id="getseat_line" name="getseat_flow" value="${mseatreview.seat_line }">
 			<br>
 			<br>
 			<br>
+			<!-- 다음페이지에 전달할 값 -->
 			<input type="hidden" id="theater_cd" name="theater_cd" value="${theater_cd }">
-			<input type="hidden" id="rev_distin_cd" name="rev_distin_cd" value="${rev_distin_cd }">
-			<!-- 임시로 전달하는 user 값 -->
-			<input type="hidden" id="user_cd" name="user_cd" value="U00001">
-			<!-- 다음 페이지에 전달할 공연 코드 값 -->
-			<input type="hidden" id="play_cd" name="play_cd" value="${play.play_cd }">
+			<input type="hidden" id="rev_distin_cd" name="rev_distin_cd" value="${mseatreview.rev_distin_cd }">
 			<div class="nextBtn">
 				<button type="submit" id="nextBtn" class="btn btn-info nextBtn">상세 리뷰 작성하러 가기</button>
 			</div>
