@@ -114,7 +114,7 @@
 			var hiddenUser = $("#hiddenUser");
 		    var hiddenUserVal = hiddenUser.val();
 		    
-		  	//@@ 빈 하뚜
+		  	//@@ 빈 하트
 		    var str0 = "<i class='far fa-heart fa-lg'></i>";
 		    //@@ 꽉 찬 하트
 		    var str1 = "<i class='fas fa-heart fa-lg'></i>";

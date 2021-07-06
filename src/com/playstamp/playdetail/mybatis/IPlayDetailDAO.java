@@ -3,9 +3,11 @@ package com.playstamp.playdetail.mybatis;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.playstamp.playdetail.Jjim;
 import com.playstamp.playdetail.PlayDetail;
 import com.playstamp.playdetail.PlayRevPre;
 import com.playstamp.playdetail.SeatRev;
+import com.playstamp.playreviewdetail.Like;
 
 public interface IPlayDetailDAO
 {
@@ -30,4 +32,15 @@ public interface IPlayDetailDAO
 	
 	// 해당 공연에 해당하는 공연 리뷰 프리뷰 조회 메소드
 	public ArrayList<PlayRevPre> getPlayRevPre(String play_cd);
+	
+	//----------------------------------------------------------
+	
+	// 찜 추가 메소드
+	public int addJjim(Jjim jjim);
+	
+	// 찜 중복 체크 메소드
+	public int checkJjim(Jjim jjim);
+	
+	// 찜 제거 메소드
+	public int delJjim(Jjim jjim);
 }

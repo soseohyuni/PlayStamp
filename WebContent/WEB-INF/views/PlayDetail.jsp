@@ -55,7 +55,14 @@
 
 </style>
 <script type="text/javascript">	
-
+	
+	//@@ 현재 url 가져오기 
+	var url = location.href;
+	//@@ 자르기.. 
+	var parameters = ((url.split("?"))[1].split("="))[1];
+	
+	var articleNo = parameters;
+	
 	//@@ 공연리뷰 평점
 	var playRevPre = new Array();
 		
@@ -159,6 +166,51 @@
 		}); 
 	}); 
 	
+	$(function()
+	{
+		$("#jjim").on("click", function()
+		{
+			var hiddenUser = $("#hiddenUser");
+		    var hiddenUserVal = hiddenUser.val();
+		    
+		  	//@@ 빈 하트
+		    var str0 = "<i class='far fa-heart fa-lg'></i>";
+		    //@@ 꽉 찬 하트
+		    var str1 = "<i class='fas fa-heart fa-lg'></i>";
+		 	
+	
+	    	$.ajax({
+			        type : "post",
+			        url : "jjimclick.action",
+			        contentType: "application/json; charset=utf-8;",
+			        dataType : "json",
+			        data : JSON.stringify
+			        ({
+			            "play_cd" : articleNo,
+			            "user_cd" : hiddenUserVal
+			        }),
+			        success : function (result)
+			        {			        	
+			        	//@@ 찜이 삭제되었을 경우
+			        	if (result.returnValue == 0)
+						{
+				        	$("#jjim").html("");
+							$("#jjim").html(str0);
+						}
+			        	//@@ 찜이 추가되었을 경우
+			        	else if(result.returnValue ==1)
+			        	{
+				        	$("#jjim").html("");
+							$("#jjim").html(str1);
+			        	}
+	
+		        	}
+	    		});
+	
+		    
+		});
+	});
+	
 </script>
 </head>
 
@@ -217,9 +269,17 @@
 							<option value="5">5</option>
 						</select>
 						</td>
-						<td></td>
-						<td>찜리스트에 저장 <span style="color: #FE2E2E"><i class="far fa-heart fa-lg"></i></span></td>
-					</tr>
+						<td><input type="hidden" id="hiddenUser" value="${sessionScope.code }"></td>
+						<c:set var="checkJjim" value="${checkJjim}"></c:set>
+						<c:choose>
+						<c:when test="${checkJjim eq 0}">
+							<td>찜리스트에 저장&nbsp;<span id="jjim" style="color: #FE2E2E"><i class='far fa-heart fa-lg'></i></span></td>
+						</c:when>
+						<c:when test="${checkJjim eq 1}">
+							<td>찜리스트에 저장&nbsp;<span id="jjim" style="color: #FE2E2E"><i class="fas fa-heart fa-lg"></i></span></td>
+						</c:when>
+						</c:choose>
+						</tr>
 				</c:forEach>			
 				</table>
 			</div>

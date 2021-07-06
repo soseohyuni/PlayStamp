@@ -41,4 +41,21 @@
 		FROM VIEW_PLAYREV
 		WHERE PLAY_CD=#{play_cd}
 	</select>
+	
+	<insert id="addJjim">
+		INSERT INTO TBL_JJIMS(JJIM_CD, PLAY_CD, USER_CD, JJIM_DT)
+		VALUES(JJIM_SEQ.NEXTVAL, #{play_cd}, #{user_cd}, SYSDATE)
+	</insert>
+	
+	<select id="checkJjim" resultType="Integer">
+		SELECT COUNT(*) AS JCOUNT
+		FROM TBL_JJIMS
+		WHERE PLAY_CD=#{play_cd} AND USER_CD=#{user_cd}
+	</select>
+	
+	<delete id="delJjim">
+		DELETE
+		FROM TBL_JJIMS
+		WHERE PLAY_CD=#{play_cd} AND USER_CD=#{user_cd}
+	</delete>
 </mapper>
