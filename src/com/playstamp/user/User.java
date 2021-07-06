@@ -9,88 +9,100 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class User
 {
-	private String userId, userNm, userTel, userPw
-			     , userNick, userMail, joinDt, userImg;
+	private String user_Id, user_Nm, user_Tel, user_Pw
+			     , user_Nick, user_Mail, join_Dt, user_Img, user_join;
 
-	public String getUserId()
+	public String getUser_Id()
 	{
-		return userId;
+		return user_Id;
 	}
 
-	public void setUserId(String userId)
+	public void setUser_Id(String user_Id)
 	{
-		this.userId = userId;
+		this.user_Id = user_Id;
 	}
 
-	public String getUserNm()
+	public String getUser_Nm()
 	{
-		return userNm;
+		return user_Nm;
 	}
 
-	public void setUserNm(String userNm)
+	public void setUser_Nm(String user_Nm)
 	{
-		this.userNm = userNm;
+		this.user_Nm = user_Nm;
 	}
 
-	public String getUserTel()
+	public String getUser_Tel()
 	{
-		return userTel;
+		return user_Tel;
 	}
 
-	public void setUserTel(String userTel)
+	public void setUser_Tel(String user_Tel)
 	{
-		this.userTel = userTel;
+		this.user_Tel = user_Tel;
 	}
 
-	public String getUserPw()
+	public String getUser_Pw()
 	{
-		return userPw;
+		return user_Pw;
 	}
 
-	public void setUserPw(String userPw)
+	public void setUser_Pw(String user_Pw)
 	{
-		this.userPw = userPw;
+		this.user_Pw = user_Pw;
 	}
 
-	public String getUserNick()
+	public String getUser_Nick()
 	{
-		return userNick;
+		return user_Nick;
 	}
 
-	public void setUserNick(String userNick)
+	public void setUser_Nick(String user_Nick)
 	{
-		this.userNick = userNick;
+		this.user_Nick = user_Nick;
 	}
 
-	public String getUserMail()
+	public String getUser_Mail()
 	{
-		return userMail;
+		return user_Mail;
 	}
 
-	public void setUserMail(String userMail)
+	public void setUser_Mail(String user_Mail)
 	{
-		this.userMail = userMail;
+		this.user_Mail = user_Mail;
 	}
 
-	public String getJoinDt()
+	public String getJoin_Dt()
 	{
-		return joinDt;
+		return join_Dt;
 	}
 
-	public void setJoinDt(String joinDt)
+	public void setJoin_Dt(String join_Dt)
 	{
-		this.joinDt = joinDt;
+		this.join_Dt = join_Dt;
 	}
 
-	public String getUserImg()
+	public String getUser_Img()
 	{
-		return userImg;
+		return user_Img;
 	}
 
-	public void setUserImg(String userImg)
+	public void setUser_Img(String user_Img)
 	{
-		this.userImg = userImg;
+		this.user_Img = user_Img;
 	}
+
+	public String getUser_join()
+	{
+		return user_join;
+	}
+
+	public void setUser_join(String user_join)
+	{
+		this.user_join = user_join;
+	}
+
+	
 	
 	
 }

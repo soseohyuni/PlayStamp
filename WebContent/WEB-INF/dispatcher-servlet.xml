@@ -15,10 +15,9 @@
 	<!-- ① 기존 코드 -->
 	<!-- ※ Annotation 표기법으로 Controller 객체를 등록한다. -->
     <context:component-scan base-package="com.playstamp.*" />
-
-	<!-- ③ mybatis 설정 중, dataSource 를 등록하기 위해 생겨나는 추가 코드 -->
-	<!-- ※ mybatis를 사용하기 위한 환경설정 추가 2 → SimpleDriverDataSource -->
-	<bean name="localDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+	<!-- ③ mybatis 설정 중 ... dataSource 를 등록하는 과정에서 생겨나는 추가 코드 -->
+	<!-- ※ mybatis 를 사용하기 위한 환경 설정 추가 2 → SimpleDriverDataSource -->
+	<bean id="localDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
 		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"></property>
 		<property name="url" value="jdbc:oracle:thin:@211.238.142.163:1521:xe"></property>
 		<property name="username" value="playstamp"></property>
@@ -50,5 +49,22 @@
 	   <bean id="interceptor" class="com.playstamp.user.Interceptor"></bean>
 	  </mvc:interceptor>
 	 </mvc:interceptors>
+	 
+	 
+	 <!-- email 인증 관련   -->
+     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="username" value="shyunnkk@gmail.com"/>
+        <property name="password" value="tjgusS1212" />
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.debug">true</prop>
+            </props>
+        </property>
+    </bean>
 
 </beans>

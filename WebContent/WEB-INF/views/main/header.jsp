@@ -6,9 +6,6 @@
 <%
 		Object user = session.getAttribute("id");
 		String userId = (String)user;
-		
-		Object nick = session.getAttribute("nick");
-		String userNick = (String)nick;
 %>
 <!DOCTYPE html>
 <html>
@@ -28,22 +25,6 @@
 
 <!-- header -->
 <header class="header">
-		<%-- 
-		
-		<%if(session_id == null) {%>		
-			<!-- 로그인 이전 화면 -->
-			<label>아이디</label>
-			<input type='text' size='7' name='mid'/>
-			<label>암호</label>
-			<input type='password' size='7' name='pwd'/>
-			<input type='button' value='로그인' id='btnLogin'/>
-		<%}else{ %>	
-			<!-- 로그인 이후 화면 -->
-			<span><%=(session_id == null)? "손님" : session_id %> 방가...방가...</span>
-			<input type='button' value='로그아웃' id='btnLogout'/>
-		<%} %> 
-		
-		--%>
 	<!-- Top Bar -->
 	<div class="top_bar">
 		<div class="container">
@@ -61,7 +42,7 @@
 							</div>
 						<%} else{ %>
 							<div class="bar_line">
-								<a href="myspace.action"><b><%= userNick %></b>님</a>
+								<a href="myspace.action"><b>${sessionScope.nick }</b>님</a>
 							</div>
 							<div class="bar_line">
 								<a href="logout.action">로그아웃</a>
@@ -94,7 +75,6 @@
 						<ul class="standard_dropdown main_nav_dropdown">
 						
 							<li><a href="myspace.action">마이스페이스</a></li>
-							
 							<li><a href="musicallist.action">공연정보</a></li>
 							<li><a href="blog.html">좌석정보</a></li>
 							<li><a href="contact.html">티켓 양도</a></li>

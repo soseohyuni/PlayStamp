@@ -40,12 +40,11 @@
     
     <form action="login.action" id="loginForm" method="post">
 	    <div class="mt-4 text-center">
-	        <h6 style="font-weight: bold;">로그인 하기</h6>
 	        <div class="mt-3 inputbox"> 
-	        	<input type="text" class="form-control" name="userId" id="userId"placeholder="아이디" required="required"> <i class="fa fa-user"></i> 
+	        	<input type="text" class="form-control" name="userId" id="userId" placeholder="아이디" required="required"> <i class="fa fa-user"></i> 
 	        </div>
 	        <div class="inputbox"> 
-	        	<input type="text" class="form-control" name="userPw" id="userPw" placeholder="패스워드" required="required"> <i class="fa fa-lock"></i> 
+	        	<input type="password" class="form-control" name="userPw" id="userPw" placeholder="패스워드" required="required"> <i class="fa fa-lock"></i> 
 	        	<span id="loginFail"></span>
 	        </div>
 	    </div>
@@ -55,16 +54,21 @@
 	    <div class="mt-2"> 
 	    	<button type="submit" class="btn btn-primary btn-block" id="login">로그인</button>
 	    </div>
+	    
 	    <div class="mt-2"> 
 	    	<button class="btn btn-primary btn-block" id="naverLogin">
 	    		<img src="images/naverIcon.png" alt="Icon naver" id="naverImg">네이버로 로그인
 	    	</button> 
 	    </div>
+	    
+	    <!-- 
 	    <div class="mt-2"> 
 	    	<button class="btn btn-primary btn-block" id="kakaoLogin">
 	    		<img src="images/kakaoIcon.png" alt="Icon kakao" id="kakaoImg">카카오로 로그인
 	    	</button> 
-	    </div><br>
+	    </div>
+	    -->
+	    <br>
 	</form>
 	<div class="findInfo">
 		<a target="_blank" id="idinquiry" href="" style="color: black; text-align: center;">아이디 찾기</a> │
