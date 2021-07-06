@@ -249,7 +249,7 @@ String cp = request.getContextPath();
 
 		<!-- 상단 로고 이미지 -->
 		<div class="formContent">
-			<img onclick="location.href='main.action'" src="images/logo_typo.svg" style="cursor:pointer;">
+			<img onclick="location.href='home.action'" src="images/logo_typo.svg" style="cursor:pointer;">
 		</div>
 
 		

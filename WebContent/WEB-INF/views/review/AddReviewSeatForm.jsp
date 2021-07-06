@@ -23,6 +23,7 @@
 <style type="text/css">
 	.center 
 	{
+		width: 1300px;
 		margin: 0 auto;
 		text-align: center;
 	}
@@ -41,26 +42,12 @@
 		margin: 0 auto;
 		max-width: 1300px;
 	}
-	.box1 
-	{
-		margin-left: 430px;
-		width: 200px;
-		height: 150px;
-		float: left;
-		margin-right: 40px;
-	}
-	.box2 
-	{
-		width: 200px;
-		height: 150px;
-		float: left;
-	}
 	.selectpicker 
 	{
 		width: 50px;
 		height: 23px;
 	}
-	#num 
+	#seat_num 
 	{
 		width: 90px;
 		height: 23px;
@@ -89,6 +76,29 @@
 	{
 		font-size: 20px;
 		font-style: bold;
+	}
+	.img { text-align:center;}
+    #reviewseattable td { height:20px; }
+	#reviewseattable { width:60%; margin: auto; text-align: center; }
+	th
+	{
+		width: 115px;
+	}
+	.form-control
+	{
+		height: 30px;
+	}
+	#nextBtn
+	{
+		width: 756px;
+	}
+	.nextBtn
+	{
+		text-align: center;
+	}
+	.hidden
+	{
+		display: none;
 	}
 	
 </style>
@@ -139,6 +149,39 @@
       });
    });
    
+   // 5대 공연장인 경우 hidden 속성 보이게 하기
+   $(function()
+	{
+		var theaterCd = $("#theater_cd").val();
+		
+		if(theaterCd == 'FC000011')		//-- 디큐브아트센터
+		{
+			$("#img").attr("src", "http://www.kopis.or.kr/upload/pfmPoster/PF_PF165400_200701_113032.gif");
+			$("#hidden1").show();
+			$("#hidden2").show();
+		}else if(theaterCd == 'FC000031')	//-- 블루스퀘어
+		{
+			$("#img").attr("src", "http://www.kopis.or.kr/upload/pfmPoster/PF_PF165400_200701_113032.gif");
+			$("#hidden1").show();
+			$("#hidden2").show();
+		}else if(theaterCd == 'FC000012')	//-- 샤롯데씨어터
+		{
+			$("#img").attr("src", "http://www.kopis.or.kr/upload/pfmPoster/PF_PF165400_200701_113032.gif");
+			$("#hidden1").show();
+			$("#hidden2").show();	
+		}else if(theaterCd == 'FC000001')	//-- 예술의전당
+		{
+			$("#img").attr("src", "http://www.kopis.or.kr/upload/pfmPoster/PF_PF165400_200701_113032.gif");
+			$("#hidden1").show();
+			$("#hidden2").show();
+		}else if(theaterCd == 'FC000014')	//-- 충무아트센터
+		{
+			$("#img").attr("src", "http://www.kopis.or.kr/upload/pfmPoster/PF_PF165400_200701_113032.gif");
+			$("#hidden1").show();
+			$("#hidden2").show();
+		}
+	});
+   
 </script>
 </head>
 <body>
@@ -162,211 +205,160 @@
 	<br>
 	<div id="container">
 		<form action="addreviewdetailform.action" method="post">
-			<div>
-				<!-- 5대 공연장인 경우 이미지 로드 + 구역 입력받기 분기 -->
-				<c:if test="${theater_cd == 'FC000011'}">
-					<img src=""><br><br>
-					<div>
-						구역선택&nbsp;&nbsp;
+			<table class="table table-borderless" id="reviewseattable">
+				<tr class="hidden" id="hidden1">
+					<td colspan="6">
+						<!-- 공연장에 따라 달라짐 -->
+						<img src="" id="img" class="img">
+					</td>
+				</tr>
+				<tr class="hidden" id="hidden2">
+					<th colspan="3" style="text-align:right;">구역선택</th>
+					<td colspan="3" style="text-align:left;">
 						<select class="selectpicker" id="mseat_sort_cd" name="mseat_sort_cd">
 						<c:forEach var="a" begin="1" end="14" step="1">
 							<option value="${a }">A${a }</option>
 						</c:forEach>
 						</select>
-					</div>
-				</c:if>
-				
-				
-				<c:if test="${theater_cd == 'FC000031'}">
-					<img src=""><br><br>
-					<div>
-						구역선택&nbsp;&nbsp;
-						<select class="selectpicker" id="mseat_sort_cd" name="mseat_sort_cd">
-						<c:forEach var="a" begin="1" end="14" step="1">
-							<option value="${a }">A${a }</option>
-						</c:forEach>
-						</select>
-					</div>
-				</c:if>
-				
-				
-				<c:if test="${theater_cd == 'FC000012'}">
-					<img src=""><br><br>
-					<div>
-						구역선택&nbsp;&nbsp;
-						<select class="selectpicker" id="mseat_sort_cd" name="mseat_sort_cd">
-						<c:forEach var="a" begin="1" end="14" step="1">
-							<option value="${a }">A${a }</option>
-						</c:forEach>
-						</select>
-					</div>
-				</c:if>
-				
-				<c:if test="${theater_cd == 'FC000001'}">
-					<img src=""><br><br>
-					<div>
-						구역선택&nbsp;&nbsp;
-						<select class="selectpicker" id="mseat_sort_cd" name="mseat_sort_cd">
-						<c:forEach var="a" begin="1" end="14" step="1">
-							<option value="${a }">A${a }</option>
-						</c:forEach>
-						</select>
-					</div>
-				</c:if>
-				
-				<c:if test="${theater_cd == 'FC000014'}">
-					<img src=""><br><br>
-					<div>
-						구역선택&nbsp;&nbsp;
-						<select class="selectpicker" id="mseat_sort_cd" name="mseat_sort_cd">
-						<c:forEach var="a" begin="1" end="14" step="1">
-							<option value="${a }">A${a }</option>
-						</c:forEach>
-						</select>
-					</div>
-				</c:if>
-			</div>
-			
-			<div class="box1">
-				<div>
-					<b>좌석 위치</b>
-				</div>
-				<br>
-				<div>
-					<select class="selectpicker" id="seat_flow" name="seat_flow">
+					</td>
+				</tr>
+				<tr>
+					<th colspan="2">좌석 위치</th>
+					<th colspan="4">좌석 별점</th>
+				</tr>
+				<tr>
+					<td>
+						<select class="selectpicker" id="seat_flow" name="seat_flow">
 						<c:forEach var="a" begin="1" end="5" step="1">
 							<option value="${a }">${a }</option>
 						</c:forEach>
-					</select> 층 &nbsp;&nbsp;&nbsp;&nbsp;
-					<select class="selectpicker" id="seat_area" name="seat_area">
-						<option>-</option>
-						<option value="A">A</option>
-						<option value="B">B</option>
-						<option value="C">C</option>
-						<option value="D">D</option>
-						<option value="E">E</option>
-						<option value="F">F</option>
-						<option value="G">G</option>
-						<option value="H">H</option>
-						<option value="OP">OP</option>
-						<option value="가">가</option>
-						<option value="나">나</option>
-						<option value="다">다</option>
-						<option value="라">라</option>
-						<option value="마">마</option>
-						<option value="바">바</option>
-						<option value="사">사</option>
-						<option value="아">아</option>
-					</select> 구역 <br><br>
-					<select class="selectpicker" id="seat_line" name="seat_line">
+						</select> 층
+					</td>
+					<td>
+						<select class="selectpicker" id="seat_area" name="seat_area">
+							<option>-</option>
+							<option value="A">A</option>
+							<option value="B">B</option>
+							<option value="C">C</option>
+							<option value="D">D</option>
+							<option value="E">E</option>
+							<option value="F">F</option>
+							<option value="G">G</option>
+							<option value="H">H</option>
+							<option value="OP">OP</option>
+							<option value="가">가</option>
+							<option value="나">나</option>
+							<option value="다">다</option>
+							<option value="라">라</option>
+							<option value="마">마</option>
+							<option value="바">바</option>
+							<option value="사">사</option>
+							<option value="아">아</option>
+						</select> 구역
+					</td>
+					<td>시야</td>
+					<td>
+						<select id="view_rating" name="view_rating">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+						</select>
+					</td>
+					<td>좌석</td>
+					<td>
+						<select id="seat_rating" name="seat_rating">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<select class="selectpicker" id="seat_line" name="seat_line">
 						<option>-</option>
 						<c:forEach var="a" begin="1" end="30" step="1">
 							<option value="${a }">${a }</option>
 						</c:forEach>
-						<option value="A">A</option>
-						<option value="B">B</option>
-						<option value="C">C</option>
-						<option value="D">D</option>
-						<option value="E">E</option>
-						<option value="F">F</option>
-						<option value="G">G</option>
-						<option value="H">H</option>
-						<option value="I">I</option>
-						<option value="J">J</option>
-						<option value="K">K</option>
-						<option value="L">L</option>
-						<option value="M">M</option>
-						<option value="N">N</option>
-						<option value="O">O</option>
-						<option value="P">P</option>
-						<option value="Q">Q</option>
-						<option value="R">R</option>
-						<option value="S">S</option>
-						<option value="T">T</option>
-						<option value="U">U</option>
-						<option value="V">V</option>
-						<option value="W">W</option>
-						<option value="X">X</option>
-						<option value="Y">Y</option>
-						<option value="Z">Z</option>
-						<option value="OP">OP</option>
-					</select> 열&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="text" id="seat_num" name="seat_num" placeholder="좌석번호" required="required">
-					<br>
-				</div>
-			</div><!-- box1 -->
-			<div class="box2">
-				<div>
-					<b>좌석 별점</b>
-				</div>
-				<table>
-					<tr>
-						<th>시야</th>
-						<td><select id="view_rating" name="view_rating">
+							<option value="A">A</option>
+							<option value="B">B</option>
+							<option value="C">C</option>
+							<option value="D">D</option>
+							<option value="E">E</option>
+							<option value="F">F</option>
+							<option value="G">G</option>
+							<option value="H">H</option>
+							<option value="I">I</option>
+							<option value="J">J</option>
+							<option value="K">K</option>
+							<option value="L">L</option>
+							<option value="M">M</option>
+							<option value="N">N</option>
+							<option value="O">O</option>
+							<option value="P">P</option>
+							<option value="Q">Q</option>
+							<option value="R">R</option>
+							<option value="S">S</option>
+							<option value="T">T</option>
+							<option value="U">U</option>
+							<option value="V">V</option>
+							<option value="W">W</option>
+							<option value="X">X</option>
+							<option value="Y">Y</option>
+							<option value="Z">Z</option>
+							<option value="OP">OP</option>
+						</select> 열
+					</td>
+					<td>
+						<input type="text" id="seat_num" name="seat_num" placeholder="좌석번호" required="required">
+					</td>
+					<td>음향</td>
+					<td>
+						<select id="sound_rating" name="sound_rating">
 								<option value="1">1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
 								<option value="4">4</option>
 								<option value="5">5</option>
-						</select></td>
-					</tr>
-					<tr>
-						<th>좌석</th>
-						<td><select id="seat_rating" name="seat_rating">
+						</select>
+					</td>
+					<td>조명</td>
+					<td>
+						<select id="light_rating" name="light_rating">
 								<option value="1">1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
 								<option value="4">4</option>
 								<option value="5">5</option>
-						</select></td>
-					</tr>
-					<tr>
-						<th>음향</th>
-						<td><select id="sound_rating" name="sound_rating">
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-						</select></td>
-					</tr>
-					<tr>
-						<th>조명</th>
-						<td><select id="light_rating" name="light_rating">
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-						</select></td>
-					</tr>
-				</table>
-			</div><!-- box2 -->
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th colspan="6">좌석 리뷰</th>
+				</tr>
+				<tr>
+					<td colspan="6">
+						<textarea id="seat_rev" name="seat_rev" cols="120" rows="5" style="resize: none;"
+						placeholder="좌석에 대한 자세한 리뷰를 입력해주세요."></textarea>
+					</td>
+				</tr>
+			</table>
+
 			<br>
 			<br>
 			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<div class="reviewleft">
-				<b>좌석 리뷰</b>
-			</div>
-			<div class="center">
-				<textarea id="seat_rev" name="seat_rev" cols="53" rows="5" style="resize: none;"
-				placeholder="좌석에 대한 자세한 리뷰를 입력해주세요."></textarea>
-			</div>
-			<br>
-			<br>
-			<br>
-			<input type="hidden" id="theater_cd" name="theater_cd" value="${play.theater_cd }">
+			<input type="hidden" id="theater_cd" name="theater_cd" value="${theater_cd }">
 			<input type="hidden" id="rev_distin_cd" name="rev_distin_cd" value="${rev_distin_cd }">
 			<!-- 임시로 전달하는 user 값 -->
 			<input type="hidden" id="user_cd" name="user_cd" value="U00001">
 			<!-- 다음 페이지에 전달할 공연 코드 값 -->
 			<input type="hidden" id="play_cd" name="play_cd" value="${play.play_cd }">
-			<div class="center">
-				<button type="submit" id="center" class="btn btn-info">상세 리뷰 작성하러 가기</button>
+			<div class="nextBtn">
+				<button type="submit" id="nextBtn" class="btn btn-info nextBtn">상세 리뷰 작성하러 가기</button>
 			</div>
 		</form>
 	</div>

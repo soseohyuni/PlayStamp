@@ -35,7 +35,7 @@
 
 <div class="card">
     <div class="text-center intro"> 
-    	<br><img onclick="location.href='main.action'" src="images/logo_typo.svg" style="cursor:pointer; width:300px;"><br> 
+    	<br><img onclick="location.href='home.action'" src="images/logo_typo.svg" style="cursor:pointer; width:300px;"><br> 
     </div>
     
     <form action="login.action" id="loginForm" method="post">
