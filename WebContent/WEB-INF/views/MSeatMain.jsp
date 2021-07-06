@@ -203,8 +203,7 @@ body {
 		fullBackground.style.top = document.body.scrollTop; //-- y 축 방향으로 스크롤한 거리
 		fullBackground.style.left = document.body.scrollLeft; //-- x 축 방향으로 스크롤한 거리
 
-		popup.style.top = ((screen.height / 2) - 200 + document.body.scrollTop)
-				+ "px";
+		popup.style.top = ((screen.height / 2) - 200 + document.body.scrollTop) + "px";
 		popup.style.left = ((screen.width / 2) - 500) + "px";
 
 		fullBackground.style.display = "block";
