@@ -37,10 +37,10 @@
 	
 	.tab-content { border: 0.3px solid gray; }
 	
-	#pageTitle { float: left; margin: auto; }
-	
-	#backList { float: right; }
-	
+	.subContainer { text-align: center; }
+	#pageTitle { float: left; font-size: 20px;}	
+	#backList { float: right;}
+		
 	.container { width: 1300px; }
 	
 	#header { margin: auto; }
@@ -52,32 +52,45 @@
 	div#playReview > table > tbody > tr > td:nth-child(2) { height: 10px; }
 	
 	div#seatReview > table > tbody > tr > td:nth-child(2) { text-align: center; }
-	/* div#seatReview > table > tbody > tr > td:nth-child(3) { width: 60px; } */
 
 </style>
-<script type="text/javascript">
+<script type="text/javascript">	
 
-	
 	//@@ 공연리뷰 평점
-	var playRevPre = "";
+	var playRevPre = new Array();
+		
+	//@@ 공연 평균 평점
+	var playRevTot = 0;
+	var playRevCount = 0;
+	var playRevAvg = 0;
 	
 	//@@ 좌석리뷰 평점
-	var view = "";
-	var seat = "";
-	var sound = "";
-	var light = "";
+	var view = new Array();
+	var seat = new Array();
+	var sound = new Array();
+	var light = new Array();
 	
-	<c:forEach var="playRevPre" items="${playRevPreList}">
-		playRevPre = ${playRevPre.rating_cd};
+	//@@ 각 평점 값 list 에 담기(playRevPre)
+	<c:forEach var="playRevPre" items="${playRevPreList}">	
+		playRevPre.push("${playRevPre.rating_cd}");
+		playRevTot += ${playRevPre.rating_cd};
+		playRevCount += 1;
 	</c:forEach>
-
+	
+	//@@ 각 평점 값 list 에 담기(seatRev)
 	<c:forEach var="seatRev" items="${seatRevList}">
-		view = ${seatRev.view_rating};
-		seat = ${seatRev.seat_rating};
-		sound = ${seatRev.sound_rating};
-		light = ${seatRev.light_rating};
+		view.push("${seatRev.view_rating}");
+		seat.push("${seatRev.seat_rating}");
+		sound.push("${seatRev.sound_rating}");
+		light.push("${seatRev.light_rating}");
 	</c:forEach> 
-
+	
+	//@@ 테스트
+	//alert(playRevPre[1]);
+		
+	// 평균 연산(편의상 몫만 취함..)
+	var playRevAvg = parseInt(playRevTot/playRevCount);
+	
 	//@@ 목록으로 클릭시 이동
 	$(function()
 	{
@@ -88,45 +101,61 @@
 	});
 	
 	//@@ 별점 제이쿼리
-	
 	$(function()
 	{
-		$("#playRevPre").barrating(
+		for (var i = 0; i < playRevPre.length; i++)
+		{
+			//@@ 공연 별점
+			$("#playRevPre"+i).barrating(
+			{
+				theme: "fontawesome-stars"
+		        , initialRating: playRevPre[i]
+		        , readonly: true
+		    });
+		    
+		}
+
+		//@@ 공연 평균 별점
+		$(".playRev").barrating(
 		{
 			theme: "fontawesome-stars"
-	        , initialRating: play
+	        , initialRating: playRevAvg
 	        , readonly: true
 	    });
 		
 		$("#seatRev").click(function()
 		{
-			$("#view").barrating(
+			for (var i = 0; i < view.length; i++)
 			{
-				theme: "fontawesome-stars"
-		        , initialRating: view
-		        , readonly: true
-		    });
-			
-			$("#seat").barrating(
-			{
-				theme: "fontawesome-stars"
-		        , initialRating: seat
-		        , readonly: true
-		    });
-			
-			$("#sound").barrating(
-			{
-				theme: "fontawesome-stars"
-		        , initialRating: sound
-		        , readonly: true
-		    });
-			
-			$("#light").barrating(
-			{
-				theme: "fontawesome-stars"
-		        , initialRating: light
-		        , readonly: true
-		    });
+				//@@ 시야 별점
+				$("#view"+i).barrating(
+				{
+					theme: "fontawesome-stars"
+			        , initialRating: view[i]
+			        , readonly: true
+			    });
+				//@@ 좌석 별점
+				$("#seat"+i).barrating(
+				{
+					theme: "fontawesome-stars"
+			        , initialRating: seat[i]
+			        , readonly: true
+			    });
+				//@@ 음향 별점
+				$("#sound"+i).barrating(
+				{
+					theme: "fontawesome-stars"
+			        , initialRating: sound[i]
+			        , readonly: true
+			    });
+				//@@ 조명 별점
+				$("#light"+i).barrating(
+				{
+					theme: "fontawesome-stars"
+			        , initialRating: light[i]
+			        , readonly: true
+			    });
+			}
 		}); 
 	}); 
 	
@@ -143,12 +172,13 @@
 	<div id="wrapper">
 		<div>
 		
+
 		<!-- 메뉴 -->
-			<div id="pageTitle" class="container">공연 상세 정보
+		<div class="subContainer">
+			<span id="pageTitle">공연상세 정보</span>
 			<button type="button" id="backList">목록으로</button>
-			</div>
-			
-			<br><hr>
+			<hr>
+		</div>
 			
 			
 		<!-- 공연 상세 출력 -->
@@ -174,15 +204,21 @@
 					<tr>
 						<td>출연진</td>
 						<td><input type="text" disabled="disabled" value="${playDetail.play_cast}"
-						style="width: 500px;"></td>
+						style="width: 450px;"></td>
 					</tr>
 
 					<tr>
 			  			<td>
-							공연 평균 별점
+			  			<select class="playRev">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
 						</td>
 						<td></td>
-						<td>찜리스트에 저장 ♡</td>
+						<td>찜리스트에 저장 <span style="color: #FE2E2E"><i class="far fa-heart fa-lg"></i></span></td>
 					</tr>
 				</c:forEach>			
 				</table>
@@ -201,57 +237,43 @@
 				<div class="tab-content">
 					  <div class="tab-pane fade show active" id="playReview">
 					  	<table class="table table-bordered">
+					  		<!--@@ 반복문 돌면서 id 값을 달리하기 위한 i -->
+					  		<c:set var="i" value="0"></c:set>
 					  		<c:forEach var="playRevPre" items="${playRevPreList }">
 						  		<tr>
 									<td rowspan="2"><img src="${playRevPre.play_img}" width="100px"></td>
-									<td colspan="2" id="reviewTitle" onclick="location.href='playreviewdetail.action'">${playRevPre.title }</td>
+									<td colspan="2" id="reviewTitle"
+									onclick="location.href='playreviewdetail.action?playrev_cd=${playRevPre.playrev_cd}'">${playRevPre.title }</td>
 						  		</tr>
 						  		<tr>
 						  			<td colspan="2">${playRevPre.contents}</td>
 						  		</tr>
 						  		<tr>
 						  			<td>
-						  			<select id="playRevPre">
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-									</select>
+							  			<select id="playRevPre${i }">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+										</select>
 									</td>
 						  			<td>
-						  			<span style="color: #0080FF"><i class="fa fa-comment fa-sm" aria-hidden="true"></i></span></i> ${playRevPre.lcount}
-						  			&nbsp;<span style="color: #FE2E2E"><i class="fas fa-heart fa-sm"></i></span> ${playRevPre.ccount}
+						  			<span style="color: #0080FF"><i class="fa fa-comment fa-sm" aria-hidden="true"></i></span></i> ${playRevPre.ccount}
+						  			&nbsp;<span style="color: #FE2E2E"><i class="fas fa-heart fa-sm"></i></span> ${playRevPre.lcount}
 						  			</td>
 						  			<td>${playRevPre.user_nick}</td>
 						  		</tr>	
+						  		<!--@@ 한 턴 반복이 끝나면 i 를 증가! -->
+					  			<c:set var="i" value="${i+1}"></c:set>
 						  	</c:forEach>	  		
 					  	</table>
-					  	<%-- <table>
-					  		<tr>
-					  			<th>공연이미지</th>
-					  			<th>평점</th>
-					  			<th>공연명</th>
-					  			<th>리뷰내용</th>
-					  			<th>좋아요수</th>
-					  			<th>댓글수</th>
-					  			<th>닉네임</th>
-					  		</tr>
-					  		<c:forEach var="playRevPre" items="${playRevPreList }">
-					    		<tr>
-					  				<td><img src="${playRevPre.play_img}"></td>
-					  				<td>${playRevPre.rating_cd}</td>
-					  				<td>${playRevPre.play_nm}</td>
-					  				<td>${playRevPre.contents}</td>
-					  				<td>${playRevPre.lcount}</td>
-					  				<td>${playRevPre.ccount}</td>
-					  				<td>${playRevPre.user_nick}</td>					  				
-					  			</tr>
-					    	</c:forEach>
-					  	</table> --%>
+					  		
 					  </div>
 					  <div class="tab-pane fade" id="seatReview">
 					  	<table class="table table-borderless" id="seatRevTbl">
+					  	<!--@@ 반복문 돌면서 id 값을 달리하기 위한 j -->
+					  		<c:set var="j" value="0"></c:set>
 					  		<c:forEach var="seatRev" items="${seatRevList }">
 						  		<tr>
 						  			<td rowspan="2"></td>
@@ -266,7 +288,7 @@
 						  		<tr>
 						  			<td>시야</td>
 						  			<td>
-							  			<select id="view">
+							  			<select id="view${j }">
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
@@ -279,7 +301,7 @@
 						  		<tr>
 						  			<td>좌석</td>
 						  			<td>
-										<select id="seat">
+										<select id="seat${j }">
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
@@ -291,7 +313,7 @@
 						  		<tr>
 						  			<td>조명</td>
 						  			<td>
-										<select id="sound">
+										<select id="light${j }">
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
@@ -303,7 +325,7 @@
 						  		<tr>
 						  			<td>음향</td>
 						  			<td>
-										<select id="light">
+										<select id="sound${j }">
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
@@ -312,38 +334,11 @@
 									</select>
 									</td>
 						  		</tr>
+						  		<!--@@ 한 턴 반복이 끝나면 j 를 증가! -->
+					  			<c:set var="j" value="${j+1}"></c:set>
 					  		</c:forEach>  		
 					  	</table>
-					    <%-- <table>
-					  		<tr>
-					  			<th>층</th>
-					  			<th>구역</th>
-					  			<th>열</th>
-					  			<th>번호</th>
-					  			<th>공연명</th>
-					  			<th>공연일</th>
-					  			<th>내용</th>
-					  			<th>시야평점</th>
-					  			<th>좌석평점</th>
-					  			<th>조명평점</th>
-					  			<th>음향평점</th>
-					  		</tr>
-					  		<c:forEach var="seatRev" items="${seatRevList }">
-					    		<tr>
-					  				<td>${seatRev.seat_flow}</td>
-					  				<td>${seatRev.seat_area}</td>
-					  				<td>${seatRev.seat_line}</td>
-					  				<td>${seatRev.seat_num}</td>
-					  				<td>${seatRev.play_nm}</td>
-					  				<td>${seatRev.play_dt}</td>
-					  				<td>${seatRev.seat_rev}</td>					  				
-					  				<td>${seatRev.view_rating}</td>					  				
-					  				<td>${seatRev.seat_rating}</td>					  				
-					  				<td>${seatRev.light_rating}</td>					  				
-					  				<td>${seatRev.sound_rating}</td>					  				
-					  			</tr>
-					    	</c:forEach>
-					  	</table> --%>
+					
 					  </div>
 				</div>
 			</div>

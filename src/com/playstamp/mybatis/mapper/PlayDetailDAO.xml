@@ -37,7 +37,7 @@
 	</select>
 	
 	<select id="getPlayRevPre" resultType="com.playstamp.playdetail.PlayRevPre" parameterType="string">
-		SELECT PLAY_CD, PLAY_IMG, RATING_CD, PLAY_NM, CONTENTS, LCOUNT, CCOUNT, USER_NICK, TITLE
+		SELECT PLAY_CD, PLAY_IMG, PLAYREV_CD, RATING_CD, PLAY_NM, CONTENTS, LCOUNT, CCOUNT, USER_NICK, TITLE
 		FROM VIEW_PLAYREV
 		WHERE PLAY_CD=#{play_cd}
 	</select>

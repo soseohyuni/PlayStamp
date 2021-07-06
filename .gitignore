@@ -1,4 +1,9 @@
+<<<<<<< HEAD
+.class
+build/
+=======
 .classpath
 .project
 .settings/org.eclipse.wst.common.component
 src/sample/
+>>>>>>> 30c9ba887833f310a019207bd7e22b4233b86980
