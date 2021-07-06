@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.playstamp.review.mybatis.IAddReviewDAO">
+
+	<!-- 검색 시 공연정보를 모두 가져오는 list() -->
+	<!-- 코드, 이름만 가져와도 되나...??? 리뷰 입력할때는 뷰말고 그냥 테이블 써서 공연명에 날짜안들어가게할거니까.. -->
+	<select id="playList" resultType="com.playstamp.review.Play">
+		SELECT play_cd, theater_cd, genre_cd, mng_cd, play_nm
+		     , play_start, play_end, play_img, play_cast
+		FROM VIEW_PLAY
+	</select>
+
+</mapper>
