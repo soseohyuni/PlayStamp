@@ -20,7 +20,9 @@ public class UserImgUpload extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		
-		String realPath = request.getServletContext().getRealPath("upload");
+		String realPath = request.getServletContext().getRealPath("/");
+		
+		System.out.println(realPath);
 		
 		String fileName = null;
 	    String contextPath = request.getServletContext().getContextPath();
