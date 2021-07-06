@@ -15,7 +15,7 @@ import com.playstamp.paging.PageMaker;
 
 @Controller
 public class PagingController
-{
+{/*
 	@Autowired
 	private SqlSession sqlSession;
 	
@@ -36,4 +36,5 @@ public class PagingController
 	    mav.addObject("pageMaker", pageMaker); //-- 페이징을 위한 버튼 값이 들어있음
 	        
 	    return mav;
+	    */
 }
