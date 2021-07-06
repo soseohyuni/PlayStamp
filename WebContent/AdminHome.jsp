@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>adminHome.jsp</title>
+<title>AdminHome.jsp</title>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -19,9 +19,9 @@
 <body>
 
 <!-- 헤더 추가 -->
-<c:import url="adminHeader.jsp"></c:import>
+<c:import url="AdminHeader.jsp"></c:import>
 
-<div class="container" style="width: 75%; height: 700px; top:50px;">
+<div class="container" style="align: left; width: 74%; height: 700px; top:50px;">
 	<div class="container">	
 		<div class="infoContainer">
 			<div id="userInfoContainer" class="userInfo">
@@ -65,8 +65,8 @@
 						</tr>
 					</thead>
 					<tbody>
+						<!-- c:foreach문으로 리스트 반복 뿌려주기 -->
 						<tr>
-							<!-- c:foreach문으로 리스트 반복 뿌려주기 -->
 							<td>10001</td>
 							<td>욕설/비방</td>
 							<td><a href="">이런수박씨같은xx</a></td>
@@ -74,7 +74,6 @@
 							<td>공연리뷰</td>
 						</tr>
 						<tr>
-							<!-- c:foreach문으로 리스트 반복 뿌려주기 -->
 							<td>10002</td>
 							<td>욕설/비방</td>
 							<td><a href="">이런수박씨같은xx</a></td>
@@ -82,7 +81,6 @@
 							<td>댓글</td>
 						</tr>
 						<tr>
-							<!-- c:foreach문으로 리스트 반복 뿌려주기 -->
 							<td>10003</td>
 							<td>욕설/비방</td>
 							<td><a href="">이런수박씨같은xx</a></td>
@@ -90,7 +88,6 @@
 							<td>좌석정보</td>
 						</tr>
 						<tr>
-							<!-- c:foreach문으로 리스트 반복 뿌려주기 -->
 							<td>10004</td>
 							<td>욕설/비방</td>
 							<td><a href="">이런수박씨같은xx</a></td>
@@ -98,7 +95,6 @@
 							<td>댓글</td>
 						</tr>
 						<tr>
-							<!-- c:foreach문으로 리스트 반복 뿌려주기 -->
 							<td>10004</td>
 							<td>욕설/비방</td>
 							<td><a href="">이런수박씨같은xx</a></td>

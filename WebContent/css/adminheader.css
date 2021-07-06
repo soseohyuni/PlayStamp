@@ -30,3 +30,9 @@
 	
 	li:first-child { border-bottom: none; } 
 	
+	li .img:hover
+	{
+		background-color: transparent !important;
+	}
+	
+	
