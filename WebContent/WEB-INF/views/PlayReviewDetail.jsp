@@ -88,6 +88,9 @@
 	//@@ 좋아요 여부 확인
 	//var checkHeart = ${checkHeart};
 	
+	//@@ 신고 루트 분기 위한...
+	var reportWhat = 0;
+	
 	<c:forEach var="playReviewDetail" items="${playReviewDetail }">
 		playRev = "${playReviewDetail.rating_cd}"
 	</c:forEach> 
@@ -260,7 +263,7 @@
 				{
 					str += "<div data-replyNo='" + item.comment_cd + "' class='replyLi2'>"
 					+ "<span class='commentWriter'>" + item.user_nick + "</span>"
-					+ "<button type='button' class='btn btn-default' onclick='openWindow()'>신고</button><br><br>"
+					+ "<button type='button' class='btn btn-default'>신고</button><br><br>"
 					+ "<span class='comment'>" + item.comments + "</span>"
 					+ "<span class='commentDt'>" + item.wr_dt + "</span><br>"          
 	                + "<hr>"
@@ -279,20 +282,54 @@
 	var popup;
 	
 	//@@ 신고 팝업
-	function openWindow()
+/* 	function openWindow()
 	{ 		
 		popup = window.open("reportform.action", "reportform", "width=570, height=350, resizable = no, scrollbars = no");
-	}
+	} */
 	
-	window.report = function(data)
+	var comment_cd = 0;
+	
+	$(function()
 	{
-		// 자식창에서 얻어 온 신고 사유 값 rep_y_cd 에 담기
-		var rep_y_cd = data;
 		
-		// report.action 으로 컨트롤러 호출
-		$(location).attr("href", "report.action?playrev_cd=" + articleNo + "&rep_y_cd=" + rep_y_cd);
-	}
+		$("#reportPlayRev").click(function()
+		{
+			popup = window.open("reportform.action", "reportform", "width=570, height=350, resizable = no, scrollbars = no");
+			reportWhat = 0;
+			
+		});
+		
+		$("#comments").on("click", ".replyLi2 button", function()
+		{
+			var reply = $(this).parent();
+			
+			var replyNo = reply.attr("data-replyNo");
+			
+			popup = window.open("reportform.action", "reportform", "width=570, height=350, resizable = no, scrollbars = no");
+			reportWhat = 1;
+			comment_cd = replyNo;
+		});
+	
+		window.report = function(data)
+		{ 
+			// 자식창에서 얻어 온 신고 사유 값 rep_y_cd 에 담기
+			var rep_y_cd = data;
+			
+			// report.action 으로 컨트롤러 호출
+			if (reportWhat==0)
+			{
+				$(location).attr("href", "report.action?playrev_cd=" + articleNo + "&rep_y_cd=" + rep_y_cd);	
+			}
+			else if (reportWhat==1)
+			{
+				$(location).attr("href", "report.action?playrev_cd=" + articleNo + "&comment_cd=" + comment_cd + "&rep_y_cd=" + rep_y_cd);
+			}
+			
+		}
+	});
+	
 
+	
 </script>
 </head>
 
@@ -402,7 +439,7 @@
 			<c:set var="loginUser_cd" value="${sessionScope.code }"></c:set>
   			<c:set var="writer_cd" value="${playReviewDetail.user_cd }"></c:set>
   			<c:if test="${loginUser_cd ne writer_cd }">
-			<button type="button" class="btn btn-default" id="report" onclick="openWindow()">리뷰 신고</button>
+			<button type="button" class="btn btn-default" id="reportPlayRev" onclick="openWindow()">리뷰 신고</button>
 			</c:if>	
 			<hr>
 			</c:forEach>

@@ -4,8 +4,13 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.playstamp.report.mybatis.IReportDAO">
-	<insert id="addReport">
+	<insert id="addReportPlayRev">
 		INSERT INTO TBL_REP_REV(REP_REV_CD, PLAYREV_CD, REP_Y_CD, USER_CD, REP_DT)
 		VALUES(REP_REV_SEQ.NEXTVAL, #{playrev_cd}, #{rep_y_cd}, #{user_cd}, SYSDATE)
+	</insert>
+	
+	<insert id="addReportComment">
+		INSERT INTO TBL_REP_COM(REP_COM_CD, COMMENT_CD, REP_Y_CD, USER_CD, REP_DT)
+		VALUES(REP_COM_SEQ.NEXTVAL, #{comment_cd}, #{rep_y_cd}, #{user_cd}, SYSDATE)
 	</insert>
 </mapper>

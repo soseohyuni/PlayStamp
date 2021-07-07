@@ -19,7 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.playstamp.playreviewdetail.Comment;
 import com.playstamp.playreviewdetail.mybatis.IPlayReviewDetailDAO;
-import com.playstamp.report.Report;
+import com.playstamp.report.ReportComment;
+import com.playstamp.report.ReportPlayRev;
 
 @Controller
 public class ReportController
@@ -36,26 +37,60 @@ public class ReportController
 		String playrev_cd = request.getParameter("playrev_cd");
 		String rep_y_cd = request.getParameter("rep_y_cd");
 		String user_cd = (String)session.getAttribute("code");
+		String comment_cd = request.getParameter("comment_cd");
 		
-		Report report = new Report();
+		ReportPlayRev reportPlayRev = new ReportPlayRev();
+		ReportComment reportComment = new ReportComment();
 		
-		report.setPlayrev_cd(playrev_cd);
-		report.setRep_y_cd(rep_y_cd);
-		report.setUser_cd(user_cd);
+		//@@ 값 넘어옴!
+		//System.out.println(comment_cd);
 
 		int result = 0;
 		
 		try
 		{
-			result = dao.addReport(report);
-			
-			//@@ 신고 접수 후 alert 창으로 신고 접수가 완료되었음을 알려 주기!
-			if (result>0)
-				model.addAttribute("msg", "신고 접수가 완료되었습니다.");
-			else
-				model.addAttribute("msg", "신고 접수에 실패하였습니다.");
+			//result = dao.addReport(report);
+			if (comment_cd!=null)
+			{	reportComment.setComment_cd(comment_cd);
+				reportComment.setRep_y_cd(rep_y_cd);
+				reportComment.setUser_cd(user_cd);
 				
-			model.addAttribute("url", "playreviewdetail.action?playrev_cd="+playrev_cd);
+				result = dao.addReportComment(reportComment);
+				
+				//@@ 신고 접수 후 alert 창으로 신고 접수가 완료되었음을 알려 주기!
+				if (result>0)
+					model.addAttribute("msg", "신고 접수가 완료되었습니다.");
+				else
+					model.addAttribute("msg", "신고 접수에 실패하였습니다.");
+					
+				model.addAttribute("url", "playreviewdetail.action?playrev_cd="+playrev_cd);
+			}
+			/*
+			 * else if (seat_rev_cd!=null) {
+			 * 
+			 * } else if (mseat_rev_cd!=null) {
+			 * 
+			 * }
+			 */
+			else if (playrev_cd!=null)
+			{
+				reportPlayRev.setPlayrev_cd(playrev_cd);
+				reportPlayRev.setRep_y_cd(rep_y_cd);
+				reportPlayRev.setUser_cd(user_cd);
+				
+				result = dao.addReportPlayRev(reportPlayRev);
+				
+				//@@ 신고 접수 후 alert 창으로 신고 접수가 완료되었음을 알려 주기!
+				if (result>0)
+					model.addAttribute("msg", "신고 접수가 완료되었습니다.");
+				else
+					model.addAttribute("msg", "신고 접수에 실패하였습니다.");
+					
+				model.addAttribute("url", "playreviewdetail.action?playrev_cd="+playrev_cd);
+			}
+			
+			
+			
 
 			 
 		} catch (Exception e)

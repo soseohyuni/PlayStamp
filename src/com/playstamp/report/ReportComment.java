@@ -1,27 +1,27 @@
 package com.playstamp.report;
 
-public class Report
+public class ReportComment
 {
-	private String rep_rev_cd, playrev_cd, rep_y_cd, user_cd, rep_dt;
+	private String rep_com_cd, comment_cd, rep_y_cd, user_cd, rep_dt;
 
-	public String getRep_rev_cd()
+	public String getRep_com_cd()
 	{
-		return rep_rev_cd;
+		return rep_com_cd;
 	}
 
-	public void setRep_rev_cd(String rep_rev_cd)
+	public void setRep_com_cd(String rep_com_cd)
 	{
-		this.rep_rev_cd = rep_rev_cd;
+		this.rep_com_cd = rep_com_cd;
 	}
 
-	public String getPlayrev_cd()
+	public String getComment_cd()
 	{
-		return playrev_cd;
+		return comment_cd;
 	}
 
-	public void setPlayrev_cd(String playrev_cd)
+	public void setComment_cd(String comment_cd)
 	{
-		this.playrev_cd = playrev_cd;
+		this.comment_cd = comment_cd;
 	}
 
 	public String getRep_y_cd()
