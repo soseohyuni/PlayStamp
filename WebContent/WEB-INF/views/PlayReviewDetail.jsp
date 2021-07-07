@@ -380,7 +380,12 @@
 			<span style="color: #FE2E2E"><i class="fas fa-heart fa-lg"></i></span>&nbsp;<span id="lcount">${playReviewDetail.lcount }</span>
 			&nbsp;&nbsp;작성자: ${playReviewDetail.user_nick }			
 			</span>
-			<button type="button" class="" id="report">리뷰 신고</button>		
+			<!-- 리뷰 작성자가 본인일 경우 신고 버튼 뜨지 않도록 처리 -->
+			<c:set var="loginUser_cd" value="${sessionScope.code }"></c:set>
+  			<c:set var="writer_cd" value="${playReviewDetail.user_cd }"></c:set>
+  			<c:if test="${loginUser_cd ne writer_cd }">
+			<button type="button" class="btn btn-default" id="report">리뷰 신고</button>
+			</c:if>	
 			<hr>
 			</c:forEach>
 		</div>

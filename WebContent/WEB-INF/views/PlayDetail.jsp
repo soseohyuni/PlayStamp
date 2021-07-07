@@ -340,10 +340,23 @@
 						  			<td rowspan="2"><i class="fa fa-user-circle fa-4x" aria-hidden="true"></i></td>
 						  			<td><input type="text" 
 						  			value="${seatRev.seat_flow}층 ${seatRev.seat_area}구역 ${seatRev.seat_line}열 ${seatRev.seat_num}번" disabled="disabled"></td>
+						  			
+						  			<!-- 본인이 작성한 좌석 리뷰에는 신고 버튼이 출력되지 않도록 처리  -->
+						  			<c:set var="loginUser_cd" value="${sessionScope.code }"></c:set>
+						  			<c:set var="writer_cd" value="${seatRev.user_cd }"></c:set>
+						  			<c:choose>
+									<c:when test="${loginUser_cd ne writer_cd }">
+									<td><button type="button" class="btn btn-defualt">신고</button></td>
+									</c:when>
+									<c:when test="${loginUser_cd eq writer_cd }">
+									<td></td>
+									</c:when>
+									</c:choose>						  		
 						  		</tr>
 						  		<tr>
 						  			<td><input type="text" value="${seatRev.play_nm}" disabled="disabled">
 						  			<input type="text" value="${seatRev.play_dt}" disabled="disabled"></td>
+						  			<td></td>
 						  		</tr>
 						  		<tr>
 						  			<td>시야</td>
@@ -357,6 +370,7 @@
 										</select>
 									</td>
 						  			<td rowspan="4"><textarea rows="7%" cols="50%" disabled="disabled">${seatRev.seat_rev}</textarea></td>
+						  			<td></td>
 						  		</tr>
 						  		<tr>
 						  			<td>좌석</td>
@@ -369,6 +383,7 @@
 										<option value="5">5</option>
 										</select>
 									</td>
+									<td></td>
 						  		</tr>
 						  		<tr>
 						  			<td>조명</td>
@@ -381,6 +396,7 @@
 										<option value="5">5</option>
 										</select>
 									</td>
+									<td></td>
 						  		</tr>
 						  		<tr>
 						  			<td>음향</td>
@@ -393,6 +409,7 @@
 										<option value="5">5</option>
 									</select>
 									</td>
+									<td></td>
 						  		</tr>
 						  		<!--@@ 한 턴 반복이 끝나면 j 를 증가! -->
 					  			<c:set var="j" value="${j+1}"></c:set>
