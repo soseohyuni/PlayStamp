@@ -151,7 +151,7 @@
  	
  	<!-- 공연 상세 리뷰 수정 -->
  	<update id="modifyReviewDetail">
- 		UPDATE TBL_PLAY_REV SET COMPANION_CD=${companion_cd}, TITLE='${title}', RATING_CD=${rating_cd}, CONTENTS='${contents}', PLAY_IMG='${play_img}', PLAY_DT=TO_DATE('${play_dt}', 'YY-MM-DD'), PLAY_TIME='${play_time}', PLAY_MONEY=${play_money}, PLAY_CAST='${play_cast}' WHERE REV_DISTIN_CD = '${rev_distin_cd}'
+ 		UPDATE TBL_PLAY_REV SET COMPANION_CD=${companion_cd}, TITLE='${title}', RATING_CD=${rating_cd}, CONTENTS='${contents}', PLAY_DT=TO_DATE('${play_dt}', 'YY-MM-DD'), PLAY_TIME='${play_time}', PLAY_MONEY=${play_money}, PLAY_CAST='${play_cast}' WHERE REV_DISTIN_CD = '${rev_distin_cd}'
  	</update>
  	
  	<!-- 공연 상세 리뷰 삭제 -->
@@ -188,5 +188,12 @@
 		FROM TBL_PLAY P, TBL_REV_DISTIN RD
 		WHERE P.PLAY_CD=RD.PLAY_CD AND RD.REV_DISTIN_CD='${rev_distin_cd}'
  	</select>
+ 	
+ 	<!-- 리뷰 수정 시 포스터 수정 처리 액션 -->
+ 	<update id="modifyPosterImg">
+	 	UPDATE TBL_PLAY_REV
+		SET PLAY_IMG='${play_img}'
+		WHERE REV_DISTIN_CD='${rev_distin_cd}'
+ 	</update>
 
 </mapper>

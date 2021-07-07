@@ -26,6 +26,8 @@
 <script src="<%=cp %>/js/jquery.barrating.min.js"></script>
 <link rel="stylesheet" href="css/header.css">
 <style type="text/css">
+	#leftbox { width: 40%; }
+	#rightbox { width: 60%;}
 	.content 
 	{
 	    width: 1300px;
@@ -97,6 +99,7 @@
    #img { text-align:center;}
    
    #reviewdetailtable td { height:20px; }
+   
    #reviewdetailtable { width:60%; margin: auto; }
    #uploadFile { text-align:center;}
    
@@ -117,6 +120,34 @@
 </script>
 <script type="text/javascript">
 
+	// 사용자가 이미지를 업로드하면 함수 호출
+	$(function()
+	{
+		$("#userUpImg").on("change", handleImgFileSelect);
+	});
+	
+	// 사진 업로드
+	//-- 첨부 이미지 미리보기에 반영되기 전 확장자 체크
+	function handleImgFileSelect(e) 
+	{
+	    var files = e.target.files;
+	    var filesArr = Array.prototype.slice.call(files);
+
+	    filesArr.forEach(function(f) {
+	        if(!f.type.match("image.*")) {
+	            alert("이미지 파일만 첨부해주세요.");
+	            return;
+	        }
+
+	        sel_file = f;
+	        var reader = new FileReader();
+	        reader.onload = function(e) {
+	            $("#imgWrap").attr("src", e.target.result);
+	        }
+	        reader.readAsDataURL(f);
+	    });
+	}
+	
 	// 날짜를 달력에서 선택할 수 있도록 설정
 	$("#play_dt").datepicker(
 	{
@@ -141,15 +172,26 @@
 <br><br>
 
 <div class="content">
+
+	<div class="leftbox">
+		<!-- 첨부사진 -->
+		<form action="UserImgUpload" method="post" enctype="multipart/form-data">
+			<div class="profileImg" id="userImg">
+                   <img id="imgWrap" src="${play.play_img }">
+			</div>
+			
+			<div>
+				<br>
+				<input class="btn btn-primary" type="submit" val="변경하기">
+			</div>		
+		</form>
+	</div>
+	
+	<div class="rightbox">
+	
 	<form action="addreviewdetail.action" method="post" class="content">
 		<table class="table table-borderless" id="reviewdetailtable">
 			<tr>
-				<td colspan="2" rowspan="7" style="width:50px; margin:0 auto;">
-					<!-- 포스터 사진 미리보기 -->
-					<div>
-						<img id="imagePreview" src="${play.play_img }">
-					</div>
-				</td>
 				<th>제목</th>
 				<td>
 					<input type="text" id="title" name="title" class="form-control" maxlength="50" required="required">
@@ -186,16 +228,6 @@
 				</td>
 			</tr>
 			<tr>
-				<th style="text-align:center;">공연 평점</th>
-				<td>
-					<select id="rating_cd"" name="rating_cd">
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-					</select>
-				</td>
 				<th>함께 본 사람</th>
 				<td>
 				<select id="companion_cd" name="companion_cd">
@@ -206,6 +238,10 @@
 				</select>
 				</td>
 			</tr>
+		</table>
+	</div><!-- rightbox -->
+		
+		<table>
 			<tr>
 				<th colspan="4">공연 상세 리뷰</th>
 			</tr>
@@ -219,7 +255,7 @@
 		</div>
 		<!-- 이전 페이지로 넘겨받은 데이터 -->
 		<input type="hidden" id="rev_distin_cd" name="rev_distin_cd" value="${rev_distin_cd }">
-		<input type="hidden" id="play_img" name="play_img" value="${play.play_img }">
+		<input type="hidden" id="getplay_img" name="getplay_img" value="${play.play_img }">
 	</form>
 </div><!-- close #content -->
 

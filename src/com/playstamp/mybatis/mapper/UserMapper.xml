@@ -36,4 +36,11 @@
       WHERE MNG_ID = #{arg0} AND MNG_PW = #{arg1}
    </select>
    
+   <!-- 식별번호 조회 -->
+   <select id="userCode" resultType="String">
+      SELECT USER_CD
+      FROM TBL_USERINFO
+      WHERE USER_ID=#{arg0}
+   </select>
+   
 </mapper>

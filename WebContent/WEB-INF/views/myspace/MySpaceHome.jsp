@@ -57,7 +57,7 @@
 		<!-- 리뷰 추가하기 -->
 		<div id="addReview" class="container">
 				<button type="button" class="btn btn-primary btn-lg btn-block"
-				style="margin-bottom: 50px;">+ 리뷰 추가하기</button>
+				style="margin-bottom: 50px;" onclick="location.href='addreviewsearchform.action'">+ 리뷰 추가하기</button>
 		</div>
 		
 		<!-- 2층 -->

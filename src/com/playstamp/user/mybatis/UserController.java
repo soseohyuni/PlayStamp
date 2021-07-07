@@ -190,9 +190,12 @@ public class UserController
 				System.out.println("사용자로 로그인 성공");
 				
 				// 사용자 정보 세션에 담기
-				HttpSession session = request.getSession();
-				session.setAttribute("id", id);
-				session.setAttribute("nick", str);
+	            HttpSession session = request.getSession();
+	            session.setAttribute("id", id);
+	            session.setAttribute("nick", str);
+	            
+	            String code = userDao.userCode(id);
+	            session.setAttribute("code", code);
 				
 				/* 등급 처리 */
 				
