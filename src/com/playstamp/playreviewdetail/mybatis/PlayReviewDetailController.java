@@ -61,7 +61,12 @@ public class PlayReviewDetailController
 	
 		return "WEB-INF/views/PlayReviewDetail.jsp";
 	}
-
+	
+	@RequestMapping(value="/reportform.action")
+	public String reportForm()
+	{
+		return "WEB-INF/views/Report.jsp";
+	}
 	
 	//@@ ajax 로 댓글 리스트 전송
 	@RequestMapping(value="/comment.action", method= RequestMethod.GET)
