@@ -3,7 +3,7 @@ package com.playstamp.playdetail;
 public class SeatRev
 {
 	private String play_cd, seat_area, seat_flow, user_cd, seat_line, seat_num, play_nm, play_dt
-		  , seat_rev, view_rating, seat_rating, light_rating, sound_rating;
+		  , seat_rev, view_rating, seat_rating, light_rating, sound_rating, seat_rev_cd, mseat_rev_cd;
 
 	public String getPlay_cd()
 	{
@@ -133,7 +133,28 @@ public class SeatRev
 	public void setUser_cd(String user_cd)
 	{
 		this.user_cd = user_cd;
+	}
+
+	public String getSeat_rev_cd()
+	{
+		return seat_rev_cd;
+	}
+
+	public void setSeat_rev_cd(String seat_rev_cd)
+	{
+		this.seat_rev_cd = seat_rev_cd;
+	}
+
+	public String getMseat_rev_cd()
+	{
+		return mseat_rev_cd;
+	}
+
+	public void setMseat_rev_cd(String mseat_rev_cd)
+	{
+		this.mseat_rev_cd = mseat_rev_cd;
 	}			
+	
 	
 	
 }

@@ -44,16 +44,24 @@ public class PlayDetailController
 		int mseatCheck = 0;
 		int seatCheck = 0;
 		
+		// 신고 처리를 분기하기 위해 임의의 변수 추가 
+		int distin = 0;
+		
 		ArrayList<SeatRev> seatRev = new ArrayList<SeatRev>();
 		
 		// 어떤 seatRev 를 가지고 갈 것인지 판별
+		//@@ 각각 널 체크를 해 줘야 함. 값이 없으면... 담으면서 널 익셉션 뜨기 때문.
 		if (dao.getMseatCheck(play_cd) != null)
 			mseatCheck = dao.getMseatCheck(play_cd);
 		if (dao.getSeatCheck(play_cd) != null)
 			seatCheck = dao.getSeatCheck(play_cd);
 				
+		//@@ 5대 좌석 리뷰일 시 distin 에 1을 대입
 		if(mseatCheck > 0)
-			seatRev = dao.getMseatRev(play_cd);
+		{	seatRev = dao.getMseatRev(play_cd);
+			distin = 1;	}
+		
+		//@@ 일반 좌석 리뷰의 distin 은 0
 		if(seatCheck > 0)
 			seatRev = dao.getSeatRev(play_cd);
 		
@@ -72,6 +80,7 @@ public class PlayDetailController
 		model.addAttribute("checkJjim",checkJjim);
 				
 		// addAttribute 를 통해 전송
+		model.addAttribute("distin", distin);
 		model.addAttribute("seatRevList", seatRev);
 		model.addAttribute("playDetailList", dao.getPlayDetail(play_cd));
 		model.addAttribute("playRevPreList", dao.getPlayRevPre(play_cd));

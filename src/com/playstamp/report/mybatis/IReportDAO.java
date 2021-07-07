@@ -1,7 +1,9 @@
 package com.playstamp.report.mybatis;
 
 import com.playstamp.report.ReportComment;
+import com.playstamp.report.ReportMseatRev;
 import com.playstamp.report.ReportPlayRev;
+import com.playstamp.report.ReportSeatRev;
 
 public interface IReportDAO
 {
@@ -9,4 +11,8 @@ public interface IReportDAO
 	public int addReportPlayRev(ReportPlayRev reportPlayRev);
 	
 	public int addReportComment(ReportComment reportComment);
+
+	public int addReportSeatRev(ReportSeatRev reportSeatRev);
+	
+	public int addReportMseatRev(ReportMseatRev reportMseatRev);
 }

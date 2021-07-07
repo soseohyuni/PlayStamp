@@ -77,6 +77,9 @@
 	var sound = new Array();
 	var light = new Array();
 	
+	//@@ 신고 루트 분기 위한...
+	var reportWhat = 0;
+	
 	//@@ 각 평점 값 list 에 담기(playRevPre)
 	<c:forEach var="playRevPre" items="${playRevPreList}">	
 		playRevPre.push("${playRevPre.rating_cd}");
@@ -211,6 +214,50 @@
 		});
 	});
 	
+	$(function()
+	{
+		var seat_rev_cd = "";
+		var mseat_rev_cd = "";
+	
+		//@@ 일반 공연장 좌석 리뷰일 경우 ~
+		$(".btn-defualt0").click(function()
+		{			
+			popup = window.open("reportform.action", "reportform", "width=570, height=350, resizable = no, scrollbars = no");
+			reportWhat = 0;
+			
+			seat_rev_cd = $(this).attr("data-seat");
+			
+			console.log(seat_rev_cd);
+		});
+		
+		
+		//@@ 5대 좌석 리뷰일 경우 ~ 
+		$(".btn-defualt1").click(function()
+		{
+			popup = window.open("reportform.action", "reportform", "width=570, height=350, resizable = no, scrollbars = no");
+			reportWhat = 1;
+			
+			mseat_rev_cd = $(this).attr("data-seat");
+			
+		});
+	
+		window.report = function(data)
+		{ 
+			// 자식창에서 얻어 온 신고 사유 값 rep_y_cd 에 담기
+			var rep_y_cd = data;
+			
+			// report.action 으로 컨트롤러 호출
+			if (reportWhat==0)
+			{
+				$(location).attr("href", "report.action?play_cd=" + articleNo + "&rep_y_cd=" + rep_y_cd + "&seat_rev_cd=" + seat_rev_cd);	
+			}
+			else if (reportWhat==1)
+			{
+				$(location).attr("href", "report.action?play_cd=" + articleNo + "&rep_y_cd=" + rep_y_cd + "&mseat_rev_cd=" + mseat_rev_cd);
+			}
+			
+		}
+	});
 </script>
 </head>
 
@@ -344,10 +391,14 @@
 						  			<!-- 본인이 작성한 좌석 리뷰에는 신고 버튼이 출력되지 않도록 처리  -->
 						  			<c:set var="loginUser_cd" value="${sessionScope.code }"></c:set>
 						  			<c:set var="writer_cd" value="${seatRev.user_cd }"></c:set>
+						  			<c:set var="distin" value="${distin }"></c:set>
 						  			<c:choose>
-									<c:when test="${loginUser_cd ne writer_cd }">
-									<td><button type="button" class="btn btn-defualt">신고</button></td>
-									</c:when>
+										<c:when test="${loginUser_cd ne writer_cd }">
+											<c:choose>
+												<c:when test="${distin eq 1}"><td><button type="button" class="btn btn-defualt1" data-seat="${seatRev.mseat_rev_cd }">신고</button></td></c:when>
+												<c:when test="${distin eq 0}"><td><button type="button" class="btn btn-defualt0" data-seat="${seatRev.seat_rev_cd }">신고</button></td></c:when>										
+											</c:choose>
+										</c:when>
 									<c:when test="${loginUser_cd eq writer_cd }">
 									<td></td>
 									</c:when>
