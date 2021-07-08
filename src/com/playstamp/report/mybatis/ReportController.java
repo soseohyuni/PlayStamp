@@ -51,7 +51,7 @@ public class ReportController
 		
 		//@@ 값 넘어옴!
 		//System.out.println(comment_cd);
-		System.out.println("값 : " + seat_rev_cd);
+		//System.out.println("값 : " + seat_rev_cd);
 		
 		int result = 0;
 		
@@ -70,7 +70,7 @@ public class ReportController
 				else
 					model.addAttribute("msg", "신고 접수에 실패하였습니다.");
 					
-				model.addAttribute("url", "playreviewdetail.action?playrev_cd="+playrev_cd);
+				model.addAttribute("url", "playreviewdetail.action?playrev_cd="+playrev_cd+"&play_cd="+play_cd);
 			}
 			
 			else if (seat_rev_cd!=null)
@@ -113,15 +113,17 @@ public class ReportController
 				reportPlayRev.setRep_y_cd(rep_y_cd);
 				reportPlayRev.setUser_cd(user_cd);
 				
-				result = dao.addReportPlayRev(reportPlayRev);
+				//result = dao.addReportPlayRev(reportPlayRev);
 				
+				System.out.println();
 				//@@ 신고 접수 후 alert 창으로 신고 접수가 완료되었음을 알려 주기!
 				if (result>0)
 					model.addAttribute("msg", "신고 접수가 완료되었습니다.");
 				else
 					model.addAttribute("msg", "신고 접수에 실패하였습니다.");
 					
-				model.addAttribute("url", "playreviewdetail.action?playrev_cd="+playrev_cd);
+				System.out.println("값 : " + play_cd);
+				model.addAttribute("url", "playdetail.action?play_cd="+play_cd);
 			}
 			
 			

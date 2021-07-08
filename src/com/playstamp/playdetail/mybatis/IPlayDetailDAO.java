@@ -43,4 +43,21 @@ public interface IPlayDetailDAO
 	
 	// 찜 제거 메소드
 	public int delJjim(Jjim jjim);
+	
+	//----------------------------------------------------------
+	
+	// 공연 리뷰 신고 여부 체크 메소드
+	public Integer checkRepPlay(String play_rev_cd);
+	// 일반 좌석 리뷰 신고 여부 체크 메소드
+	public Integer checkRepSeat(String seat_rev_cd);
+	// 5대 좌석 리뷰 신고 여부 체크 메소드
+	public Integer checkRepMseat(String mseat_rev_cd);
+	//----------------------------------------------------------
+	
+	// 공연 리뷰 신고 처리 여부 체크 메소드
+	public Integer checkRepPlaySt(String play_rev_cd);
+	// 일반 좌석 리뷰 신고 처리 여부 체크 메소드
+	public Integer checkRepSeatSt(String seat_rev_cd);
+	// 5대 좌석 리뷰 신고 처리 여부 체크 메소드
+	public Integer checkRepMseatSt(String mseat_rev_cd);
 }

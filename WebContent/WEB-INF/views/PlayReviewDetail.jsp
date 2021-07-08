@@ -81,7 +81,8 @@
 	//@@ 현재 url 가져오기 
 	var url = location.href;
 	//@@ 자르기.. 
-	var parameters = ((url.split("?"))[1].split("="))[1];
+	var parameters = (((url.split("?"))[1].split("&"))[0]).split("=")[1];
+	var parameters2 = (((url.split("?"))[1].split("&"))[1]).split("=")[1];
 	
 	var articleNo = parameters;
 	
@@ -280,12 +281,7 @@
 	
 	//@@ 자식창을 저장할 변수
 	var popup;
-	
-	//@@ 신고 팝업
-/* 	function openWindow()
-	{ 		
-		popup = window.open("reportform.action", "reportform", "width=570, height=350, resizable = no, scrollbars = no");
-	} */
+
 	
 	var comment_cd = 0;
 	
@@ -318,11 +314,11 @@
 			// report.action 으로 컨트롤러 호출
 			if (reportWhat==0)
 			{
-				$(location).attr("href", "report.action?playrev_cd=" + articleNo + "&rep_y_cd=" + rep_y_cd);	
+				$(location).attr("href", "report.action?playrev_cd=" + articleNo + "&rep_y_cd=" + rep_y_cd + "&play_cd=" + parameters2);	
 			}
 			else if (reportWhat==1)
 			{
-				$(location).attr("href", "report.action?playrev_cd=" + articleNo + "&comment_cd=" + comment_cd + "&rep_y_cd=" + rep_y_cd);
+				$(location).attr("href", "report.action?playrev_cd=" + articleNo + "&comment_cd=" + comment_cd + "&rep_y_cd=" + rep_y_cd +"&play_cd=" + parameters2);
 			}
 			
 		}
@@ -439,7 +435,7 @@
 			<c:set var="loginUser_cd" value="${sessionScope.code }"></c:set>
   			<c:set var="writer_cd" value="${playReviewDetail.user_cd }"></c:set>
   			<c:if test="${loginUser_cd ne writer_cd }">
-			<button type="button" class="btn btn-default" id="reportPlayRev" onclick="openWindow()">리뷰 신고</button>
+			<button type="button" class="btn btn-default" id="reportPlayRev">리뷰 신고</button>
 			</c:if>	
 			<hr>
 			</c:forEach>

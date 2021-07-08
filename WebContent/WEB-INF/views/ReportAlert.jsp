@@ -13,6 +13,7 @@
 <script type="text/javascript">
 		var message = "${msg}";
 		var url = "${url}";
+
 		if (message!=null)
 		{
 			alert(message);

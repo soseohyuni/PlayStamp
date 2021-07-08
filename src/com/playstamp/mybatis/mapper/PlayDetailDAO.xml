@@ -58,4 +58,17 @@
 		FROM TBL_JJIMS
 		WHERE PLAY_CD=#{play_cd} AND USER_CD=#{user_cd}
 	</delete>
+	
+	<select id="checkRepPlay" resultType="Integer" parameterType="string">
+		SELECT COUNT
+		FROM VIEW_REP_PLAY
+		WHERE PLAYREV_CD=#{arg0}
+	</select>
+	
+	<select id="checkRepPlaySt" resultType="Integer" parameterType="string">
+		SELECT REP_ST_CD
+		FROM VIEW_REP_PLAY_ST
+		WHERE PLAYREV_CD=#{arg0}
+	</select>
+
 </mapper>

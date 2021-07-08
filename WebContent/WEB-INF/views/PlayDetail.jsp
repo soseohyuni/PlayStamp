@@ -249,11 +249,11 @@
 			// report.action 으로 컨트롤러 호출
 			if (reportWhat==0)
 			{
-				$(location).attr("href", "report.action?play_cd=" + articleNo + "&rep_y_cd=" + rep_y_cd + "&seat_rev_cd=" + seat_rev_cd);	
+				$(location).attr("href", "report.action?play_cd=" + articleNo + "&rep_y_cd=" + rep_y_cd + "&seat_rev_cd=" + seat_rev_cd+ "&play_cd=" + parameters);	
 			}
 			else if (reportWhat==1)
 			{
-				$(location).attr("href", "report.action?play_cd=" + articleNo + "&rep_y_cd=" + rep_y_cd + "&mseat_rev_cd=" + mseat_rev_cd);
+				$(location).attr("href", "report.action?play_cd=" + articleNo + "&rep_y_cd=" + rep_y_cd + "&mseat_rev_cd=" + mseat_rev_cd+ "&play_cd=" + parameters);
 			}
 			
 		}
@@ -341,41 +341,64 @@
 				    <a class="nav-link" data-toggle="tab" href="#seatReview" id="seatRev">좌석리뷰</a>
 				  </li>
 				</ul>
+				
 				<div class="tab-content">
+				
+				<!-- 공연 리뷰  -->
 					  <div class="tab-pane fade show active" id="playReview">
-					  	<table class="table table-bordered">
+					  	<table class="table table-borderless">
 					  		<!--@@ 반복문 돌면서 id 값을 달리하기 위한 i -->
 					  		<c:set var="i" value="0"></c:set>
 					  		<c:forEach var="playRevPre" items="${playRevPreList }">
-						  		<tr>
-									<td rowspan="2"><img src="${playRevPre.play_img}" width="100px"></td>
-									<td colspan="2" id="reviewTitle"
-									onclick="location.href='playreviewdetail.action?playrev_cd=${playRevPre.playrev_cd}'">${playRevPre.title }</td>
-						  		</tr>
-						  		<tr>
-						  			<td colspan="2">${playRevPre.contents}</td>
-						  		</tr>
-						  		<tr>
-						  			<td>
-							  			<select id="playRevPre${i }">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-										</select>
-									</td>
-						  			<td>
-						  			<span style="color: #0080FF"><i class="fa fa-comment fa-sm" aria-hidden="true"></i></span></i> ${playRevPre.ccount}
-						  			&nbsp;<span style="color: #FE2E2E"><i class="fas fa-heart fa-sm"></i></span> ${playRevPre.lcount}
-						  			</td>
-						  			<td>${playRevPre.user_nick}</td>
-						  		</tr>	
-						  		<!--@@ 한 턴 반복이 끝나면 i 를 증가! -->
-					  			<c:set var="i" value="${i+1}"></c:set>
-						  	</c:forEach>	  		
+					  		<c:set var="checkRepPlay" value="${checkRepPlayList}"></c:set>
+					  		<c:set var="checkRepPlaySt" value="${checkRepPlayStList}"></c:set>
+						  		<c:choose>
+						  			<%-- (신고 O +  처리 결과 2) OR (신고 X)  --%>
+						  			<c:when test="${(checkRepPlay[i] eq 1 && checkRepPlaySt[i] eq 2) || (checkRepPlay[i] eq 0) }">
+								  		<tr>
+											<td rowspan="2"><img src="${playRevPre.play_img}" width="100px;"></td>
+											<td colspan="2" id="reviewTitle"
+											onclick="location.href='playreviewdetail.action?playrev_cd=${playRevPre.playrev_cd}&play_cd=${playRevPre.play_cd}'">${playRevPre.title }</td>
+								  		</tr>
+								  		<tr>
+								  			<td colspan="2">${playRevPre.contents}</td>
+								  		</tr>
+								  		<tr>
+								  			<td>
+									  			<select id="playRevPre${i }">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+												</select>
+											</td>
+								  			<td>
+								  			<span style="color: #0080FF"><i class="fa fa-comment fa-sm" aria-hidden="true"></i></span> ${playRevPre.ccount}
+								  			&nbsp;<span style="color: #FE2E2E"><i class="fas fa-heart fa-sm"></i></span> ${playRevPre.lcount}
+								  			</td>
+								  			<td>${playRevPre.user_nick}</td>
+								  		</tr>	
+						  			</c:when>
+						  			<%-- (신고 O +  처리 결과 1) OR (신고 O +  처리 결과 0) AND--%>
+						  			<c:when test="${(checkRepPlay[i] eq 1 && checkRepPlaySt[i] eq 1) || (checkRepPlay[i] eq 1 && checkRepPlaySt[i] eq 0)}">
+							  			<tr>
+											<td colspan="2"></td>
+										</tr><%-- (신고 O +  처리 결과 1) OR (신고 O +  처리 결과 0) AND--%>
+										<tr>
+											<td colspan="2" style="text-align: center;">신고에 의해 블라인드 처리된 게시글입니다.</td>
+										</tr>
+										<tr>
+											<td colspan="2"></td>
+										</tr>
+						  			</c:when>
+							  	</c:choose>  
+							  	<!--@@ 한 턴 반복이 끝나면 i 를 증가! -->
+							  	<c:set var="i" value="${i+1}"></c:set>
+						  	</c:forEach>
 					  	</table>
-					  		
+					  
+					  <!-- 좌석리뷰  -->		
 					  </div>
 					  <div class="tab-pane fade" id="seatReview">
 					  	<table class="table table-borderless" id="seatRevTbl">
