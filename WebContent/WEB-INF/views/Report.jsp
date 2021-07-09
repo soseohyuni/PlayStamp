@@ -17,24 +17,29 @@
 <script type="text/javascript">
 	function sendRepY()
 	{
-		if (confirm("정말로 신고하시겠습니까?"))
+		//@@ 라디오버튼 값 수신
+		var report = document.getElementsByName("report");
+		var rep_y_cd = 0;
+		
+		for(var i=0; i<report.length; i++)
 		{
-			//@@ 라디오버튼 값 수신
-			var report = document.getElementsByName("report");
-			var rep_y_cd = 0;
-			
-			for(var i=0; i<report.length; i++)
-			{
-			    if(report[i].checked)
-			        rep_y_cd = report[i].value;
+		    if(report[i].checked)
+		        rep_y_cd = report[i].value;
+		}
+		
+		if (rep_y_cd > 0 ) // rep_y_cd 가 존재한다면
+		{
+			if (confirm("정말로 신고하시겠습니까?"))
+			{			
+				//@@ 부모창에 값 전송하기
+				opener.report(rep_y_cd);
+				window.close();	
 			}
-			
-			//@@ 부모창에 값 전송하기
-			opener.report(rep_y_cd);
-			window.close();	
+			else
+				return;	
 		}
 		else
-			return;
+			alert("사유를 선택해 주세요.");
 	}
 </script>
 </head>

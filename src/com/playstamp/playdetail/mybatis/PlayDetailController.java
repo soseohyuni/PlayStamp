@@ -78,24 +78,28 @@ public class PlayDetailController
 		if (dao.checkJjim(jjim) != 0)
 			checkJjim = 1;
 		
-		//@@ 신고되었는지 여부 확인하는 변수와 이를 담을 리스트
-		int checkRepPlay = 0;
-		ArrayList<Integer> checkRepPlayList = new ArrayList<Integer>();
-		//@@ 신고 처리 되었는지 여부 확인하는 변수와 이를 담을 리스트
-		int checkRepPlaySt = 0;
-		ArrayList<Integer> checkRepPlayStList = new ArrayList<Integer>();
-		
-		//@@ 신고된 게시물 블라인드 처리 로직
+		//@@ 신고된 게시물 블라인드 처리 로직 ---------------------------------------------
+		// 해당 공연의 공연 리뷰 코드들을 꺼내기 위해 리스트 선언 
 		ArrayList<PlayRevPre> playRevPreList = dao.getPlayRevPre(play_cd);
 		
+		int checkRepPlay = 0;
+		int checkRepPlaySt = 0;
+		ArrayList<Integer> checkRepPlayList = new ArrayList<Integer>();
+		ArrayList<Integer> checkRepPlayStList = new ArrayList<Integer>();
+		
 		for (PlayRevPre playRevPre : playRevPreList)
-		{
-			//@@ 신고가 되었다면, 1을 반환한다. 신고가 되지 않았다면 초기화된 값 0을 반환한다.
-			if ( dao.checkRepPlay(playRevPre.getPlayrev_cd()) != null )
+		{		
+			int a = 0;
+			if (dao.checkRepPlay(playRevPre.getPlayrev_cd()) != null)
+			{
+				a = dao.checkRepPlay(playRevPre.getPlayrev_cd());
+			}
+			//@@ 신고가 되었다면 (즉, 공연 리뷰 신고 테이블에 코드가 하나라도 존재한다면) 
+			if (dao.checkRepPlay(playRevPre.getPlayrev_cd()) != null)
 				checkRepPlay = 1;
 					
 			//@@ 신고가 처리되었다면, 승인(1) 또는 반려(2)를 반환한다. 신고가 처리되지 않았다면 초기화된 값 0을 반환한다. 
-			if (dao.checkRepPlaySt(playRevPre.getPlayrev_cd()) != null)
+			if (dao.checkRepPlaySt(playRevPre.getPlayrev_cd()) != 0)
 				checkRepPlaySt = dao.checkRepPlaySt(playRevPre.getPlayrev_cd());
 
 			// 신고 o → 1

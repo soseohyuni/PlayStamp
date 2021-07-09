@@ -157,24 +157,5 @@ public class PlayReviewDetailController
 		}
 		
 		return result;
-	}
-	
-	/*
-	 * //@@ 좋아요 삭제
-	 * 
-	 * @RequestMapping(value="/heartdel.action", method= {RequestMethod.POST,
-	 * RequestMethod.GET}) public @ResponseBody int delHeart(@RequestBody Like like,
-	 * HttpSession session) throws SQLException { IPlayReviewDetailDAO dao =
-	 * sqlSession.getMapper(IPlayReviewDetailDAO.class); int result = 0;
-	 * 
-	 * try { dao.delHeart(like);
-	 * 
-	 * result = dao.countHeart(like);
-	 * 
-	 * } catch (Exception e) { e.printStackTrace(); }
-	 * 
-	 * return result; }
-	 */
-	
-	
+	}	
 }

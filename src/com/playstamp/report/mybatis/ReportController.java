@@ -113,7 +113,7 @@ public class ReportController
 				reportPlayRev.setRep_y_cd(rep_y_cd);
 				reportPlayRev.setUser_cd(user_cd);
 				
-				//result = dao.addReportPlayRev(reportPlayRev);
+				result = dao.addReportPlayRev(reportPlayRev);
 				
 				System.out.println();
 				//@@ 신고 접수 후 alert 창으로 신고 접수가 완료되었음을 알려 주기!

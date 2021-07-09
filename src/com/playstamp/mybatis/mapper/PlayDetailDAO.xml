@@ -68,7 +68,7 @@
 	<select id="checkRepPlaySt" resultType="Integer" parameterType="string">
 		SELECT REP_ST_CD
 		FROM VIEW_REP_PLAY_ST
-		WHERE PLAYREV_CD=#{arg0}
+		WHERE PLAYREV_CD=#{arg0} AND ROWNUM=1
 	</select>
 
 </mapper>

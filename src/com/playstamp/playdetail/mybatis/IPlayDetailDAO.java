@@ -46,7 +46,7 @@ public interface IPlayDetailDAO
 	
 	//----------------------------------------------------------
 	
-	// 공연 리뷰 신고 여부 체크 메소드
+	// 공연 리뷰 블라인드 여부 체크 메소드
 	public Integer checkRepPlay(String play_rev_cd);
 	// 일반 좌석 리뷰 신고 여부 체크 메소드
 	public Integer checkRepSeat(String seat_rev_cd);
