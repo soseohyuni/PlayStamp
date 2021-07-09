@@ -68,6 +68,12 @@
 	<select id="checkRepSeat" resultType="com.playstamp.playdetail.SeatRevBlind" parameterType="string">
 		SELECT SEAT_REV_CD, REP_SEAT_CD, REP_DT, REP_SEATCH_CD, REP_ST_CD
 		FROM VIEW_SEATREV_BLIND
-		WHERE SEAT_REV_CD=#{seat_rev_cd} AND ROWNUM=1;
+		WHERE SEAT_REV_CD=#{seat_rev_cd} AND ROWNUM=1
+	</select>
+
+	<select id="checkRepMseat" resultType="com.playstamp.playdetail.MseatRevBlind" parameterType="string">
+		SELECT MSEAT_REV_CD, REP_MSEAT_CD, REP_DT, REP_MSEATCH_CD, REP_ST_CD
+		FROM VIEW_MSEATREV_BLIND
+		WHERE MSEAT_REV_CD=#{mseat_rev_cd} AND ROWNUM=1
 	</select>
 </mapper>

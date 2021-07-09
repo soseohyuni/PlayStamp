@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.playstamp.playdetail.Jjim;
+import com.playstamp.playdetail.MseatRevBlind;
 import com.playstamp.playdetail.PlayRevBlind;
 import com.playstamp.playdetail.PlayRevPre;
 import com.playstamp.playdetail.SeatRev;
@@ -122,31 +123,86 @@ public class PlayDetailController
 		ArrayList<Integer> checkRepSeatList = new ArrayList<Integer>();
 		ArrayList<Integer> checkRepSeatStList = new ArrayList<Integer>();
 
-		for (SeatRev seat : seatRev)
-		{		
-			//@@ 블라인드 객체 반환
-			SeatRevBlind blindSeat = dao.checkRepSeat(seat.getSeat_rev_cd());
+		if (distin==0)
+		{
+			for (SeatRev seat : seatRev)
+			{
+				//@@ 블라인드 객체 반환
+				SeatRevBlind blindSeat = dao.checkRepSeat(seat.getSeat_rev_cd());
 
-			//@@ 신고가 되었다면 
-			if (Integer.parseInt(blindSeat.getRep_seat_cd()) != 0)
-				checkRepSeat = 1;
-			else
-				checkRepSeat = 0;
-					
-			//@@ 신고가 처리되었다면, 승인(1) 또는 반려(2)를 반환한다. 신고가 처리되지 않았다면 초기화된 값 0을 반환한다. 
-			if (Integer.parseInt(blindSeat.getRep_st_cd()) != 0)
-				checkRepPlaySt = Integer.parseInt(blindSeat.getRep_st_cd());
-			else
-				checkRepPlaySt = 0;
-			// 신고 o → 1
-			// 신고 x → 0
-			checkRepSeatList.add(checkRepSeat);
-			// 승인 → 1 
-			// 반려 → 2
-			// 신고 처리 x → 0
-			checkRepSeatStList.add(checkRepSeatSt);			
+				//@@ 신고가 되었다면 
+				if (Integer.parseInt(blindSeat.getRep_seat_cd()) != 0)
+					checkRepSeat = 1;
+				else
+					checkRepSeat = 0;
+						
+				//@@ 신고가 처리되었다면, 승인(1) 또는 반려(2)를 반환한다. 신고가 처리되지 않았다면 초기화된 값 0을 반환한다. 
+				if (Integer.parseInt(blindSeat.getRep_st_cd()) != 0)
+					checkRepSeatSt = Integer.parseInt(blindSeat.getRep_st_cd());
+				else
+					checkRepSeatSt = 0;
+				// 신고 o → 1
+				// 신고 x → 0
+				checkRepSeatList.add(checkRepSeat);
+				// 승인 → 1 
+				// 반려 → 2
+				// 신고 처리 x → 0
+				checkRepSeatStList.add(checkRepSeatSt);
+			}
 		}
 		
+		if (distin==1)
+		{
+			for (SeatRev seat : seatRev)
+			{
+				//@@ 블라인드 객체 반환
+				MseatRevBlind blindSeat = dao.checkRepMseat(seat.getMseat_rev_cd());
+
+				//@@ 신고가 되었다면 
+				if (Integer.parseInt(blindSeat.getRep_mseat_cd()) != 0)
+					checkRepSeat = 1;
+				else
+					checkRepSeat = 0;
+						
+				//@@ 신고가 처리되었다면, 승인(1) 또는 반려(2)를 반환한다. 신고가 처리되지 않았다면 초기화된 값 0을 반환한다. 
+				if (Integer.parseInt(blindSeat.getRep_st_cd()) != 0)
+					checkRepSeatSt = Integer.parseInt(blindSeat.getRep_st_cd());
+				else
+					checkRepSeatSt = 0;
+				// 신고 o → 1
+				// 신고 x → 0
+				checkRepSeatList.add(checkRepSeat);
+				// 승인 → 1 
+				// 반려 → 2
+				// 신고 처리 x → 0
+				checkRepSeatStList.add(checkRepSeatSt);	
+			}
+		}
+		
+		/*
+		 * for (SeatRev seat : seatRev) { if (distin == 0) { //@@ 블라인드 객체 반환
+		 * SeatRevBlind blindSeat = dao.checkRepSeat(seat.getSeat_rev_cd());
+		 * 
+		 * //@@ 신고가 되었다면 if (Integer.parseInt(blindSeat.getRep_seat_cd()) != 0)
+		 * checkRepSeat = 1; else checkRepSeat = 0;
+		 * 
+		 * //@@ 신고가 처리되었다면, 승인(1) 또는 반려(2)를 반환한다. 신고가 처리되지 않았다면 초기화된 값 0을 반환한다. if
+		 * (Integer.parseInt(blindSeat.getRep_st_cd()) != 0) checkRepPlaySt =
+		 * Integer.parseInt(blindSeat.getRep_st_cd()); else checkRepPlaySt = 0; // 신고 o
+		 * → 1 // 신고 x → 0 checkRepSeatList.add(checkRepSeat); // 승인 → 1 // 반려 → 2 // 신고
+		 * 처리 x → 0 checkRepSeatStList.add(checkRepSeatSt); } else if (distin == 1) {
+		 * //@@ 블라인드 객체 반환 MseatRevBlind blindSeat =
+		 * dao.checkRepMseat(seat.getMseat_rev_cd());
+		 * 
+		 * //@@ 신고가 되었다면 if (Integer.parseInt(blindSeat.getRep_mseat_cd()) != 0)
+		 * checkRepSeat = 1; else checkRepSeat = 0;
+		 * 
+		 * //@@ 신고가 처리되었다면, 승인(1) 또는 반려(2)를 반환한다. 신고가 처리되지 않았다면 초기화된 값 0을 반환한다. if
+		 * (Integer.parseInt(blindSeat.getRep_st_cd()) != 0) checkRepSeatSt =
+		 * Integer.parseInt(blindSeat.getRep_st_cd()); else checkRepSeatSt = 0; // 신고 o
+		 * → 1 // 신고 x → 0 checkRepSeatList.add(checkRepSeat); // 승인 → 1 // 반려 → 2 // 신고
+		 * 처리 x → 0 checkRepSeatStList.add(checkRepSeatSt); } }
+		 */
 		
 		//@@ 신고되었는지 여부 확인하는 리스트를 모델에 담아 보낸다.
 		model.addAttribute("checkRepPlayList", checkRepPlayList);

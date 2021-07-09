@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.playstamp.playdetail.Jjim;
+import com.playstamp.playdetail.MseatRevBlind;
 import com.playstamp.playdetail.PlayDetail;
 import com.playstamp.playdetail.PlayRevBlind;
 import com.playstamp.playdetail.PlayRevPre;
@@ -53,6 +54,6 @@ public interface IPlayDetailDAO
 	// 일반 좌석 리뷰 신고 여부 체크 메소드
 	public SeatRevBlind checkRepSeat(String seat_rev_cd);
 	// 5대 좌석 리뷰 신고 여부 체크 메소드
-	public Integer checkRepMseat(String mseat_rev_cd);
+	public MseatRevBlind checkRepMseat(String mseat_rev_cd);
 
 }

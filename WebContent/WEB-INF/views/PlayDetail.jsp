@@ -406,6 +406,12 @@
 					  	<!--@@ 반복문 돌면서 id 값을 달리하기 위한 j -->
 					  		<c:set var="j" value="0"></c:set>
 					  		<c:forEach var="seatRev" items="${seatRevList }">
+					  		<c:set var="checkRepSeat" value="${checkRepSeatList}"></c:set>
+					  		<c:set var="checkRepSeatSt" value="${checkRepSeatStList}"></c:set>
+						  		console.log(${checkRepSeat[j]}${checkRepSeatSt[j]});
+						  		<c:choose>
+						  			<%-- (신고 O +  처리 결과 2) OR (신고 X)  --%>
+						  			<c:when test="${(checkRepSeat[j] eq 1 && checkRepSeatSt[j] eq 2) || (checkRepSeat[j] eq 0) }">
 						  		<tr>
 						  			<td rowspan="2"></td>
 						  			<td rowspan="2"><i class="fa fa-user-circle fa-4x" aria-hidden="true"></i></td>
@@ -486,7 +492,28 @@
 									</td>
 									<td></td>
 						  		</tr>
-						  		<!--@@ 한 턴 반복이 끝나면 j 를 증가! -->
+						  		</c:when>
+						  		<c:when test="${(checkRepSeat[j] eq 1 && checkRepSeatSt[j] eq 1) || (checkRepSeat[j] eq 1 && checkRepSeatSt[j] eq 0)}">
+							  			<tr>
+											<td colspan="4"></td>
+										</tr>
+										<tr>
+											<td colspan="4"></td>
+										</tr>
+										<tr>
+											<td colspan="4" style="text-align: center;">신고에 의해 블라인드 처리된 게시글입니다.</td>
+										</tr>
+										<tr>
+											<td colspan="4"></td>
+										</tr>
+										<tr>
+											<td colspan="4"></td>
+										</tr>
+										<tr>
+											<td colspan="4"></td>
+										</tr>
+						  			</c:when>
+							  	</c:choose>  
 					  			<c:set var="j" value="${j+1}"></c:set>
 					  		</c:forEach>  		
 					  	</table>
