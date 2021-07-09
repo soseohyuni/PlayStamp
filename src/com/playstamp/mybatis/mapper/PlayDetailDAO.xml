@@ -59,16 +59,15 @@
 		WHERE PLAY_CD=#{play_cd} AND USER_CD=#{user_cd}
 	</delete>
 	
-	<select id="checkRepPlay" resultType="Integer" parameterType="string">
-		SELECT COUNT
-		FROM VIEW_REP_PLAY
-		WHERE PLAYREV_CD=#{arg0}
+	<select id="checkRepPlay" resultType="com.playstamp.playdetail.PlayRevBlind" parameterType="string">
+		SELECT PLAYREV_CD, REP_REV_CD, REP_DT, REP_REVCH_CD, REP_ST_CD
+		FROM VIEW_PLAYREV_BLIND
+		WHERE PLAYREV_CD=#{playrev_cd} AND ROWNUM=1
 	</select>
 	
-	<select id="checkRepPlaySt" resultType="Integer" parameterType="string">
-		SELECT REP_ST_CD
-		FROM VIEW_REP_PLAY_ST
-		WHERE PLAYREV_CD=#{arg0} AND ROWNUM=1
+	<select id="checkRepSeat" resultType="com.playstamp.playdetail.SeatRevBlind" parameterType="string">
+		SELECT SEAT_REV_CD, REP_SEAT_CD, REP_DT, REP_SEATCH_CD, REP_ST_CD
+		FROM VIEW_SEATREV_BLIND
+		WHERE SEAT_REV_CD=#{seat_rev_cd} AND ROWNUM=1;
 	</select>
-
 </mapper>

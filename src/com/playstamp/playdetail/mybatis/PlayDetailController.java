@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.playstamp.playdetail.Jjim;
+import com.playstamp.playdetail.PlayRevBlind;
 import com.playstamp.playdetail.PlayRevPre;
 import com.playstamp.playdetail.SeatRev;
+import com.playstamp.playdetail.SeatRevBlind;
 import com.playstamp.playreviewdetail.Like;
 import com.playstamp.playreviewdetail.mybatis.IPlayReviewDetailDAO;
 
@@ -59,8 +61,10 @@ public class PlayDetailController
 				
 		//@@ 5대 좌석 리뷰일 시 distin 에 1을 대입
 		if(mseatCheck > 0)
-		{	seatRev = dao.getMseatRev(play_cd);
-			distin = 1;	}
+		{	
+			seatRev = dao.getMseatRev(play_cd);
+			distin = 1;
+		}
 		
 		//@@ 일반 좌석 리뷰의 distin 은 0
 		if(seatCheck > 0)
@@ -81,7 +85,7 @@ public class PlayDetailController
 		//@@ 신고된 게시물 블라인드 처리 로직 ---------------------------------------------
 		// 해당 공연의 공연 리뷰 코드들을 꺼내기 위해 리스트 선언 
 		ArrayList<PlayRevPre> playRevPreList = dao.getPlayRevPre(play_cd);
-		
+					
 		int checkRepPlay = 0;
 		int checkRepPlaySt = 0;
 		ArrayList<Integer> checkRepPlayList = new ArrayList<Integer>();
@@ -89,19 +93,20 @@ public class PlayDetailController
 		
 		for (PlayRevPre playRevPre : playRevPreList)
 		{		
-			int a = 0;
-			if (dao.checkRepPlay(playRevPre.getPlayrev_cd()) != null)
-			{
-				a = dao.checkRepPlay(playRevPre.getPlayrev_cd());
-			}
-			//@@ 신고가 되었다면 (즉, 공연 리뷰 신고 테이블에 코드가 하나라도 존재한다면) 
-			if (dao.checkRepPlay(playRevPre.getPlayrev_cd()) != null)
+			//@@ 블라인드 객체 반환
+			PlayRevBlind blindPlay = dao.checkRepPlay(playRevPre.getPlayrev_cd());
+
+			//@@ 신고가 되었다면 
+			if (Integer.parseInt(blindPlay.getRep_rev_cd()) != 0)
 				checkRepPlay = 1;
+			else
+				checkRepPlay = 0;
 					
 			//@@ 신고가 처리되었다면, 승인(1) 또는 반려(2)를 반환한다. 신고가 처리되지 않았다면 초기화된 값 0을 반환한다. 
-			if (dao.checkRepPlaySt(playRevPre.getPlayrev_cd()) != 0)
-				checkRepPlaySt = dao.checkRepPlaySt(playRevPre.getPlayrev_cd());
-
+			if (Integer.parseInt(blindPlay.getRep_st_cd()) != 0)
+				checkRepPlaySt = Integer.parseInt(blindPlay.getRep_st_cd());
+			else
+				checkRepPlaySt = 0;
 			// 신고 o → 1
 			// 신고 x → 0
 			checkRepPlayList.add(checkRepPlay);
@@ -111,10 +116,46 @@ public class PlayDetailController
 			checkRepPlayStList.add(checkRepPlaySt);			
 		}
 		
+		//@@ 신고된 좌석 리뷰 블라인드 처리 로직 ---------------------------------------------
+		int checkRepSeat = 0;
+		int checkRepSeatSt = 0;
+		ArrayList<Integer> checkRepSeatList = new ArrayList<Integer>();
+		ArrayList<Integer> checkRepSeatStList = new ArrayList<Integer>();
+
+		for (SeatRev seat : seatRev)
+		{		
+			//@@ 블라인드 객체 반환
+			SeatRevBlind blindSeat = dao.checkRepSeat(seat.getSeat_rev_cd());
+
+			//@@ 신고가 되었다면 
+			if (Integer.parseInt(blindSeat.getRep_seat_cd()) != 0)
+				checkRepSeat = 1;
+			else
+				checkRepSeat = 0;
+					
+			//@@ 신고가 처리되었다면, 승인(1) 또는 반려(2)를 반환한다. 신고가 처리되지 않았다면 초기화된 값 0을 반환한다. 
+			if (Integer.parseInt(blindSeat.getRep_st_cd()) != 0)
+				checkRepPlaySt = Integer.parseInt(blindSeat.getRep_st_cd());
+			else
+				checkRepPlaySt = 0;
+			// 신고 o → 1
+			// 신고 x → 0
+			checkRepSeatList.add(checkRepSeat);
+			// 승인 → 1 
+			// 반려 → 2
+			// 신고 처리 x → 0
+			checkRepSeatStList.add(checkRepSeatSt);			
+		}
+		
+		
 		//@@ 신고되었는지 여부 확인하는 리스트를 모델에 담아 보낸다.
 		model.addAttribute("checkRepPlayList", checkRepPlayList);
 		//@@ 신고 처리 여부 확인하는 리스트를 모델에 담아 보낸다.
 		model.addAttribute("checkRepPlayStList", checkRepPlayStList);
+		//@@ 신고되었는지 여부 확인하는 리스트를 모델에 담아 보낸다.
+		model.addAttribute("checkRepSeatList", checkRepSeatList);
+		//@@ 신고 처리 여부 확인하는 리스트를 모델에 담아 보낸다.
+		model.addAttribute("checkRepSeatStList", checkRepSeatStList);
 		
 		//@@ 찜 여부도 담아 보낸다
 		model.addAttribute("checkJjim",checkJjim);

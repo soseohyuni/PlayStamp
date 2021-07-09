@@ -227,7 +227,7 @@
 			
 			seat_rev_cd = $(this).attr("data-seat");
 			
-			console.log(seat_rev_cd);
+			//console.log(seat_rev_cd);
 		});
 		
 		
@@ -352,6 +352,7 @@
 					  		<c:forEach var="playRevPre" items="${playRevPreList }">
 					  		<c:set var="checkRepPlay" value="${checkRepPlayList}"></c:set>
 					  		<c:set var="checkRepPlaySt" value="${checkRepPlayStList}"></c:set>
+						  		<%-- console.log(${checkRepPlay[i]}${checkRepPlaySt[i]}); --%>
 						  		<c:choose>
 						  			<%-- (신고 O +  처리 결과 2) OR (신고 X)  --%>
 						  			<c:when test="${(checkRepPlay[i] eq 1 && checkRepPlaySt[i] eq 2) || (checkRepPlay[i] eq 0) }">
@@ -384,7 +385,7 @@
 						  			<c:when test="${(checkRepPlay[i] eq 1 && checkRepPlaySt[i] eq 1) || (checkRepPlay[i] eq 1 && checkRepPlaySt[i] eq 0)}">
 							  			<tr>
 											<td colspan="2"></td>
-										</tr><%-- (신고 O +  처리 결과 1) OR (신고 O +  처리 결과 0) AND--%>
+										</tr>
 										<tr>
 											<td colspan="2" style="text-align: center;">신고에 의해 블라인드 처리된 게시글입니다.</td>
 										</tr>

@@ -53,6 +53,4 @@ public class PlayRevBlind
 	{
 		this.rep_st_cd = rep_st_cd;
 	}
-	
-	
 }
