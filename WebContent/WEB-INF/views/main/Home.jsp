@@ -24,6 +24,7 @@
 <!-- 별점 콜백 함수 호출을 위해 js 폴더에 추가해 경로 지정 -->
 <script type="text/javascript" src="<%=cp %>/js/jquery.barrating.min.js"></script>
 <link rel="stylesheet" href="<%=cp %>/css/home.css">
+
 <script type="text/javascript">
 
 	// 공연 평점을 담을 배열
@@ -141,7 +142,16 @@
 <body>
 
 <!-- 헤더 임포트 -->
-<c:import url="header.jsp"></c:import><br><br><br>
+<c:import url="/WEB-INF/views/main/header.jsp"></c:import><br><br><br>
+
+	<%
+		Object user = session.getAttribute("id");
+		String userId = (String)user;
+		
+		Object nick = request.getAttribute("userNick");
+		String userNick = (String)nick;
+	
+	%>
 
 <div id="wrapper">
 
@@ -160,16 +170,16 @@
        <div id="imgContainer" class="row">
        		<c:forEach var="listReview" items="${highReviewSorting }" begin="0" end="3">
 	          <div class="col-lg-3 col-xs-6 col-md-3 firstReview" id="firstReview">
-	             <a href="playdetail.action?play_cd=${listReview.play_cd }" class="thumbnail">
-	               <img src="${listReview.play_img }">
+	             <a href="playdetail.action?play_cd=${listReview.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
+	               <img class="playPoster" src="${listReview.play_img }" style="width: 100%; height: 100%;">
 	             </a>
 	             <div class="playTitle">${listReview.play_nm }</div>
 	          </div>
 	         </c:forEach>
 	         <c:forEach var="listReview" items="${highReviewSorting }" begin="4" end="7">
 	          <div class="col-lg-3 col-xs-6 col-md-3 secondReview" id="secondReview">
-	             <a href="playdetail.action?play_cd=${listReview.play_cd }" class="thumbnail">
-	               <img src="${listReview.play_img }">
+	             <a href="playdetail.action?play_cd=${listReview.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
+	               <img class="playPoster"  src="${listReview.play_img }" style="width: 100%; height: 100%;">
 	             </a>
 	             <div class="playTitle">${listReview.play_nm }</div>
 	          </div>
@@ -260,8 +270,8 @@
        <div id="imgContainer" class="row">
           <c:forEach var="listRate" items="${highRateSorting }" begin="0" end="3">
 	          <div class="col-lg-3 col-xs-6 col-md-3 firstRating" id="firstRating">
-	             <a href="playdetail.action?play_cd=${listRate.play_cd }" class="thumbnail">
-	               <img src="${listRate.play_img }">
+	             <a href="playdetail.action?play_cd=${listRate.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
+	               <img class="playPoster"  src="${listRate.play_img }" style="width: 100%; height: 100%;">
 	             </a>
 	             <div class="playTitle">${listRate.play_nm }</div>
 	          </div>
@@ -269,8 +279,8 @@
 	      
 	      <c:forEach var="listRate" items="${highRateSorting }" begin="4" end="7">
 	          <div class="col-lg-3 col-xs-6 col-md-3 secondRating" id="secondRating">
-	             <a href="playdetail.action?play_cd=${listRate.play_cd }" class="thumbnail">
-	               <img src="${listRate.play_img }">
+	             <a href="playdetail.action?play_cd=${listRate.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
+	               <img class="playPoster"  src="${listRate.play_img }" style="width: 100%; height: 100%;">
 	             </a>
 	             <div class="playTitle">${listRate.play_nm }</div>
 	          </div>

@@ -107,7 +107,7 @@
 		text-align: center;
 		margin: 0 auto;
 		background-color: #fafafa;
-		height: 370px;
+		height: 360px;
 	}
 	
 	#reviewContainer
@@ -130,6 +130,7 @@
   		text-overflow: ellipsis;
   		width: 245px;
   		white-space: nowrap;
+  		margin-top: 5px;
 	}
 		
 	.reviewTitle
@@ -226,3 +227,10 @@
 		left: 140px;
 		bottom: 190px; 
 	}
+
+	.playthumbnail
+	{
+		
+	}
+
+	

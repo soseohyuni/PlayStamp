@@ -8,18 +8,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>AdminHome.jsp</title>
+<title>ManagerHome.jsp</title>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="<%=cp %>/css/adminhome.css">
+<link rel="stylesheet" href="<%=cp %>/css/managerhome.css">
 </head>
 <body>
 
 <!-- 헤더 추가 -->
-<c:import url="AdminHeader.jsp"></c:import>
+<c:import url="ManagerHeader.jsp"></c:import>
 
 <div class="container" style="align: left; width: 74%; height: 700px; top:50px;">
 	<div class="container">	

@@ -10,10 +10,11 @@ public interface IMSeatDAO
 	// 예술의전당 좌석평점 리스트
 	public ArrayList<MSeat> listSac(String seatName) throws SQLException;
 	
-	/*
-	// 블루스퀘어 좌석평점 리스트
-	public ArrayList<MSeatDTO> listBs(String seatName) throws SQLException;
 	
+	// 블루스퀘어 좌석평점 리스트
+	public ArrayList<MSeat> listBs(String seatName) throws SQLException;
+	
+	/*
 	// 충무아트센터 좌석평점 리스트
 	public ArrayList<MSeatDTO> listCac(String seatName) throws SQLException;
 	

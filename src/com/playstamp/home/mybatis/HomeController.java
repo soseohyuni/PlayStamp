@@ -1,5 +1,12 @@
 package com.playstamp.home.mybatis;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +29,8 @@ public class HomeController
 		model.addAttribute("highRateSorting", dao.highRateSorting());
 		model.addAttribute("highLikeSorting", dao.highLikeSorting());
 		
-		return "WEB-INF/views/Home.jsp";
+		return "WEB-INF/views/main/Home.jsp";
+		
 	}
-	
+
 }

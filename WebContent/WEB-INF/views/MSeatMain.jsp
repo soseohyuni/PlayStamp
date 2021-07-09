@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-String cp = request.getContextPath();
+	String cp = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
@@ -10,9 +10,13 @@ String cp = request.getContextPath();
 <meta charset="UTF-8">
 <title>MSeatMain.jsp</title>
 <%-- <link rel="stylesheet" href="<%=cp %>/css/mseat.css"> --%>
-<%-- <script type="text/javascript" src="<%=cp%>/js/jquery-3.6.0.min.js"></script> --%>
-<script type="text/javascript" src="<%=cp %>/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<%=cp%>/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="css/bootstrap.min.css">
 
 
 <link rel="stylesheet"
@@ -26,14 +30,6 @@ String cp = request.getContextPath();
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <!-- 별점 콜백 함수 호출을 위해 js 폴더에 추가해 경로 지정 -->
 <script type="text/javascript" src="<%=cp%>/js/jquery.barrating.min.js"></script>
-
-
-<!--  Tooltips
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
- -->
 
 <style type="text/css">
 body {
@@ -151,32 +147,50 @@ body {
 .seatRating {
 	width: 200px;
 	z-index: 1 !important;
-	border: 1px solid;
+	border: 2px solid;
 	top: 100px;
 	position: absolute;
 	left: 40px;
-	border-radius: 2em;
-	margin: 5px;
+	border-radius: 1em;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border-color: #dedede;
+	color: #727272;
+}
+
+.seatName
+{
+	 font-size: 20pt;
+	 font-weight: bold;
 }
 
 	#tableRating th
 	{
 		margin: 20px;
 		font-size: 10pt;
+		font-family: 맑은 고딕;
 	}
 	
 	#tableRating td
 	{
-		text-align: left;
+		font-weight: bold;
 		font-size: 10pt;	
+		font-family: 맑은 고딕;
 	}
+	
+	#tableRating
+	{
+		position: relative;
+		left: 50px;
+		font-family: 맑은 고딕;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	
 	
 </style>
 
 <script type="text/javascript">
-
-	// 별점 구현 -----------------------------------------------------------
-	// ----------------------------------------------------------- 별점 구현 
 
 	// 모달창 구현 -----------------------------------------------------------
 	var on_off = 0;
@@ -257,7 +271,8 @@ body {
 		$(".seatImg").mouseenter(function()
 		{
 			// div 내용 초기화
-			$("#ratingDiv").html("");
+			$("#ratingSacDiv").html("");
+			$("#ratingBsDiv").html("");
 
 			// seatName에 구역번호값 담기
 			var seatName = $(this).val();
@@ -266,105 +281,80 @@ body {
 			$('.seatName').html("A" + seatName);
 
 			// 마우스 엔터시 params 변수 해당 버튼의 value 값으로 초기화
-			var params =
-			{
-				"seatName" : seatName
-			};
+			params = { "seatName" : seatName };
 
 			$(".seatRating").show();
 			
 			if(seatName>=1 && seatName<=8)
 				$(".seatRating").css("top", "100px").css("left", "40px");
 			else if(seatName>=9 && seatName<=12)
-				$(".seatRating").css("top", "420px").css("left", "750px");
-			else if(seatName>=13)
-				$(".seatRating").css("top", "650px").css("left", "40px");
-			
-			$.ajaxSetup(
 			{
-				async : false
-			});
-
+				$("#sacRating").css("top", "400px").css("left", "750px");
+				$("#bsRating").css("top", "370px").css("left", "750px");
+			}
+			else if(seatName>=13)
+			{
+				$("#sacRating").css("top", "630px").css("left", "40px");
+				$("#bsRating").css("top", "550px").css("left", "40px");
+			}
 			// 아작스 요청
 			ajaxRequest(params);
 
 			// 마우스 리브했을 때 평점 div 숨김
 			$(".seatImg").mouseleave(function()
 			{
-				$("#ratingDiv").html("");
+				$("#ratingSacDiv").html("");
+				$("#ratingBsDiv").html("");
+				
 				$(".seatRating").hide();
 			});
 		});
 
-		// 마우스 엔터시마다 호출됨
-		function ajaxRequest(params)
-		{
-			// GET방식으로 요청해야 가능해짐
-			$.ajax(
-			{
-				type : "GET",
-				url : "seatratingprint.action",
-				dataType : "json",
-				contentType : "application/json; charset=UTF-8",
-				data : params,
-				success : function(data)
-				{
-					listSac = data.listSac;
-
-					// 4개의 변수이므로 i<4
-					for (var i = 0; i < 4; i++)
-					{
-						/* 
-						$('#view').barrating('set', listSac[i].viewrating);
-						$('#sound').barrating('set', listSac[i].soundrating);
-						$('#light').barrating('set', listSac[i].lightrating);
-						$('#seat').barrating('set', listSac[i].seatrating);
-						
-						
-						view = listSac[i].viewrating;
-						seat = listSac[i].seatrating;
-						light = listSac[i].lightrating;
-						sound = listSac[i].soundrating;
-						*/
-						/*
-						$("<input title='시야 : "+ listSac[i].viewrating 
-								+ "<br>좌석 : " + listSac[i].seatrating 
-								+ "<br>조명 : " + listSac[i].lightrating
-								+ "<br>조명 : " + listSac[i].lightrating + "' type='image' class='seatImg' value='1' src='images/sac/sac-a1.png' style='top: 88px; left: 392px; width: 21%;'>").appendTo(".content");
-						
-						
-						$("<a href='#' title='시야 : "+ listSac[i].viewrating 
-							+ "<br>좌석 : " + listSac[i].seatrating 
-							+ "<br>조명 : " + listSac[i].lightrating
-							+ "<br>조명 : " + listSac[i].lightrating + "'>").appendTo(".content");
-						*/	
-						
-
-						// listSac에 담아온 것을 테이블 형식에 맞게 뿌려줌
-						$("<table id='tableRating'><tr><th>시야</th><td>&emsp;" + listSac[i].viewrating + "</td></tr>"
-						+ "<tr><th>좌석</th><td>&emsp;" + listSac[i].seatrating + "</td></tr>"
-						+ "<tr><th>조명</th><td>&emsp;" + listSac[i].lightrating + "</td></tr>"
-						+ "<tr><th>음향</th><td>&emsp;" + listSac[i].soundrating + "</td></tr></table>").appendTo("#ratingDiv");
-				
-						
-					}
-				},
-				error : function(e)
-				{
-					alert(e.responseText);
-				}
-			// 여기에 put X
-			});
-		}
 	});
+	
+
+	// 마우스 엔터시마다 호출됨
+	function ajaxRequest(params)
+	{
+		// GET방식으로 요청해야 가능해짐
+		$.ajax(
+		{
+			type : "GET",
+			url : "seatratingprint.action",
+			dataType : "json",
+			contentType : "application/json; charset=UTF-8",
+			data : params,
+			success : function(data)
+			{
+				listSac = data.listSac;
+				listBs = data.listBs;
+
+				for (var i=0; i<4; i++)
+				{
+					// listSac에 담아온 것을 테이블 형식에 맞게 뿌려줌 (예술의전당)
+					$("<table id='tableRating'><tr><th>시야 : </th><td>&emsp;" + listSac[i].viewrating + " 점</td></tr>"
+					+ "<tr><th>좌석 : </th><td>&emsp;" + listSac[i].seatrating + " 점</td></tr>"
+					+ "<tr><th>조명 : </th><td>&emsp;" + listSac[i].lightrating + " 점</td></tr>"
+					+ "<tr><th>음향 : </th><td>&emsp;" + listSac[i].soundrating + " 점</td></tr></table>").appendTo("#ratingSacDiv");
+					
+					// listBs에 담아온 것을 테이블 형식에 맞게 뿌려줌 (블루스퀘어)
+					$("<table id='tableRating'><tr><th>시야 : </th><td>&emsp;" + listBs[i].viewrating + " 점</td></tr>"
+					+ "<tr><th>좌석 : </th><td>&emsp;" + listSac[i].seatrating + " 점</td></tr>"
+					+ "<tr><th>조명 : </th><td>&emsp;" + listBs[i].lightrating + " 점</td></tr>"
+					+ "<tr><th>음향 : </th><td>&emsp;" + listBs[i].soundrating + " 점</td></tr></table>").appendTo("#ratingBsDiv");
+				}
+			}
+			, error : function(e)
+			{
+				alert(e.responseText);
+			}
+		});
+	}
 	// ------------------------------------------------------------- AJAX 구현 
 
-	// 전역변수로 담겼는지 확인하기 위한 테스트
-	//console.log(sound);
-	
 </script>
 </head>
-<c:import url="header.jsp"></c:import>
+<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
 <body onmouseup="move_onoff(0, event);" onmousemove="moven(event);">
 
 	<!-- 메인 화면 -->
@@ -372,11 +362,11 @@ body {
 	<br>
 	<!-- 공연장 버튼 -->
 	<div class="theather" style="text-align: center;">
-		<button type="button" onclick="javascript:openFrame(1);" class="btn-theater">예술의전당</button>&emsp;
-		<button type="button" onclick="javascript:openFrame(2);" class="btn-theater">블루스퀘어</button>&emsp;
-		<button type="button" onclick="javascript:openFrame(3);" class="btn-theater">충무아트센터</button>&emsp;
-		<button type="button" onclick="javascript:openFrame(4);" class="btn-theater">디큐브아트센터</button>&emsp;
-		<button type="button" onclick="javascript:openFrame(5);" class="btn-theater">샤롯데씨어터</button>
+		<button type="button" onclick="javascript:openFrame(1);" class="btn btn-default">예술의전당</button>&emsp;
+		<button type="button" onclick="javascript:openFrame(2);" class="btn btn-default">블루스퀘어</button>&emsp;
+		<button type="button" onclick="javascript:openFrame(3);" class="btn btn-default">충무아트센터</button>&emsp;
+		<button type="button" onclick="javascript:openFrame(4);" class="btn btn-default">디큐브아트센터</button>&emsp;
+		<button type="button" onclick="javascript:openFrame(5);" class="btn btn-default">샤롯데씨어터</button>
 	</div>
 
 	<br />
@@ -411,42 +401,21 @@ body {
 			<input type="image" class="seatImg" value="2" src="images/sac/sac-a2.png" style="top: 140px; left: 387px; width: 22%;"> 
 			<input type="image" class="seatImg" value="3" src="images/sac/sac-a3.png" style="top: 200px; left: 433px; width: 13%;"> 
 			<input type="image" class="seatImg" value="4" src="images/sac/sac-a4.png" style="top: 263px; left: 424px; width: 15%;"> 
-			<input
-				type="image" class="seatImg" value="5" src="images/sac/sac-a5.png"
-				style="top: 128px; left: 320px; width: 10%;"> 
-			<input
-				type="image" class="seatImg" value="6" src="images/sac/sac-a6.png"
-				style="top: 234px; left: 320px; width: 9%;"> 
-			<input
-				type="image" class="seatImg" value="7" src="images/sac/sac-a7.png"
-				style="top: 128px; left: 570px; width: 10%;"> 
-			<input
-				type="image" class="seatImg" value="8" src="images/sac/sac-a8.png"
-				style="top: 238px; left: 580px; width: 9%;"> 
-			<input
-				type="image" class="seatImg" value="9" src="images/sac/sac-a9.png"
-				style="top: 480px; left: 375px; width: 26%;"> 
-			<input
-				type="image" class="seatImg" value="10" src="images/sac/sac-a10.png"
-				style="top: 534px; left: 424px; width: 16%;"> 
-			<input
-				type="image" class="seatImg" value="11" src="images/sac/sac-a11.png"
-				style="top: 392px; left: 324px; width: 9%;"> 
-			<input
-				type="image" class="seatImg" value="12" src="images/sac/sac-a12.png"
-				style="top: 392px; left: 593px; width: 9%;"> 
-			<input
-				type="image" class="seatImg" value="13" src="images/sac/sac-a13.png"
-				style="top: 686px; left: 370px; width: 27%;"> 
-				<input
-				type="image" class="seatImg" value="14" src="images/sac/sac-a14.png"
-				style="top: 613px; left: 320px; width: 37%;">
+			<input type="image" class="seatImg" value="5" src="images/sac/sac-a5.png" style="top: 128px; left: 320px; width: 10%;"> 
+			<input type="image" class="seatImg" value="6" src="images/sac/sac-a6.png" style="top: 234px; left: 320px; width: 9%;"> 
+			<input type="image" class="seatImg" value="7" src="images/sac/sac-a7.png" style="top: 128px; left: 570px; width: 10%;"> 
+			<input type="image" class="seatImg" value="8" src="images/sac/sac-a8.png" style="top: 238px; left: 580px; width: 9%;"> 
+			<input type="image" class="seatImg" value="9" src="images/sac/sac-a9.png" style="top: 480px; left: 375px; width: 26%;"> 
+			<input type="image" class="seatImg" value="10" src="images/sac/sac-a10.png" style="top: 534px; left: 424px; width: 16%;"> 
+			<input type="image" class="seatImg" value="11" src="images/sac/sac-a11.png" style="top: 392px; left: 324px; width: 9%;"> 
+			<input type="image" class="seatImg" value="12" src="images/sac/sac-a12.png" style="top: 392px; left: 593px; width: 9%;"> 
+			<input type="image" class="seatImg" value="13" src="images/sac/sac-a13.png" style="top: 686px; left: 370px; width: 27%;"> 
+			<input type="image" class="seatImg" value="14" src="images/sac/sac-a14.png" style="top: 613px; left: 320px; width: 37%;">
 
-
-			<div class="seatRating">
-				<div class="seatName" style="font-size: 20pt; color: #ff8000; font-weight: bold;"></div><br>
+			<div class="seatRating" id="sacRating">
+				<div class="seatName"></div><br>
 				<div>해당구역에서 관람한 회원님들이<br>남겨주신 평균 별점입니다 :)</div><br>
-				<div id="ratingDiv" style="left:70px;"></div>
+				<div id="ratingSacDiv"></div>
 			</div>
 			<!-- close .seatRating -->
 		</div>
@@ -467,38 +436,43 @@ body {
 
 		<div class="content">
 			<!-- 블루스퀘어 좌석배치도 -->
-			<img class="backgroundImg" src="images/bs/blue.png">
+			<img class="backgroundImg" src="images/bs/blue.png" style="width: 550px;">
 
 			<!-- 좌석배치도 위에 이미지에 맞게 구역(A1~A14) 설정 -->
-			<input type="image" class="seatImg" src="images/sac/sac-a1.png"
-				style="top: 88px; left: 392px; width: 21%;"> <input
-				type="image" class="seatImg" src="images/sac/sac-a2.png"
-				style="top: 140px; left: 387px; width: 22%;"> <input
-				type="image" class="seatImg" src="images/sac/sac-a3.png"
-				style="top: 200px; left: 433px; width: 13%;"> <input
-				type="image" class="seatImg" src="images/sac/sac-a4.png"
-				style="top: 263px; left: 424px; width: 15%;"> <input
-				type="image" class="seatImg" src="images/sac/sac-a5.png"
-				style="top: 128px; left: 320px; width: 10%;"> <input
-				type="image" class="seatImg" src="images/sac/sac-a6.png"
-				style="top: 234px; left: 320px; width: 9%;"> <input
-				type="image" class="seatImg" src="images/sac/sac-a7.png"
-				style="top: 128px; left: 570px; width: 10%;"> <input
-				type="image" class="seatImg" src="images/sac/sac-a8.png"
-				style="top: 238px; left: 580px; width: 9%;"> <input
-				type="image" class="seatImg" src="images/sac/sac-a9.png"
-				style="top: 480px; left: 375px; width: 26%;"> <input
-				type="image" class="seatImg" src="images/sac/sac-a10.png"
-				style="top: 534px; left: 424px; width: 16%;"> <input
-				type="image" class="seatImg" src="images/sac/sac-a11.png"
-				style="top: 392px; left: 324px; width: 9%;"> <input
-				type="image" class="seatImg" src="images/sac/sac-a12.png"
-				style="top: 392px; left: 593px; width: 9%;"> <input
-				type="image" class="seatImg" src="images/sac/sac-a13.png"
-				style="top: 686px; left: 370px; width: 27%;"> <input
-				type="image" class="seatImg" src="images/sac/sac-a14.png"
-				style="top: 613px; left: 320px; width: 37%;">
-
+			<input type="image" class="seatImg" src="images/bs/blue-a1.png" value="1"
+				style="top: 90px; left: 442px; width: 11%;"> <input
+				type="image" class="seatImg" src="images/bs/blue-a2.png" value="2"
+				style="top: 113px; left: 400px; width: 20%;"> <input
+				type="image" class="seatImg" src="images/bs/blue-a3.png" value="3"
+				style="top: 185px; left: 384px; width: 23%;"> <input
+				type="image" class="seatImg" src="images/bs/blue-a4.png" value="4"
+				style="top: 225px; left: 437px; width: 12%;"> <input
+				type="image" class="seatImg" src="images/bs/blue-a5.png" value="5"
+				style="top: 105px; left: 330px; width: 9%;"> <input
+				type="image" class="seatImg" src="images/bs/blue-a6.png" value="6"
+				style="top: 105px; left: 578px; width: 9%;"> <input
+				type="image" class="seatImg" src="images/bs/blue-a7.png" value="7"
+				style="top: 174px; left: 321px; width: 10%;"> <input
+				type="image" class="seatImg" src="images/bs/blue-a8.png" value="8"
+				style="top: 174px; left: 578px; width: 10%;"> <input
+				type="image" class="seatImg" src="images/bs/blue-a9.png" value="9"
+				style="top: 415px; left: 368px; width: 26%;"> <input
+				type="image" class="seatImg" src="images/bs/blue-a10.png" value="10"
+				style="top: 407px; left: 320px; width: 10%;"> <input
+				type="image" class="seatImg" src="images/bs/blue-a11.png" value="11"
+				style="top: 458px; left: 442px; width: 11%;"> <input
+				type="image" class="seatImg" src="images/bs/blue-a12.png" value="12"
+				style="top: 407px; left: 578px; width: 10%;"> <input
+				type="image" class="seatImg" src="images/bs/blue-a13.png"  value="13"
+				style="top: 580px; left: 363px; width: 27%;"> <input
+				type="image" class="seatImg" src="images/bs/blue-a14.png" value="14"
+				style="top: 570px; left: 312px; width: 37%;">
+		
+			<div class="seatRating" id="bsRating">
+				<div class="seatName"></div><br>
+				<div>해당구역에서 관람한 회원님들이<br>남겨주신 평균 별점입니다 :)</div><br>
+				<div id="ratingBsDiv"></div>
+			</div>
 		</div>
 		<!-- close #modal -->
 	</div>
