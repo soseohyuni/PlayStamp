@@ -78,19 +78,24 @@
 										<th style="background-color: #eeeeee; text-align: center;">제목</th>
 										<th style="background-color: #eeeeee; text-align: center;">작성자</th>
 										<th style="background-color: #eeeeee; text-align: center;">작성일</th>
+										<th style="background-color: #eeeeee; text-align: center;">조회수</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<!-- c:foreach문으로 리스트 반복 뿌려주기 -->
-										<td>10001(시퀀스 뒷부분만?)</td>
-										<td>시카고</td>
-										<!-- 게시글 제목을 눌렀을 때 해당 게시물로 이동할 수 있도록 링크 설정(<a>태그 이용)
-										     페이지: view.jsp / 매개변수: bbsID (게시물 번호) -->
-										<td><a href="">코로나도 잊게 한 공연!!</a></td>
-										<td>이웃집 고양이</td>
-										<td>2021.06.09</td>
-									</tr>
+								<!-- c:foreach문으로 리스트 반복 뿌려주기(BoardVO)
+								bno, play_nm, title, user_nick, playrev_dt, view_cnt -->
+								<c:forEach var="review" items="${list }">
+								<tr>	
+									<td>${review.bno }</td>
+									<td>${review.play_nm }</td>
+									<!-- 게시글 제목을 눌렀을 때 해당 게시물로 이동할 수 있도록 링크 설정(<a>태그 이용)
+									     페이지: view.jsp / 매개변수: bbsID (게시물 번호) -->
+									<td><a href="">${review.title }</a></td>
+									<td>${review.user_nick }</td>
+									<td>${review.playrev_dt }</td>
+									<td>${review.view_cnt }</td>
+								</tr>
+								</c:forEach>
 								</tbody>
 							</table>
 							<!--  페이징 추가 -->

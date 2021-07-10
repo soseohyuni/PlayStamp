@@ -97,9 +97,9 @@
    #img { text-align:center;}
    
    #reviewdetailtable td { height:20px; }
-   
    #reviewdetailtable { width:60%; margin: auto; }
    #uploadFile { text-align:center;}
+   
 </style>
 <script type="text/javascript">
 	
@@ -114,35 +114,6 @@
 	    });
 	 });
    
-</script>
-<script type="text/javascript">
-
-	// 처음 imagePreview 부분에 공연 포스터 넣어주기
-	$(function()
-	{
-		var url = $("#getplay_img").val();
-		$("#imagePreview").attr("src", url);
-	});
-	
-	// 사진 업로드
-	/*
-	$(function() {
-	    $("#play_img").on("change", function(){
-	        var files = !!this.files ? this.files : [];
-	        if (!files.length || !window.FileReader) return; 
-	 
-	        if (/^image/.test( files[0].type)){ 
-	            var reader = new FileReader(); 
-	            reader.readAsDataURL(files[0]); 
-	 
-	            reader.onloadend = function(){ 
-	             $('#imagePreview').css("background-image", "url("+this.result+")"); 
-	            };
-	        }
-	    });
-	});
-	*/
-
 </script>
 <script type="text/javascript">
 
@@ -170,14 +141,14 @@
 <br><br>
 
 <div class="content">
-	<form action="addreviewdetail.action" method="post" class="content" enctype="multipart/form-data">
+	<form action="addreviewdetail.action" method="post" class="content">
 		<table class="table table-borderless" id="reviewdetailtable">
 			<tr>
 				<td colspan="2" rowspan="7" style="width:50px; margin:0 auto;">
-					<!-- 첨부 사진 미리보기 -->
-					<div id="imagePreview"></div>
-					<br> <!-- 선택한 사진 이름 보기 --> 
-					<input type="file" id="play_img" name="play_img" class="img" accept="img/*" />
+					<!-- 포스터 사진 미리보기 -->
+					<div>
+						<img id="imagePreview" src="${play.play_img }">
+					</div>
 				</td>
 				<th>제목</th>
 				<td>
@@ -248,7 +219,7 @@
 		</div>
 		<!-- 이전 페이지로 넘겨받은 데이터 -->
 		<input type="hidden" id="rev_distin_cd" name="rev_distin_cd" value="${rev_distin_cd }">
-		<input type="hidden" id="getplay_img" name="getplay_img" value="${play.play_img }">
+		<input type="hidden" id="play_img" name="play_img" value="${play.play_img }">
 	</form>
 </div><!-- close #content -->
 

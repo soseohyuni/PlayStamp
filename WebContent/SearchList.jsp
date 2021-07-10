@@ -103,36 +103,60 @@ h5 {
 </div>
 
 <div id="textbox">
+	<br>
 	<h5>
-		<img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">리뷰 추가하기
+		<span>통합 검색</span>
 	</h5>
 	<hr>
 </div>
 <br><br><br><br><br>
 <div id="wrapper">
 	<div class="container">
-			<!-- 다음 단계로 이동 버튼 클릭 시 사용자가 선택한 공연코드를 가지고 좌석 리뷰 작성 페이지로 이동 -->
-		<form action="addreviewseatform.action" method="post">
-			<h2>관람하신 공연명을 검색하여 선택해주세요</h2>
-		    <br>
-			<br>
-			<input type="text" id="search" class="form-control" placeholder="공연을 검색해보세요!">
-			
-			<!-- 스크립트 단에 전달할 공연정보 hidden 속성으로 구성 -->
-			 
-			<c:forEach var="play" items="${list }">
-				<input type="hidden" id="playlist" name="playlist" value="${play.play_nm }"/>
-			</c:forEach>
-			<br><br>
-			<input type="hidden" id="play_nm" name="play_nm">
-			<!-- 임시로 유저아이디 다음 페이지에 넘기기 -->
-			<input type="hidden" id="user_cd" name="user_cd" value="U00001">
-			<div>
-				<button type="submit" id="nextBtn" class="btn btn-info">다음 단계로</button>
-			</div>
-		</form>
-	</div>
-</div>
+	
+		<!-- 검색 시 공연 목록 조회 -->
+		<div class="row">
+			<c:forEach var="myreviewposter" items="${myreviewposter }">
+  			<div class="col-lg-3 col-xs-6 col-md-3">
+    			<div class="thumbnail">
+      				<a href="myreviewdetail.action?play_cd=${myreviewposter.play_cd }&rev_distin_cd=${myreviewposter.rev_distin_cd}" 
+             		class="thumbnail">
+               			<img src="${myreviewposter.play_img }">
+             		</a>
+      				<div class="caption">
+        				<h3>Thumbnail label</h3>
+        				<p>...</p>
+        				<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+      				</div><!-- .caption -->
+    			</div><!-- .thumbnail -->
+ 			</div><!-- .col-lg-3 .col-xs-6 .col-md-3 -->
+ 			</c:forEach>
+		</div><!-- .row -->
+		
+		
+		<!-- 검색 시 리뷰 목록 조회 -->
+		<div class="row">
+			<c:forEach var="myreviewposter" items="${myreviewposter }">
+  			<div class="col-lg-3 col-xs-6 col-md-3">
+    			<div class="thumbnail">
+      				<a href="myreviewdetail.action?play_cd=${myreviewposter.play_cd }&rev_distin_cd=${myreviewposter.rev_distin_cd}" 
+             		class="thumbnail">
+               			<img src="${myreviewposter.play_img }">
+             		</a>
+      				<div class="caption">
+        				<h3>Thumbnail label</h3>
+        				<p>...</p>
+        				<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+      				</div><!-- .caption -->
+    			</div><!-- .thumbnail -->
+ 			</div><!-- .col-lg-3 .col-xs-6 .col-md-3 -->
+ 			</c:forEach>
+		</div><!-- .row -->
+		
+		
+	</div><!-- .container -->
+</div><!-- #wrapper -->
+
+
 
 </body>
 </html>

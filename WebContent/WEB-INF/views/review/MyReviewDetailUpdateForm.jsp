@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>MyReviewDetailUpdateForm.jsp</title>
+<link href="<%=cp%>/css/myspace.css" rel="stylesheet">
 <!-- 달력 선택 기능을 위한 jquery UI 추가 -->
 <link rel="stylesheet" type="text/css" href="<%=cp %>/css/jquery-ui.css">
 <script type="text/javascript" src="<%=cp%>/js/jquery-ui.js"></script>
@@ -128,29 +129,35 @@
 </script>
 <script type="text/javascript">
 
-	// 처음 imagePreview 부분에 공연 포스터 넣어주기
-	$(function()
+	// 사용자가 파일을 첨부해서 해당 영역에 변경이 일어난다면 함수 호출
+	$(function ()
 	{
-		var url = $("#getplay_img").val();
-		$("#imagePreview").attr("src", url);
+		$("#userUpImg").on("change", handleImgFileSelect);
 	});
 	
-	// 사진 업로드
-	$(function() {
-	    $("#play_img").on("change", function(){
-	        var files = !!this.files ? this.files : [];
-	        if (!files.length || !window.FileReader) return; 
-	 
-	        if (/^image/.test( files[0].type)){ 
-	            var reader = new FileReader(); 
-	            reader.readAsDataURL(files[0]); 
-	 
-	            reader.onloadend = function(){ 
-	             $('#imagePreview').css("background-image", "url("+this.result+")"); 
-	            };
+	//-- 첨부 이미지 미리보기에 반영되기 전 확장자 체크
+	function handleImgFileSelect(e) 
+	{
+	    var files = e.target.files;
+	    var filesArr = Array.prototype.slice.call(files);
+
+	    filesArr.forEach(function(f)
+	    {
+	        if(!f.type.match("image.*"))
+	        {
+	            alert("이미지 파일만 첨부해주세요.");
+	            return;
 	        }
+
+	        sel_file = f;
+	        var reader = new FileReader();
+	        reader.onload = function(e)
+	        {
+	            $("#play_img").attr("src", e.target.result);
+	        }
+	        reader.readAsDataURL(f);
 	    });
-	});
+	}
 
 </script>
 </head>
@@ -167,92 +174,114 @@
 </div>
 <br><br>
 
-<div class="content">
-	<form action="myreviewdetailupdate.action" method="post" class="content">
-		<table class="table table-borderless" id="reviewdetailtable">
-			<tr>
-				<td colspan="2" rowspan="7" style="width:50px; margin:0 auto;">
-					<!-- 첨부 사진 미리보기 -->
-					<div id="imagePreview"></div>
-					<br> <!-- 선택한 사진 이름 보기 --> 
-					<input type="file" id="play_img" name="play_img" class="img" accept="img/*" />
-				</td>
-				<th>제목</th>
-				<td>
-					<input type="text" id="title" name="title" class="form-control" maxlength="50" value="${reviewdetail.title}">
-				</td>
-			</tr>
-			<tr>
-				<th>공연명</th>
-				<td><input type="text" id="playname" class="form-control"
-					value="${play.play_nm }" readonly></td>
-			</tr>
-			<tr>
-				<th>공연 날짜</th>
-				<td><input type="text" id="play_dt" name="play_dt" class="form-control"
-					required="required" value="${reviewdetail.play_dt}"></td>
-			</tr>
-			<tr>
-				<th>공연 시간</th>
-				<td><input type="text" id="play_time" name="play_time" class="form-control" value="${reviewdetail.play_time }">
-				</td>
-			</tr>
-			<tr>
-				<th>공연 장소</th>
-				<td><input type="text" id="place" class="form-control" value="${play.theater }"
-					readonly></td>
-			</tr>
-			<tr>
-				<th>출연진</th>
-				<td><input type="text" id="play_cast" name="play_cast" class="form-control" value="${reviewdetail.play_cast }">
-				</td>
-			</tr>
-			<tr>
-				<th>티켓 금액</th>
-				<td><input type="text" id="play_money" name="play_money" class="form-control" value="${reviewdetail.play_money }">
-				</td>
-			</tr>
-			<tr>
-				<th style="text-align:center;">공연 평점</th>
-				<td>
-					<select id="rating_cd"" name="rating_cd">
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-					</select>
-				</td>
-				<th>함께 본 사람</th>
-				<td>
-				<select id="companion_cd" name="companion_cd">
-				<c:forEach var="c" items="${companion}">
-					<c:set var="a" value="${a+1 }"/>
-					<option value="${a }">${c.companion }</option>
-				</c:forEach>
-				</select>
-				</td>
-			</tr>
-			<tr>
-				<th colspan="4">공연 상세 리뷰</th>
-			</tr>
-			<tr>
-				<td colspan="4"><textarea id="contents" name="contents" cols="55" rows="10" style="resize: none;" class="form-control">${reviewdetail.contents}</textarea></td>
-			</tr>
-		</table>
-		<br><br>
-		<div class="finishBtn">
-			<button type="submit" id="finishBtn" class="btn btn-info">리뷰 수정 완료하기</button>
+<div id="wrapper">	
+	<div class="container">
+		<!-- left -->
+		<div id="profileImg profileImg-b" >
+			<!-- 리뷰 사진 변경: play_img, rev_distin_cd 제출 -->
+			<!-- PosterImgUpload.java 서블릿 호출 -->
+			<form action="PosterImgUpload" method="post" enctype="multipart/form-data">
+				<div>
+		            <img id="imagePreview" name="play_img" src="${reviewdetail.play_img }">
+				</div>
+				<input type="hidden" id="rev_distin_cd" name="rev_distin_cd" value="${sessionScope.rev_distin_cd }">
+				<div>
+					<input type="file" name="userImg" id="userUpImg">
+				</div>
+				
+				<div>
+					<br>
+					<button type="submit" class="btn btn-info">사진 변경하기</button>
+				</div>
+			</form>
 		</div>
-		<!-- 이전 페이지로 넘겨받은 데이터 -->
-		<input type="hidden" id="rev_distin_cd" name="rev_distin_cd" value="${rev_distin_cd }">
-		<input type="hidden" id="play_img" name="play_img" value="${reviewdetail.play_img }">
-		<input type="hidden" id="getplay_img" name="getplay_img" value="${reviewdetail.play_img }">
-		<input type="hidden" id="getrating_cd" name="getrating_cd" value="${reviewdetail.rating_cd}">
-		<input type="hidden" id="getcompanion_cd" name="getcompanion_cd" value="${reviewdetail.companion_cd}">
-	</form>
-</div><!-- close #content -->
-
+		
+		<!-- right -->
+		<form action="myreviewdetailupdate.action" method="post" class="content">
+			<div id="profileInput">
+				<table class="table table-borderless" id="reviewdetailtable">
+					<tr>
+						<th>제목</th>
+						<td>
+							<input type="text" id="title" name="title" class="form-control" maxlength="50" value="${reviewdetail.title}">
+						</td>
+					</tr>
+					<tr>
+						<th>공연명</th>
+						<td><input type="text" id="playname" class="form-control"
+							value="${play.play_nm }" readonly></td>
+					</tr>
+					<tr>
+						<th>공연 날짜</th>
+						<td><input type="text" id="play_dt" name="play_dt" class="form-control"
+							required="required" value="${reviewdetail.play_dt}"></td>
+					</tr>
+					<tr>
+						<th>공연 시간</th>
+						<td><input type="text" id="play_time" name="play_time" class="form-control" value="${reviewdetail.play_time }">
+						</td>
+					</tr>
+					<tr>
+						<th>공연 장소</th>
+						<td><input type="text" id="place" class="form-control" value="${play.theater }"
+							readonly></td>
+					</tr>
+					<tr>
+						<th>출연진</th>
+						<td><input type="text" id="play_cast" name="play_cast" class="form-control" value="${reviewdetail.play_cast }">
+						</td>
+					</tr>
+					<tr>
+						<th>티켓 금액</th>
+						<td><input type="text" id="play_money" name="play_money" class="form-control" value="${reviewdetail.play_money }">
+						</td>
+					</tr>
+					<tr>
+						<th>함께 본 사람</th>
+						<td>
+						<select id="companion_cd" name="companion_cd">
+						<c:forEach var="c" items="${companion}">
+							<c:set var="a" value="${a+1 }"/>
+							<option value="${a }">${c.companion }</option>
+						</c:forEach>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<th style="text-align:center;">공연 평점</th>
+						<td>
+							<select id="rating_cd" name="rating_cd">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+			</div><!-- right -->
+			<div><!-- 아래쪽 -->
+				<table>
+					<tr>
+						<th colspan="4">공연 상세 리뷰</th>
+					</tr>
+					<tr>
+						<td colspan="4"><textarea id="contents" name="contents" cols="55" rows="10" style="resize: none;" class="form-control">${reviewdetail.contents}</textarea></td>
+					</tr>
+				</table>
+				<br><br>
+				<div class="finishBtn">
+					<button type="submit" id="finishBtn" class="btn btn-info">리뷰 수정 완료하기</button>
+				</div>
+				<!-- 이전 페이지로 넘겨받은 데이터 -->
+				<input type="hidden" id="rev_distin_cd" name="rev_distin_cd" value="${rev_distin_cd }">
+				<input type="hidden" id="getrating_cd" name="getrating_cd" value="${reviewdetail.rating_cd}">
+				<input type="hidden" id="getcompanion_cd" name="getcompanion_cd" value="${reviewdetail.companion_cd}">
+			</div><!-- close 아래쪽 -->
+		</form>
+	</div><!-- close .container -->
+</div><!-- close #wrapper -->
 	
 <br><br><br><br><br><br><br><br>
 </body>

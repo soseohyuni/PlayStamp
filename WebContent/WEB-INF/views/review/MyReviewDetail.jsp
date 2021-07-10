@@ -161,15 +161,6 @@
 </script>
 <script type="text/javascript">
 
-	// 사용자가 업로드한 리뷰 파일 얻어오기 -- 작동X
-	$(document).ready(function()
-	{
-		$("#imagePreview").attr('src', '${reviewdetail.play_img}');
-	});
-	
-</script>
-<script type="text/javascript">
-
 	// 삭제 버튼 클릭시 확인 후 삭제 액션 수행
 	$(function()
 	{
@@ -208,9 +199,10 @@
 			</tr>
 			<tr>
 				<td colspan="2" rowspan="7" style="width:50px; margin:0 auto;">
-					<br>
-					<!-- 첨부 사진 보기 -->
-					<div id="imagePreview"></div>
+					<!-- 포스터 사진 미리보기 -->
+					<div>
+						<img id="imagePreview" src="${play.play_img }">
+					</div>
 				</td>
 				<th colspan="4" id="reviewTitle" name="reviewTitle">${reviewdetail.title }</th>
 			</tr>
