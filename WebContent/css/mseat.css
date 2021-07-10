@@ -104,18 +104,19 @@ background-color: none;
 }
  */
 
-.btn-theater {
-	margin: 0;
+.btn-theater, .theater, .theaterName {
+	margin: 0 auto;
 	padding: 0.5rem 1rem;
 	font-size: 1rem;
 	font-weight: bold;
-	text-align: center;
-	/* text-decoration: none; */
+	text-align: center !important;
+	border-radius: 1em;
 	display: inline-block;
 	width: 150px;
 	border-radius: 2em;
 	background-color: white;
 	border-color: orange;
+	font-size: 12pt;
 }
 
 .seatImg {

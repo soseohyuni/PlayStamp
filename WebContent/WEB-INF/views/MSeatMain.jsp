@@ -188,7 +188,7 @@
 	<br>
 	<br>
 	<!-- 공연장 버튼 -->
-	<div class="btn .btn-theater" style="text-align: center;">
+	<div class="theater" style="text-align: center;">
 		<button class="theaterName" type="button" onclick="javascript:openFrame(1);" class="btn btn-default">예술의전당</button>&emsp;
 		<button class="theaterName" type="button" onclick="javascript:openFrame(2);" class="btn btn-default">블루스퀘어</button>&emsp;
 		<button class="theaterName" type="button" onclick="javascript:openFrame(3);" class="btn btn-default">충무아트센터</button>&emsp;
@@ -201,7 +201,7 @@
 	<div class="intro" style="font-size: 12pt; font-weight: bold;">
 		궁금하신 공연장을 선택하시고<br>좌석 구역에 마우스를 올려보세요 !
 		<div class="mseatexample">
-			<img src="images/mseatmainexample.JPG">
+			<img src="images/mseatmainexamplefinal.JPG">
 		</div>
 	</div>
 
@@ -241,7 +241,7 @@
 
 			<div class="seatRating" id="sacRating">
 				<div class="seatName"></div><br>
-				<div>해당구역에서 관람한 회원님들이<br>남겨주신 평균 별점입니다 :)</div><br>
+				<div>해당구역에서 관람한 회원님들이<br>남겨주신 평균 점수입니다 :)</div><br>
 				<div id="ratingSacDiv"></div>
 			</div>
 			<!-- close .seatRating -->
@@ -297,7 +297,7 @@
 		
 			<div class="seatRating" id="bsRating">
 				<div class="seatName"></div><br>
-				<div style="font-family: 맑은 고딕;">해당구역에서 관람한 회원님들이<br>남겨주신 평균 별점입니다 :)</div><br>
+				<div style="font-family: 맑은 고딕;">해당구역에서 관람한 회원님들이<br>남겨주신 평균 점수입니다 :)</div><br>
 				<div id="ratingBsDiv"></div>
 			</div>
 		</div>
