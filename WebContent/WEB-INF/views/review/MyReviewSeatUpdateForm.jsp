@@ -341,7 +341,7 @@
 			<input type="hidden" id="getseat_area" name="getseat_area" value="${seatreview.seat_area }">
 			<input type="hidden" id="getseat_line" name="getseat_line" value="${seatreview.seat_line }">
 			<div class="nextBtn">
-				<button type="submit" id="nextBtn" class="btn btn-info nextBtn">상세 리뷰 작성하러 가기</button>
+				<button type="submit" id="nextBtn" class="btn btn-info nextBtn">상세 리뷰 수정하러 가기</button>
 			</div>
 		</form>
 	</div>

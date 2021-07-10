@@ -208,9 +208,10 @@
 			</tr>
 			<tr>
 				<td colspan="2" rowspan="7" style="width:50px; margin:0 auto;">
-					<br>
-					<!-- 첨부 사진 보기 -->
-					<div id="imagePreview"></div>
+					<!-- 포스터 사진 미리보기 -->
+					<div>
+						<img id="imagePreview" src="${play.play_img }">
+					</div>
 				</td>
 				<th colspan="4" id="reviewTitle" name="reviewTitle">${reviewdetail.title }</th>
 			</tr>
