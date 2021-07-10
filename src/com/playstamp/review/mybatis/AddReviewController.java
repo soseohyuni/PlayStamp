@@ -6,9 +6,14 @@
 
 package com.playstamp.review.mybatis;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +21,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.SessionScope;
 
+import com.playstamp.myspace.mybatis.IMyspaceDAO;
 import com.playstamp.review.Companion;
 import com.playstamp.review.DistinctReview;
 import com.playstamp.review.MSeatReview;
+import com.playstamp.review.ModifyPoster;
 import com.playstamp.review.MyReviewPoster;
 import com.playstamp.review.Play;
 import com.playstamp.review.ReviewDetail;
@@ -48,14 +56,13 @@ public class AddReviewController
 	// 리뷰 식별 코드 테이블에 Insert 한 뒤,
 	// 선택한 공연 관련 정보를 가지고 좌석 리뷰 입력 페이지로 이동
 	@RequestMapping(value="/addreviewseatform.action", method=RequestMethod.POST)
-	public String addDistinctReview(Model model, HttpServletRequest request)
+	public String addDistinctReview(Model model, HttpServletRequest request, HttpSession session)
 	{
 		IAddReviewDAO dao = sqlSession.getMapper(IAddReviewDAO.class);
 		String rev_distin_cd = null;
 		
 		// 검색 페이지(AddReviewSearchForm.jsp)로부터 정보 수신
-		//String user_cd = request.getParameter("user_cd");
-		String user_cd = "U00001";
+		String user_cd = (String)session.getAttribute("code");
 		String play_nm = request.getParameter("play_nm");
 		
 		// 사용자가 선택한 공연명+공연기간으로 공연코드 가져오기
@@ -294,14 +301,11 @@ public class AddReviewController
 	// 포스터 형식으로 사용자의 리뷰 조회하는 페이지
 	//-- 사용자 코드로 리뷰 식별 테이블에서 리뷰식별코드, 공연코드 조회 → 이미지 url 가져오기
 	@RequestMapping(value="/myreviewlistposter.action", method=RequestMethod.GET)
-	public String myReviewPoster(Model model, HttpServletRequest request)
+	public String myReviewPoster(Model model, HttpServletRequest request, HttpSession session)
 	{
 		IAddReviewDAO dao = sqlSession.getMapper(IAddReviewDAO.class);
 		
-		// String user_cd = request.getParameter("user_cd");
-		//-- 나중에 연결하고 사용자 아이디 받아온다고 가정
-		
-		String user_cd = "U00001";
+		String user_cd = (String)session.getAttribute("code");
 		
 		ArrayList<MyReviewPoster> myreviewposter = dao.myReviewPoster(user_cd);
 		
@@ -492,16 +496,21 @@ public class AddReviewController
 		play = dao.searchPlay(play_cd);
 		
 		model.addAttribute("play", play);
+		
+		// 2. 리뷰식별코드 session에 담기 (리뷰 사진 수정 시, form으로 같이 제출하기 위해)
+        HttpSession session = request.getSession();
+        session.setAttribute("rev_distin_cd", rev_distin_cd);
+        // model 에도 담기
 		model.addAttribute("rev_distin_cd", rev_distin_cd);
 		
-		// 2. 함께 본 사람 리스트 넘기기
+		// 3. 함께 본 사람 리스트 넘기기
 		ArrayList<Companion> companion = dao.companion();
 		model.addAttribute("companion", companion);
 		
-		// 3. 공연장소 이름 넘기기
+		// 4. 공연장소 이름 넘기기
 		model.addAttribute("theater_nm", dao.searchTheaterName(theater_cd));
 		
-		// 4. 리뷰식별코드로 리뷰 상세 내용 가져오기
+		// 5. 리뷰식별코드로 리뷰 상세 내용 가져오기
 		ReviewDetail reviewdetail = dao.getReviewDetail(rev_distin_cd);
 		model.addAttribute("reviewdetail", reviewdetail);
 		
@@ -545,7 +554,7 @@ public class AddReviewController
 		String play_cast = request.getParameter("play_cast");	// 출연진
 		String play_money = request.getParameter("play_money");	// 티켓 금액
 		String contents = request.getParameter("contents");		// 공연 상세리뷰
-		String play_img = request.getParameter("play_img");		// 첨부파일
+		//String play_img = request.getParameter("play_img");	// 첨부파일 -- 따로 폼 제출해 수정받기
 		
 		// 가져온 값 객체에 세팅하기
 		ReviewDetail reviewdetail = new ReviewDetail();
@@ -554,7 +563,7 @@ public class AddReviewController
 		reviewdetail.setTitle(title);
 		reviewdetail.setRating_cd(rating_cd);
 		reviewdetail.setContents(contents);
-		reviewdetail.setPlay_img(play_img);
+		//reviewdetail.setPlay_img(play_img);
 		reviewdetail.setPlay_dt(play_dt);
 		reviewdetail.setPlay_time(play_time);
 		reviewdetail.setPlay_money(play_money);
@@ -598,6 +607,40 @@ public class AddReviewController
 		
 		// 모두 삭제 후 조회 화면으로 이동
 		return "redirect:myreviewlistposter.action";
+	}
+	
+	// 사용자가 리뷰 수정 시 사진 업로드(수정)하는 경우
+	@RequestMapping(value="/modifyPosterImg.action", method=RequestMethod.GET)
+    public void uploadPoster(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException
+	{
+		IAddReviewDAO dao = sqlSession.getMapper(IAddReviewDAO.class);
+		
+		// 수정할 리뷰의 리뷰식별코드, 수정할 이미지 값 받기
+		String rev_distin_cd = (String)session.getAttribute("rev_distin_cd");
+		String play_img = (String)session.getAttribute("play_img");
+		
+		System.out.println(rev_distin_cd);
+		System.out.println(play_img);
+		
+		//String rev_distin_cd = (String) request.getAttribute("rev_distin_cd");
+		//String play_img = (String) request.getAttribute("play_img");
+		
+		ModifyPoster mp = new ModifyPoster();
+		mp.setRev_distin_cd(rev_distin_cd);
+		mp.setPlay_img(play_img);
+		
+		int success = dao.modifyPosterImg(mp);
+		
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printwriter = response.getWriter();
+		
+		if(success==1)
+		{
+			printwriter.print("<script>alert('정보 수정이 완료됐습니다.');"
+					+ "history.back();</script>");
+		}
+		printwriter.flush();
+		printwriter.close();
 	}
 	
 }

@@ -71,7 +71,6 @@
 		height: 90px;
 		width: 280px;
 		background-color: #fafafa;
-		
 		font-size: 10pt;
 		color: black;
 		padding: 10px;
@@ -82,7 +81,6 @@
 		width: 1100px;
 		text-align: center;
 		margin: 0 auto;
-		background-color: #fafafa;
 		height: 370px;
 	}
 	
@@ -165,17 +163,17 @@
     <div id="highReviewSorting" class="container">
        	<div id="imgContainer" class="row">
        		<c:forEach var="myreviewposter" items="${myreviewposter }">
-	          	<div class="col-lg-3 col-xs-6 col-md-3">
-	             	<a href="myreviewdetail.action?play_cd=${myreviewposter.play_cd }&rev_distin_cd=${myreviewposter.rev_distin_cd}" 
-	             	class="thumbnail">
-	               		<img src="${myreviewposter.play_img }">
-	             	</a>
-	             	<div class="playTitle">${myreviewposter.title }</div>
-	          	</div>
-       		</c:forEach>
+          	<div class="col-lg-3 col-xs-6 col-md-3">
+             	<a href="myreviewdetail.action?play_cd=${myreviewposter.play_cd }&rev_distin_cd=${myreviewposter.rev_distin_cd}" 
+             	class="thumbnail">
+               		<img src="${myreviewposter.play_img }">
+             	</a>
+             	<div class="caption">${myreviewposter.title }</div>
+          	</div>
+          	</c:forEach>
        	</div>
     </div>
-
+	
     <br><br>
     
 </div><!-- close #wrapper -->

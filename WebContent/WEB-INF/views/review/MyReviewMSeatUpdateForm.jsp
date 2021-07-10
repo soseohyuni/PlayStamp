@@ -379,7 +379,7 @@
 			<input type="hidden" id="theater_cd" name="theater_cd" value="${theater_cd }">
 			<input type="hidden" id="rev_distin_cd" name="rev_distin_cd" value="${mseatreview.rev_distin_cd }">
 			<div class="nextBtn">
-				<button type="submit" id="nextBtn" class="btn btn-info nextBtn">상세 리뷰 작성하러 가기</button>
+				<button type="submit" id="nextBtn" class="btn btn-info nextBtn">상세 리뷰 수정하러 가기</button>
 			</div>
 		</form>
 	</div>

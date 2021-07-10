@@ -7,9 +7,12 @@ package com.playstamp.review.mybatis;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.playstamp.review.Companion;
 import com.playstamp.review.DistinctReview;
 import com.playstamp.review.MSeatReview;
+import com.playstamp.review.ModifyPoster;
 import com.playstamp.review.MyReviewPoster;
 import com.playstamp.review.Play;
 import com.playstamp.review.ReviewDetail;
@@ -49,6 +52,7 @@ public interface IAddReviewDAO
 	public int removeReviewDetail(String rev_distin_cd);			//-- 공연 상세 리뷰 삭제 액션처리
 	public int removeReviewDistin(String rev_distin_cd);			//-- 리뷰 식별코드 삭제 액션처리
 	
+	public int modifyPosterImg(ModifyPoster modifyposter);	//-- 리뷰 수정 시 첨부 파일 업로드 처리
 	
 	//-- 트랜잭션 처리
 
