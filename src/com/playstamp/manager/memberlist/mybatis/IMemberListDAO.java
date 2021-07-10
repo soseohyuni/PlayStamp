@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 import com.playstamp.manager.memberlist.ManagingPointList;
 import com.playstamp.manager.memberlist.MemberList;
-import com.playstamp.paging.Criteria;
 import com.playstamp.paging.PageDTO;
+import com.playstamp.paging.ReverseCriteria;
 
 public interface IMemberListDAO
 {
 	// 회원 리스트 조회
-	public ArrayList<MemberList> memberlist(Criteria cri);
+	public ArrayList<MemberList> memberlist(ReverseCriteria cri);
 	
 	// 총 회원 수 조회
 	public int membercount();
