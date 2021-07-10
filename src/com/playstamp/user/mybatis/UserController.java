@@ -1,11 +1,14 @@
 package com.playstamp.user.mybatis;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -44,6 +47,7 @@ public class UserController
 
 		return result;
 	}
+	
 		
 	//-- 회원가입 페이지로 이동
 	@RequestMapping("/signupform.action")
@@ -168,13 +172,13 @@ public class UserController
 			{
 				System.out.println("관리자 로그인 성공");
 				// 추후 관리자 페이지로 변경
-				result = "WEB-INF/views/main/Welcome.jsp";
+				result = "redirect:managerhome.action";
 			}
 			else
 			{
 				System.out.println("관리자 로그인 실패");
 				request.setAttribute("msg", "fail");
-				result = "/WEB-INF/views/main/LoginForm.jsp";
+				result = "redirect:loginform.action";
 			}
 			
 		}
@@ -196,6 +200,7 @@ public class UserController
 	            
 	            String code = userDao.userCode(id);
 	            session.setAttribute("code", code);
+		
 				
 				/* 등급 처리 */
 				
@@ -240,7 +245,7 @@ public class UserController
 				//System.out.println(str);
 				model.addAttribute("msg", "success");
 				
-				result = "WEB-INF/views/main/Main.jsp";
+				result = "WEB-INF/views/main/Home.jsp";
 			}
 			else // 로그인 실패
 			{
@@ -253,14 +258,158 @@ public class UserController
 		return result; 
 	}
 	
+	// 아이디 찾기 버튼 클릭
+	@RequestMapping("/findid.action")
+	public String findId()
+	{
+		String result = "";
+		
+		result = "/WEB-INF/views/main/FindIdForm.jsp";
+
+		return result;
+	}
+	
+	// 비밀번호 찾기 버튼 클릭
+	@RequestMapping("/findpw.action")
+	public String findPw()
+	{
+		String result = "";
+		
+		result = "/WEB-INF/views/main/FindPwForm.jsp";
+
+		return result;
+	}
+	
+	// 아이디 찾기 폼 페이지
+	@ResponseBody
+	@RequestMapping(value="/checkfindidpw.action", method=RequestMethod.POST)
+	public String findId(@RequestParam("email") String email)
+	{
+		Random random = new Random();
+		int checkNum = random.nextInt(888888)+111111; // 111111 - 999999
+		//System.out.println("인증번호 : " + checkNum);
+		
+ 		String setFrom = "shyunnkk@gmail.com";
+		String toEmail = email;
+		String title = "플레이스탬프 인증코드";
+		String content = "플레이스탬프 인증코드입니다." 
+					   + "<br/><br/>" + "인증 번호 : " + checkNum + "<br/>"
+					   + "플레이스탬프로 돌아가 인증코드를 입력해주세요:>";
+        try {
+        	
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+            helper.setFrom(setFrom);
+            helper.setTo(toEmail);
+            helper.setSubject(title);
+            helper.setText(content,true);
+            mailSender.send(message);
+            
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        String num = Integer.toString(checkNum);
+        
+        //System.out.println("인증번호 : " + num);
+        return num;
+	}
+	
+	// 찾은 아이디 확인하기
+	@RequestMapping("/selectfindid.action")
+	public String selectFindId(Model model, HttpServletRequest request)
+	{
+		String result = "";
+		String[] idList;
+		
+		String mail = request.getParameter("user_Mail");
+		
+		IUserDAO dao = sqlSession.getMapper(IUserDAO.class);
+		idList = dao.selectFindId(mail);
+		
+		model.addAttribute("idList", idList);
+		System.out.println(idList[0]);
+	
+		result = "/WEB-INF/views/main/ConfirmId.jsp";
+		return result;
+	}
+	
+	// 아이디와 메일 일치하는 계정있는지 확인하기
+	@ResponseBody
+	@RequestMapping(value="/selectidpw.action", method=RequestMethod.POST)
+	public String selectIdMail(@RequestParam("userId") String userId, @RequestParam("userMail") String userMail
+			, HttpServletRequest request, Model model)
+	{
+		String str = "";
+		
+		IUserDAO dao = sqlSession.getMapper(IUserDAO.class);
+		int result = 0;
+		
+		try
+		{
+			result = dao.selectIdMail(userId, userMail);
+			//System.out.println(result);
+			
+		} catch (Exception e)
+		{
+			System.out.println(e.toString());
+		}
+		
+		if(result!=0) // 이미 존재하는 아이디
+			str = "NO";
+		else
+		{
+			model.addAttribute("userId", userId);
+			str = "YES";
+		}
+		
+		return str;
+	}
+	
+	// 비밀번호 재설정 전 확인
+
+	@RequestMapping(value="/userchangepwform.action", method=RequestMethod.POST)
+	public String changePwForm(@RequestParam("user_Id") String userId, Model model)
+	{
+		String result = "";
+		
+		model.addAttribute("userId", userId);
+		
+		System.out.println("아이디" + userId);
+		result = "/WEB-INF/views/main/ChangePwForm.jsp";
+		return result;
+	}
+	
+	// 비밀번호 재설정
+	@RequestMapping(value="/userchangepw.action", method=RequestMethod.POST)
+
+	public void changePw(@RequestParam("user_Pw") String userPw, @RequestParam("user_Id") String userId, HttpServletResponse response) throws IOException
+	{
+		
+		IUserDAO dao = sqlSession.getMapper(IUserDAO.class);
+		dao.changePw(userPw, userId);
+		
+		System.out.println("아이디" + userId + "비번" + userPw);
+		
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printwriter = response.getWriter();
+		
+		printwriter.print("<script>alert('비밀번호 변경이 완료됐습니다.');"
+				+ "location.href='home.action'</script>");
+		printwriter.flush();
+		printwriter.close();
+	}
+	
+	
 	// 사용자 로그아웃
 	@RequestMapping("/logout.action")
 	public String userLogout(HttpSession session)
 	{ 
 		String result = ""; 
 		session.invalidate();
-		
-		result = "WEB-INF/views/main/Main.jsp";
+
+		result = "WEB-INF/views/main/Home.jsp";
+
 		
 		return result;
 	}

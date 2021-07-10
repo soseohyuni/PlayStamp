@@ -1,0 +1,62 @@
+package com.playstamp.home.mybatis;
+
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class HomeController
+{
+	@Autowired
+	private SqlSession sqlSession;
+	
+	@RequestMapping("/managerhome.action")
+	public String adminHome()
+	{
+		String result = "";
+		
+		result = "/WEB-INF/views/manager/ManagerHome.jsp";
+
+		return result;
+	}
+	
+
+	@RequestMapping(value = "/home.action", method= {RequestMethod.GET, RequestMethod.POST})
+	public String mSeatMain(Model model, HttpServletRequest request)
+	{
+		IHomeDAO dao = sqlSession.getMapper(IHomeDAO.class);
+		
+		model.addAttribute("highReviewSorting", dao.highReviewSorting());
+		model.addAttribute("highRateSorting", dao.highRateSorting());
+		model.addAttribute("highLikeSorting", dao.highLikeSorting());
+		
+		String result = "";
+		
+		int nonuser = 0;
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("nonuser", nonuser);
+		
+		result = "/WEB-INF/views/main/Home.jsp";
+
+		return result;
+		
+		
+	}
+
+
+}

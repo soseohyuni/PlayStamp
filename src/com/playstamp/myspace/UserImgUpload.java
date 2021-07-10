@@ -20,11 +20,11 @@ public class UserImgUpload extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		
-		String realPath = request.getServletContext().getRealPath("upload");
+		String realPath = request.getServletContext().getRealPath("/profile");
+		
+		System.out.println(realPath);
 		
 		String fileName = null;
-	    String contextPath = request.getServletContext().getContextPath();
-	    String userProfile = null;
 	    
 	    // 위 경로의 디렉토리가 존재하지 않으면 새로 생성 
 		File dir = new File(realPath); 
@@ -36,10 +36,10 @@ public class UserImgUpload extends HttpServlet {
 		
 		fileName = multpartRequest.getFilesystemName("userImg"); 
 		
-		userProfile = contextPath + "/upload/" + fileName;
+		//userProfile = realPath + fileName;
 
 		HttpSession session= request.getSession();
-	    session.setAttribute("userProfile", userProfile);
+	    session.setAttribute("userProfile", fileName);
 	    
 		response.sendRedirect("uploadimg.action"); 
 		

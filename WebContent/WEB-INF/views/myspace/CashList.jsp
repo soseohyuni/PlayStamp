@@ -21,7 +21,7 @@
 </style>
 </head>
 <body>
-<!-- 메뉴 영역 -->
+	<!-- 메뉴 영역 -->
 	<div>
 		<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
 	</div>
