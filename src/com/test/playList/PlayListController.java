@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +27,7 @@ public class PlayListController
 	
 	//@@ 공연정보 페이지(뮤지컬 리스트)로 보내 주는 컨트롤러
 	@RequestMapping(value="/musicallist.action")
-	public String musicalHome()
+	public String musicalHome(HttpSession session)
 	{
 		return "WEB-INF/views/MusicalList.jsp";
 	}

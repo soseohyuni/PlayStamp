@@ -2,7 +2,9 @@ package com.playstamp.playreviewdetail.mybatis;
 
 import java.util.ArrayList;
 
+import com.playstamp.playdetail.SeatRevBlind;
 import com.playstamp.playreviewdetail.Comment;
+import com.playstamp.playreviewdetail.CommentBlind;
 import com.playstamp.playreviewdetail.Like;
 import com.playstamp.playreviewdetail.PlayReviewDetail;
 
@@ -28,4 +30,17 @@ public interface IPlayReviewDetailDAO
 	
 	//@@ 좋아요 중복 체크 메소드
 	public int checkHeart(Like like);
+	
+	//@@ 좋아요 제거 메소드
+	public int delHeart(Like like);
+	
+	// 일반 좌석 리뷰 신고 여부 체크 메소드
+	public CommentBlind checkRepCom(String comment_cd);
+	
+	// 멤버 등급 얻어오는 메소드
+	public String getUserGrade(String user_id);
+	
+	// 별점 평균 산출하는 메소드
+	public Integer getRatingAvg(String play_cd);
+
 }

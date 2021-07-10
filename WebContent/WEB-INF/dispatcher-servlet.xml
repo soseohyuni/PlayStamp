@@ -12,7 +12,8 @@
         http://www.springframework.org/schema/mvc/spring-mvc.xsd"
     xmlns:mvc="http://www.springframework.org/schema/mvc">
 
-	<mvc:annotation-driven />
+
+<mvc:annotation-driven />
 
    <!-- ① 기존 코드 -->
    <!-- ※ Annotation 표기법으로 Controller 객체를 등록한다. -->
@@ -34,13 +35,15 @@
    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
       <property name="dataSource" ref="localDataSource"></property>
       <property name="mapperLocations" value="classpath:com/playstamp/mybatis/mapper/*.xml"></property>
+
+   </bean>   
+
+   <!-- ⑥ sqlSession 등록 과정에서 생겨나는 추가 코드 -->
+   <!-- ※ mybatis 를 사용하기 위한 환경 설정 추가 3 → sqlSessionTemplate -->
+   <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+      <constructor-arg index="0" ref="sqlSessionFactory"></constructor-arg>
    </bean>
 
-	<!-- ⑥ sqlSession 등록 과정에서 생겨나는 추가 코드 -->
-	<!-- ※ mybatis 를 사용하기 위한 환경 설정 추가 3 → sqlSessionTemplate -->
-	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg index="0" ref="sqlSessionFactory"></constructor-arg>
-	</bean>
 
     <!-- Configures Handler Interceptors -->
     <mvc:interceptors>

@@ -284,7 +284,7 @@
 					{
 						str += "<div data-replyNo='" + item.comment_cd + "' class='replyLi2'>"
 						+ "<span class='commentWriter'>" + item.user_nick + "</span>"
-						+ "<button type='button' class='btn btn-default'>신고</button><br><br>"
+						+ "<br><br>"
 						+ "<span class='comment'>" + item.comments + "</span>"
 						+ "<span class='commentDt'>" + item.wr_dt + "</span><br>"          
 		                + "<hr>"
@@ -438,21 +438,7 @@
 				</tr>
 				<tr>
 					<td colspan="3"><textarea rows="5%" cols="100%" disabled="disabled">${playReviewDetail.contents }</textarea></td>
-				</tr>
-				<c:set var="checkHeart" value="${checkHeart}"></c:set>
-				<c:choose>
-				<c:when test="${checkHeart eq 0}">
-				<tr>
-					<td colspan="7">이 리뷰가 마음에 드시면 하트를 눌러 주세요!&nbsp;<span id="heart" style="color: #FE2E2E"><i class='far fa-heart fa-lg'></i></span></td>
-				</tr>
-				</c:when>
-				<c:when test="${checkHeart eq 1}">
-				<tr>
-					<td colspan="7">이 리뷰가 마음에 드시면 하트를 눌러 주세요!&nbsp;<span id="heart" style="color: #FE2E2E"><i class="fas fa-heart fa-lg"></i></span></td>
-				</tr>
-				</c:when>
-				</c:choose>
-				
+				</tr>				
 				</c:forEach>
 			</table>
 		</div>
@@ -467,30 +453,12 @@
 			&nbsp;&nbsp;작성자: ${playReviewDetail.user_nick }			
 			</span>
 			<!-- 리뷰 작성자가 본인일 경우 신고 버튼 뜨지 않도록 처리 -->
-			<c:set var="loginUser_cd" value="${sessionScope.code }"></c:set>
-  			<c:set var="writer_cd" value="${playReviewDetail.user_cd }"></c:set>
-  			<c:if test="${loginUser_cd ne writer_cd }">
-			<button type="button" class="btn btn-default" id="reportPlayRev">리뷰 신고</button>
-			</c:if>	
 			<hr>
 			</c:forEach>
 		</div>
 		
 		<!-- 댓글 ^^ -->
-		<div class="col-lg-12">
-				<!-- 로그인한 사용자의 USER_CD 가 들어갈 hidden 타입 인풋 박스 -->
-				<input type="hidden" id="hiddenUser" value="${sessionScope.code }">
-			<div>
-                <p id="newReplyWriter" name="replyWriter">${sessionScope.nick }</p>
-            </div>
-             <form class="form-inline">
-            <div class="form-group">
-                <input type="text" id="newReplyText" class="form-control" name="replyText" placeholder="내용을 입력해주세요">
-                &nbsp;<button type="button" id="commentAddBtn" class="btn-default form-control">댓글 달기</button>
-            </div>
-            </form>
-        </div>
-        <hr>
+
         <div class="box-footer">
             <div id="comments">
 

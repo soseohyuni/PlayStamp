@@ -69,7 +69,7 @@
 				</div>
 				<div id="box2" class="inBox inBox2">
 					<div class="sTitle"><a>나의 찜리스트></a></div>
-					<div class="aTitle"><a href="#">24개</a></div>
+					<div class="aTitle"><a href="myspacejjim.action">24개</a></div>
 				</div>
 			</div>
 			<div class="outBox">

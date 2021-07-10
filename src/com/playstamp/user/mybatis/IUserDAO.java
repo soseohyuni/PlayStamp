@@ -12,6 +12,6 @@ public interface IUserDAO
 	
 	public String userLogin(String userId, String userPw) throws SQLException;
 	public String managerLogin(String userId, String userPw) throws SQLException;
-	
+
 	public String userCode(String userId) throws SQLException;
 }
