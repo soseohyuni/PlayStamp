@@ -200,9 +200,7 @@ public class UserController
 	            
 	            String code = userDao.userCode(id);
 	            session.setAttribute("code", code);
-				
-				String code = userDao.userCode(id);
-				session.setAttribute("code", code);
+		
 				
 				/* 등급 처리 */
 				
@@ -369,18 +367,23 @@ public class UserController
 	}
 	
 	// 비밀번호 재설정 전 확인
-	@RequestMapping("/userchangepwform.action")
-	public String changePwForm()
+
+	@RequestMapping(value="/userchangepwform.action", method=RequestMethod.POST)
+	public String changePwForm(@RequestParam("user_Id") String userId, Model model)
 	{
 		String result = "";
 		
+		model.addAttribute("userId", userId);
+		
+		System.out.println("아이디" + userId);
 		result = "/WEB-INF/views/main/ChangePwForm.jsp";
 		return result;
 	}
 	
 	// 비밀번호 재설정
 	@RequestMapping(value="/userchangepw.action", method=RequestMethod.POST)
-	public void changePw(@RequestParam("userPw") String userPw, @RequestParam("userId") String userId, HttpServletResponse response) throws IOException
+
+	public void changePw(@RequestParam("user_Pw") String userPw, @RequestParam("user_Id") String userId, HttpServletResponse response) throws IOException
 	{
 		
 		IUserDAO dao = sqlSession.getMapper(IUserDAO.class);

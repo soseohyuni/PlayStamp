@@ -111,7 +111,8 @@
 				사용자의 아이디와 이메일 주소가 일치해야 이메일 전송 버튼이 활성화되고 인증이 진행됩니다.
 				<hr>
 				
-			<form action="">
+
+			<form action="userchangepwform.action" method="post">
 				<div class="form-group">
 					<input type="text" class="form-control" id="userId" name="user_Id" placeholder="아이디를 입력하세요" 
 					    required="required" style="margin-bottom: 16px;">
@@ -132,13 +133,12 @@
 				  
 				<div class="alert alert-success" id="mailCheckSuccess">인증번호가 일치합니다.</div>
 				<div class="alert alert-danger" id="mailCheckFail">인증번호가 일치하지 않습니다.</div>
-				
+
+				<input id="updatePwBtn" type="submit" class="btn btn-primary btn-lg btn-block" style="width: 50%; margin: 0 auto;"
+				value="비밀번호 변경하기" disabled="disabled">
 			</form>
 			<hr>
-			<a href="userchangepwform.action">
-				<input id="updatePwBtn" type="button" class="btn btn-primary btn-lg btn-block" style="width: 50%; margin: 0 auto;"
-				value="비밀번호 변경하기" disabled="disabled">
-			</a>
+
 			
 	</div>
 	

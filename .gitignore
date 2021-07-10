@@ -5,3 +5,4 @@ build/
 .project
 .settings/org.eclipse.wst.common.component
 src/sample/
+.classpath
