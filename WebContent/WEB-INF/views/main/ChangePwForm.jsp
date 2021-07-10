@@ -75,6 +75,7 @@
 				새로 설정할 비밀번호를 입력해주세요.
 				<hr>
 				<form action="userchangepw.action" method="post">
+				
 					<div class="joinInputBox">
 						<input type="hidden" id="userId" name="user_Id" value="${userId }">
 						<input type="password" id="userPw" name="user_Pw" class="form-control" maxlength="20" required="required"
@@ -89,6 +90,7 @@
 					<hr>
 						<input id="updatePwBtn" type="submit" class="btn btn-primary btn-lg btn-block" style="width: 50%; margin: 0 auto;"
 						value="비밀번호 변경하기" disabled="disabled">
+						
 				</form>
 			
 	</div>

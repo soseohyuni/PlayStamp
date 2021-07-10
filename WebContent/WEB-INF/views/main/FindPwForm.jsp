@@ -37,6 +37,7 @@
 				  else if(data=="NO") // 비밀번호 변경 진행 가능
 				  {
 					  alert("계정이 확인됐습니다. 메일 인증을 요청해주세요.");
+					  $("#mailCheckBtn").attr("disabled",false);
 				  }
 				},
 				error : function(request,status,error)
@@ -125,7 +126,7 @@
 				  
 					<div class="form-inline mail_check_input_box" id="mail_check_input_box_false">
 					    <input type="text" id="mailCheckNum"  class="form-control mail_check_input" disabled="disabled" style="margin-right:10px; width: 60%;">
-					    <input type="button" id="mailCheckBtn" class="btn" value="인증번호 전송" style="width: 39%;" >
+					    <input type="button" id="mailCheckBtn" class="btn" value="인증번호 전송" style="width: 39%;" disabled="disabled">
 					</div>
 				</div>
 				  
