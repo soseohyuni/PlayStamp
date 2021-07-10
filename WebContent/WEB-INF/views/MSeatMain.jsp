@@ -9,186 +9,13 @@
 <head>
 <meta charset="UTF-8">
 <title>MSeatMain.jsp</title>
-<%-- <link rel="stylesheet" href="<%=cp %>/css/mseat.css"> --%>
+<link rel="stylesheet" href="<%=cp %>/css/mseat.css">
 <script type="text/javascript" src="<%=cp%>/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="css/bootstrap.min.css">
-
-
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<!-- 별점 기능을 위한 아이콘을 CDN 방식으로 추가 -->
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-<!-- 별점 이미지 파일을 다운받은 뒤 css폴더에 추가해 경로 지정 -->
-<link rel="stylesheet" href="<%=cp%>/css/fontawesome-stars.css">
-<script type="text/javascript" src="<%=cp%>/js/ajax.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<!-- 별점 콜백 함수 호출을 위해 js 폴더에 추가해 경로 지정 -->
-<script type="text/javascript" src="<%=cp%>/js/jquery.barrating.min.js"></script>
-
-<style type="text/css">
-body {
-	font-size: 25pt;
-	font-weight: bold;
-}
-
-#fullBackground {
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	width: 100%;
-	height: 1400px !important;
-	/* background-color: #E4E4E4; */
-	background-color: #343434;
-	filter: alpha(opacity = 55);
-	opacity: 0.5;
-	display: none;
-	z-index: 100;
-}
-
-#sac, #bs {
-	position: absolute;
-	height: 1000px;
-	left: 150px;
-	top: 33px;
-	bottom: 33px;
-	border: 1px solid;
-	background-color: #FFFFFF;
-	z-index: 101;
-	display: none;
-	width: 1000px;
-}
-
-.titleBar, .content {
-	font-family: 굴림;
-	font-size: 9pt;
-	/* padding: 2px 2px 2px 5px; */
-	width: 1000px;
-}
-
-.titleBar {
-	clear: both;
-	height: 25px;
-	background: #3980F4;
-	width: 1000px;
-	cursor: move;
-}
-
-.title {
-	float: left;
-	font-size: 9pt;
-	height: 25px;
-	line-height: 25px;
-	background: #3980F4;
-	color: #FFFFFF;
-	width: 270px;
-	cursor: move;
-}
-
-.titleClose {
-	float: right;
-	font-size: 9pt;
-	height: 20px;
-	margin-top: 5px;
-	background: #3980F4;
-	color: #FFFFFF;
-	width: 17px;
-	cursor: pointer;
-}
-
-.content {
-	clear: both;
-	width: 1000px;
-	/* height: 1000px; */
-	align: center;
-	margin: 0 auto;
-	text-align: center;
-	top: 5%;
-}
-
-.backgroundImg {
-	width: 500px;
-	z-index: 2;
-}
-
-.intro, .theater {
-	text-align: center !important;
-	align-content: center;
-	margin: 0 auto;
-	justify-content: center;
-	/* font-weight: bold; */
-	align: center;
-}
-
-.btn-theater {
-	margin: 0;
-	padding: 0.5rem 1rem;
-	font-size: 1rem;
-	font-weight: bold;
-	text-align: center;
-	/* text-decoration: none; */
-	display: inline-block;
-	width: 150px;
-	border-radius: 2em;
-	background-color: white;
-	border-color: orange;
-}
-
-.seatImg {
-	position: absolute;
-	z-index: 1;
-}
-
-.seatRating {
-	width: 200px;
-	z-index: 1 !important;
-	border: 2px solid;
-	top: 100px;
-	position: absolute;
-	left: 40px;
-	border-radius: 1em;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	border-color: #dedede;
-	color: #727272;
-}
-
-.seatName
-{
-	 font-size: 20pt;
-	 font-weight: bold;
-}
-
-	#tableRating th
-	{
-		margin: 20px;
-		font-size: 10pt;
-		font-family: 맑은 고딕;
-	}
-	
-	#tableRating td
-	{
-		font-weight: bold;
-		font-size: 10pt;	
-		font-family: 맑은 고딕;
-	}
-	
-	#tableRating
-	{
-		position: relative;
-		left: 50px;
-		font-family: 맑은 고딕;
-		margin-top: 10px;
-		margin-bottom: 10px;
-	}
-	
-	
-</style>
 
 <script type="text/javascript">
 
@@ -361,20 +188,20 @@ body {
 	<br>
 	<br>
 	<!-- 공연장 버튼 -->
-	<div class="theather" style="text-align: center;">
-		<button type="button" onclick="javascript:openFrame(1);" class="btn btn-default">예술의전당</button>&emsp;
-		<button type="button" onclick="javascript:openFrame(2);" class="btn btn-default">블루스퀘어</button>&emsp;
-		<button type="button" onclick="javascript:openFrame(3);" class="btn btn-default">충무아트센터</button>&emsp;
-		<button type="button" onclick="javascript:openFrame(4);" class="btn btn-default">디큐브아트센터</button>&emsp;
-		<button type="button" onclick="javascript:openFrame(5);" class="btn btn-default">샤롯데씨어터</button>
+	<div class="btn .btn-theater" style="text-align: center;">
+		<button class="theaterName" type="button" onclick="javascript:openFrame(1);" class="btn btn-default">예술의전당</button>&emsp;
+		<button class="theaterName" type="button" onclick="javascript:openFrame(2);" class="btn btn-default">블루스퀘어</button>&emsp;
+		<button class="theaterName" type="button" onclick="javascript:openFrame(3);" class="btn btn-default">충무아트센터</button>&emsp;
+		<button class="theaterName" type="button" onclick="javascript:openFrame(4);" class="btn btn-default">디큐브아트센터</button>&emsp;
+		<button class="theaterName" type="button" onclick="javascript:openFrame(5);" class="btn btn-default">샤롯데씨어터</button>
 	</div>
 
 	<br />
 	<br />
-	<div class="intro">
+	<div class="intro" style="font-size: 12pt; font-weight: bold;">
 		궁금하신 공연장을 선택하시고<br>좌석 구역에 마우스를 올려보세요 !
 		<div class="mseatexample">
-			<img src="images/mseatexample.png">
+			<img src="images/mseatmainexample.JPG">
 		</div>
 	</div>
 
@@ -470,7 +297,7 @@ body {
 		
 			<div class="seatRating" id="bsRating">
 				<div class="seatName"></div><br>
-				<div>해당구역에서 관람한 회원님들이<br>남겨주신 평균 별점입니다 :)</div><br>
+				<div style="font-family: 맑은 고딕;">해당구역에서 관람한 회원님들이<br>남겨주신 평균 별점입니다 :)</div><br>
 				<div id="ratingBsDiv"></div>
 			</div>
 		</div>
