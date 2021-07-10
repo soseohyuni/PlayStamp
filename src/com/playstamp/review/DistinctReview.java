@@ -2,9 +2,9 @@ package com.playstamp.review;
 
 public class DistinctReview
 {
-	String rev_distin_cd;	// 리뷰 식별 코드
-	String user_cd;			// 사용자 코드
-	String play_cd;			// 공연 코드
+	private String rev_distin_cd;	// 리뷰 식별 코드
+	private String user_cd;			// 사용자 코드
+	private String play_cd;			// 공연 코드
 	
 	public String getRev_distin_cd()
 	{

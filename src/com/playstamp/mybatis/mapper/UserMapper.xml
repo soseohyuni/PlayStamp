@@ -36,4 +36,6 @@
 		WHERE MNG_ID = #{arg0} AND MNG_PW = #{arg1}
 	</select>
 	
+               
+   
 </mapper>
