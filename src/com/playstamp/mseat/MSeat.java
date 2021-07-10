@@ -1,6 +1,5 @@
 package com.playstamp.mseat;
 
-
 public class MSeat
 {
 	private String viewrating, lightrating, soundrating, seatrating;

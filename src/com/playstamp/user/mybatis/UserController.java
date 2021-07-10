@@ -193,7 +193,7 @@ public class UserController
 			{
 				System.out.println("사용자로 로그인 성공");
 				
-				// 사용자 정보 세션에 담기
+
 	            HttpSession session = request.getSession();
 	            session.setAttribute("id", id);
 	            session.setAttribute("nick", str);
@@ -407,8 +407,9 @@ public class UserController
 	{ 
 		String result = ""; 
 		session.invalidate();
-		
+
 		result = "WEB-INF/views/main/Home.jsp";
+
 		
 		return result;
 	}

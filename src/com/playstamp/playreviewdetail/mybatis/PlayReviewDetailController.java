@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.playstamp.play.PlayList;
 import com.playstamp.play.mybatis.IPlayListDAO;
+import com.playstamp.playdetail.PlayRevBlind;
+import com.playstamp.playdetail.PlayRevPre;
 import com.playstamp.playreviewdetail.Comment;
+import com.playstamp.playreviewdetail.CommentBlind;
 import com.playstamp.playreviewdetail.Like;
 
 @Controller
@@ -29,22 +33,105 @@ public class PlayReviewDetailController
 	private SqlSession sqlSession;
 	
 	@RequestMapping(value="playreviewdetail.action", method=RequestMethod.GET)
-	public String sendPlayReviewDetail(HttpServletRequest request, ModelMap model) throws SQLException
+	public String sendPlayReviewDetail(HttpServletRequest request, ModelMap model, HttpSession session) throws SQLException
 	{
 		IPlayReviewDetailDAO dao = sqlSession.getMapper(IPlayReviewDetailDAO.class);
 		
 		String playrev_cd = request.getParameter("playrev_cd");
+		String play_cd = request.getParameter("play_cd");
 		
+		String user_cd = (String)session.getAttribute("code");
+		String user_id = (String)session.getAttribute("id");
+		
+		Like like = new Like();
+		
+		like.setPlayrev_cd(playrev_cd);
+		like.setUser_cd(user_cd);
+		
+		//@@ 좋아요 체크 메소드 
+		int checkHeart = 0;
+		
+		//@@ 있을 경우 1, 없을 경우 0 반환
+		if (dao.checkHeart(like) != 0)
+			checkHeart = 1;
+		
+		model.addAttribute("checkHeart",checkHeart);
+		
+		//----------------------------------------- 댓글 블라인드
+		// 해당 공연의 공연 리뷰 코드들을 꺼내기 위해 리스트 선언 
+		//ArrayList<PlayRevPre> playRevPreList = dao.getPlayRevPre(play_cd);
+		ArrayList<Comment> commentList = dao.getCommentList(playrev_cd);
+		
+		int checkRepCom = 0;
+		int checkRepComSt = 0;
+		ArrayList<Integer> checkRepComList = new ArrayList<Integer>();
+		ArrayList<Integer> checkRepComStList = new ArrayList<Integer>();
+		
+		for (Comment comment : commentList)
+		{		
+			//@@ 블라인드 객체 반환
+			//PlayRevBlind blindPlay = dao.checkRepPlay(playRevPre.getPlayrev_cd());
+			CommentBlind blindCom = dao.checkRepCom(comment.getComment_cd());
+			
+			//@@ 신고가 되었다면 
+			if (Integer.parseInt(blindCom.getRep_com_cd()) != 0)
+				checkRepCom = 1;
+			else
+				checkRepCom = 0;
+					
+			//@@ 신고가 처리되었다면, 승인(1) 또는 반려(2)를 반환한다. 신고가 처리되지 않았다면 초기화된 값 0을 반환한다. 
+			if (Integer.parseInt(blindCom.getRep_st_cd()) != 0)
+				checkRepComSt = Integer.parseInt(blindCom.getRep_st_cd());
+			else
+				checkRepComSt = 0;
+			// 신고 o → 1
+			// 신고 x → 0
+			checkRepComList.add(checkRepCom);
+			// 승인 → 1 
+			// 반려 → 2
+			// 신고 처리 x → 0
+			checkRepComStList.add(checkRepComSt);			
+		}
+		
+		if (dao.getUserGrade(user_id).equals("어둠회원") || dao.getUserGrade(user_id).equals("뉴비"))
+		{
+			//@@ 신고되었는지 여부 확인하는 리스트를 모델에 담아 보낸다.
+			model.addAttribute("checkRepComList", checkRepComList);
+			//@@ 신고 처리 여부 확인하는 리스트를 모델에 담아 보낸다.
+			model.addAttribute("checkRepComStList", checkRepComStList);
+					
+			//System.out.println(playrev_cd);
+			// addAttribute 를 통해 전송
+			model.addAttribute("playReviewDetail", dao.getPlayReviewDetail(playrev_cd));
+			
+			//@@ 코멘트 리스트 전송 구문도 추가
+			model.addAttribute("commentList", dao.getCommentList(playrev_cd));
+			
+			model.addAttribute("ratingAvg", dao.getRatingAvg(play_cd));
+			
+			return "WEB-INF/views/PlayReviewDetailForDark.jsp";
+		}
+		
+		//@@ 신고되었는지 여부 확인하는 리스트를 모델에 담아 보낸다.
+		model.addAttribute("checkRepComList", checkRepComList);
+		//@@ 신고 처리 여부 확인하는 리스트를 모델에 담아 보낸다.
+		model.addAttribute("checkRepComStList", checkRepComStList);
+				
 		//System.out.println(playrev_cd);
 		// addAttribute 를 통해 전송
 		model.addAttribute("playReviewDetail", dao.getPlayReviewDetail(playrev_cd));
 		
 		//@@ 코멘트 리스트 전송 구문도 추가
 		model.addAttribute("commentList", dao.getCommentList(playrev_cd));
-		
+	
 		return "WEB-INF/views/PlayReviewDetail.jsp";
 	}
-
+	
+	@RequestMapping(value="/reportform.action")
+	public String reportForm()
+	{
+		return "WEB-INF/views/Report.jsp";
+	}
 	
 	//@@ ajax 로 댓글 리스트 전송
 	@RequestMapping(value="/comment.action", method= RequestMethod.GET)
@@ -100,17 +187,34 @@ public class PlayReviewDetailController
 		return "success";
 	}	
 	
-	//@@ 좋아요 추가
-	@RequestMapping(value="/heartadd.action", method= {RequestMethod.POST, RequestMethod.GET})
-	public @ResponseBody int addHeart(@RequestBody Like like) throws SQLException
+	//@@ 좋아요 버튼 클릭시 
+	@RequestMapping(value="/heartclick.action", method= {RequestMethod.POST, RequestMethod.GET})
+	public @ResponseBody Map<String, Object> addHeart(@RequestBody Like like, HttpSession session) throws SQLException
 	{
 		IPlayReviewDetailDAO dao = sqlSession.getMapper(IPlayReviewDetailDAO.class);	
-		int result = 0;
+		Map<String, Object> result = new HashMap<String, Object>(); 
+		
+		int returnValue = 0;
+		
 		try
-		{
-			dao.addHeart(like);
+		{	
+			//@@ 이미 좋아요를 눌렀을 경우
+			if (dao.checkHeart(like)!=0)
+			{
+				// 좋아요를 삭제하고 
+				dao.delHeart(like);
+				// 0을 반환
+				returnValue = 0;
+			}
+			else if(dao.checkHeart(like)==0)
+			{
+				dao.addHeart(like);
+				returnValue = 1;
+			}
 			
-			result = dao.countHeart(like);
+			
+			result.put("lcount", dao.countHeart(like));
+			result.put("returnValue", returnValue);
 
 		} catch (Exception e)
 		{
@@ -118,7 +222,5 @@ public class PlayReviewDetailController
 		}
 		
 		return result;
-	}
-	
-	
+	}	
 }

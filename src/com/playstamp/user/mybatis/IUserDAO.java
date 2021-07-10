@@ -15,6 +15,7 @@ public interface IUserDAO
 	public String userLogin(String userId, String userPw) throws SQLException;
 	public String userCode(String userId) throws SQLException;
 	public String managerLogin(String userId, String userPw) throws SQLException;
+
 	
 	// 아이디 찾기/비밀번호 찾기 관련 메서드
 	public String[] selectFindId(String userMail);

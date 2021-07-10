@@ -12,7 +12,9 @@
         http://www.springframework.org/schema/mvc/spring-mvc.xsd"
     xmlns:mvc="http://www.springframework.org/schema/mvc">
 
-	<mvc:annotation-driven />
+
+   <mvc:annotation-driven />
+   <context:annotation-config />
 
    <!-- ① 기존 코드 -->
    <!-- ※ Annotation 표기법으로 Controller 객체를 등록한다. -->
@@ -36,22 +38,25 @@
       <property name="mapperLocations" value="classpath:com/playstamp/mybatis/mapper/*.xml"></property>
    </bean>
 
-	<!-- ⑥ sqlSession 등록 과정에서 생겨나는 추가 코드 -->
-	<!-- ※ mybatis 를 사용하기 위한 환경 설정 추가 3 → sqlSessionTemplate -->
-	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg index="0" ref="sqlSessionFactory"></constructor-arg>
-	</bean>
+
+   <!-- ⑥ sqlSession 등록 과정에서 생겨나는 추가 코드 -->
+   <!-- ※ mybatis 를 사용하기 위한 환경 설정 추가 3 → sqlSessionTemplate -->
+   <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+      <constructor-arg index="0" ref="sqlSessionFactory"></constructor-arg>
+   </bean>
+
+
 
     <!-- Configures Handler Interceptors -->
     <mvc:interceptors>
      <mvc:interceptor>
    
-      <mvc:mapping path="/myspace.action"/>
-   
+      <mvc:mapping path="/*.action" />
+
       <bean id="interceptor" class="com.playstamp.user.Interceptor"></bean>
      </mvc:interceptor>
     </mvc:interceptors>
-    
+  
     
     <!-- email 인증 관련   -->
      <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">

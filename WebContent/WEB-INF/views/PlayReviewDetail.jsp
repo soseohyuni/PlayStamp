@@ -67,6 +67,8 @@
 	
 	.btn{float: right; height: 40px;}
 	.commentDt{float: right; height: 40px;}
+	
+	#newReplyWriter {font-weight: bold;}
 
 
 </style>
@@ -79,9 +81,16 @@
 	//@@ 현재 url 가져오기 
 	var url = location.href;
 	//@@ 자르기.. 
-	var parameters = ((url.split("?"))[1].split("="))[1];
+	var parameters = (((url.split("?"))[1].split("&"))[0]).split("=")[1];
+	var parameters2 = (((url.split("?"))[1].split("&"))[1]).split("=")[1];
 	
 	var articleNo = parameters;
+	
+	//@@ 좋아요 여부 확인
+	//var checkHeart = ${checkHeart};
+	
+	//@@ 신고 루트 분기 위한...
+	var reportWhat = 0;
 	
 	<c:forEach var="playReviewDetail" items="${playReviewDetail }">
 		playRev = "${playReviewDetail.rating_cd}"
@@ -106,17 +115,20 @@
 		//@@ 좋아요 버튼을 눌렀을 때
 		$("#heart").on("click", function()
 		{
-			
 			var hiddenUser = $("#hiddenUser");
 		    var hiddenUserVal = hiddenUser.val();
-		    var str = "<i class='fas fa-heart fa-lg'></i>";
 		    
-			// AJAX 통신 : POST
-		    $.ajax({
+		  	//@@ 빈 하트
+		    var str0 = "<i class='far fa-heart fa-lg'></i>";
+		    //@@ 꽉 찬 하트
+		    var str1 = "<i class='fas fa-heart fa-lg'></i>";
+		 	
+
+	    	$.ajax({
 			        type : "post",
-			        url : "heartadd.action",
-			        contentType: "application/json",
-			        dataType : "text",
+			        url : "heartclick.action",
+			        contentType: "application/json; charset=utf-8;",
+			        dataType : "json",
 			        data : JSON.stringify
 			        ({
 			            "playrev_cd" : articleNo,
@@ -124,12 +136,28 @@
 			        }),
 			        success : function (result)
 			        {
-			        	$("#lcount").html("");
-			        	$("#lcount").html(result);
-						$("#heart").html("");
-						$("#heart").html(str);
+			        	//console.log(result.lcount);
+			        	
+			        	//@@ 좋아요가 삭제되었을 경우
+			        	if (result.returnValue == 0)
+						{
+			        		$("#lcount").html("");
+				        	$("#lcount").html(result.lcount);
+				        	$("#heart").html("");
+							$("#heart").html(str0);
+						}
+			        	else if(result.returnValue ==1)
+			        	{
+			        		$("#lcount").html("");
+				        	$("#lcount").html(result.lcount);
+				        	$("#heart").html("");
+							$("#heart").html(str1);
+			        	}
+
 		        	}
-		    		});
+	    		});
+
+		    
 		});
 		
 		//@@ 댓글 달기 버튼을 눌렀을 때
@@ -202,6 +230,18 @@
 		});
 	});
 	
+	var check = new Array();
+	var checkSt = new Array();
+	<c:forEach var="checkRepComList" items="${checkRepComList }">
+		check.push("${checkRepComList}");
+	</c:forEach>
+		
+	<c:forEach var="checkRepComSt" items="${checkRepComStList }">
+		checkSt.push("${checkRepComSt}");
+	</c:forEach>
+		
+
+	
 	//@@ 댓글 목록 출력 함수
 	function getComments()
 	{
@@ -212,45 +252,115 @@
 			console.log(data); 
 			
 			var str = "";
+			var j = 0;
 			
 			$.each(data, function(i, item){
 				//console.log(item.comment_cd);
-				//@@ 댓글을 작성한 사용자일 때만 삭제 버튼 활성화
-				if (test==1)
-				{
-					str += "<div data-replyNo='" + item.comment_cd + "' class='replyLi'>"
-					+ "<span class='commentWriter'>" + item.user_nick + "</span>"
-					+ "<button type='button' class='btn btn-default'>삭제</button><br><br>"
-					+ "<span class='comment'>" + item.comments + "</span>"
-					+ "<span class='commentDt'>" + item.wr_dt + "</span><br>"          
-	                + "<hr>"
-					+ "</div>"
-	                + "<br>";
 
-			        $("#ccount").html(data.length);
-					$("#comments").html(str);
-				}
-			 	
-				//@@ 아닐 경우는 신고 버튼 활성화. replyLi2 아래의 버튼을 눌렀을 때는 신고 액션이 일어나야 함. 
-				if (test==2)
+				// 그대루 출력하는 경우
+				// 신고 o + 처리 2 / 신고 x
+				//console.log(checkSt[j]);
+				
+				if ((check[j]==1 && checkSt[j]==2) || check[j]==0)
 				{
+					//@@ 댓글을 작성한 사용자일 때만 삭제 버튼 활성화
+					if ($("#hiddenUser").val()==item.user_cd)
+					{
+						str += "<div data-replyNo='" + item.comment_cd + "' class='replyLi'>"
+						+ "<span class='commentWriter'>" + item.user_nick + "</span>"
+						+ "<button type='button' class='btn btn-default'>삭제</button><br><br>"
+						+ "<span class='comment'>" + item.comments + "</span>"
+						+ "<span class='commentDt'>" + item.wr_dt + "</span><br>"          
+		                + "<hr>"
+						+ "</div>"
+		                + "<br>";
+	
+				        $("#ccount").html(data.length);
+						$("#comments").html(str);
+					}
+		 	
+					//@@ 아닐 경우는 신고 버튼 활성화. replyLi2 아래의 버튼을 눌렀을 때는 신고 액션이 일어나야 함. 
+					if ($("#hiddenUser").val()!=item.user_cd)
+					{
+						str += "<div data-replyNo='" + item.comment_cd + "' class='replyLi2'>"
+						+ "<span class='commentWriter'>" + item.user_nick + "</span>"
+						+ "<button type='button' class='btn btn-default'>신고</button><br><br>"
+						+ "<span class='comment'>" + item.comments + "</span>"
+						+ "<span class='commentDt'>" + item.wr_dt + "</span><br>"          
+		                + "<hr>"
+						+ "</div>"
+		                + "<br>";
+	
+				    	$("#ccount").html(data.length);
+						$("#comments").html(str);
+					}
+				}
+				//@@ 블라인드 처리 하는 경우
+				else if ((check[j]==1 && checkSt[j]==1) || (check[j]==1 && checkSt[j]==0))
+				{	
 					str += "<div data-replyNo='" + item.comment_cd + "' class='replyLi2'>"
-					+ "<span class='commentWriter'>" + item.user_nick + "</span>"
-					+ "<button type='button' class='btn btn-default'>신고</button><br><br>"
-					+ "<span class='comment'>" + item.comments + "</span>"
-					+ "<span class='commentDt'>" + item.wr_dt + "</span><br>"          
+					+ "<span class='commentWriter'>" + item.user_nick + "</span><br><br>"
+					+ "<span class='comment'>" + '신고에 의해 블라인드 처리된 댓글입니다.' + "</span>"
+					+ "<span class='commentDt'></span><br>"          
 	                + "<hr>"
 					+ "</div>"
 	                + "<br>";
-
-			    	$("#ccount").html(data.length);
+	                
 					$("#comments").html(str);
 				}
+				
+			 	j++;
 			});
-			 
 		});
 	}
+	
+	//@@ 자식창을 저장할 변수
+	var popup;
 
+	
+	var comment_cd = 0;
+	
+	$(function()
+	{
+		
+		$("#reportPlayRev").click(function()
+		{
+			popup = window.open("reportform.action", "reportform", "width=570, height=350, resizable = no, scrollbars = no");
+			reportWhat = 0;
+			
+		});
+		
+		$("#comments").on("click", ".replyLi2 button", function()
+		{
+			var reply = $(this).parent();
+			
+			var replyNo = reply.attr("data-replyNo");
+			
+			popup = window.open("reportform.action", "reportform", "width=570, height=350, resizable = no, scrollbars = no");
+			reportWhat = 1;
+			comment_cd = replyNo;
+		});
+	
+		window.report = function(data)
+		{ 
+			// 자식창에서 얻어 온 신고 사유 값 rep_y_cd 에 담기
+			var rep_y_cd = data;
+			
+			// report.action 으로 컨트롤러 호출
+			if (reportWhat==0)
+			{
+				$(location).attr("href", "report.action?playrev_cd=" + articleNo + "&rep_y_cd=" + rep_y_cd + "&play_cd=" + parameters2);	
+			}
+			else if (reportWhat==1)
+			{
+				$(location).attr("href", "report.action?playrev_cd=" + articleNo + "&comment_cd=" + comment_cd + "&rep_y_cd=" + rep_y_cd +"&play_cd=" + parameters2);
+			}
+			
+		}
+	});
+	
+
+	
 </script>
 </head>
 
@@ -258,7 +368,7 @@
 <div class="container">
 <!-- 상단바 -->
 	<div id="header">
-		<c:import url="/WEB-INF/views/header.jsp"></c:import>
+		<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
 	</div>
 <!-- 내용 출력 시작 -->	
 	<div id="wrapper">
@@ -329,9 +439,20 @@
 				<tr>
 					<td colspan="3"><textarea rows="5%" cols="100%" disabled="disabled">${playReviewDetail.contents }</textarea></td>
 				</tr>
+				<c:set var="checkHeart" value="${checkHeart}"></c:set>
+				<c:choose>
+				<c:when test="${checkHeart eq 0}">
 				<tr>
-					<td colspan="7">이 리뷰가 마음에 드시면 하트를 눌러 주세요!&nbsp;<span id="heart" style="color: #FE2E2E"><i class="far fa-heart fa-lg"></i></span></td>
+					<td colspan="7">이 리뷰가 마음에 드시면 하트를 눌러 주세요!&nbsp;<span id="heart" style="color: #FE2E2E"><i class='far fa-heart fa-lg'></i></span></td>
 				</tr>
+				</c:when>
+				<c:when test="${checkHeart eq 1}">
+				<tr>
+					<td colspan="7">이 리뷰가 마음에 드시면 하트를 눌러 주세요!&nbsp;<span id="heart" style="color: #FE2E2E"><i class="fas fa-heart fa-lg"></i></span></td>
+				</tr>
+				</c:when>
+				</c:choose>
+				
 				</c:forEach>
 			</table>
 		</div>
@@ -345,7 +466,12 @@
 			<span style="color: #FE2E2E"><i class="fas fa-heart fa-lg"></i></span>&nbsp;<span id="lcount">${playReviewDetail.lcount }</span>
 			&nbsp;&nbsp;작성자: ${playReviewDetail.user_nick }			
 			</span>
-			<button type="button" class="" id="report">리뷰 신고</button>		
+			<!-- 리뷰 작성자가 본인일 경우 신고 버튼 뜨지 않도록 처리 -->
+			<c:set var="loginUser_cd" value="${sessionScope.code }"></c:set>
+  			<c:set var="writer_cd" value="${playReviewDetail.user_cd }"></c:set>
+  			<c:if test="${loginUser_cd ne writer_cd }">
+			<button type="button" class="btn btn-default" id="reportPlayRev">리뷰 신고</button>
+			</c:if>	
 			<hr>
 			</c:forEach>
 		</div>
@@ -353,9 +479,9 @@
 		<!-- 댓글 ^^ -->
 		<div class="col-lg-12">
 				<!-- 로그인한 사용자의 USER_CD 가 들어갈 hidden 타입 인풋 박스 -->
-				<input type="hidden" id="hiddenUser" value="U00004">
+				<input type="hidden" id="hiddenUser" value="${sessionScope.code }">
 			<div>
-                <p id="newReplyWriter" name="replyWriter">사용자</p>
+                <p id="newReplyWriter" name="replyWriter">${sessionScope.nick }</p>
             </div>
              <form class="form-inline">
             <div class="form-group">

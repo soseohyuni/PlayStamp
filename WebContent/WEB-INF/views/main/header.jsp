@@ -76,7 +76,7 @@
 						
 							<li><a href="myspace.action">마이스페이스</a></li>
 							<li><a href="musicallist.action">공연정보</a></li>
-							<li><a href="blog.html">좌석정보</a></li>
+							<li><a href="mseat.action">좌석정보</a></li>
 							<li><a href="contact.html">티켓 양도</a></li>
 						</ul>
 					</div>
