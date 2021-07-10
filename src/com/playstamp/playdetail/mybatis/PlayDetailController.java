@@ -42,8 +42,14 @@ public class PlayDetailController
 	{
 		IPlayDetailDAO dao = sqlSession.getMapper(IPlayDetailDAO.class);
 		String play_cd = request.getParameter("play_cd");
-		String user_cd = (String)session.getAttribute("code");
+		String user_cd = "비회원";
+		String user_id = "비회원";
 		
+		if ((String)session.getAttribute("code") != null)
+			user_cd = (String)session.getAttribute("code");
+		if ((String)session.getAttribute("id") != null)
+			user_id = (String)session.getAttribute("id");
+
 		// 변수 선언 및 초기화
 		int mseatCheck = 0;
 		int seatCheck = 0;
@@ -179,30 +185,32 @@ public class PlayDetailController
 			}
 		}
 		
-		/*
-		 * for (SeatRev seat : seatRev) { if (distin == 0) { //@@ 블라인드 객체 반환
-		 * SeatRevBlind blindSeat = dao.checkRepSeat(seat.getSeat_rev_cd());
-		 * 
-		 * //@@ 신고가 되었다면 if (Integer.parseInt(blindSeat.getRep_seat_cd()) != 0)
-		 * checkRepSeat = 1; else checkRepSeat = 0;
-		 * 
-		 * //@@ 신고가 처리되었다면, 승인(1) 또는 반려(2)를 반환한다. 신고가 처리되지 않았다면 초기화된 값 0을 반환한다. if
-		 * (Integer.parseInt(blindSeat.getRep_st_cd()) != 0) checkRepPlaySt =
-		 * Integer.parseInt(blindSeat.getRep_st_cd()); else checkRepPlaySt = 0; // 신고 o
-		 * → 1 // 신고 x → 0 checkRepSeatList.add(checkRepSeat); // 승인 → 1 // 반려 → 2 // 신고
-		 * 처리 x → 0 checkRepSeatStList.add(checkRepSeatSt); } else if (distin == 1) {
-		 * //@@ 블라인드 객체 반환 MseatRevBlind blindSeat =
-		 * dao.checkRepMseat(seat.getMseat_rev_cd());
-		 * 
-		 * //@@ 신고가 되었다면 if (Integer.parseInt(blindSeat.getRep_mseat_cd()) != 0)
-		 * checkRepSeat = 1; else checkRepSeat = 0;
-		 * 
-		 * //@@ 신고가 처리되었다면, 승인(1) 또는 반려(2)를 반환한다. 신고가 처리되지 않았다면 초기화된 값 0을 반환한다. if
-		 * (Integer.parseInt(blindSeat.getRep_st_cd()) != 0) checkRepSeatSt =
-		 * Integer.parseInt(blindSeat.getRep_st_cd()); else checkRepSeatSt = 0; // 신고 o
-		 * → 1 // 신고 x → 0 checkRepSeatList.add(checkRepSeat); // 승인 → 1 // 반려 → 2 // 신고
-		 * 처리 x → 0 checkRepSeatStList.add(checkRepSeatSt); } }
-		 */
+		if (dao.getUserGrade(user_id).equals("어둠회원") || dao.getUserGrade(user_id).equals("뉴비"))
+		{
+			//@@ 신고되었는지 여부 확인하는 리스트를 모델에 담아 보낸다.
+			model.addAttribute("checkRepPlayList", checkRepPlayList);
+			//@@ 신고 처리 여부 확인하는 리스트를 모델에 담아 보낸다.
+			model.addAttribute("checkRepPlayStList", checkRepPlayStList);
+			model.addAttribute("playDetailList", dao.getPlayDetail(play_cd));
+			model.addAttribute("playRevPreList", dao.getPlayRevPreFirst(play_cd));
+			model.addAttribute("ratingAvg", dao.getRatingAvg(play_cd));
+			model.addAttribute("checkJjim",checkJjim);
+			
+			return "WEB-INF/views/PlayDetailForNewDark.jsp";
+		}
+		
+		if (user_cd.equals("비회원"))
+		{
+			//@@ 신고되었는지 여부 확인하는 리스트를 모델에 담아 보낸다.
+			model.addAttribute("checkRepPlayList", checkRepPlayList);
+			//@@ 신고 처리 여부 확인하는 리스트를 모델에 담아 보낸다.
+			model.addAttribute("checkRepPlayStList", checkRepPlayStList);
+			model.addAttribute("playDetailList", dao.getPlayDetail(play_cd));
+			model.addAttribute("ratingAvg", dao.getRatingAvg(play_cd));
+			
+			return "WEB-INF/views/PlayDetailForNone.jsp";
+		}
+
 		
 		//@@ 신고되었는지 여부 확인하는 리스트를 모델에 담아 보낸다.
 		model.addAttribute("checkRepPlayList", checkRepPlayList);

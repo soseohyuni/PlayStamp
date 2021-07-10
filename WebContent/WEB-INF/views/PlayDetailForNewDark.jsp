@@ -71,15 +71,6 @@
 	var playRevCount = 0;
 	var playRevAvg = 0;
 	
-	//@@ 좌석리뷰 평점
-	var view = new Array();
-	var seat = new Array();
-	var sound = new Array();
-	var light = new Array();
-	
-	//@@ 신고 루트 분기 위한...
-	var reportWhat = 0;
-	
 	//@@ 각 평점 값 list 에 담기(playRevPre)
 	<c:forEach var="playRevPre" items="${playRevPreList}">	
 		playRevPre.push("${playRevPre.rating_cd}");
@@ -87,19 +78,11 @@
 		playRevCount += 1;
 	</c:forEach>
 	
-	//@@ 각 평점 값 list 에 담기(seatRev)
-	<c:forEach var="seatRev" items="${seatRevList}">
-		view.push("${seatRev.view_rating}");
-		seat.push("${seatRev.seat_rating}");
-		sound.push("${seatRev.sound_rating}");
-		light.push("${seatRev.light_rating}");
-	</c:forEach> 
-	
 	//@@ 테스트
 	//alert(playRevPre[1]);
 		
 	// 평균 연산(편의상 몫만 취함..)
-	var playRevAvg = parseInt(playRevTot/playRevCount);
+	//var playRevAvg = parseInt(playRevTot/playRevCount);
 	
 	//@@ 목록으로 클릭시 이동
 	$(function()
@@ -129,44 +112,9 @@
 		$(".playRev").barrating(
 		{
 			theme: "fontawesome-stars"
-	        , initialRating: playRevAvg
+	        , initialRating: $("#playReview").attr("data-avg")
 	        , readonly: true
 	    });
-		
-		$("#seatRev").click(function()
-		{
-			for (var i = 0; i < view.length; i++)
-			{
-				//@@ 시야 별점
-				$("#view"+i).barrating(
-				{
-					theme: "fontawesome-stars"
-			        , initialRating: view[i]
-			        , readonly: true
-			    });
-				//@@ 좌석 별점
-				$("#seat"+i).barrating(
-				{
-					theme: "fontawesome-stars"
-			        , initialRating: seat[i]
-			        , readonly: true
-			    });
-				//@@ 음향 별점
-				$("#sound"+i).barrating(
-				{
-					theme: "fontawesome-stars"
-			        , initialRating: sound[i]
-			        , readonly: true
-			    });
-				//@@ 조명 별점
-				$("#light"+i).barrating(
-				{
-					theme: "fontawesome-stars"
-			        , initialRating: light[i]
-			        , readonly: true
-			    });
-			}
-		}); 
 	}); 
 	
 	$(function()
@@ -212,51 +160,6 @@
 	
 		    
 		});
-	});
-	
-	$(function()
-	{
-		var seat_rev_cd = "";
-		var mseat_rev_cd = "";
-	
-		//@@ 일반 공연장 좌석 리뷰일 경우 ~
-		$(".btn-defualt0").click(function()
-		{			
-			popup = window.open("reportform.action", "reportform", "width=570, height=350, resizable = no, scrollbars = no");
-			reportWhat = 0;
-			
-			seat_rev_cd = $(this).attr("data-seat");
-			
-			//console.log(seat_rev_cd);
-		});
-		
-		
-		//@@ 5대 좌석 리뷰일 경우 ~ 
-		$(".btn-defualt1").click(function()
-		{
-			popup = window.open("reportform.action", "reportform", "width=570, height=350, resizable = no, scrollbars = no");
-			reportWhat = 1;
-			
-			mseat_rev_cd = $(this).attr("data-seat");
-			
-		});
-	
-		window.report = function(data)
-		{ 
-			// 자식창에서 얻어 온 신고 사유 값 rep_y_cd 에 담기
-			var rep_y_cd = data;
-			
-			// report.action 으로 컨트롤러 호출
-			if (reportWhat==0)
-			{
-				$(location).attr("href", "report.action?play_cd=" + articleNo + "&rep_y_cd=" + rep_y_cd + "&seat_rev_cd=" + seat_rev_cd+ "&play_cd=" + parameters);	
-			}
-			else if (reportWhat==1)
-			{
-				$(location).attr("href", "report.action?play_cd=" + articleNo + "&rep_y_cd=" + rep_y_cd + "&mseat_rev_cd=" + mseat_rev_cd+ "&play_cd=" + parameters);
-			}
-			
-		}
 	});
 </script>
 </head>
@@ -346,14 +249,13 @@
 				<div class="tab-content">
 				
 				<!-- 공연 리뷰  -->
-					  <div class="tab-pane fade show active" id="playReview">
+					  <div class="tab-pane fade show active" data-avg="${ratingAvg }" id="playReview">
 					  	<table class="table table-borderless">
 					  		<!--@@ 반복문 돌면서 id 값을 달리하기 위한 i -->
 					  		<c:set var="i" value="0"></c:set>
 					  		<c:forEach var="playRevPre" items="${playRevPreList }">
 					  		<c:set var="checkRepPlay" value="${checkRepPlayList}"></c:set>
 					  		<c:set var="checkRepPlaySt" value="${checkRepPlayStList}"></c:set>
-						  		<%-- console.log(${checkRepPlay[i]}${checkRepPlaySt[i]}); --%>
 						  		<c:choose>
 						  			<%-- (신고 O +  처리 결과 2) OR (신고 X)  --%>
 						  			<c:when test="${(checkRepPlay[i] eq 1 && checkRepPlaySt[i] eq 2) || (checkRepPlay[i] eq 0) }">
@@ -385,140 +287,40 @@
 						  			<%-- (신고 O +  처리 결과 1) OR (신고 O +  처리 결과 0) AND--%>
 						  			<c:when test="${(checkRepPlay[i] eq 1 && checkRepPlaySt[i] eq 1) || (checkRepPlay[i] eq 1 && checkRepPlaySt[i] eq 0)}">
 							  			<tr>
-											<td colspan="2"></td>
+											<td colspan="3"></td>
 										</tr>
 										<tr>
-											<td colspan="2" style="text-align: center;">신고에 의해 블라인드 처리된 게시글입니다.</td>
+											<td colspan="3" style="text-align: center;">신고에 의해 블라인드 처리된 게시글입니다.</td>
 										</tr>
 										<tr>
-											<td colspan="2"></td>
+											<td colspan="3"></td>
 										</tr>
 						  			</c:when>
 							  	</c:choose>  
 							  	<!--@@ 한 턴 반복이 끝나면 i 를 증가! -->
 							  	<c:set var="i" value="${i+1}"></c:set>
 						  	</c:forEach>
+						  	<div>
+					  			<tr>
+									<td colspan="3"></td>
+								</tr>
+								<tr>
+									<td colspan="3" style="text-align: center;">
+									더 많은 리뷰 정보를 확인하고 싶다면?<br>
+									보다 더 활발한 활동을 통해 '준회원'으로 등급을 올려 주세요!
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3" style="text-align: center;"><button type="button" class="btn btn-default" onclick="">내 포인트/등급 확인하러 가기</td>
+								</tr>
+						  	</div>
 					  	</table>
 					  
 					  <!-- 좌석리뷰  -->		
 					  </div>
 					  <div class="tab-pane fade" id="seatReview">
-					  	<table class="table table-borderless" id="seatRevTbl">
-					  	<!--@@ 반복문 돌면서 id 값을 달리하기 위한 j -->
-					  		<c:set var="j" value="0"></c:set>
-					  		<c:forEach var="seatRev" items="${seatRevList }">
-					  		<c:set var="checkRepSeat" value="${checkRepSeatList}"></c:set>
-					  		<c:set var="checkRepSeatSt" value="${checkRepSeatStList}"></c:set>
-						  		<%-- console.log(${checkRepSeat[j]}${checkRepSeatSt[j]}); --%>
-						  		<c:choose>
-						  			<%-- (신고 O +  처리 결과 2) OR (신고 X)  --%>
-						  			<c:when test="${(checkRepSeat[j] eq 1 && checkRepSeatSt[j] eq 2) || (checkRepSeat[j] eq 0) }">
-						  		<tr>
-						  			<td rowspan="2"></td>
-						  			<td rowspan="2"><i class="fa fa-user-circle fa-4x" aria-hidden="true"></i></td>
-						  			<td><input type="text" 
-						  			value="${seatRev.seat_flow}층 ${seatRev.seat_area}구역 ${seatRev.seat_line}열 ${seatRev.seat_num}번" disabled="disabled"></td>
-						  			
-						  			<!-- 본인이 작성한 좌석 리뷰에는 신고 버튼이 출력되지 않도록 처리  -->
-						  			<c:set var="loginUser_cd" value="${sessionScope.code }"></c:set>
-						  			<c:set var="writer_cd" value="${seatRev.user_cd }"></c:set>
-						  			<c:set var="distin" value="${distin }"></c:set>
-						  			<c:choose>
-										<c:when test="${loginUser_cd ne writer_cd }">
-											<c:choose>
-												<c:when test="${distin eq 1}"><td><button type="button" class="btn btn-defualt1" data-seat="${seatRev.mseat_rev_cd }">신고</button></td></c:when>
-												<c:when test="${distin eq 0}"><td><button type="button" class="btn btn-defualt0" data-seat="${seatRev.seat_rev_cd }">신고</button></td></c:when>										
-											</c:choose>
-										</c:when>
-									<c:when test="${loginUser_cd eq writer_cd }">
-									<td></td>
-									</c:when>
-									</c:choose>						  		
-						  		</tr>
-						  		<tr>
-						  			<td><input type="text" value="${seatRev.play_nm}" disabled="disabled">
-						  			<input type="text" value="${seatRev.play_dt}" disabled="disabled"></td>
-						  			<td></td>
-						  		</tr>
-						  		<tr>
-						  			<td>시야</td>
-						  			<td>
-							  			<select id="view${j }">
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										</select>
-									</td>
-						  			<td rowspan="4"><textarea rows="7%" cols="50%" disabled="disabled">${seatRev.seat_rev}</textarea></td>
-						  			<td></td>
-						  		</tr>
-						  		<tr>
-						  			<td>좌석</td>
-						  			<td>
-										<select id="seat${j }">
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										</select>
-									</td>
-									<td></td>
-						  		</tr>
-						  		<tr>
-						  			<td>조명</td>
-						  			<td>
-										<select id="light${j }">
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										</select>
-									</td>
-									<td></td>
-						  		</tr>
-						  		<tr>
-						  			<td>음향</td>
-						  			<td>
-										<select id="sound${j }">
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-									</select>
-									</td>
-									<td></td>
-						  		</tr>
-						  		</c:when>
-						  		<c:when test="${(checkRepSeat[j] eq 1 && checkRepSeatSt[j] eq 1) || (checkRepSeat[j] eq 1 && checkRepSeatSt[j] eq 0)}">
-							  			<tr>
-											<td colspan="4"></td>
-										</tr>
-										<tr>
-											<td colspan="4"></td>
-										</tr>
-										<tr>
-											<td colspan="4" style="text-align: center;">신고에 의해 블라인드 처리된 게시글입니다.</td>
-										</tr>
-										<tr>
-											<td colspan="4"></td>
-										</tr>
-										<tr>
-											<td colspan="4"></td>
-										</tr>
-										<tr>
-											<td colspan="4"></td>
-										</tr>
-						  			</c:when>
-							  	</c:choose>  
-					  			<c:set var="j" value="${j+1}"></c:set>
-					  		</c:forEach>  		
-					  	</table>
-					
+					  	<br>
+						<p style="text-align: center;">좌석 리뷰는 일반 회원부터 조회 가능합니다.</p>
 					  </div>
 				</div>
 			</div>

@@ -50,4 +50,22 @@
 		FROM TBL_LIKE
 		WHERE PLAYREV_CD=#{playrev_cd} AND USER_CD=#{user_cd}
 	</delete>
+	
+	<select id="checkRepCom" resultType="com.playstamp.playreviewdetail.CommentBlind" parameterType="string">
+		SELECT COMMENT_CD, REP_COM_CD, REP_DT, REP_COMCH_CD, REP_ST_CD
+		FROM VIEW_COMMENT_BLIND
+		WHERE COMMENT_CD=#{comment_cd} AND ROWNUM=1
+	</select>
+	
+	<select id="getUserGrade" resultType="string" parameterType="string">
+		SELECT GRADE
+		FROM VIEW_MEMBERGRADE
+		WHERE USER_ID=#{user_id}
+	</select>
+	
+	<select id="getRatingAvg" resultType="integer" parameterType="string">
+		SELECT ROUND(SUM(RATING_CD)/COUNT(*))
+		FROM VIEW_RATING_AVG
+		WHERE PLAY_CD=#{play_cd}
+	</select>
 </mapper>

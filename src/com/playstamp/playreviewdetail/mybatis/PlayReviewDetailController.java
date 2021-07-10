@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.playstamp.play.PlayList;
 import com.playstamp.play.mybatis.IPlayListDAO;
+import com.playstamp.playdetail.PlayRevBlind;
+import com.playstamp.playdetail.PlayRevPre;
 import com.playstamp.playreviewdetail.Comment;
+import com.playstamp.playreviewdetail.CommentBlind;
 import com.playstamp.playreviewdetail.Like;
 
 @Controller
@@ -35,8 +38,10 @@ public class PlayReviewDetailController
 		IPlayReviewDetailDAO dao = sqlSession.getMapper(IPlayReviewDetailDAO.class);
 		
 		String playrev_cd = request.getParameter("playrev_cd");
+		String play_cd = request.getParameter("play_cd");
 		
 		String user_cd = (String)session.getAttribute("code");
+		String user_id = (String)session.getAttribute("id");
 		
 		Like like = new Like();
 		
@@ -49,9 +54,69 @@ public class PlayReviewDetailController
 		//@@ 있을 경우 1, 없을 경우 0 반환
 		if (dao.checkHeart(like) != 0)
 			checkHeart = 1;
-			
+		
 		model.addAttribute("checkHeart",checkHeart);
 		
+		//----------------------------------------- 댓글 블라인드
+		// 해당 공연의 공연 리뷰 코드들을 꺼내기 위해 리스트 선언 
+		//ArrayList<PlayRevPre> playRevPreList = dao.getPlayRevPre(play_cd);
+		ArrayList<Comment> commentList = dao.getCommentList(playrev_cd);
+		
+		int checkRepCom = 0;
+		int checkRepComSt = 0;
+		ArrayList<Integer> checkRepComList = new ArrayList<Integer>();
+		ArrayList<Integer> checkRepComStList = new ArrayList<Integer>();
+		
+		for (Comment comment : commentList)
+		{		
+			//@@ 블라인드 객체 반환
+			//PlayRevBlind blindPlay = dao.checkRepPlay(playRevPre.getPlayrev_cd());
+			CommentBlind blindCom = dao.checkRepCom(comment.getComment_cd());
+			
+			//@@ 신고가 되었다면 
+			if (Integer.parseInt(blindCom.getRep_com_cd()) != 0)
+				checkRepCom = 1;
+			else
+				checkRepCom = 0;
+					
+			//@@ 신고가 처리되었다면, 승인(1) 또는 반려(2)를 반환한다. 신고가 처리되지 않았다면 초기화된 값 0을 반환한다. 
+			if (Integer.parseInt(blindCom.getRep_st_cd()) != 0)
+				checkRepComSt = Integer.parseInt(blindCom.getRep_st_cd());
+			else
+				checkRepComSt = 0;
+			// 신고 o → 1
+			// 신고 x → 0
+			checkRepComList.add(checkRepCom);
+			// 승인 → 1 
+			// 반려 → 2
+			// 신고 처리 x → 0
+			checkRepComStList.add(checkRepComSt);			
+		}
+		
+		if (dao.getUserGrade(user_id).equals("어둠회원") || dao.getUserGrade(user_id).equals("뉴비"))
+		{
+			//@@ 신고되었는지 여부 확인하는 리스트를 모델에 담아 보낸다.
+			model.addAttribute("checkRepComList", checkRepComList);
+			//@@ 신고 처리 여부 확인하는 리스트를 모델에 담아 보낸다.
+			model.addAttribute("checkRepComStList", checkRepComStList);
+					
+			//System.out.println(playrev_cd);
+			// addAttribute 를 통해 전송
+			model.addAttribute("playReviewDetail", dao.getPlayReviewDetail(playrev_cd));
+			
+			//@@ 코멘트 리스트 전송 구문도 추가
+			model.addAttribute("commentList", dao.getCommentList(playrev_cd));
+			
+			model.addAttribute("ratingAvg", dao.getRatingAvg(play_cd));
+			
+			return "WEB-INF/views/PlayReviewDetailForDark.jsp";
+		}
+		
+		//@@ 신고되었는지 여부 확인하는 리스트를 모델에 담아 보낸다.
+		model.addAttribute("checkRepComList", checkRepComList);
+		//@@ 신고 처리 여부 확인하는 리스트를 모델에 담아 보낸다.
+		model.addAttribute("checkRepComStList", checkRepComStList);
+				
 		//System.out.println(playrev_cd);
 		// addAttribute 를 통해 전송
 		model.addAttribute("playReviewDetail", dao.getPlayReviewDetail(playrev_cd));

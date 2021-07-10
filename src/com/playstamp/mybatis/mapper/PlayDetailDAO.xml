@@ -37,7 +37,7 @@
 	</select>
 	
 	<select id="getPlayRevPre" resultType="com.playstamp.playdetail.PlayRevPre" parameterType="string">
-		SELECT PLAY_CD, PLAY_IMG, PLAYREV_CD, RATING_CD, PLAY_NM, CONTENTS, LCOUNT, CCOUNT, USER_NICK, TITLE
+		SELECT PLAY_CD, PLAY_IMG, PLAYREV_DT, PLAYREV_CD, RATING_CD, PLAY_NM, CONTENTS, LCOUNT, CCOUNT, USER_NICK, TITLE
 		FROM VIEW_PLAYREV
 		WHERE PLAY_CD=#{play_cd}
 	</select>
@@ -75,5 +75,23 @@
 		SELECT MSEAT_REV_CD, REP_MSEAT_CD, REP_DT, REP_MSEATCH_CD, REP_ST_CD
 		FROM VIEW_MSEATREV_BLIND
 		WHERE MSEAT_REV_CD=#{mseat_rev_cd} AND ROWNUM=1
+	</select>
+	
+	<select id="getPlayRevPreFirst" resultType="com.playstamp.playdetail.PlayRevPre" parameterType="string">
+		SELECT PLAY_CD, PLAYREV_DT, PLAY_IMG, PLAYREV_CD, RATING_CD, PLAY_NM, CONTENTS, LCOUNT, CCOUNT, USER_NICK, TITLE, ROWNUM
+		FROM VIEW_PLAYREV
+		WHERE PLAY_CD=#{play_cd} AND ROWNUM=1
+	</select>
+	
+	<select id="getUserGrade" resultType="string" parameterType="string">
+		SELECT GRADE
+		FROM VIEW_MEMBERGRADE
+		WHERE USER_ID=#{user_id}
+	</select>
+	
+	<select id="getRatingAvg" resultType="integer" parameterType="string">
+		SELECT ROUND(SUM(RATING_CD)/COUNT(*))
+		FROM VIEW_RATING_AVG
+		WHERE PLAY_CD=#{play_cd}
 	</select>
 </mapper>

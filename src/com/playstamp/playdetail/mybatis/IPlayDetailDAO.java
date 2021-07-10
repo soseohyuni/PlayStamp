@@ -39,13 +39,13 @@ public interface IPlayDetailDAO
 	//----------------------------------------------------------
 	
 	// 찜 추가 메소드
-	public int addJjim(Jjim jjim);
+	public Integer addJjim(Jjim jjim);
 	
 	// 찜 중복 체크 메소드
-	public int checkJjim(Jjim jjim);
+	public Integer checkJjim(Jjim jjim);
 	
 	// 찜 제거 메소드
-	public int delJjim(Jjim jjim);
+	public Integer delJjim(Jjim jjim);
 	
 	//----------------------------------------------------------
 	
@@ -55,5 +55,16 @@ public interface IPlayDetailDAO
 	public SeatRevBlind checkRepSeat(String seat_rev_cd);
 	// 5대 좌석 리뷰 신고 여부 체크 메소드
 	public MseatRevBlind checkRepMseat(String mseat_rev_cd);
+	
+	//---------------------------------------------------------
+	
+	// 공연 리뷰 최신순 하나만 출력하는 메소드 (뉴비, 어둠회원)
+	public ArrayList<PlayRevPre> getPlayRevPreFirst(String play_cd);
+	
+	// 멤버 등급 얻어오는 메소드
+	public String getUserGrade(String user_id);
+	
+	// 별점 평균 산출하는 메소드
+	public Integer getRatingAvg(String play_cd);
 
 }
