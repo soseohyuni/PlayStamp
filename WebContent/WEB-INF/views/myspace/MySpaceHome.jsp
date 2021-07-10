@@ -27,7 +27,7 @@
 		
 		<div id="firstArea" class="container">
 			<div id="profile" class="myspace">
-				<div class="profileBox"><img class="profileImg" onerror="this.src='<%=cp%>/images/default_profile.png'" src="${userInfo.user_Img }"></div>
+				<div class="profileBox"><img class="profileImg" onerror="this.src='<%=cp%>/images/default_profile.png'" src="<%=cp%>/profile/${userInfo.user_Img }"></div>
 				<div class="userInfoBox">
 					<span class="sTitle">${userInfo.user_Nick }</span><span class="label label-primary">${sessionScope.grade }</span>
 					<div class="userMail">${userInfo.user_Mail }</div>
@@ -40,7 +40,7 @@
 			<div id="listArea" class="myspace">
 				<div id="list1" style="display: flex; align-items: center;">
 						<div class="listArea sTitle">현재 내 포인트 ></div>
-						<div class="listArea aTitle"><a href="pointlist.action">320 P</a></div>
+						<div class="listArea aTitle"><a href="pointlist.action">${userPoint } P</a></div>
 				</div>
 			</div>
 			
@@ -49,7 +49,7 @@
 			<div id="listArea" class="myspace">
 					<div id="list1" style="display: flex; align-items: center;">
 						<div class="listArea sTitle">현재 내 캐시 ></div>
-						<div class="listArea aTitle"><a href="cashlist.action">320 P</a></div>
+						<div class="listArea aTitle"><a href="cashlist.action">${userCash } 원</a></div>
 					</div>
 			</div>
 		</div>
@@ -65,20 +65,20 @@
 			<div class="outBox">
 				<div id="box1" class="inBox inBox1">
 					<div class="sTitle"><a>나의 관람 리뷰></a></div>
-					<div class="aTitle"><a href="#">72개</a></div>
+					<div class="aTitle"><a href="#">${userRev }개</a></div>
 				</div>
 				<div id="box2" class="inBox inBox2">
 					<div class="sTitle"><a>나의 찜리스트></a></div>
-					<div class="aTitle"><a href="#">24개</a></div>
+					<div class="aTitle"><a href="#">${userJjim }개</a></div>
 				</div>
 			</div>
 			<div class="outBox">
 				<div id="box1" class="inBox inBox1">
-					<div class="bTitle"><a>나의 활동 / 신고 관리</a></div>
+					<div class="bTitle"><a href="" style="color: #444;">나의 활동 / 신고 관리</a></div>
 				</div>
 				
 				<div id="box2" class="inBox inBox2">
-					<div class="bTitle"><a>나의 관람 통계</a></div>
+					<div class="bTitle"><a href="mystatisticlist.action" style="color: #444;">나의 관람 통계</a></div>
 				</div>
 			</div>
 		</div>

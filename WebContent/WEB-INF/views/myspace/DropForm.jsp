@@ -14,9 +14,24 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-		<style>
-			p { margin:20px 0px; }
-		</style>
+<script type="text/javascript">
+
+	function checkDrop()
+	{
+		if(!$("#chk").prop("checked"))
+		{
+			alert("약관 동의 후 가입 가능합니다.");
+			return false;
+		}
+		
+		if($("#backup_y").val()=="")
+		{
+			alert("탈퇴 사유를 선택해주세요.");
+			return false;
+		}
+	}
+
+</script>
 </head>
 <body>
 <!-- 메뉴 영역 -->
@@ -28,7 +43,7 @@
 		<div class="container">
 			<div id="pageTitle" class="container">탈퇴 안내</div>
 			
-			<form action="">
+			<form action="userdrop.action" method="post" onsubmit="return checkDrop()">
 				<div class="dropText">
 					<h4>
 						<mark><b>탈퇴 후에도 리뷰, 양도 게시판, 문의글 및 댓글은 자동 삭제되지 않고 그대로 남아 있습니다.</b></mark><br><br>
@@ -42,24 +57,20 @@
 				</div>
 				<br>
 				
-				<div><input type="checkbox"> 안내 사항을 모두 확인하였으며, 이에 동의합니다.</div>
-				
-				<!-- Single button -->
-				<div class="btn-group">
-				  <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-				    탈퇴 사유를 선택해주세요. <span class="caret"></span>
-				  </button>
-				  <ul class="dropdown-menu" role="menu">
-				    <li><a href="#">고객서비스 불만</a></li>
-				    <li><a href="#">방문빈도 낮음</a></li>
-				    <li><a href="#">개인정보 유출 우려</a></li>
-				    <li><a href="#">콘텐츠 부족</a></li>
-				  </ul>
+				<div class="checkbox">
+				  <label>
+				    <input type="checkbox" id="chk">
+				    안내 사항을 모두 확인하였으며, 이에 동의합니다.
+				  </label>
 				</div>
-
-				<div class="btn-group">
+				
+				<br>
+				<br>
+				<br>
+				<!-- Single button -->
 					<label for="backup_y">탈퇴 사유</label>
-					<select id="backup_y" name="backup_y" class="dropdown-menu" role="menu">
+					<select id="backup_y" name="backup_y" class="form-control">
+						<option value="">탈퇴사유를 선택해주세요.</option>
 						<option value="1">고객서비스 불만</option>
 						<option value="2">방문빈도 낮음</option>
 						<option value="3">개인정보 유출 우려</option>
@@ -68,11 +79,14 @@
 						<option value="6">기타</option>
 					</select>
 				<div class="form-group">
-					<label for="txtId">비밀번호 확인</label>
-					<input type="text" id="userPw" name="user_Pw" class="form-control" placeholder="비밀 번호를 입력하세요" required="required">
+				
+				<br>
+					<label for="user_Pw">비밀번호 확인</label>
+					
+					<input type="password" id="userPw" name="user_Pw" class="form-control" placeholder="비밀 번호를 입력하세요" required="required">
 				</div>	
-			
-				<input type="submit">탈퇴하기
+				<br>
+				<input type="submit" class="btn btn-primary btn-lg btn-block" style="width: 50%; margin: 0 auto; " value="탈퇴하기">
 			
 			</form>
 		</div>

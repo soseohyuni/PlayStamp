@@ -1,7 +1,5 @@
 package com.playstamp.mseat;
 
-import org.springframework.stereotype.Repository;
-
 
 public class MSeat
 {

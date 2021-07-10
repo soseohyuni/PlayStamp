@@ -78,33 +78,32 @@ String cp = request.getContextPath();
 				
 				$("#idChkBtn").click(function() // 올바른 형식일 때 클릭해야 작동
 				{
-	   				$.ajax(
-	   				{
-	   					url: "checkSignup.action"
-	   				  , type: "POST"
-	   				  , data: {"userId": $('#userId').val()}
-	   				  , success : function(data)
-	   				    {
-	   					  if (data=="YES") // 중복이 아닌 경우 = submit 가능
-	   					  {
-	   						  $("#idChkBtn").attr("disabled",true);
-	   						  $("#userId").css("border-color", "green");
-	   						  $("#checkId").text("사용 가능한 아이디입니다.").css("color", "green");
-	   						  idFlag = true;
-	   					  }
-	   					  else if(data=="NO")
-	   					  {
-	   						  $("#checkId").text("이미 사용중인 아이디입니다.").css("color", "red");
-	   						  $("#userId").focus();
-	   						  idFlag = false;
-	   					  }
-	   					},
-	   					error : function(request,status,error)
-	   					{
-	   				        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-	   				    }
-	   				});//-- ajax 끝(클릭은 안하면 idFlag는 false인 상태)
-	
+	   				$.ajax({
+			   					url: "checkSignup.action"
+			   				  , type: "POST"
+			   				  , data: {"userId": $('#userId').val()}
+			   				  , success : function(data)
+			   				    {
+			   					  if (data=="YES") // 중복이 아닌 경우 = submit 가능
+			   					  {
+			   						  $("#idChkBtn").attr("disabled",true);
+			   						  $("#userId").css("border-color", "green");
+			   						  $("#checkId").text("사용 가능한 아이디입니다.").css("color", "green");
+			   						  idFlag = true;
+			   					  }
+			   					  else if(data=="NO")
+			   					  {
+			   						  $("#checkId").text("이미 사용중인 아이디입니다.").css("color", "red");
+			   						  $("#userId").focus();
+			   						  idFlag = false;
+			   					  }
+			   					},
+			   					error : function(request,status,error)
+			   					{
+			   				        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+			   				    }
+			   				});//-- ajax 끝(클릭은 안하면 idFlag는 false인 상태)
+			
 				});//-- 아이디 중복 체크 끝
 				
 			}//-- else 끝
@@ -249,7 +248,7 @@ String cp = request.getContextPath();
 
 		<!-- 상단 로고 이미지 -->
 		<div class="formContent">
-			<img onclick="location.href='main.action'" src="images/logo_typo.svg" style="cursor:pointer;">
+			<img onclick="location.href='home.action'" src="images/logo_typo.svg" style="cursor:pointer;">
 		</div>
 
 		
@@ -314,12 +313,11 @@ String cp = request.getContextPath();
 				<div class="alert alert-danger" id="mailCheckFail">인증번호가 일치하지 않습니다.</div>
 		
 				 
-				<div class="checkbox">
-				  <label>
-				    <input type="checkbox" name="chk" id="chk">
-				    이용약관, 개인정보 수집 및 이용에 모두 동의합니다.
-				  </label>
-				</div>
+				<div class="d-flex justify-content-between">
+			        <div class="form-check">
+			        <input type="checkbox" type="checkbox" name="chk" id="chk" value="1"><label for="admin"> &nbsp;이용약관, 개인정보 수집 및 이용에 모두 동의합니다.</label>
+			        </div>
+			    </div>
 				
 				<div>
 					<input id="signUpBtn" type="submit" class="btn" value="가입하기">
