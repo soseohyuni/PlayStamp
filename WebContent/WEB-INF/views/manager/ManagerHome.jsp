@@ -1,9 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<<<<<<< HEAD
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-=======
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
->>>>>>> 6d54336753ae1a2fa4138aa0c90047bade2e7ac3
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -12,10 +8,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
-<title>Insert title here</title>
+<title>관리자 홈</title>
 </head>
 <body>
-수정
+
+<!-- 메뉴 영역 -->
+
+	<div>
+		<c:import url="/WEB-INF/views/manager/ManagerHeader.jsp"></c:import>
+	</div>
+	<div class="container" style="align: left; width: 74%; height: 700px; top:50px;">
+	
+	</div>
+	
 </body>
 </html>

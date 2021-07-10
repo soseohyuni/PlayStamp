@@ -2,9 +2,12 @@ package com.playstamp.myactivity.mybatis;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.playstamp.myactivity.MyLikeCommentReview;
 import com.playstamp.paging.Criteria;
 import com.playstamp.paging.PageDTO;
+import com.playstamp.paging.ReverseCriteria;
 
 public interface IMyActivityDAO
 {
@@ -20,12 +23,14 @@ public interface IMyActivityDAO
 	// 내가 댓글 단 리뷰 글 개수 가져오기
 	public int commentReviewCount(String user_cd);
 	
+	//테스트
+	//public int playCount();
+	
 	// 내가 좋아요 한 리뷰 글 목록 가져오기
-	//-- Criteria 객체 사용해서 가져올 때 한 페이지 당 보이게 할 게시글 수와 페이지 수 정해서 그만큼만 가져오기
-	public ArrayList<MyLikeCommentReview> getLikeListWithPaging(Criteria cri, String user_cd);
+	public ArrayList<MyLikeCommentReview> getLikeListWithPaging(ReverseCriteria rc);
 	
 	// 내가 댓글 단 리뷰 글 목록 가져오기
-	public ArrayList<MyLikeCommentReview> getCommentListWithPaging(Criteria cri, String user_cd);
+	public ArrayList<MyLikeCommentReview> getCommentListWithPaging(ReverseCriteria rc);
 	
 
 	// 내가 신고한 글 개수 가져오기

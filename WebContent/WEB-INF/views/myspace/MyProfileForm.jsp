@@ -66,11 +66,6 @@
 	    });
 	}
 	
-	function checkUpdateForm()
-	{
-		
-	}
-	
 </script>
 </head>
 <body>
@@ -83,7 +78,7 @@
 		
 		<div class="container">
 		
-			<div id="pageTitle" class="container">나의 프로필</div>
+			 
 			
 			<div id="pForm" >
 			
@@ -94,7 +89,7 @@
 					<form action="UserImgUpload" method="post" enctype="multipart/form-data">
 						<div class="profileImg" id="userImg">
 		                    <img id="imgWrap" onerror="this.src='<%=cp%>/images/default_profile.png'" 
-							src="${userInfo.user_Img }">
+							src="<%=cp%>/profile/${userInfo.user_Img }">
 						</div>
 					
 						<div>
@@ -112,7 +107,7 @@
 					
 					<div class="userInfo">${sessionScope.grade }</div>
 					<div class="userInfo sTitle">현재 포인트</div>
-					<div class="userInfo aTitle">320p</div> 
+					<div class="userInfo aTitle">${userPoint } p</div> 
 					
 				</div>
 					

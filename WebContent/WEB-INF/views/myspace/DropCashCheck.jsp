@@ -28,15 +28,15 @@
 		<div class="container">
 			<div id="pageTitle" class="container">탈퇴 안내</div>
 			
-			<div>
-				고객님이 충전한 캐시가 145,000 원 남아 있어요.
-				탈퇴 후에는 캐시 환불이 불가능하니
-				마이프로필 - 캐시 내역에서
-				[출금하기] 를 먼저 진행해 주시기 바랍니다.
-			</div>
+			<h4>
+				<mark>고객님이 충전한 캐시가 남아 있어요.</mark><br>
+				탈퇴 후에는 캐시 환불이 불가능하니<br>
+				마이프로필 - 캐시 내역에서 [출금하기] 를 먼저 진행해 주시기 바랍니다.<br>
+			</h4>
+					
 			<br>
 			
-			<button>내 캐시 내역 확인하기</button>
+			<button type="button" onclick="location.href='cashlist.action'" class="btn btn-primary btn-lg btn-block" style="width: 50%; margin: 0 auto; " value="">내 캐시 내역 확인하기</button>
 		</div>
 	
 	</div>

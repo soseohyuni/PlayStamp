@@ -7,6 +7,7 @@ public class Criteria
 	private int pageNum;		//-- 페이지 수
 	private int amount;			//-- 한 페이지 당 보이게 할 게시글의 수
 	
+	
 	// 생성자를 통해 기본값을 1페이지, 10개로 지정해 처리
 	public Criteria()
 	{
@@ -18,6 +19,7 @@ public class Criteria
 		this.pageNum = pageNum;
 		this.amount = amount;
 	}
+	
 
 	// getter, setter 구성
 	public int getPageNum()
@@ -39,8 +41,8 @@ public class Criteria
 	{
 		this.amount = amount;
 	}
-	
-	// toString 구성
+
+
 	@Override
 	public String toString()
 	{

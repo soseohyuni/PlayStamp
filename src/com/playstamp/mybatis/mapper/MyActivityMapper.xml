@@ -6,8 +6,8 @@
 
 	<!-- 좋아요 한 총 리뷰 글 개수 출력 -->
 	<select id="likeReviewCount" resultType="int">
-		select count(playrev_cd) as count
-		from tbl_like
+		select count(*) as count
+		from view_mylike_rev
 		where user_cd = '${user_cd}'
 	</select>
 	
@@ -18,22 +18,30 @@
 		where user_cd = '${user_cd}'
 	</select>
 	
+	<!-- 연극 총 개수 출력 -->
+	<select id="playCount" resultType="int">
+		select count(*) as count
+		from tbl_play
+	</select>
+	
 	<!-- 좋아요 한 리뷰 글들 가져오기 -->
 	<select id="getLikeListWithPaging" resultType="com.playstamp.myactivity.MyLikeCommentReview">
 	<![CDATA[
 		select bno, play_nm, title, user_nick, playrev_dt, view_cnt, rev_distin_cd
 		from
 		(
-    		select bno, play_nm, title, user_nick, playrev_dt, view_cnt, user_cd, rev_distin_cd
-   			from view_mylike_rev
-    		where bno<= #{pageNum} * #{amount}
+		    select row_number() over(order by playrev_dt) as bno, play_nm, title, user_nick, playrev_dt, view_cnt, user_cd, rev_distin_cd
+		    from view_mylike_rev
+		    where user_cd = '${user_cd}'
+		    order by bno desc
 		)
-		where bno>(#{pageNum}-1)*#{amount} and user_cd = '${user_cd}'
+		where bno > #{total} - (#{pageNum}*#{amount}) and bno <= #{total} - ((#{pageNum}-1) * #{amount})
 	]]>
 	</select>
+	
 
+	<!-- 페이징 테스트용~~ 연극 리스트 가져옴-->
 	<!-- 
-	페이징 테스트용~~ 연극 리스트 가져옴
 	<select id="getLikeListWithPaging" resultType="com.playstamp.myactivity.MyLikeCommentReview">
 	<![CDATA[
 		select bno, play_nm, title, user_nick, playrev_dt, view_cnt

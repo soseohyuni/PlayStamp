@@ -35,9 +35,10 @@
 
 <div class="card">
     <div class="text-center intro"> 
-    	<br><img onclick="location.href='main.action'" src="images/logo_typo.svg" style="cursor:pointer; width:300px;"><br> 
+    	<br><img onclick="location.href='home.action'" src="images/logo_typo.svg" style="cursor:pointer; width:300px;"><br> 
     </div>
-    
+    <br>
+    <br>
     <form action="login.action" id="loginForm" method="post">
 	    <div class="mt-4 text-center">
 	        <div class="mt-3 inputbox"> 
@@ -49,8 +50,9 @@
 	        </div>
 	    </div>
 	    <div class="d-flex justify-content-between">
-	        <div class="form-check"><input type="checkbox" id="admin" name="admin" value="1"><label for="admin">관리자</label></div>
+	        <div class="form-check"><input type="checkbox" id="admin" name="admin" value="1"><label for="admin"> &nbsp;관리자</label></div>
 	    </div>
+	    <br>
 	    <div class="mt-2"> 
 	    	<button type="submit" class="btn btn-primary btn-block" id="login">로그인</button>
 	    </div>
@@ -71,9 +73,9 @@
 	    <br>
 	</form>
 	<div class="findInfo">
-		<a target="_blank" id="idinquiry" href="" style="color: black; text-align: center;">아이디 찾기</a> │
-		<a target="_blank" id="pwinquiry" href=""style="color: black; text-align: center;">비밀번호 찾기</a> │
-		<a target="_blank" id="join" href=""style="color: black; text-align: center;">회원가입</a>
+		<a target="_blank" id="idinquiry" href="findid.action" style="color: black; text-align: center;">아이디 찾기</a> │
+		<a target="_blank" id="pwinquiry" href="findpw.action"style="color: black; text-align: center;">비밀번호 찾기</a> │
+		<a target="_blank" id="join" href="signupform.action"style="color: black; text-align: center;">회원가입</a>
 	</div>
 </div>
 
