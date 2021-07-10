@@ -39,21 +39,6 @@
 	}
 </style>
 <script type="text/javascript">
-
-	// 좋아요 누른 리뷰, 댓글 단 리뷰 탭을
-	// 사용자가 원하는 순서대로 끌어 정렬할 수 있는 기능
-	$( function()
-	{
-	    var tabs = $( "#tabs" ).tabs();
-	    tabs.find( ".ui-tabs-nav" ).sortable(
-	    {
-	       axis: "x",
-	       stop: function()
-	      {
-	        tabs.tabs( "refresh" );
-	      }
-	    });
-	});
 	
 	// 페이지 번호만 속성값으로 가지도록 <a> 태그가 작동하지 못하도록 처리
 	//-- 실제 페이지를 클릭하면 동작하는 부분은 <form> 태그를 이용해 처리함

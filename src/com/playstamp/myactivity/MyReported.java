@@ -1,8 +1,6 @@
 package com.playstamp.myactivity;
 
-import lombok.Data;
 
-@Data
 public class MyReported
 {
 	// 보여 줄 게시글의 객체 클래스

@@ -168,7 +168,7 @@
              	class="thumbnail">
                		<img src="${myreviewposter.play_img }">
              	</a>
-             	<div class="playTitle">${myreviewposter.title }</div>
+             	<div class="caption">${myreviewposter.title }</div>
           	</div>
           	</c:forEach>
        	</div>
