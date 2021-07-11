@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.playstamp.manager.memberlist.ManagingPointList;
 import com.playstamp.manager.memberlist.MemberList;
 import com.playstamp.paging.Criteria;
 import com.playstamp.paging.PageDTO;
+import com.playstamp.paging.ReverseCriteria;
 
 @Controller 
 public class MemberListController
@@ -28,17 +30,37 @@ public class MemberListController
 	
 	// 전체 회원 리스트 조회
 	@RequestMapping(value = "/memberlist.action", method= RequestMethod.GET)
-	public String memberlist(Criteria cri, Model model)
+	public String memberlist(Criteria cri, Model model, HttpSession session, HttpServletRequest request)
 	{	
 		IMemberListDAO dao = sqlSession.getMapper(IMemberListDAO.class);
 		
-		ArrayList<MemberList> memberlist = dao.memberlist(cri);
 		int total = dao.membercount();
 		
-		model.addAttribute("memberlist", memberlist);
+		// 페이지로부터 pageNum, amount 받아오기
+		String pageNum = request.getParameter("pageNum");
+		String amount = request.getParameter("amount");
+		
+		// 처음 페이지가 로드되었을 때는 pageNum, amount가 null 이므로
+		// (사용자가 아직 페이지 번호를 누르지 않았기 때문에)
+		// 1페이지에 10개의 글이 보이도록 설정한다.
+		if(pageNum==null || amount==null)
+		{
+			pageNum="1";
+			amount="10";
+		}
+		
+		// 페이지 번호 누를 때마다 그에 해당하는 글을 가져오기 위한 객체 준비
+		ReverseCriteria rc = new ReverseCriteria();
+		
+		rc.setPageNum(Integer.parseInt(pageNum));
+		rc.setAmount(Integer.parseInt(amount));
+		rc.setTotal(total);
+		
+		model.addAttribute("memberlist", dao.memberlist(rc));
 		model.addAttribute("PageMaker", new PageDTO(cri, total));
 		
 		return "WEB-INF/views/manager/MemberList.jsp";
+		
 	}
 	
 	// 회원의 포인트 변경 팝업 띄우기
@@ -72,30 +94,46 @@ public class MemberListController
 	
 	// 특정 회원의 포인트 내역 조회
 	@RequestMapping(value = "/managingpointlist.action", method= {RequestMethod.GET, RequestMethod.POST})
-	public String managingpointlist(HttpServletRequest request, ModelMap model)
+	public String managingpointlist(String user_id, String point, String grade, HttpServletRequest request, ModelMap model, Criteria cri, HttpSession session)
 	{
 		String result = "";
+
+		String pageNum = request.getParameter("pageNum");
+		String amount = request.getParameter("amount");
 		
-		// 클릭한 회원의 아이디값 가져오기
-		String user_id = request.getParameter("user_id");
-		String grade = request.getParameter("grade");
-		
-		// 포인트 리스트 받아오기
 		IMemberListDAO dao = sqlSession.getMapper(IMemberListDAO.class);
+		/*
+		MemberList memberlist = new MemberList();
+		memberlist.setUser_id(user_id);
+		*/
+		int total = dao.countmanagingpointlist(user_id);
 		
-		ArrayList<ManagingPointList> pointList = new ArrayList<ManagingPointList>();
-		pointList = dao.managingpointlist(user_id);
+		// 처음 페이지가 로드되었을 때는 pageNum, amount가 null 이므로
+		// (사용자가 아직 페이지 번호를 누르지 않았기 때문에)
+		// 1페이지에 10개의 글이 보이도록 설정한다.
+		if(pageNum==null || amount==null)
+		{
+			pageNum="1";
+			amount="10";
+		}
 		
-		// 리스트 제일 앞에 있는 값 꺼내기 = 현재 포인트
-		int userPoint = 0;
-		if( pointList.size()!=0)
-		{ userPoint = Integer.parseInt(pointList.get(0).getUser_point()); }
+		// 페이지 번호 누를 때마다 그에 해당하는 글을 가져오기 위한 객체 준비
+		ReverseCriteria rc = new ReverseCriteria();
+		
+		rc.setPageNum(Integer.parseInt(pageNum));
+		rc.setAmount(Integer.parseInt(amount));
+		rc.setTotal(total);
+		rc.setUser_id(user_id);
+		
+		rc.setPageNum(Integer.parseInt(pageNum));
+		rc.setAmount(Integer.parseInt(amount));
 		
 		// addAttribute 를 통해 전송
-		model.addAttribute("pointList", pointList);
-		model.addAttribute("userPoint", userPoint);
 		model.addAttribute("user_id", user_id);
+		model.addAttribute("point", point);
 		model.addAttribute("grade", grade);
+		model.addAttribute("pointList", dao.managingpointlist(rc));
+		model.addAttribute("PageMaker", new PageDTO(cri, total));
 				
 		result = "/WEB-INF/views/manager/ManagingPointList.jsp";
 

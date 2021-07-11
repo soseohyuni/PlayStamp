@@ -24,17 +24,6 @@ public class HomeController
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@RequestMapping("/managerhome.action")
-	public String adminHome()
-	{
-		String result = "";
-		
-		result = "/WEB-INF/views/manager/ManagerHome.jsp";
-
-		return result;
-	}
-	
-
 	@RequestMapping(value = "/home.action", method= {RequestMethod.GET, RequestMethod.POST})
 	public String mSeatMain(Model model, HttpServletRequest request)
 	{

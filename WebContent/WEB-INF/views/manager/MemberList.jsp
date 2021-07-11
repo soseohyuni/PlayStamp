@@ -61,6 +61,17 @@
 		color: #2688f4;
 	}
 	
+	.paginate_button, .pagination, .pagingButton
+	{
+		text-align: center !important;
+		margin: 0 auto !important;
+		position: relative;
+		border: none;
+		height: 40px;
+		right: 130px;
+		margin-top: 5px;
+	}
+	
 </style>
 
 <script type="text/javascript">
@@ -84,8 +95,10 @@
 		{
 			var user_id = $(this).find("td:eq(1)").text();
 			var grade = $(this).find("td:eq(5)").text();
+			var point = $(".pointInput").val();
 		
-			$(location).attr("href", "managingpointlist.action?user_id=" + user_id + "&grade=" + grade);
+			/* $(location).attr("href", "managingpointlist.action?user_id=" + user_id + "&grade=" + grade + "&point=" + point); */
+			$(location).attr("href", "managingpointlist.action?user_id=" + user_id);
 			
 		});
 	}
@@ -138,12 +151,9 @@
 						<!-- c:foreach문으로 리스트 반복 뿌려주기 -->
 						<c:forEach var="member" items="${memberlist }" varStatus="status">
 						<tr>
-							<%-- <td>${member.membernum }</td> --%>
-							<%-- <c:set var="num" value="${PageMaker.total}" ></c:set>
-							<td>${num}</td>
-							<c:set var="num" value="${num-1}"></c:set> --%>
-							<td>${PageMaker.total - ((PageMaker.cri.pageNum-1) * PageMaker.cri.amount + status.index) }</td>
-							<td class="userid" onclick="javascript:gotomanaginpointlist();">${member.user_id }</td>
+							<td>${member.membernum }</td>
+							<td class="userid"><a href="managingpointlist.action?user_id=${member.user_id }&point=${member.point}&grade=${member.grade}">
+							${member.user_id }</a></td>
 							<td>${member.user_nick }</td>
 							<td>${member.user_mail }</td>
 							<td>${member.join_dt }</td>
@@ -163,11 +173,11 @@
                      </c:if>
                      
                      <c:forEach var="num" begin="${PageMaker.startPage }" end="${PageMaker.endPage }">
-                        <li class="paginate_button"><a href="${num }">${num }</a></li>
+                        <li class="paginate_button"><a class="pagingButton" href="${num }">${num }</a></li>
                      </c:forEach>
                      
                      <c:if test="${PageMaker.next }">
-                        <li class="paginate_button next"><a href="${PageMaker.endPage+1 }">Next</a></li>
+                        <li class="paginate_button next"><a class="pagingButton" href="${PageMaker.endPage+1 }">Next</a></li>
                      </c:if>
                      </ul>
                   </div><!-- close .pull-right -->
