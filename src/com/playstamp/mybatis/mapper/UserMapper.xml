@@ -5,64 +5,64 @@
     
 <mapper namespace="com.playstamp.user.mybatis.IUserDAO">
 
-	<!-- 유저 입력 아이디 중복체크 -->
-	<select id="userIdCheck" parameterType="String" resultType="int">
-		SELECT COUNT(*) AS COUNT 
-		FROM TBL_USERINFO 
-		WHERE USER_ID = #{user_Id}
-	</select>
-	
-	
-	<!-- 회원가입 -->
-	<insert id="userInsertProcedure" statementType="CALLABLE">
-		{
-			CALL PRC_USER_INSERT(#{user_Id}, #{user_Nm}, #{user_Tel}, #{user_Pw}, #{user_Nick}, #{user_Mail}, 'UURL')
-		}
-	</insert>
-	
-	<!-- 유저 로그인 -->
-	<select id="userLogin" resultType="String">
-		SELECT USER_NICK
-		FROM TBL_USERINFO 
-		WHERE USER_ID = #{arg0} AND USER_PW = #{arg1}
-	</select>
-	
-	
-	<!-- 식별번호 조회 -->
-	<select id="userCode" resultType="String">
-		SELECT USER_CD
-		FROM TBL_USERINFO
-		WHERE USER_ID=#{arg0}
-	</select>
-	
-	
-	<!-- 관리자 로그인 -->
-	<select id="managerLogin" resultType="String">
-		SELECT MNG_NICK
-		FROM TBL_MANAGER 
-		WHERE MNG_ID = #{arg0} AND MNG_PW = #{arg1}
-	</select>
-	
-	
-	<!-- 이메일로 아이디 찾기 -->
-	<select id="selectFindId" parameterType="String" resultType="String">
-		SELECT USER_ID
-		FROM TBL_USERINFO
-		WHERE USER_MAIL = #{arg0}
-	</select>
-	
-	<!-- 아디이와 이메일 일치하는지 확인하기 -->
-	<select id="selectIdMail" parameterType="String" resultType="int">
-		SELECT COUNT(*)
-		FROM TBL_USERINFO
-		WHERE USER_ID=#{arg0} AND USER_MAIL=#{arg1}
-	</select>
-	
-	<!-- 비밀번호 변경 -->
-	<update id="changePw">
-		UPDATE TBL_USERINFO
-		SET USER_PW=#{arg0}
-		WHERE USER_ID=#{arg1}
-	</update>
+   <!-- 유저 입력 아이디 중복체크 -->
+   <select id="userIdCheck" parameterType="String" resultType="int">
+      SELECT COUNT(*) AS COUNT 
+      FROM TBL_USERINFO 
+      WHERE USER_ID = #{user_Id}
+   </select>
+   
+   
+   <!-- 회원가입 -->
+   <insert id="userInsertProcedure" statementType="CALLABLE">
+      {
+         CALL PRC_USER_INSERT(#{user_Id}, #{user_Nm}, #{user_Tel}, #{user_Pw}, #{user_Nick}, #{user_Mail}, 'UURL')
+      }
+   </insert>
+   
+   <!-- 유저 로그인 -->
+   <select id="userLogin" resultType="String">
+      SELECT USER_NICK
+      FROM TBL_USERINFO 
+      WHERE USER_ID = #{arg0} AND USER_PW = #{arg1}
+   </select>
+   
+   
+   <!-- 식별번호 조회 -->
+   <select id="userCode" resultType="String">
+      SELECT USER_CD
+      FROM TBL_USERINFO
+      WHERE USER_ID=#{arg0}
+   </select>
+   
+   
+   <!-- 관리자 로그인 -->
+   <select id="managerLogin" resultType="String">
+      SELECT MNG_NICK
+      FROM TBL_MANAGER 
+      WHERE MNG_ID = #{arg0} AND MNG_PW = #{arg1}
+   </select>
+   
+   
+   <!-- 이메일로 아이디 찾기 -->
+   <select id="selectFindId" parameterType="String" resultType="String">
+      SELECT USER_ID
+      FROM TBL_USERINFO
+      WHERE USER_MAIL = #{arg0}
+   </select>
+   
+   <!-- 아디이와 이메일 일치하는지 확인하기 -->
+   <select id="selectIdMail" parameterType="String" resultType="int">
+      SELECT COUNT(*)
+      FROM TBL_USERINFO
+      WHERE USER_ID=#{arg0} AND USER_MAIL=#{arg1}
+   </select>
+   
+   <!-- 비밀번호 변경 -->
+   <update id="changePw">
+      UPDATE TBL_USERINFO
+      SET USER_PW=#{arg0}
+      WHERE USER_ID=#{arg1}
+   </update>
 
 </mapper>
