@@ -107,9 +107,9 @@
 		WHERE TO_CHAR(POINT_DT, 'YYYY-MM-DD')=TO_CHAR(SYSDATE, 'YYYY-MM-DD') AND USER_CD=#{user_cd} AND POINT_Y_CD=3
 	</select>
 	
-	<select id="ifUserAddComment" resultType="string">
-		SELECT POINT_CD
+	<select id="ifUserAddComment" resultType="com.playstamp.playreviewdetail.CommentPoint" parameterType="string">
+		SELECT POINT_Y_CD, POINT_CD
 		FROM VIEW_IF_USER_ADD_COMPOINT
-		WHERE POINT_Y_CD=3 AND COMMENT_CD=#{comment_cd}
+		WHERE COMMENT_CD=#{comment_cd}
 	</select>
 </mapper>

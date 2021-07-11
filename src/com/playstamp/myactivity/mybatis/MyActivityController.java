@@ -29,59 +29,56 @@ public class MyActivityController
 	private SqlSession sqlSession;
 	
 	// 나의 활동 내역 클릭 시 분기 화면 이동
-	@RequestMapping(value="/myactivityhome.action", method=RequestMethod.GET)
-	public String myActivityHome(ModelMap model, HttpSession session)
-	{
-		IMyspaceDAO dao = sqlSession.getMapper(IMyspaceDAO.class);
-		
-		// 세션 객체 안에 있는 ID 정보 저장
-		String userId = (String)session.getAttribute("id");
-		String userCode = (String)session.getAttribute("code");
+   @RequestMapping(value="/myactivityhome.action", method=RequestMethod.GET)
+   public String myActivityHome(ModelMap model, HttpSession session)
+   {
+      IMyspaceDAO dao = sqlSession.getMapper(IMyspaceDAO.class);
+      
+      // 세션 객체 안에 있는 ID 정보 저장
+      String userId = (String)session.getAttribute("id");
+      String userCode = (String)session.getAttribute("code");
 
-		// 회원 정보 조회
-		User userInfo = null;
-		try
-		{
-			userInfo = dao.searchUserInfo(userId);
-		} catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		// 나의 포인트 조회
-		ArrayList<Point> pointList = new ArrayList<Point>();
-		pointList = dao.userPointList(userId);
-	
-		int userPoint = 0;
-		if( pointList.size()!=0){
-			userPoint = Integer.parseInt(pointList.get(0).getUser_point());
-		}
-		
-		// 나의 캐시 조회
-		ArrayList<Cash> cashList = new ArrayList<Cash>();
-		cashList = dao.userCashList(userId);
-		
-		int userCash = 0;
-		if( cashList.size()!=0){
-			userCash = Integer.parseInt(cashList.get(0).getUser_cash());
-		}
-		
-		// 나의 리뷰 개수 조회
-		int userRev = dao.countingRev(userCode);
-		
-		// 나의 찜리스트 개수 조회
-		int userJjim = dao.countingJjim(userCode);
-		
-		// 얻어온 정보 저장
-		model.addAttribute("userInfo", userInfo);
-		model.addAttribute("userPoint", userPoint);
-		model.addAttribute("userCash", userCash);
-		model.addAttribute("userRev", userRev);
-		model.addAttribute("userJjim", userJjim);
-		
-		return "WEB-INF/views/myspace/MyActivityHome.jsp";
-	}
+      // 회원 정보 조회
+      User userInfo = null;
+      try
+      {
+         userInfo = dao.searchUserInfo(userId);
+      } catch (SQLException e)
+      {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
+      
+      // 나의 포인트 조회
+      int userPoint = 0;
+      if(dao.userPoint(userCode) != 0)
+         userPoint = dao.userPoint(userCode);
+
+      // 나의 캐시 조회
+      int userCash = 0;
+      if(dao.userCash(userCode) != 0)
+         userCash = dao.userCash(userCode);
+
+      // 나의 리뷰 개수 조회
+      int userRev = 0;
+      if(dao.countingRev(userCode) != 0)
+         userRev = dao.countingRev(userCode);
+
+      // 나의 찜 개수 조회
+      int userJjim = 0;
+      if(dao.countingJjim(userCode) != 0)
+         userJjim = dao.countingJjim(userCode);
+
+      
+      // 얻어온 정보 저장
+      model.addAttribute("userInfo", userInfo);
+      model.addAttribute("userPoint", userPoint);
+      model.addAttribute("userCash", userCash);
+      model.addAttribute("userRev", userRev);
+      model.addAttribute("userJjim", userJjim);
+      
+      return "WEB-INF/views/myspace/MyActivityHome.jsp";
+  }
 	
 	
 	// 좋아요 누른 리뷰글 가져오기

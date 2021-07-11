@@ -24,6 +24,7 @@ import com.playstamp.playdetail.PlayRevBlind;
 import com.playstamp.playdetail.PlayRevPre;
 import com.playstamp.playreviewdetail.Comment;
 import com.playstamp.playreviewdetail.CommentBlind;
+import com.playstamp.playreviewdetail.CommentPoint;
 import com.playstamp.playreviewdetail.Like;
 
 @Controller
@@ -93,7 +94,7 @@ public class PlayReviewDetailController
 			checkRepComStList.add(checkRepComSt);			
 		}
 		
-		if (dao.getUserGrade(user_id).equals("어둠회원") || dao.getUserGrade(user_id).equals("뉴비"))
+		if (dao.getUserGrade(user_id).equals("어둠회원"))
 		{
 			//@@ 신고되었는지 여부 확인하는 리스트를 모델에 담아 보낸다.
 			model.addAttribute("checkRepComList", checkRepComList);
@@ -187,16 +188,18 @@ public class PlayReviewDetailController
 		String user_cd = (String)session.getAttribute("code");
 		String point_cd = "";
 		
-		//System.out.println("댓글코드: " + comment.getComment_cd());
+		CommentPoint commentPoint = new CommentPoint();
 		
-		System.out.println(comment.getComment_cd());
+		//System.out.println("댓글코드: " + comment.getComment_cd());
+		//System.out.println(comment.getComment_cd());
+		
 		//@@ 댓글을 삭제할 경우, 해당 댓글로 포인트를 적립받았었는지 확인
 		try
 		{	
-			point_cd = dao.ifUserAddComment(comment.getComment_cd());
+			commentPoint = dao.ifUserAddComment(comment.getComment_cd());
 			
 			//@@ 적립받았다면 포인트 차감
-			if (!point_cd.equals("0"))
+			if (!commentPoint.getPoint_cd().equals("0"))
 				dao.delCommentPoint(user_cd);
 			
 			//@@ 적립받지 않았다면, 코멘트만 삭제
