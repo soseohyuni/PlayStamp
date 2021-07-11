@@ -56,7 +56,7 @@ public class AddReviewController
 	// 리뷰 식별 코드 테이블에 Insert 한 뒤,
 	// 선택한 공연 관련 정보를 가지고 좌석 리뷰 입력 페이지로 이동
 	@RequestMapping(value="/addreviewseatform.action", method=RequestMethod.POST)
-	public String addDistinctReview(Model model, HttpServletRequest request, HttpSession session)
+	public String addDistinctReview(Model model, HttpServletRequest request, HttpSession session, HttpServletResponse response)
 	{
 		IAddReviewDAO dao = sqlSession.getMapper(IAddReviewDAO.class);
 		String rev_distin_cd = null;
@@ -81,11 +81,29 @@ public class AddReviewController
 		// 기존에 입력된 리뷰 내용이 있다면
 		if(rev_distin_cd!=null)
 		{
-			// 리뷰 조회 페이지로 이동 (리뷰 식별코드, 공연장 코드 넘기기)
-			String redirect = "redirect:myreviewdetail.action?play_cd=" + play_cd + "&rev_distin_cd=" + rev_distin_cd
-					+ "&theater_cd=" + theater_cd;
+			// 기존 리뷰 존재함 안내
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter printwriter = null;
 			
-			return redirect; 
+			try
+			{
+				printwriter = response.getWriter();
+			} catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			printwriter.print("<script>alert('기존에 작성하신 리뷰글로 이동합니다.');"
+					+ "location.href='myreviewdetail.action?play_cd=" + play_cd + "&rev_distin_cd="
+					+ rev_distin_cd + "&theater_cd=" + theater_cd + "'</script>");
+			printwriter.flush();
+			printwriter.close();
+			
+			
+			// 리뷰 조회 페이지로 이동 (리뷰 식별코드, 공연장 코드 넘기기)
+			//String redirect = "redirect:myreviewdetail.action?play_cd=" + play_cd + "&rev_distin_cd=" + rev_distin_cd
+			//		+ "&theater_cd=" + theater_cd;
 			
 		}else
 		{	
@@ -108,6 +126,8 @@ public class AddReviewController
 			// 좌석 리뷰 입력 페이지로 이동
 			return "WEB-INF/views/review/AddReviewSeatForm.jsp";
 		}
+		
+		return "WEB-INF/views/review/AddReviewSeatForm.jsp";
 	}
 	
 	//-------------------------- 아래부터 좌석 리뷰 입력
@@ -227,9 +247,11 @@ public class AddReviewController
 	
 	//-- 공연 리뷰 테이블에 Insert
 	@RequestMapping(value="/addreviewdetail.action", method=RequestMethod.POST)
-	public String addReviewDetail(Model model, HttpServletRequest request)
+	public String addReviewDetail(Model model, HttpServletRequest request, HttpSession session)
 	{
 		IAddReviewDAO dao = sqlSession.getMapper(IAddReviewDAO.class);
+		
+		String user_cd = (String)session.getAttribute("code");
 		
 		// 좌석 리뷰 페이지로부터 수신한 데이터
 		String rev_distin_cd = request.getParameter("rev_distin_cd");
@@ -293,6 +315,9 @@ public class AddReviewController
 		
 		// 공연 리뷰 테이블에 insert
 		dao.addReviewDetail(rd);
+		
+		// 리뷰 작성 완료 시 포인트 증가
+		dao.plusPoint(user_cd);
 		
 		// 나의 공연 리스트로 리다이렉트 (포스터)
 		return "redirect:myreviewlistposter.action";
@@ -578,9 +603,11 @@ public class AddReviewController
 	
 	// 삭제 액션 수행
 	@RequestMapping(value="/removemyreview.action", method=RequestMethod.GET)
-	public String removeMyReview(Model model, HttpServletRequest request)
+	public String removeMyReview(Model model, HttpServletRequest request, HttpSession session)
 	{
 		IAddReviewDAO dao = sqlSession.getMapper(IAddReviewDAO.class);
+		
+		String user_cd = (String)session.getAttribute("code");
 		
 		// 삭제 할 리뷰 식별 코드, 공연 코드 가져오기
 		String rev_distin_cd = request.getParameter("rev_distin_cd");
@@ -604,6 +631,9 @@ public class AddReviewController
 		
 		// 리뷰 식별코드 삭제
 		dao.removeReviewDistin(rev_distin_cd);
+		
+		// 삭제 시 포인트 차감 액션
+		dao.minusPoint(user_cd);
 		
 		// 모두 삭제 후 조회 화면으로 이동
 		return "redirect:myreviewlistposter.action";

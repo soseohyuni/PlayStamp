@@ -198,7 +198,7 @@
 				</td>
 				<th>함께 본 사람</th>
 				<td>
-				<select id="companion_cd" name="companion_cd">
+				<select id="companion_cd" name="companion_cd" class="form-control">
 				<c:forEach var="c" items="${companion}">
 					<c:set var="a" value="${a+1 }"/>
 					<option value="${a }">${c.companion }</option>

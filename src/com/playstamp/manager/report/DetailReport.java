@@ -13,6 +13,8 @@ public class DetailReport
 	private String rep_cd;				//-- 신고 코드
 	private String writer_cd;			//-- 글 작성자 사용자 코드
 	private String reporter_cd;			//-- 신고자 사용자 코드
+	private String rep_y_cd;			//-- 최종 선택 신고 사유
+	private String rep_st_cd;			//-- 승인(1), 반려(2)
 	
 	// getter, setter
 	public String getTitle()
@@ -78,6 +80,22 @@ public class DetailReport
 	public void setReporter_cd(String reporter_cd)
 	{
 		this.reporter_cd = reporter_cd;
+	}
+	public String getRep_y_cd()
+	{
+		return rep_y_cd;
+	}
+	public void setRep_y_cd(String rep_y_cd)
+	{
+		this.rep_y_cd = rep_y_cd;
+	}
+	public String getRep_st_cd()
+	{
+		return rep_st_cd;
+	}
+	public void setRep_st_cd(String rep_st_cd)
+	{
+		this.rep_st_cd = rep_st_cd;
 	}
 
 }

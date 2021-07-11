@@ -2,10 +2,9 @@ package com.playstamp.myactivity.mybatis;
 
 import java.util.ArrayList;
 
-import org.apache.ibatis.annotations.Param;
 
 import com.playstamp.myactivity.MyLikeCommentReview;
-import com.playstamp.paging.Criteria;
+import com.playstamp.myactivity.MyReportList;
 import com.playstamp.paging.PageDTO;
 import com.playstamp.paging.ReverseCriteria;
 
@@ -34,13 +33,16 @@ public interface IMyActivityDAO
 	
 
 	// 내가 신고한 글 개수 가져오기
+	public int reportingTotal(String user_cd);
 	
 	// 내가 신고 당한 글 개수 가져오기
-	
+	public int reportedTotal(String user_cd);
+		
 	// 내가 신고한 글 목록 가져오기
+	public ArrayList<MyReportList> myReportingList(ReverseCriteria rc);
 	
 	// 내가 신고 당한 내역 글 목록 가져오기
+	public ArrayList<MyReportList> myReportedList(ReverseCriteria rc);
 	
-	// 글 제목 누르면 해당 신고글 요청 리다이렉트 (조회만 가능)
 
 }

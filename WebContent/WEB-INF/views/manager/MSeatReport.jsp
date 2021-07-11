@@ -28,7 +28,7 @@
 <div class="container">
 	<div class="modal-body">
 		<!-- 신고 처리 테이블 insert를 위해 요청하는 주소 -->
-		<form action="checkseatreport.action" method="post">
+		<form action="checkmseatreport.action" method="post">
 			<table class="table table-striped table-sm" >
 				<tr>
 					<th>좌석 리뷰</th>

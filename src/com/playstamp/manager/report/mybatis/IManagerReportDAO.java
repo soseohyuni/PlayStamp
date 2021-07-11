@@ -36,5 +36,24 @@ public interface IManagerReportDAO
 		
 	// 신고된 5대 공연장 좌석 리뷰글의 상세 내역 가져오기
 	public DetailReport mseatReport(String rep_cd);
-		
+	
+	// 신고자 포인트 차감 (신고 반려)
+	public int reporterPointMinus(String reporter_cd);
+	
+	// 피신고자 포인트 차감 (신고 승인)
+	public int writerPointMinus(String writer_cd);
+	
+	// 댓글 신고 처리 액션
+	public int commentDone(DetailReport dr);
+	
+	// 리뷰 신고 처리 액션
+	public int reviewDone(DetailReport dr);
+	
+	// 좌석 리뷰 신고 처리 액션
+	public int seatDone(DetailReport dr);
+	
+	// 5대 좌석 리뷰 신고 처리 액션
+	public int mseatDone(DetailReport dr);
+
+	
 }

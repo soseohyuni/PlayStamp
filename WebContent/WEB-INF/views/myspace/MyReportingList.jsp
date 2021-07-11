@@ -8,9 +8,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ManagerReportDone.jsp</title>
-<link rel="stylesheet" href="<%=cp %>/css/managerhome.css">
-
+<title>MyReportingList.jsp</title>
+<link href="<%=cp%>/css/header.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -113,13 +112,14 @@
 </head>
 <body>
 <!-- 헤더 추가 -->
-<c:import url="ManagerHeader.jsp"></c:import>
-
+<div>
+	<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
+</div>
 <div class="container" style="width: 72%; height: 700px; top:50px;">
-	<h2>신고 관리</h2>
+	<h2>신고한 내역</h2>
 	<hr>
 	<div class="container">
-		<div id="reportListIntro"><img style="width: 20px; margin-right: 5px;" src="images/boardicon.png">처리 완료 신고 리스트</div>
+		<div id="reportListIntro"><img style="width: 20px; margin-right: 5px;" src="images/boardicon.png">신고 리스트</div>
 			<br>
 			<div class="row">
 				<table class="table table-striped" id="userTable" style="text-align: center; border: 1px solid #dddddd">
@@ -127,8 +127,6 @@
 						<tr>
 							<th style="background-color: #eeeeee; text-align: center;">번호</th>
 							<th style="background-color: #eeeeee; text-align: center;">신고내용</th>
-							<th style="background-color: #eeeeee; text-align: center;">작성자</th>
-							<th style="background-color: #eeeeee; text-align: center;">신고자</th>
 							<th style="background-color: #eeeeee; text-align: center;">신고 카테고리</th>
 							<th style="background-color: #eeeeee; text-align: center;">신고 일시</th>
 							<th style="background-color: #eeeeee; text-align: center;">게시판 분류</th>
@@ -139,24 +137,32 @@
 					<tbody>
 					<!--  BNO, REP_CONTENTS, REPORTER, REP_Y, REP_DT, 
 					BOARDCATEGORY, REP_CD, REPORTED_CD, REP_ST, REP_CH_DT -->
-					<c:forEach var="doneList" items="${doneList }">
+					<c:forEach var="List" items="${List }">
 					<tr>	
-						<td>${doneList.bno }</td>
-						<td>${doneList.rep_contents }</td>
-						<td>${doneList.writer }</td>
-						<td>${doneList.reporter }</td>
-						<td>${doneList.rep_y }</td>
-						<td>${doneList.rep_dt }</td>
-						<td>${doneList.boardCategory }</td>
+						<td>${List.bno }</td>
+						<td>${List.rep_contents }</td>
+						<td>${List.rep_y }</td>
+						<td>${List.rep_dt }</td>
+						<td>${List.boardCategory }</td>
 						<c:choose>
-							<c:when test="${doneList.rep_st eq '승인'}">
-								<td style="font-weight:bold; color:red;">${doneList.rep_st }</td>
+							<c:when test="${List.rep_st eq '승인'}">
+								<td style="font-weight:bold; color:red;">${List.rep_st }</td>
 							</c:when>
-							<c:when test="${doneList.rep_st eq '반려'}">
-								<td style="font-weight:bold; color:green;">${doneList.rep_st }</td>
+							<c:when test="${List.rep_st eq '반려'}">
+								<td style="font-weight:bold; color:green;">${List.rep_st }</td>
+							</c:when>
+							<c:when test="${List.rep_st eq '확인중'}">
+								<td style="font-weight:bold; color:black;">${List.rep_st }</td>
 							</c:when>
 						</c:choose>
-						<td>${doneList.rep_ch_dt }</td>
+						<c:choose>
+							<c:when test="${List.rep_ch_dt eq '2999-12-31 00:00:00'}">
+								<td>확인중</td>
+							</c:when>
+							<c:otherwise>
+								<td>${List.rep_ch_dt }</td>
+							</c:otherwise>
+						</c:choose>
 					</tr>
 					</c:forEach>
 					</tbody>
@@ -164,32 +170,32 @@
 			<!--  페이징 추가 -->
 			<div class="text-center">
 				<ul class="pagination">
-				<c:if test="${donePageMaker.prev }">
+				<c:if test="${PageMaker.prev }">
 					<li class="paginate_button previous">
-						<a href="${donePageMaker.startPage-1 }">Previous</a>
+						<a href="${PageMaker.startPage-1 }">Previous</a>
 					</li>
 				</c:if>
 				
-				<c:forEach var="num" begin="${donePageMaker.startPage }" end="${donePageMaker.endPage }">
+				<c:forEach var="num" begin="${PageMaker.startPage }" end="${PageMaker.endPage }">
 					<li class="paginate_button">
 						<a href="${num }">${num }</a>
 					</li>
 				</c:forEach>
 				
-				<c:if test="${donePageMaker.next }">
+				<c:if test="${PageMaker.next }">
 					<li class="paginate_button next">
-						<a href="${donePageMaker.endPage+1 }">Next</a>
+						<a href="${PageMaker.endPage+1 }">Next</a>
 					</li>
 				</c:if>
 				</ul>
 			</div><!-- close .pull-right -->
 			<div>
-				<button type="button" class="btn btn-info" onclick="location='managerreport.action'">확인 필요 신고 리스트</button>
+				<button type="button" class="btn btn-info" onclick="location='myreportedlist.action'">내가 신고당한 내역</button>
 			</div>
 			<!-- 페이지 번호 클릭시 이동을 위한 hidden form 구성 -->
-			<form id="reportForm" action="donemanagerreport.action" method="get">
-				<input type="hidden" name="pageNum" value="${donePageMaker.cri.pageNum }">
-				<input type="hidden" name="amount" value="${donePageMaker.cri.amount }">
+			<form id="reportForm" action="myreportinglist.action" method="get">
+				<input type="hidden" name="pageNum" value="${PageMaker.cri.pageNum }">
+				<input type="hidden" name="amount" value="${PageMaker.cri.amount }">
 			</form>
 		</div>
 	</div>

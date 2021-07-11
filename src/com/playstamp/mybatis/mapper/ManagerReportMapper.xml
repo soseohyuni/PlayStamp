@@ -127,4 +127,41 @@
 		AND R.REP_MSEAT_CD='${rep_cd}'
 	</select>
 	
+	<!-- 리뷰 신고 처리 완료 테이블에 insert 액션 -->
+	<insert id="reviewDone">
+		INSERT INTO TBL_REP_REVCH(REP_REVCH_CD, REP_REV_CD, REP_ST_CD, REP_Y_CD, REP_CH_DT)
+		VALUES('RR' || TO_CHAR(SEQ_REP_REVCH.NEXTVAL), '${rep_cd}', ${rep_st_cd}, ${rep_y_cd}, SYSDATE)
+	</insert>
+	
+	<!-- 댓글 신고 처리 완료 테이블에 insert 액션 -->
+	<insert id="commentDone">
+		INSERT INTO TBL_REP_COMCH(REP_COMCH_CD, REP_COM_CD, REP_ST_CD, REP_Y_CD, REP_CH_DT)
+		VALUES('RC' || TO_CHAR(SEQ_REP_COMCH.NEXTVAL), '${rep_cd}', ${rep_st_cd}, ${rep_y_cd}, SYSDATE)
+	</insert>
+	
+	<!-- 좌석 리뷰(일반 공연장) 신고 처리 완료 테이블에 insert 액션 -->
+	<insert id="seatDone">
+		INSERT INTO TBL_REP_SEATCH(REP_SEATCH_CD, REP_SEAT_CD, REP_ST_CD, REP_Y_CD, REP_CH_DT)
+		VALUES('RS' || TO_CHAR(SEQ_REP_SEATCH.NEXTVAL), '${rep_cd}', ${rep_st_cd}, ${rep_y_cd}, SYSDATE)
+	</insert>
+	
+	<!-- 좌석 리뷰(5대 공연장) 신고 처리 완료 테이블에 insert 액션 -->
+	<insert id="mseatDone">
+		INSERT INTO TBL_REP_MSEATCH(REP_MSEATCH_CD, REP_MSEAT_CD, REP_ST_CD, REP_Y_CD, REP_CH_DT)
+		VALUES('RMS' || TO_CHAR(SEQ_REP_MSEATCH.NEXTVAL), '${rep_cd}', ${rep_st_cd}, ${rep_y_cd}, SYSDATE)
+	</insert>
+	
+	<!-- 피신고자 포인트 차감 액션 (승인) -->
+	<insert id="writerPointMinus">
+		INSERT INTO TBL_POINT(POINT_CD, USER_CD, POINT_Y_CD, POINT_DT)
+		VALUES('PT' || TO_CHAR(SEQ_POINT.NEXTVAL), '${writer_cd}', 10, SYSDATE)
+	</insert>
+	
+	<!-- 신고자 허위신고인 경우(반려) 포인트 차감 액션 -->
+	<insert id="reporterPointMinus">
+		INSERT INTO TBL_POINT(POINT_CD, USER_CD, POINT_Y_CD, POINT_DT)
+		VALUES('PT' || TO_CHAR(SEQ_POINT.NEXTVAL), '${reporter_cd}', 9, SYSDATE)
+	</insert>
+	
+	
 </mapper>

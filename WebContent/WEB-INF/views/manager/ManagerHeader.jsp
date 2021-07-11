@@ -21,7 +21,7 @@
 <ul class="nav nav-pills nav-stacked">
 	<li><a class="img" href="adminhome.action"><img src="images/logo_typo.svg"></a></li>
 	<li><a href="memberlist.action"><span class="glyphicon glyphicon-user"></span>&nbsp;회원 관리</a></li>
-	<li><a href="#"><span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;신고 관리</a></li>
+	<li><a href="managerreport.action"><span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;신고 관리</a></li>
 	<li><a href="notice.action"><span class="glyphicon glyphicon-edit"></span>&nbsp;공지사항 관리</a></li>
 	<li><a href="faq.action"><span class="glyphicon glyphicon-edit"></span>&nbsp;FAQ 관리</a></li>
 	<li><a href="managerlist.action"><span class="glyphicon glyphicon-cog"></span>&nbsp;운영진 관리</a></li>

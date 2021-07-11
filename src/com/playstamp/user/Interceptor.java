@@ -16,7 +16,7 @@ public class Interceptor extends HandlerInterceptorAdapter
 											, "/musicallist.action", "/dramalist.action", "/musicalprint.action", "/dramaprint.action"
 											, "/memberlist.action", "/modifypointpopup.action", "/modifypoint.action"
 											, "/mailcheck.action", "/completesignup.action", "/checkSignup.action", "/managingpointlist.action"
-											, "/mseat.action", "/managerhome.action", "/managerlist.action", "/faq.action", "/notice.action"};
+											, "/managerhome.action", "/managerlist.action", "/faq.action", "/notice.action"};
 	
 	// → 고객센터, 검색 결과도 추가해야 함
 	
