@@ -49,7 +49,10 @@
 							</div>
 						<%} %>
 							<div>
-								<a href="usernoticefaq.action">고객센터</a>
+								<a href="usernotice.action">공지사항</a>
+							</div>
+							<div>
+								<a href="userfaq.action">FAQ</a>
 							</div>
 						</div>
 					</div>

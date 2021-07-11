@@ -29,7 +29,7 @@ public class PlayListController
 	@RequestMapping(value="/musicallist.action")
 	public String musicalHome()
 	{
-		return "WEB-INF/views/MusicalList.jsp";
+		return "WEB-INF/views/play/MusicalList.jsp";
 	}
 	
 	//@@ 뮤지컬 리스트 출력 컨트롤러
@@ -50,7 +50,7 @@ public class PlayListController
 	@RequestMapping(value="/dramalist.action")
 	public String dramaHome()
 	{
-		return "WEB-INF/views/DramaList.jsp";
+		return "WEB-INF/views/play/DramaList.jsp";
 	}
 	
 	//@@ 연극 리스트 출력 컨트롤러

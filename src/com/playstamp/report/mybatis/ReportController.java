@@ -135,6 +135,6 @@ public class ReportController
 			e.printStackTrace();
 		}
 
-		return "WEB-INF/views/ReportAlert.jsp";
+		return "WEB-INF/views/report/ReportAlert.jsp";
 	}	
 }

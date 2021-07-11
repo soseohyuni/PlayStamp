@@ -273,9 +273,9 @@
 		                + "<hr>"
 						+ "</div>"
 		                + "<br>";
-	
+						
+		                $("#ccount").html("");
 				        $("#ccount").html(data.length);
-				        console.log(data.length);
 						$("#comments").html(str);
 					}
 		 	
@@ -290,9 +290,11 @@
 		                + "<hr>"
 						+ "</div>"
 		                + "<br>";
-	
+		                
+		                $("#ccount").html("");
 				    	$("#ccount").html(data.length);
 						$("#comments").html(str);
+					}
 					
 				}
 				//@@ 블라인드 처리 하는 경우
@@ -308,10 +310,10 @@
 	                
 					$("#comments").html(str);
 				}
-			});
-		});
+			});//end each
+		});//end func
 	}
-	
+
 	//@@ 자식창을 저장할 변수
 	var popup;
 	
@@ -459,9 +461,8 @@
 		<div class="subContainer2">
 			<c:forEach var="playReviewDetail" items="${playReviewDetail }">
 			<span id="count">
-			<span style="color: #0080FF"><i class="fa fa-comment fa-lg" aria-hidden="true"></i></span>&nbsp;<span id="ccount"></span>
+			<span style="color: #0080FF"><i class="fa fa-comment fa-lg" aria-hidden="true"></i></span>&nbsp;<span id="ccount">${playReviewDetail.ccount }</span>
 			<span style="color: #FE2E2E"><i class="fas fa-heart fa-lg"></i></span>&nbsp;<span id="lcount">${playReviewDetail.lcount }</span>
-			console.log(${playReviewDetail.lcount })
 			&nbsp;&nbsp;작성자: ${playReviewDetail.user_nick }			
 			</span>
 			<!-- 리뷰 작성자가 본인일 경우 신고 버튼 뜨지 않도록 처리 -->
