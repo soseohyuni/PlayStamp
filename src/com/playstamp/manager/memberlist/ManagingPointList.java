@@ -3,7 +3,17 @@ package com.playstamp.manager.memberlist;
 public class ManagingPointList
 {
 	// 포인트 적립/차감 사유, 포인트 적립/차감 날짜, 적립/차감된 포인트, 현재 사용자 포인트
-	private String point_y, point_dt, point, user_point;
+	private String pointnum, point_y, point_dt, point, user_point;
+
+	public String getPointnum()
+	{
+		return pointnum;
+	}
+
+	public void setPointnum(String pointnum)
+	{
+		this.pointnum = pointnum;
+	}
 
 	public String getPoint_y()
 	{

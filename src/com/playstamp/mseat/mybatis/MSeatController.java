@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,20 +37,30 @@ public class MSeatController
 		String grade = null;
 		grade = (String)session.getAttribute("grade");
 		
-		if(grade.equals("우수회원") || grade.equals("준회원") || grade.equals("일반회원"))
+		try
 		{
-			return "WEB-INF/views/MSeatMain.jsp";
-		}
-		else if(grade.equals("어둠회원") || grade.equals("뉴비"))
+			if(grade!=null)
+			{
+				if(grade.equals("우수회원") || grade.equals("준회원") || grade.equals("일반회원"))
+				{
+					return "WEB-INF/views/MSeatMain.jsp";
+				}
+				else if(grade.equals("어둠회원") || grade.equals("뉴비"))
+				{
+					response.setContentType("text/html;charset=utf-8");
+					PrintWriter printwriter = response.getWriter();
+						
+					printwriter.print("<script>alert('일반회원등급 이상 이용이 가능합니다.');history.back();</script>");
+					printwriter.flush();
+					printwriter.close();
+				}
+			}	
+			
+		} catch (Exception e)
 		{
-			response.setContentType("text/html;charset=utf-8");
-			PrintWriter printwriter = response.getWriter();
-				
-			printwriter.print("<script>alert('일반회원등급 이상 이용이 가능합니다.');history.back();</script>");
-			printwriter.flush();
-			printwriter.close();
+			System.out.println(e.toString());
 		}
-		
+	
 		return "WEB-INF/views/MSeatMain.jsp";
 
 	}

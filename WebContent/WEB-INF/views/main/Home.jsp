@@ -160,7 +160,7 @@
       <div class="jumbotron" style="margin: 0 0 40px 0 !important;">
         <h1>Welcome to Play Stamp!</h1>
         <p>공연 관람을 기록하고 공유해보세요</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">리뷰 작성하기</a></p>
+        <p><a class="btn btn-primary btn-lg" href="addreviewsearchform.action" role="button">리뷰 작성하기</a></p>
    	  </div>
 	</div><br><br>
 
