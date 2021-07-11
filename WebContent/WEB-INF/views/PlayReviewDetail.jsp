@@ -214,6 +214,7 @@
 			        contentType: "application/json",
 			        dataType : "text",
 			        data : JSON.stringify({
+			        	"playrev_cd" : articleNo,
 			            "comment_cd" : replyNo
 			        }),
 			        success : function (result) {

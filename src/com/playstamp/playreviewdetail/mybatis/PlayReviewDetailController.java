@@ -151,16 +151,27 @@ public class PlayReviewDetailController
 	
 	//@@ 댓글 추가
 	@RequestMapping(value="/commentadd.action", method= {RequestMethod.POST, RequestMethod.GET})
-	public @ResponseBody String addComment(@RequestBody Comment comment) throws SQLException
+	public @ResponseBody String addComment(@RequestBody Comment comment, HttpSession session) throws SQLException
 	{
 		IPlayReviewDetailDAO dao = sqlSession.getMapper(IPlayReviewDetailDAO.class);	
-
+		
 		//System.out.println("닉:" + comment.getUser_nick());
-
+		String user_cd = (String)session.getAttribute("code");
+		int count = 0;
+		
+		// 댓글을 추가할 경우 포인트 적립 횟수가 3회를 초과하지 않았는지 확인
 		try
-		{
-			dao.addComment(comment);
-		} catch (Exception e)
+		{	
+			count = dao.countAddComment(user_cd); 
+			
+			// 당일 적립 횟수가 3회를 초과하지 않았다면, 포인트 적립!
+			if (count < 3)
+				dao.addCommentPoint(user_cd);
+			
+			// 적립 횟수가 3회를 초과했다면, 포인트 적립하지 않고 코멘트만 추가
+			dao.addComment(comment);		
+		}
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -170,20 +181,32 @@ public class PlayReviewDetailController
 	
 	//@@ 댓글 삭제
 	@RequestMapping(value="/commentremove.action", method= {RequestMethod.POST, RequestMethod.GET})
-	public @ResponseBody String removeComment(@RequestBody Comment comment) throws SQLException
+	public @ResponseBody String removeComment(@RequestBody Comment comment, HttpSession session) throws SQLException
 	{
 		IPlayReviewDetailDAO dao = sqlSession.getMapper(IPlayReviewDetailDAO.class);	
+		String user_cd = (String)session.getAttribute("code");
+		String point_cd = "";
 		
 		//System.out.println("댓글코드: " + comment.getComment_cd());
 		
+		System.out.println(comment.getComment_cd());
+		//@@ 댓글을 삭제할 경우, 해당 댓글로 포인트를 적립받았었는지 확인
 		try
-		{
+		{	
+			point_cd = dao.ifUserAddComment(comment.getComment_cd());
+			
+			//@@ 적립받았다면 포인트 차감
+			if (!point_cd.equals("0"))
+				dao.delCommentPoint(user_cd);
+			
+			//@@ 적립받지 않았다면, 코멘트만 삭제
 			dao.removeComment(comment);
 		} catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 		
+		System.out.println("값 : " + point_cd);
 		return "success";
 	}	
 	
