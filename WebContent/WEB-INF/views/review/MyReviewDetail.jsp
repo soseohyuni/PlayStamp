@@ -10,10 +10,13 @@
 <meta charset="UTF-8">
 <title>MyReviewDetail.jsp</title>
 <link href="<%=cp%>/css/header.css" rel="stylesheet">
+<link href="<%=cp%>/css/myspace.css" rel="stylesheet">
+
 <!-- 부트스트랩 적용을 위한 3줄: 제이쿼리 스크립트 포함 -->
-<link rel="stylesheet" href="<%=cp %>/css/bootstrap.min.css">
+<%-- <link rel="stylesheet" href="<%=cp %>/css/bootstrap.min.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-<script type="text/javascript" src="<%=cp %>/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<%=cp %>/js/bootstrap.min.js"></script> --%>
+
 <!-- 별점 기능을 위한 아이콘을 CDN 방식으로 추가 -->
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 <!-- 별점 이미지 파일을 다운받은 뒤 css폴더에 추가해 경로 지정 -->
@@ -102,7 +105,7 @@
 	}
     #img { text-align:center;} 
     #reviewdetailtable td { height:20px; }
-    #reviewdetailtable { width:60%; margin: auto; }
+    #reviewdetailtable { width:100%; margin: auto; }
     #uploadFile { text-align:center;}
     #updateBtn
 	{
@@ -116,6 +119,7 @@
 	{
 		text-align: center;
 	}
+	#pageTitle { float: left; margin: 0; line-height: 60px;}
 </style>
 <script type="text/javascript">
 
@@ -183,14 +187,8 @@
 </div>
 	
 	
-<div id="textbox">
-	<h5>
-		<img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">나의 리뷰 정보
-	</h5>
-	<hr>
-</div>
-<br><br>
-
+<div class="container">
+	<div id="pageTitle" class="container">나의 리뷰 정보</div>
 <div class="content">
 	<form class="content" action="myreviewseatupdateform.action" method="post">
 		<table class="table table-borderless" id="reviewdetailtable">
@@ -331,6 +329,7 @@
 	</form>
 
 </div><!-- close #content -->
+</div>
 <br><br><br><br><br><br><br><br>
 
 </body>

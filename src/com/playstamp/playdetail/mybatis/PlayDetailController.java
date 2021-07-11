@@ -185,6 +185,7 @@ public class PlayDetailController
 			}
 		}
 		
+		
 		if (dao.getUserGrade(user_id).equals("어둠회원") || dao.getUserGrade(user_id).equals("뉴비"))
 		{
 			//@@ 신고되었는지 여부 확인하는 리스트를 모델에 담아 보낸다.

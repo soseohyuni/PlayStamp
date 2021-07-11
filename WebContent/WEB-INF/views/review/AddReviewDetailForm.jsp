@@ -13,9 +13,9 @@
 <link rel="stylesheet" type="text/css" href="<%=cp %>/css/jquery-ui.css">
 <script type="text/javascript" src="<%=cp%>/js/jquery-ui.js"></script>
 <!-- 부트스트랩 적용을 위한 3줄: 제이쿼리 스크립트 포함 -->
-<link rel="stylesheet" href="<%=cp %>/css/bootstrap.min.css">
+<%-- <link rel="stylesheet" href="<%=cp %>/css/bootstrap.min.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-<script type="text/javascript" src="<%=cp %>/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<%=cp %>/js/bootstrap.min.js"></script> --%>
 <!-- 별점 기능을 위한 아이콘을 CDN 방식으로 추가 -->
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 <!-- 별점 이미지 파일을 다운받은 뒤 css폴더에 추가해 경로 지정 -->
@@ -25,6 +25,7 @@
 <!-- 별점 콜백 함수 호출을 위해 js 폴더에 추가해 경로 지정 -->
 <script src="<%=cp %>/js/jquery.barrating.min.js"></script>
 <link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/myspace.css">
 <style type="text/css">
 	.content 
 	{
@@ -138,12 +139,10 @@
 	<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
 </div>
 
-
-<div id="textbox">
-	<h5><img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">리뷰 추가하기</h5>
-	<hr>
-</div>
-<br><br>
+<div id="wrapper">	
+	<div class="container">
+	
+<div id="pageTitle" class="container">리뷰 수정하기</div>
 
 <div class="content">
 	<form action="addreviewdetail.action" method="post" class="content">
@@ -227,6 +226,8 @@
 		<input type="hidden" id="play_img" name="play_img" value="${play.play_img }">
 	</form>
 </div><!-- close #content -->
+</div>
+</div>
 
 	
 <br><br><br><br><br><br><br><br>

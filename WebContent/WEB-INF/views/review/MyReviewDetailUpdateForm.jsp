@@ -10,13 +10,16 @@
 <meta charset="UTF-8">
 <title>MyReviewDetailUpdateForm.jsp</title>
 <link href="<%=cp%>/css/myspace.css" rel="stylesheet">
+
 <!-- 달력 선택 기능을 위한 jquery UI 추가 -->
 <link rel="stylesheet" type="text/css" href="<%=cp %>/css/jquery-ui.css">
 <script type="text/javascript" src="<%=cp%>/js/jquery-ui.js"></script>
+
 <!-- 부트스트랩 적용을 위한 3줄: 제이쿼리 스크립트 포함 -->
-<link rel="stylesheet" href="<%=cp %>/css/bootstrap.min.css">
+<%-- <link rel="stylesheet" href="<%=cp %>/css/bootstrap.min.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-<script type="text/javascript" src="<%=cp %>/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<%=cp %>/js/bootstrap.min.js"></script> --%>
+
 <!-- 별점 기능을 위한 아이콘을 CDN 방식으로 추가 -->
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 <!-- 별점 이미지 파일을 다운받은 뒤 css폴더에 추가해 경로 지정 -->
@@ -82,6 +85,7 @@
 	th
 	{
 		width: 115px;
+		text-align: left;
 	}
 	.form-control
 	{
@@ -168,16 +172,14 @@
 </div>
 
 
-<div id="textbox">
-	<h5><img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">리뷰 추가하기</h5>
-	<hr>
-</div>
-<br><br>
-
 <div id="wrapper">	
 	<div class="container">
+	
+	<div id="pageTitle" class="container">리뷰 수정하기</div>
+	
+	<div id="pForm" >
 		<!-- left -->
-		<div id="profileImg profileImg-b" >
+		<div id="profileImg profileImg-b"  style="margin-left: 180px;">
 			<!-- 리뷰 사진 변경: play_img, rev_distin_cd 제출 -->
 			<!-- PosterImgUpload.java 서블릿 호출 -->
 			<form action="PosterImgUpload" method="post" enctype="multipart/form-data">
@@ -198,7 +200,7 @@
 		
 		<!-- right -->
 		<form action="myreviewdetailupdate.action" method="post" class="content">
-			<div id="profileInput">
+			<div id="profileInput" style="width: 100% !important;">
 				<table class="table table-borderless" id="reviewdetailtable">
 					<tr>
 						<th>제목</th>
@@ -248,7 +250,7 @@
 						</td>
 					</tr>
 					<tr>
-						<th style="text-align:center;">공연 평점</th>
+						<th>공연 평점</th>
 						<td>
 							<select id="rating_cd" name="rating_cd">
 									<option value="1">1</option>
@@ -259,15 +261,11 @@
 							</select>
 						</td>
 					</tr>
-				</table>
-			</div><!-- right -->
-			<div><!-- 아래쪽 -->
-				<table>
 					<tr>
 						<th colspan="4">공연 상세 리뷰</th>
 					</tr>
 					<tr>
-						<td colspan="4"><textarea id="contents" name="contents" cols="55" rows="10" style="resize: none;" class="form-control">${reviewdetail.contents}</textarea></td>
+						<td colspan="4"><textarea id="contents" name="contents" cols="55" rows="10" style="height: 200px; resize: none;" class="form-control">${reviewdetail.contents}</textarea></td>
 					</tr>
 				</table>
 				<br><br>
@@ -278,11 +276,13 @@
 				<input type="hidden" id="rev_distin_cd" name="rev_distin_cd" value="${rev_distin_cd }">
 				<input type="hidden" id="getrating_cd" name="getrating_cd" value="${reviewdetail.rating_cd}">
 				<input type="hidden" id="getcompanion_cd" name="getcompanion_cd" value="${reviewdetail.companion_cd}">
-			</div><!-- close 아래쪽 -->
+			
+			</div><!-- right -->
+			
 		</form>
 	</div><!-- close .container -->
 </div><!-- close #wrapper -->
-	
+</div>
 <br><br><br><br><br><br><br><br>
 </body>
 </html>

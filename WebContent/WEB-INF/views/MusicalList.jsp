@@ -38,8 +38,16 @@
 	}
 	.playImg
 	{
-		width: 180px;
-		height: 280px;
+		width: 240px;
+		height: 330px;
+	}
+	
+	#td {float: left; margin: 0 20px 32px 0;  overflow: hidden;}
+	#td > a:hover img 
+	{
+	  transform: scale(1.2);
+	  transition: transform 1s;
+	  filter: brightness(70%);
 	}
 </style>
 <script type="text/javascript">
@@ -94,9 +102,9 @@
 							$("<tr>").appendTo("#result");
 						
 						// get 방식으로 공연코드를 넘겨 줌으로써 클릭시 공연 상세정보로 이동할 수 있도록 함
-						$("<td><a href='playdetail.action?play_cd="
+						$("<div id='td'><td><a href='playdetail.action?play_cd="
 								+ list[i].play_cd + "'>" + "<img src='"
-								+ list[i].play_img + "' class='playImg'></a><td>").appendTo("#result");
+								+ list[i].play_img + "' class='playImg'></a><td></div>").appendTo("#result");
 								
 						// 테스트 
 						//$("<td>" + i + "<td>").appendTo("#result"); 
@@ -169,11 +177,12 @@
 </script>
 </head>
 <body>
-<div style="width: 1300px; margin: 0 auto;">
-	<!-- 상단바 -->
+<!-- 상단바 -->
 	<div>
 		<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
 	</div>
+	
+<div style="width: 1300px; margin: 0 auto;">
 	
 	<!-- 뮤지컬/연극 버튼 -->
 	<div class="play">
@@ -202,7 +211,7 @@
 		<option value="val2">리뷰많은순</option>
 	</select> 
 	</div> -->
-	<select class="selectpicker">
+	<select class="selectpicker" style="margin-bottom: 32px;">
 		<option value="val1">최신순</option>
 		<option value="val2">리뷰많은순</option>
  	</select>

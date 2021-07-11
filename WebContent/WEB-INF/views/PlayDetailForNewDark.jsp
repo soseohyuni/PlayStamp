@@ -23,32 +23,41 @@
 <!-- 별점 콜백 함수 호출을 위해 js 폴더에 추가해 경로 지정 -->
 <script src="<%=cp %>/js/jquery.barrating.min.js"></script>
 
+<link href="<%=cp%>/css/myspace.css" rel="stylesheet">
+
 <!-- 부트스트랩 아이콘 -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
  integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 
 <style type="text/css">	
-	#img { text-align:center;}
-	
-	#playTable td {	width:100px; height:20px;
-					text-align: center; }
 		
 	#tab { width: 60%; margin: auto; }
 	
 	.tab-content { border: 0.3px solid gray; }
 	
 	.subContainer { text-align: center; }
-	#pageTitle { float: left; font-size: 20px;}	
+	#pageTitle { float: left; margin: 0; line-height: 60px;}	
 	#backList { float: right;}
 		
 	.container { width: 1300px; }
 	
 	#header { margin: auto; }
 	
-	#table { margin: auto; width: 80%; }	
+	#infoTable th {text-align: left; width:120px; height: 40px;}
+	#infoTable td {text-align: left; height: 40px;}
+	#playInfo {
+		margin-bottom: 40px; 
+		background-color: #fafafa;
+	    border-radius: 20px;
+	    padding: 30px;
+	    text-align: center;
+	}
+	.infoTd {height: 24px;}
+	
+	#poster { height: 280px; margin: 0 200px 20px 200px; }
 	
 	#playReview { text-align: left; }
-	div#playReview > table > tbody > tr > td:nth-child(1) { width: 10px; }
+	div#playReview > table > tbody > tr > td:nth-child(1) { width: 100px; }
 	div#playReview > table > tbody > tr > td:nth-child(2) { height: 10px; }
 	
 	div#seatReview > table > tbody > tr > td:nth-child(2) { text-align: center; }
@@ -165,74 +174,76 @@
 </head>
 
 <body>
-<div class="container">
 <!-- 상단바 -->
 	<div id="header">
 		<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
 	</div>
+<div class="container">
 <!-- 내용 출력 시작 -->	
-	<div id="wrapper">
+	<div id="wrapper" >
 		<div>
-		
 
 		<!-- 메뉴 -->
-		<div class="subContainer">
-			<span id="pageTitle">공연상세 정보</span>
-			<button type="button" id="backList">목록으로</button>
-			<br>
-			<hr>
-		</div>
+		
+			<div id="topBox" class="inBox" style="background-color: #fff;">
+				<div id="pageTitle">공연상세 정보</div>
+				<div class="btn-group btn-group-lg" role="group" aria-label="..." style="float: right;">
+				  <button type="button" class="btn btn-default" id="backList">목록으로</button>
+				</div>
+			</div>
 			
 			
 		<!-- 공연 상세 출력 -->
-			<div id="table">
-				<table class="table table-borderless" id="playTable">
+			<div id="playInfo">
+				<div id="playTable" style="display: flex;">
 				<c:forEach var="playDetail" items="${playDetailList }">
-					<tr>
-						<td rowspan="4">
-						<div id="img"><img src="${playDetail.play_img }" style="height: 240px;"></div>
-						</td>
-						<td>공연명</td>
-						<td><input type="text" disabled="disabled" value="${playDetail.play_nm}" }></td>
-					</tr>
-					<tr>
-						<td>공연기간</td>
-						<td><input type="text" disabled="disabled" value="${playDetail.play_start} ~ ${playDetail.play_end}"
-						style="width: 200px;"></td>
-					</tr>
-					<tr>
-						<td>공연장소</td>
-						<td><input type="text" disabled="disabled" value="${playDetail.theater}"></td>
-					</tr>
-					<tr>
-						<td>출연진</td>
-						<td><input type="text" disabled="disabled" value="${playDetail.play_cast}"
-						style="width: 450px;"></td>
-					</tr>
-
-					<tr>
-			  			<td>
-			  			<select class="playRev">
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-						</select>
-						</td>
-						<td><input type="hidden" id="hiddenUser" value="${sessionScope.code }"></td>
-						<c:set var="checkJjim" value="${checkJjim}"></c:set>
-						<c:choose>
-						<c:when test="${checkJjim eq 0}">
-							<td>찜리스트에 저장&nbsp;<span id="jjim" style="color: #FE2E2E"><i class='far fa-heart fa-lg'></i></span></td>
-						</c:when>
-						<c:when test="${checkJjim eq 1}">
-							<td>찜리스트에 저장&nbsp;<span id="jjim" style="color: #FE2E2E"><i class="fas fa-heart fa-lg"></i></span></td>
-						</c:when>
-						</c:choose>
-						</tr>
+					<div style="flex:0; width: 50%;">
+						<img src="${playDetail.play_img }" id="poster">
+						<div style="text-align: center;">
+							<select class="playRev">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</div>
+					</div>
+					<div style="flex:1; width: 40%;">
+						<table id="infoTable">
+							<tr>
+								<th class="infoTd">공연명</th>
+								<td class="infoTd">${playDetail.play_nm}</td>
+							</tr>
+							<tr>
+								<th class="infoTd">공연기간</th>
+								<td class="infoTd">${playDetail.play_start} ~ ${playDetail.play_end}</td>
+							</tr>
+							<tr>
+								<th class="infoTd">공연장소</th>
+								<td class="infoTd">${playDetail.theater}</td>
+							</tr>
+							<tr>
+								<th class="infoTd">출연진</th>
+								<td class="infoTd">${playDetail.play_cast}</td>
+							</tr>
+		
+							<tr>
+								<td><input type="hidden" id="hiddenUser" value="${sessionScope.code }"></td>
+								<c:set var="checkJjim" value="${checkJjim}"></c:set>
+								<c:choose>
+								<c:when test="${checkJjim eq 0}">
+									<td>찜리스트에 저장&nbsp;<span id="jjim" style="color: #FE2E2E"><i class='far fa-heart fa-lg'></i></span></td>
+								</c:when>
+								<c:when test="${checkJjim eq 1}">
+									<td>찜리스트에 저장&nbsp;<span id="jjim" style="color: #FE2E2E"><i class="fas fa-heart fa-lg"></i></span></td>
+								</c:when>
+								</c:choose>
+								</tr>
+							</table>
+						</div>
 				</c:forEach>			
-				</table>
+				</div>
 			</div>
 			
 			<!-- 탭 -->
@@ -327,5 +338,9 @@
 		</div>
 	</div>
 </div>
+
+<!-- 푸터 임포트 -->
+<c:import url="/WEB-INF/views/main/Footer.jsp"></c:import>
+
 </body>
 </html>

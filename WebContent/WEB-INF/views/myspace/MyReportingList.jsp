@@ -10,12 +10,12 @@
 <meta charset="UTF-8">
 <title>MyReportingList.jsp</title>
 <link href="<%=cp%>/css/header.css" rel="stylesheet">
+<link href="<%=cp%>/css/myspace.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<link rel="stylesheet" href="css/bootstrap.min.css">
 <style type="text/css">
 
 	#content
@@ -115,14 +115,14 @@
 <div>
 	<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
 </div>
-<div class="container" style="width: 72%; height: 700px; top:50px;">
-	<h2>신고한 내역</h2>
+
+<div class="container" style="width: 72%; height: 700px;">
+	<div id="pageTitle" class="container">신고한 내역</div>
 	<hr>
 	<div class="container">
-		<div id="reportListIntro"><img style="width: 20px; margin-right: 5px;" src="images/boardicon.png">신고 리스트</div>
 			<br>
 			<div class="row">
-				<table class="table table-striped" id="userTable" style="text-align: center; border: 1px solid #dddddd">
+				<table class="table table-hover" id="userTable" style="text-align: center; border: 1px solid #dddddd">
 					<thead>
 						<tr>
 							<th style="background-color: #eeeeee; text-align: center;">번호</th>

@@ -10,6 +10,8 @@
 <meta charset="UTF-8">
 <title>MyReviewSeatUpdateForm.jsp</title>
 <link href="<%=cp%>/css/header.css" rel="stylesheet">
+<link href="<%=cp%>/css/myspace.css" rel="stylesheet">
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <!-- 별점 기능을 위한 아이콘을 CDN 방식으로 추가 -->
 <link rel="stylesheet"
@@ -80,7 +82,7 @@
 	{
 		display: none;
 	}
-	
+	#pageTitle { float: left; margin: 0; line-height: 60px;}
 </style>
 <script type="text/javascript">
 
@@ -171,11 +173,9 @@
 		<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
 	</div>
 	
-	<div id="textbox">
-		<h5>
-			<img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">좌석 리뷰 수정하기
-		</h5>
-		<hr>
+	<div class="container">
+	<div id="pageTitle" class="container">좌석 리뷰 수정하기</div>
+	
 	</div><br><br><br>
 	<div class="center">
 		<h5>좌석 정보를 수정해주세요.</h5>

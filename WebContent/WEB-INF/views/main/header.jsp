@@ -59,7 +59,7 @@
 	</div>
 
 	<!-- Header Main -->
-	<div class="header_main">
+	<div class="header_main" style="margin-top: 20px;">
 		<div class="container">
 			<div class="row">
 				<!-- Logo -->

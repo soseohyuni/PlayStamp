@@ -245,7 +245,7 @@
 			
 			<div style="display:flex; width: 100%;">
 				<div class="chart-container" style="flex:0; margin-right: 80px;">
-					<h3>동행인(?) 비율(?)</h3>
+					<h3>동행인 비율</h3>
 					<hr>
 					<div style="width: 400px;">
 						<h5><input type="button" class="btn-default year" value="2021">년에는
@@ -255,11 +255,11 @@
 				</div>
 				
 				<div class="chart-container" style="flex:1;">
-					<h3>얼마를 썼는가.</h3>
+					<h3>관람 금액 통계</h3>
 					<hr>
 					<div>	
 						<h5><input type="button" class="btn-default year" value="2021">년에는
-						얼마를 썼눈지?</h5>
+						얼마를 사용했을까요?</h5>
 						<canvas id="myMChart"></canvas>
 					</div>
 				</div>

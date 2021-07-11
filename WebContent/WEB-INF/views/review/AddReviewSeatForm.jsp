@@ -169,12 +169,8 @@
 		<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
 	</div>
 	
-	<div id="textbox">
-		<h5>
-			<img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">리뷰 추가하기
-		</h5>
-		<hr>
-	</div><br><br><br>
+	<div id="pageTitle" class="container">리뷰 추가하기</div>
+	
 	<div class="center">
 		<h5>관람하신 공연은 <span id="highlight">${play.play_nm }</span>입니다.</h5>
 		<h5>플레이 스탬프에서 더 많은 정보들이 공유될 수 있도록, 관람하신 좌석에 대한 정보를 기입해주세요!</h5>
