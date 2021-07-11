@@ -171,6 +171,14 @@ public class UserController
 			if (str!=null)
 			{
 				System.out.println("관리자 로그인 성공");
+
+	            HttpSession session = request.getSession();
+	            session.setAttribute("id", id);
+	            session.setAttribute("nick", str);
+
+	            String code = userDao.userCode(id);
+	            session.setAttribute("code", code);
+	            
 				// 추후 관리자 페이지로 변경
 				result = "redirect:managerhome.action";
 			}
@@ -248,7 +256,7 @@ public class UserController
 				//System.out.println(str);
 				model.addAttribute("msg", "success");
 				
-				result = "WEB-INF/views/main/Home.jsp";
+				result = "redirect:home.action";
 			}
 			else // 로그인 실패
 			{
@@ -411,7 +419,7 @@ public class UserController
 		String result = ""; 
 		session.invalidate();
 
-		result = "WEB-INF/views/main/Home.jsp";
+		result = "redirect:home.action";
 
 		
 		return result;
