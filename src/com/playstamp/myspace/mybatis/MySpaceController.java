@@ -52,7 +52,8 @@ public class MySpaceController
 		// 회원 정보 조회
 		IMyspaceDAO dao = sqlSession.getMapper(IMyspaceDAO.class);
 		User userInfo = dao.searchUserInfo(userId);
-
+		
+		// 나의 포인트 조회
 		int userPoint = 0;
 		if(dao.userPoint(userCode) != 0)
 			userPoint = dao.userPoint(userCode);
@@ -66,8 +67,8 @@ public class MySpaceController
 		int userRev = 0;
 		if(dao.countingRev(userCode) != 0)
 			userRev = dao.countingRev(userCode);
-		System.out.println("성공");
 
+		// 나의 찜 개수 조회
 		int userJjim = 0;
 		if(dao.countingJjim(userCode) != 0)
 			userJjim = dao.countingJjim(userCode);

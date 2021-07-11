@@ -61,38 +61,34 @@ $(document).ready(function()
 				<th>번호</th>
 				<th>적립/차감</th>
 				<th></th>
-				<th>적립/차감 캐시</th>
-				<th>총 캐시</th>
+				<th style="text-align: center;">적립/차감 캐시</th>
+				<th style="text-align: center;">총 캐시</th>
 			</tr>
-			<!-- 
-			<c:forEach var="cash" items="${cashList}">
-				<tr>
-					<td>${cash.cash_y }</td>
-					<td style="color: #bfbfbf;">${cash.cash_dt }</td>
-					<c:choose>
-
-						<c:when test = "${fn:contains(cash.cash, '-')}">
-					        <td style="color: red;">${cash.cash }</td>
-					    </c:when>
-					    <c:otherwise>
-					     	<td style="color: blue;">${cash.cash }</td>
-					    </c:otherwise>
-				    
-				    </c:choose>
-					<td style="font-weight: 500;">${cash.user_cash }</td>
-				</tr>
-			</c:forEach>
-			-->
 			
-			<c:forEach var="checkList" items="${checkList }">
-					<tr>
-						<td>${checkList.bno }</td>
-						<td>${checkList.cash_y }</td>
-						<td>${checkList.cash_dt }</td>
-						<td>${checkList.cash }</td>
-						<td>${checkList.user_cash }</td>
-					</tr>
-			</c:forEach>
+			<c:choose>
+				<c:when test = "${userCash!=0}">
+					<c:forEach var="checkList" items="${checkList }">
+							<tr>
+								<td>${checkList.bno }</td>
+								<td>${checkList.cash_y }</td>
+								<td style="color: #bfbfbf;">${checkList.cash_dt }</td>
+								<c:choose>
+									<c:when test = "${fn:contains(checkList.cash, '-')}">
+								        <td style="color: red; text-align: center;">${checkList.cash }</td>
+								    </c:when>
+								    <c:otherwise>
+								     	<td style="color: blue; text-align: center;">${checkList.cash }</td>
+								    </c:otherwise>
+							    </c:choose>
+								<td style="text-align: center;">${checkList.user_cash }</td>
+							</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<td colspan="5" style="text-align: center;">확인할 내역이 없습니다.</td>
+				</c:otherwise>
+			</c:choose>
+			
 			</table>
 			
 			<!--  페이징 추가 -->

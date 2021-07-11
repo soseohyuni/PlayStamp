@@ -37,7 +37,7 @@ public class UserImgUpload extends HttpServlet {
 		fileName = multpartRequest.getFilesystemName("userImg"); 
 		
 		//userProfile = realPath + fileName;
-
+		System.out.println(fileName);
 		HttpSession session= request.getSession();
 	    session.setAttribute("userProfile", fileName);
 	    

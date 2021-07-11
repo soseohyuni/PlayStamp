@@ -57,11 +57,13 @@
 	    	<button type="submit" class="btn btn-primary btn-block" id="login">로그인</button>
 	    </div>
 	    
+	    <!-- 
 	    <div class="mt-2"> 
 	    	<button class="btn btn-primary btn-block" id="naverLogin">
 	    		<img src="images/naverIcon.png" alt="Icon naver" id="naverImg">네이버로 로그인
 	    	</button> 
 	    </div>
+	    -->
 	    
 	    <!-- 
 	    <div class="mt-2"> 

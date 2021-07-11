@@ -248,7 +248,7 @@ public class UserController
 				//System.out.println(str);
 				model.addAttribute("msg", "success");
 				
-				result = "WEB-INF/views/main/Home.jsp";
+				result = "redirect:home.action";
 			}
 			else // 로그인 실패
 			{
@@ -411,8 +411,7 @@ public class UserController
 		String result = ""; 
 		session.invalidate();
 
-		result = "WEB-INF/views/main/Home.jsp";
-
+		result = "redirect:home.action";
 		
 		return result;
 	}
