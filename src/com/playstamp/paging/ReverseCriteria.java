@@ -62,6 +62,4 @@ public class ReverseCriteria
 	{
 		this.user_cd = user_cd;
 	}
-	
-	
 }

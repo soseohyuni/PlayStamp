@@ -68,4 +68,26 @@
 		FROM VIEW_RATING_AVG
 		WHERE PLAY_CD=#{play_cd}
 	</select>
+	
+	<insert id="addHeartPoint">
+		INSERT INTO TBL_POINT(POINT_CD, USER_CD, POINT_Y_CD, POINT_DT)
+		VALUES('PT'||SEQ_POINT.NEXTVAL, #{user_cd}, 2, SYSDATE)
+	</insert>
+	
+	<insert id="delHeartPoint">
+		INSERT INTO TBL_POINT(POINT_CD, USER_CD, POINT_Y_CD, POINT_DT)
+		VALUES('PT'||SEQ_POINT.NEXTVAL, #{user_cd}, 6, SYSDATE)
+	</insert>
+		
+	<select id="countAddHeart" resultType="Integer">
+		SELECT COUNT(*)
+		FROM TBL_POINT
+		WHERE TO_CHAR(POINT_DT, 'YYYY-MM-DD')=TO_CHAR(SYSDATE, 'YYYY-MM-DD') AND USER_CD=#{user_cd} AND POINT_Y_CD=2
+	</select>
+	
+	<select id="ifUserAddHeart" resultType="string">
+		SELECT POINT_CD
+		FROM VIEW_IF_USER_ADD_HEARTPOINT
+		WHERE USER_CD=#{user_cd, jdbcType=VARCHAR} AND PLAYREV_CD=#{playrev_cd, jdbcType=VARCHAR} AND POINT_Y_CD=2 AND ROWNUM=1
+	</select>
 </mapper>
