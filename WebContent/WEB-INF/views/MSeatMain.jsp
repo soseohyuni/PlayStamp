@@ -9,182 +9,13 @@
 <head>
 <meta charset="UTF-8">
 <title>MSeatMain.jsp</title>
-<%-- <link rel="stylesheet" href="<%=cp %>/css/mseat.css"> --%>
+<link rel="stylesheet" href="<%=cp %>/css/mseat.css">
 <script type="text/javascript" src="<%=cp%>/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="<%=cp %>/css/bootstrap.min.css">
-
-<style type="text/css">
-body {
-	font-size: 25pt;
-	font-weight: bold;
-}
-
-#fullBackground {
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	width: 100%;
-	height: 1400px !important;
-	/* background-color: #E4E4E4; */
-	background-color: #343434;
-	filter: alpha(opacity = 55);
-	opacity: 0.5;
-	display: none;
-	z-index: 100;
-}
-
-#sac, #bs {
-	position: absolute;
-	height: 1000px;
-	left: 150px;
-	top: 33px;
-	bottom: 33px;
-	border: 1px solid;
-	background-color: #FFFFFF;
-	z-index: 101;
-	display: none;
-	width: 1000px;
-}
-
-.titleBar, .content {
-	font-family: 굴림;
-	font-size: 9pt;
-	/* padding: 2px 2px 2px 5px; */
-	width: 1000px;
-}
-
-.titleBar {
-	clear: both;
-	height: 25px;
-	background: #3980F4;
-	width: 1000px;
-	cursor: move;
-}
-
-.title {
-	float: left;
-	font-size: 9pt;
-	height: 25px;
-	line-height: 25px;
-	background: #3980F4;
-	color: #FFFFFF;
-	width: 270px;
-	cursor: move;
-}
-
-.titleClose {
-	float: right;
-	font-size: 9pt;
-	height: 20px;
-	margin-top: 5px;
-	background: #3980F4;
-	color: #FFFFFF;
-	width: 17px;
-	cursor: pointer;
-}
-
-.content {
-	clear: both;
-	width: 1000px;
-	/* height: 1000px; */
-	align: center;
-	margin: 0 auto;
-	text-align: center;
-	top: 5%;
-}
-
-.backgroundImg {
-	width: 500px;
-	z-index: 2;
-}
-
-.intro, .theater {
-	text-align: center !important;
-	align-content: center;
-	margin: 0 auto;
-	justify-content: center;
-	align: center;
-}
-
-/* 
-.btn-default {
-border-color: none;
-font-size: 12pt !important;
-margin-top: 10px;
-margin-bottom: 20px;
-background-color: none;
-
-	
-}
- */
-
-.theater{
-	margin: 0 auto;
-	padding: 0.5rem 1rem;
-	font-size: 1rem;
-	font-weight: bold;
-	text-align: center !important;
-	border-radius: 1em;
-	border-radius: 2em;
-	font-size: 12pt !important;
-}
-
-.seatImg {
-	position: absolute;
-	z-index: 1;
-}
-
-.seatRating {
-	width: 200px;
-	z-index: 1 !important;
-	border: 2px solid;
-	top: 100px;
-	position: absolute;
-	left: 40px;
-	/* border-radius: 1em; */
-	margin-top: 5px;
-	margin-bottom: 5px;
-	border-color: #dedede;
-	background-color:  #f6f6f6;
-	color: black;
-	box-shadow: 2px 2px 2px 2px #b9b9b9;
-}
-
-.seatName
-{
-	 font-size: 20pt;
-	 font-weight: bold;
-	 color: red;
-}
-
-	.tableRating th
-	{
-		margin: 20px;
-		font-size: 10pt;
-		font-family: 맑은 고딕;
-	}
-	
-	.tableRating td
-	{
-		font-weight: bold;
-		font-size: 10pt;	
-		font-family: 맑은 고딕;
-	}
-	
-	.tableRating
-	{
-		position: relative;
-		left: 50px;
-		font-family: 맑은 고딕;
-		margin-top: 10px;
-		margin-bottom: 10px;
-	}
-	
-</style>
 
 <script type="text/javascript">
 
@@ -265,7 +96,7 @@ background-color: none;
 
 		// 마우스 엔터했을 때
 		$(".seatImg").mouseenter(function()
-		{
+		{	
 			// div 내용 초기화
 			//$("#ratingSacDiv").html("");
 			//$("#ratingBsDiv").html("");
@@ -302,12 +133,13 @@ background-color: none;
 				$("#ratingSacDiv").html("");
 				$("#ratingBsDiv").html("");
 				
+				noReviewInfoRating();
+				
 				$(".seatRating").hide();
 			});
 		});
 
 	});
-	
 
 	// 마우스 엔터시마다 호출됨
 	function ajaxRequest(params)
@@ -324,22 +156,14 @@ background-color: none;
 			{
 				listSac = data.listSac;
 
-				if(listSac!=null)
+				for (var i=0; i<4; i++)
 				{
-					for (var i=0; i<4; i++)
-					{
-						// listSac에 담아온 것을 테이블 형식에 맞게 뿌려줌 (예술의전당)
-						$("<table class='tableRating'><tr><th>시야 : </th><td>&emsp;" + listSac[i].viewrating + " 점</td></tr>"
-						+ "<tr><th>좌석 : </th><td>&emsp;" + listSac[i].seatrating + " 점</td></tr>"
-						+ "<tr><th>조명 : </th><td>&emsp;" + listSac[i].lightrating + " 점</td></tr>"
-						+ "<tr><th>음향 : </th><td>&emsp;" + listSac[i].soundrating + " 점</td></tr></table>").appendTo("#ratingSacDiv");
-						
-						if(listSac[i].lightrating == null || listSac[i].lightrating == "")
-						{
-							$("#ratingSacDiv").innerHTML("아직 남겨진 리뷰가 없습니다ㅠㅠ");
-						}
-						
-					}
+					// listSac에 담아온 것을 테이블 형식에 맞게 뿌려줌 (예술의전당)
+					$("<table class='tableRating'><tr><th>시야 : </th><td>&emsp;" + listSac[i].viewrating + " 점</td></tr>"
+					+ "<tr><th>좌석 : </th><td>&emsp;" + listSac[i].seatrating + " 점</td></tr>"
+					+ "<tr><th>조명 : </th><td>&emsp;" + listSac[i].lightrating + " 점</td></tr>"
+					+ "<tr><th>음향 : </th><td>&emsp;" + listSac[i].soundrating + " 점</td></tr></table>").appendTo("#ratingSacDiv");
+					
 				}
 				
 			}
@@ -363,18 +187,19 @@ background-color: none;
 				
 				for (var i=0; i<4; i++)
 				{
-					// listBs에 담아온 것을 테이블 형식에 맞게 뿌려줌 (블루스퀘어)
-					$("<table class='tableRating'><tr><th>시야 : </th><td>&emsp;" + listBs[i].viewrating + " 점</td></tr>"
-					+ "<tr><th>좌석 : </th><td>&emsp;" + listBs[i].seatrating + " 점</td></tr>"
-					+ "<tr><th>조명 : </th><td>&emsp;" + listBs[i].lightrating + " 점</td></tr>"
-					+ "<tr><th>음향 : </th><td>&emsp;" + listBs[i].soundrating + " 점</td></tr></table>").appendTo("#ratingBsDiv");
-
-					if(listBs[i].lightrating == null)
-					{
-						document.getElementById("ratingBsDiv").innerHTML = "아직 남겨진 리뷰가 없습니다ㅠ";
+					if(listBs[i].seatrating != null)
+					{	
+						ReviewInfoRating();
+						
+						// listBs에 담아온 것을 테이블 형식에 맞게 뿌려줌 (블루스퀘어)
+						$("<table class='tableRating'><tr><th>시야 : </th><td>&emsp;" + listBs[i].viewrating + " 점</td></tr>"
+						+ "<tr><th>좌석 : </th><td>&emsp;" + listBs[i].seatrating + " 점</td></tr>"
+						+ "<tr><th>조명 : </th><td>&emsp;" + listBs[i].lightrating + " 점</td></tr>"
+						+ "<tr><th>음향 : </th><td>&emsp;" + listBs[i].soundrating + " 점</td></tr></table>").appendTo("#ratingBsDiv");
 					}
-				}
-				
+					else
+						noReviewInfoRating();
+				}	
 			}
 			, error : function(e)
 			{
@@ -383,6 +208,16 @@ background-color: none;
 		});
 	}			
 	// ------------------------------------------------------------- AJAX 구현 
+	
+	function noReviewInfoRating()
+	{
+		$(".infoRating").html("아직 남겨진 리뷰가 없습니다 T.T");
+	}
+	
+	function ReviewInfoRating()
+	{
+		$(".infoRating").html("해당구역에서 관람한 회원님들이<br>남겨주신 평균 점수입니다 :)");
+	}
 	
 </script>
 </head>
@@ -403,7 +238,7 @@ background-color: none;
 
 	<br />
 	<br />
-	<div class="intro" style="font-size: 12pt; font-weight: bold;">
+	<div class="intro" style="font-size: 10pt; font-weight: bold;">
 		궁금하신 공연장을 선택하시고<br>좌석 구역에 마우스를 올려보세요 !
 		<div class="mseatexample">
 			<img src="images/mseatmainexamplefinal.JPG">
@@ -502,7 +337,7 @@ background-color: none;
 		
 			<div class="seatRating" id="bsRating">
 				<div class="seatName"></div><br>
-				<div style="font-family: 맑은 고딕;">해당구역에서 관람한 회원님들이<br>남겨주신 평균 점수입니다 :)</div><br>
+				<div class="infoRating" style="font-family: 맑은 고딕;">아직 남겨진 리뷰가 없습니다 T.T</div><br>
 				<div id="ratingBsDiv"></div>
 			</div>
 		</div>

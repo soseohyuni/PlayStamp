@@ -28,7 +28,7 @@
  integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 
 <style type="text/css">	
-	#img { text-align:center;}
+	#img { text-align:center; }
 	
 	#playTable td {	width:100px; height:20px;
 					text-align: center; }
@@ -283,28 +283,26 @@
 			
 		<!-- 공연 상세 출력 -->
 			<div id="table">
-				<table class="table table-borderless" id="playTable">
+				<table class="table table-borderled" id="playTable">
 				<c:forEach var="playDetail" items="${playDetailList }">
 					<tr>
 						<td rowspan="4">
 						<div id="img"><img src="${playDetail.play_img }" style="height: 240px;"></div>
 						</td>
 						<td>공연명</td>
-						<td><input type="text" disabled="disabled" value="${playDetail.play_nm}" }></td>
+						<td>${playDetail.play_nm}</td>
 					</tr>
 					<tr>
 						<td>공연기간</td>
-						<td><input type="text" disabled="disabled" value="${playDetail.play_start} ~ ${playDetail.play_end}"
-						style="width: 200px;"></td>
+						<td>${playDetail.play_start} ~ ${playDetail.play_end}</td>
 					</tr>
 					<tr>
 						<td>공연장소</td>
-						<td><input type="text" disabled="disabled" value="${playDetail.theater}"></td>
+						<td>${playDetail.theater}</td>
 					</tr>
 					<tr>
 						<td>출연진</td>
-						<td><input type="text" disabled="disabled" value="${playDetail.play_cast}"
-						style="width: 450px;"></td>
+						<td>${playDetail.play_cast}</td>
 					</tr>
 
 					<tr>

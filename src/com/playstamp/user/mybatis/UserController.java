@@ -126,76 +126,84 @@ public class UserController
         
         //System.out.println("인증번호 : " + num);
         return num;
-   }
-   
-   
-   // 사용자 회원가입 완료
-   @RequestMapping(value="/completesignup.action", method=RequestMethod.POST)
-   public String userInsert(@ModelAttribute("user") User user) throws ClassNotFoundException, SQLException 
-   { 
-      String result = "";
-      
-      IUserDAO dao = sqlSession.getMapper(IUserDAO.class);
-      //dao.userInsert(user);
-    
-      dao.userInsertProcedure(user);
-      
-      result = "WEB-INF/views/main/Welcome.jsp";
-   
-      return result; 
-   }
-   
-   // 사용자 로그인
-   @RequestMapping(value="/login.action", method=RequestMethod.POST)
-   public String userLogin(HttpServletRequest request, Model model) throws SQLException
-   { 
-      String result = ""; 
-      
-      // 넘어온 값 받아오기
-      String id = request.getParameter("userId");
-      String pw = request.getParameter("userPw");
-      String admin = request.getParameter("admin");
-      
-      // ! 세션은 사용자의 프로필 / 모델은 페이지에서 사용할 데이터
-      
-      // 테스트(admin 체크 안 하면 null 로 넘어오는 것 확인)
-      //System.out.println("admin="+ admin);
-      
-      IUserDAO userDao = sqlSession.getMapper(IUserDAO.class);
-      String str = "";
-      
-      if (admin!=null) // 관리자로 로그인 시도
-      {
-         System.out.println("관리자로 로그인 시도");
-         
-         // 관리자 테이블 조회
-         str = userDao.managerLogin(id, pw);
-         
-         if (str!=null)
-         {
-            System.out.println("관리자 로그인 성공");
-            // 추후 관리자 페이지로 변경
-            result = "redirect:managerhome.action";
-         }
-         else
-         {
-            System.out.println("관리자 로그인 실패");
-            request.setAttribute("msg", "fail");
-            result = "redirect:loginform.action";
-         }
-         
-      }
-      else // 사용자로 로그인 시도
-      {
-         System.out.println("사용자로 로그인 시도");
-         
-         // 유저 테이블 조회
-         str = userDao.userLogin(id, pw);
-         
-         if(str!=null) // 테이블 정보가 일치 == 로그인 성공
-         {
-            System.out.println("사용자로 로그인 성공");
-            
+	}
+	
+	
+	// 사용자 회원가입 완료
+	@RequestMapping(value="/completesignup.action", method=RequestMethod.POST)
+	public String userInsert(@ModelAttribute("user") User user) throws ClassNotFoundException, SQLException 
+	{ 
+		String result = "";
+		
+		IUserDAO dao = sqlSession.getMapper(IUserDAO.class);
+		//dao.userInsert(user);
+	 
+		dao.userInsertProcedure(user);
+		
+		result = "WEB-INF/views/main/Welcome.jsp";
+	
+		return result; 
+	}
+	
+	// 사용자 로그인
+	@RequestMapping(value="/login.action", method=RequestMethod.POST)
+	public String userLogin(HttpServletRequest request, Model model) throws SQLException
+	{ 
+		String result = ""; 
+		
+		// 넘어온 값 받아오기
+		String id = request.getParameter("userId");
+		String pw = request.getParameter("userPw");
+		String admin = request.getParameter("admin");
+		
+		// ! 세션은 사용자의 프로필 / 모델은 페이지에서 사용할 데이터
+		
+		// 테스트(admin 체크 안 하면 null 로 넘어오는 것 확인)
+		//System.out.println("admin="+ admin);
+		
+		IUserDAO userDao = sqlSession.getMapper(IUserDAO.class);
+		String str = "";
+		
+		if (admin!=null) // 관리자로 로그인 시도
+		{
+			System.out.println("관리자로 로그인 시도");
+			
+			// 관리자 테이블 조회
+			str = userDao.managerLogin(id, pw);
+			
+			if (str!=null)
+			{
+				System.out.println("관리자 로그인 성공");
+
+	            HttpSession session = request.getSession();
+	            session.setAttribute("id", id);
+	            session.setAttribute("nick", str);
+
+	            String code = userDao.userCode(id);
+	            session.setAttribute("code", code);
+	            
+				// 추후 관리자 페이지로 변경
+				result = "redirect:managerhome.action";
+			}
+			else
+			{
+				System.out.println("관리자 로그인 실패");
+				request.setAttribute("msg", "fail");
+				result = "redirect:loginform.action";
+			}
+			
+		}
+		else // 사용자로 로그인 시도
+		{
+			System.out.println("사용자로 로그인 시도");
+			
+			// 유저 테이블 조회
+			str = userDao.userLogin(id, pw);
+			
+			if(str!=null) // 테이블 정보가 일치 == 로그인 성공
+			{
+				System.out.println("사용자로 로그인 성공");
+
 
                HttpSession session = request.getSession();
                session.setAttribute("id", id);
@@ -213,7 +221,6 @@ public class UserController
                   userDao.addLoginPoint(code);
                   userDao.addLogin(code);
                }
-
                
             /* 등급 처리 */
             // 세션 객체 안에 있는 ID 얻어오기
@@ -271,9 +278,56 @@ public class UserController
       String result = "";
       
       result = "/WEB-INF/views/main/FindIdForm.jsp";
-
-      return result;
-   }
+ 
+				/* 등급 처리 */
+				// 세션 객체 안에 있는 ID 얻어오기
+				String userId = (String)session.getAttribute("id");
+				
+				// 현재 포인트 얻어오기
+				IMyspaceDAO dao = sqlSession.getMapper(IMyspaceDAO.class);
+				
+				int userPoint = 0;
+				userPoint = dao.userPoint(code);
+				
+				// 좋아요 개수 받아오기
+				int countingLike = dao.countingLike(userId);
+				
+				// 등급 확인
+				String grade = null;
+				
+				if(countingLike >= 20 && userPoint >= 200)
+					grade = "우수회원";
+				else if(countingLike >= 10 && userPoint >= 100)
+					grade = "일반회원";
+				else if(countingLike >= 3 && userPoint >= 30)
+					grade = "준회원";
+				else if(userPoint < 0)
+					grade = "어둠회원";
+				else if(countingLike == 0 || userPoint == 0 )
+					grade = "뉴비";
+				
+				System.out.println("포인트 : " + userPoint + " | 좋아요 : " + countingLike + " | 등급 : " + grade);
+				
+				
+				// 세션에 담아놓기
+				session.setAttribute("grade", grade);
+				
+				//System.out.println(str);
+				model.addAttribute("msg", "success");
+				
+				result = "redirect:home.action";
+			}
+			else // 로그인 실패
+			{
+				System.out.println("로그인 실패");
+				request.setAttribute("msg", "fail");
+				result = "/WEB-INF/views/main/LoginForm.jsp";
+			}
+		}
+		
+		return result; 
+	}
+	
    
    // 비밀번호 찾기 버튼 클릭
    @RequestMapping("/findpw.action")
@@ -414,6 +468,7 @@ public class UserController
       String result = ""; 
       session.invalidate();
 
+
       result = "redirect:home.action";
 
       
@@ -441,5 +496,6 @@ public class UserController
       return "/WEB-INF/views/main/UserNoticeFaq.jsp";
    }
  
- 
+	
 }
+
