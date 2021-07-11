@@ -94,24 +94,23 @@ public class PlayReviewDetailController
 			checkRepComStList.add(checkRepComSt);			
 		}
 		
-		if (dao.getUserGrade(user_id).equals("어둠회원"))
-		{
-			//@@ 신고되었는지 여부 확인하는 리스트를 모델에 담아 보낸다.
-			model.addAttribute("checkRepComList", checkRepComList);
-			//@@ 신고 처리 여부 확인하는 리스트를 모델에 담아 보낸다.
-			model.addAttribute("checkRepComStList", checkRepComStList);
-					
-			//System.out.println(playrev_cd);
-			// addAttribute 를 통해 전송
-			model.addAttribute("playReviewDetail", dao.getPlayReviewDetail(playrev_cd));
-			
-			//@@ 코멘트 리스트 전송 구문도 추가
-			model.addAttribute("commentList", dao.getCommentList(playrev_cd));
-			
-			model.addAttribute("ratingAvg", dao.getRatingAvg(play_cd));
-			
-			return "WEB-INF/views/PlayReviewDetailForDark.jsp";
-		}
+		
+		  if (dao.getUserGrade(user_id).equals("어둠회원")) { 
+			  //@@ 신고되었는지 여부 확인하는 리스트를 모델에 담아 보낸다. 
+			  model.addAttribute("checkRepComList", checkRepComList); 
+			  //@@ 신고 처리 여부 확인하는 리스트를 모델에 담아 보낸다. 
+			  model.addAttribute("checkRepComStList",checkRepComStList);
+		  
+		  //System.out.println(playrev_cd); // addAttribute 를 통해 전송
+		  model.addAttribute("playReviewDetail", dao.getPlayReviewDetail(playrev_cd));
+		  
+		  //@@ 코멘트 리스트 전송 구문도 추가 model.addAttribute("commentList",
+		  dao.getCommentList(playrev_cd);
+		  
+		  model.addAttribute("ratingAvg", dao.getRatingAvg(play_cd));
+		  
+		  return "WEB-INF/views/play/PlayReviewDetailForDark.jsp"; }
+		 
 		
 		//@@ 신고되었는지 여부 확인하는 리스트를 모델에 담아 보낸다.
 		model.addAttribute("checkRepComList", checkRepComList);
@@ -125,13 +124,13 @@ public class PlayReviewDetailController
 		//@@ 코멘트 리스트 전송 구문도 추가
 		model.addAttribute("commentList", dao.getCommentList(playrev_cd));
 	
-		return "WEB-INF/views/PlayReviewDetail.jsp";
+		return "WEB-INF/views/play/PlayReviewDetail.jsp";
 	}
 	
 	@RequestMapping(value="/reportform.action")
 	public String reportForm()
 	{
-		return "WEB-INF/views/Report.jsp";
+		return "WEB-INF/views/report/Report.jsp";
 	}
 	
 	//@@ ajax 로 댓글 리스트 전송

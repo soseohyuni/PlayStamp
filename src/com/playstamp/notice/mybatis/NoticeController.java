@@ -9,6 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.playstamp.faq.mybatis.IFaqDAO;
 import com.playstamp.notice.Notice;
 
 @Controller
@@ -24,13 +25,28 @@ public class NoticeController
 		
 		model.addAttribute("list", dao.getNoticeList());
 		
-		return "WEB-INF/views/Notice.jsp";
+		return "WEB-INF/views/manager/Notice.jsp";
+	}
+	
+	@RequestMapping(value="/usernotice.action", method = RequestMethod.GET)
+	public String getUserNoticeList(ModelMap model)
+	{
+		INoticeDAO dao = sqlSession.getMapper(INoticeDAO.class); 
+		
+		model.addAttribute("list", dao.getNoticeList());
+		
+		return "WEB-INF/views/main/UserNotice.jsp";
 	}
 	
 	@RequestMapping(value="noticeinsert.action", method=RequestMethod.POST)
 	public String noticeInsert(Notice notice)
 	{
 		INoticeDAO dao = sqlSession.getMapper(INoticeDAO.class);
+		
+		String contents = notice.getContents();
+		contents = contents.replace("\r\n","<br>");
+		
+		notice.setContents(contents);
 		
 		dao.addNotice(notice);
 		
@@ -70,7 +86,7 @@ public class NoticeController
 	{
 		String result = "";
 		
-		result = "WEB-INF/views/NoticeInsertForm.jsp";
+		result = "WEB-INF/views/manager/NoticeInsertForm.jsp";
 				
 		return result;
 	}
@@ -81,7 +97,7 @@ public class NoticeController
 		INoticeDAO dao = sqlSession.getMapper(INoticeDAO.class);
 		String result = "";
 			
-		result = "WEB-INF/views/NoticeUpdateForm.jsp";
+		result = "WEB-INF/views/manager/NoticeUpdateForm.jsp";
 		model.addAttribute("notice", dao.searchNotice(notice));
 		
 		return result;

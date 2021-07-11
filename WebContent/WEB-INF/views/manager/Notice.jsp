@@ -22,13 +22,13 @@
 		{
 			if (confirm("정말 삭제하시겠습니까?"))
 			{
-				$(location).attr("href", "faqdelete.action?faq_cd=" + $(this).val());
+				$(location).attr("href", "noticedelete.action?notice_cd=" + $(this).val());
 			}
 		});
 		
 		$(".upBtn").click(function()
 		{
-			$(location).attr("href", "faqupdateform.action?faq_cd=" + $(this).val());
+			$(location).attr("href", "noticeupdateform.action?notice_cd=" + $(this).val());
 		});	
 	});
 	
@@ -41,10 +41,13 @@
 </style>
 </head>
 <body>
+<!-- 헤더 추가 -->
+<c:import url="ManagerHeader.jsp"></c:import>
+
 <div class="container">
-	<h2>FAQ 관리</h2>
+	<h2>공지사항 관리</h2>
 	<hr>
-	<button type="button" class="btn btn-default" onclick="location.href='faqinsertform.action'">&nbsp;FAQ 작성하기</button>
+	<button type="button" class="btn btn-default" onclick="location.href='noticeinsertform.action'">&nbsp;공지사항 작성하기</button>
 	<br><br><br>
 	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 	<c:set var="i" value="0"></c:set>
@@ -54,7 +57,7 @@
 	    <div class="panel-heading" role="tab" id="heading${i }">
 	      <h4 class="panel-title">
 		<a data-toggle="collapse" href="#collapse${i }" aria-expanded="true" aria-controls="collapse${i }">
-		  <span style="color: #FE2E2E;"><i class="fab fa-quora"></i></span>&nbsp; ${list.title}
+		  <span style="color: #0080FF"><i class="far fa-bell"></i></span>&nbsp; ${list.title}
 		</a>
 	      </h4>
 	    </div>
@@ -62,8 +65,8 @@
 	      <div class="panel-body">
 	      ${list.contents }
 	      <br>
-	      <button type="button" class="btn btn-default delBtn" value="${list.faq_cd }">삭제</button>
-	      &nbsp;<button type="button" class="btn btn-default upBtn" value="${list.faq_cd }">수정</button>
+	      <button type="button" class="btn btn-default delBtn" value="${list.notice_cd }">삭제</button>
+	      &nbsp;<button type="button" class="btn btn-default upBtn" value="${list.notice_cd }">수정</button>
 	      </div>
 	    </div>
 	  </div>

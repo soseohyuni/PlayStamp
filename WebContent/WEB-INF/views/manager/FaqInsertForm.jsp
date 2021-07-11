@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>FaqUpdateForm.jsp</title>
+<title>FaqInsertForm.jsp</title>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
@@ -35,23 +35,27 @@
 </style>
 </head>
 <body>
+<!-- 헤더 추가 -->
+<c:import url="ManagerHeader.jsp"></c:import>
+
 <div class="container">
-	<h2>공지사항 관리</h2>
+	<h2>FAQ 관리</h2>
 	<hr>
-	<h3>공지사항 수정</h3>
+	<h4>FAQ 작성</h4>
 	<hr>
-	<form action="faqupdate.action" method="post">
+	<form action="faqinsert.action" method="post">
 			<input type="hidden" id="faq_cd" name="faq_cd" value="${faq.faq_cd }">
 		<div class="col-xs-4">
-		  <input type="text" class="form-control" id="title" name="title" value="${faq.title}" required="required">
+		  <input type="text" class="form-control" id="title" name="title" required="required">
 		</div>
 		<br><br>
 		<hr>
 		<div class="col-xs-12">
-		  <textarea class="form-control" id="contents" name="contents" rows="10" required="required">${faq.contents }</textarea>
+		  <textarea class="form-control" id="contents" name="contents" rows="10" required="required"></textarea>
 		</div>
+		<hr>
 		<div class="btns">
-			<button type="submit" class="btn btn-default" id="updateBtn">수정</button>
+			<button type="submit" class="btn btn-default" id="updateBtn">작성</button>
 			<button type="button" class="btn btn-default" id="cancleBtn">취소</button>
 		</div>
 	</form>
