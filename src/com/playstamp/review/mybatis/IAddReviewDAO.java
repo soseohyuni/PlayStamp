@@ -52,9 +52,13 @@ public interface IAddReviewDAO
 	public int removeReviewDetail(String rev_distin_cd);			//-- 공연 상세 리뷰 삭제 액션처리
 	public int removeReviewDistin(String rev_distin_cd);			//-- 리뷰 식별코드 삭제 액션처리
 	
-	public int modifyPosterImg(ModifyPoster modifyposter);	//-- 리뷰 수정 시 첨부 파일 업로드 처리
+	public int modifyPosterImg(ModifyPoster modifyposter);			//-- 리뷰 수정 시 첨부 파일 업로드 처리
+	
+	public int plusPoint(String user_cd);							//-- 리뷰 작성 시 포인트 추가	
+	public int minusPoint(String user_cd);							//-- 리뷰 삭제 시 포인트 차감
 	
 	//-- 트랜잭션 처리
+	
 
 }
 

@@ -47,11 +47,6 @@
 		width: 50px;
 		height: 23px;
 	}
-	#seat_num 
-	{
-		width: 90px;
-		height: 23px;
-	}
 	th, td 
 	{
 		padding: 3px;
@@ -207,19 +202,20 @@
 		<form action="myreviewdetailupdateform.action" method="post">
 			<table class="table table-borderless" id="reviewseattable">
 				<tr>
-					<th colspan="2">좌석 위치</th>
+					<th colspan="4">좌석 위치</th>
 					<th colspan="4">좌석 별점</th>
 				</tr>
 				<tr>
 					<td>
-						<select class="selectpicker" id="seat_flow" name="seat_flow">
+						<select class="form-control" id="seat_flow" name="seat_flow">
 						<c:forEach var="a" begin="1" end="5" step="1">
 							<option value="${a }">${a }</option>
 						</c:forEach>
-						</select> 층
+						</select>
 					</td>
+					<td>층</td>
 					<td>
-						<select class="selectpicker" id="seat_area" name="seat_area">
+						<select class="form-control" id="seat_area" name="seat_area">
 							<option>-</option>
 							<option value="A">A</option>
 							<option value="B">B</option>
@@ -238,8 +234,9 @@
 							<option value="바">바</option>
 							<option value="사">사</option>
 							<option value="아">아</option>
-						</select> 구역
+						</select>
 					</td>
+					<td>구역</td>
 					<td>시야</td>
 					<td>
 						<select id="view_rating" name="view_rating">
@@ -263,7 +260,7 @@
 				</tr>
 				<tr>
 					<td>
-						<select class="selectpicker" id="seat_line" name="seat_line">
+						<select class="form-control" id="seat_line" name="seat_line">
 						<option>-</option>
 						<c:forEach var="a" begin="1" end="30" step="1">
 							<option value="${a }">${a }</option>
@@ -295,11 +292,13 @@
 							<option value="Y">Y</option>
 							<option value="Z">Z</option>
 							<option value="OP">OP</option>
-						</select> 열
+						</select>
 					</td>
+					<td>열</td>
 					<td>
-						<input type="text" id="seat_num" name="seat_num" value="${seatreview.seat_num }">
+						<input type="text" id="seat_num" name="seat_num" class="form-control" value="${seatreview.seat_num }">
 					</td>
+					<td>번호</td>
 					<td>음향</td>
 					<td>
 						<select id="sound_rating" name="sound_rating">
@@ -322,10 +321,10 @@
 					</td>
 				</tr>
 				<tr>
-					<th colspan="6">좌석 리뷰</th>
+					<th colspan="8">좌석 리뷰</th>
 				</tr>
 				<tr>
-					<td colspan="6">
+					<td colspan="8">
 						<textarea id="seat_rev" name="seat_rev" cols="120" rows="5" style="resize: none;">${seatreview.seat_rev }</textarea>
 					</td>
 				</tr>

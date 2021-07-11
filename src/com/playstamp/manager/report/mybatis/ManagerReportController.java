@@ -1,6 +1,5 @@
 package com.playstamp.manager.report.mybatis;
 
-import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.playstamp.manager.report.ManagerReport;
+import com.playstamp.manager.report.DetailReport;
 import com.playstamp.paging.Criteria;
 import com.playstamp.paging.PageDTO;
 import com.playstamp.paging.ReverseCriteria;
@@ -29,6 +28,7 @@ public class ManagerReportController
 	public String adminReportList(Criteria cri, Model model, HttpSession session, HttpServletRequest request)
 	{
 		IManagerReportDAO dao = sqlSession.getMapper(IManagerReportDAO.class);
+	
 		
 		// 한 페이지에 보여지게 할 게시물 수, 특정한 페이지 조회시 사용하기 위해
 		// Criteria 객체 생성 (매개변수로 받음)
@@ -107,7 +107,7 @@ public class ManagerReportController
 		return "WEB-INF/views/manager/ManagerReportDone.jsp";
 	}
 	
-	// 확인 필요 리스트에서 신고된 댓글 정보를 모달로 확인하기
+	// 확인 필요 리스트에서 신고된 댓글 정보 확인하기
 	@RequestMapping(value="/commentreport.action", method=RequestMethod.GET)
 	public String commentReport(Model model, HttpServletRequest request)
 	{
@@ -134,10 +134,8 @@ public class ManagerReportController
 		// 리뷰 식별 번호 받기
 		String rep_cd = request.getParameter("rep_cd");
 		
-		System.out.println(rep_cd);
-		
 		// 받은 글 번호(댓글 코드)로 댓글 상세 내용 가져와 전달하기
-		model.addAttribute("reivewReport", dao.reviewReport(rep_cd));
+		model.addAttribute("reviewReport", dao.reviewReport(rep_cd));
 		
 		return "WEB-INF/views/manager/ReviewReport.jsp";
 	}
@@ -151,7 +149,6 @@ public class ManagerReportController
 		// 리뷰 식별 번호 받기
 		String rep_cd = request.getParameter("rep_cd");
 		
-		System.out.println(rep_cd);
 		
 		// 받은 글 번호(댓글 코드)로 댓글 상세 내용 가져와 전달하기
 		model.addAttribute("seatReport", dao.seatReport(rep_cd));
@@ -173,6 +170,208 @@ public class ManagerReportController
 		// 받은 글 번호(댓글 코드)로 댓글 상세 내용 가져와 전달하기
 		model.addAttribute("seatReport", dao.mseatReport(rep_cd));
 		
-		return "WEB-INF/views/manager/SeatReport.jsp";
+		return "WEB-INF/views/manager/MSeatReport.jsp";
+	}
+	
+	// 신고된 댓글 내역에서 관리자가 확인 처리한 경우
+	@RequestMapping(value="/checkcommreport.action", method=RequestMethod.POST)
+	public String checkCommReport(Model model, HttpServletRequest request)
+	{
+		IManagerReportDAO dao = sqlSession.getMapper(IManagerReportDAO.class);
+
+		// 이전 페이지로부터 정보 받아오기
+		String rep_cd = request.getParameter("rep_cd");
+		String writer_cd = request.getParameter("writer_cd");
+		String reporter_cd = request.getParameter("reporter_cd");
+		
+		// 최종 신고 사유, 신고 승인 여부는 select 선택이므로 배열으로 받을 준비
+		String rep_st_cd = "";
+		String rep_y_cd = "";
+		
+		String[] repSTarr = request.getParameterValues("rep_st_cd");   //-- 승인(1) 반려(2)
+		String[] repYarr = request.getParameterValues("rep_y_cd");	   //-- 최종 신고 사유
+
+		// 선택한 것 꺼내기
+		if(repSTarr != null)
+		{
+			for(String list : repSTarr)
+				rep_st_cd += list;
+		}
+		if(repYarr != null)
+		{
+			for(String list : repYarr)
+				rep_y_cd += list;
+		}
+		
+		// 가져온 정보 담기
+		DetailReport dr = new DetailReport();
+		dr.setRep_cd(rep_cd);
+		dr.setRep_st_cd(rep_st_cd);
+		dr.setRep_y_cd(rep_y_cd);
+		
+		// 댓글 신고 처리 테이블에 insert
+		dao.commentDone(dr);
+		
+		// 승인인 경우, 피신고자(글작성자) 포인트 차감
+		if(rep_st_cd=="1")
+			 dao.writerPointMinus(writer_cd);
+			
+		// 반려인 경우, 신고자 포인트 차감
+		if(rep_st_cd=="2")
+			dao.reporterPointMinus(reporter_cd);
+		
+		// 관리자의 처리 완료 페이지로 이동
+		return "redirect:donemanagerreport.action";
+	}
+	
+	// 신고된 리뷰 내역에서 관리자가 확인 처리한 경우
+	@RequestMapping(value="/checkreviewreport.action", method=RequestMethod.POST)
+	public String checkReviewReport(Model model, HttpServletRequest request)
+	{
+		IManagerReportDAO dao = sqlSession.getMapper(IManagerReportDAO.class);
+		
+		// 이전 페이지로부터 정보 받아오기
+		String rep_cd = request.getParameter("rep_cd");
+		String writer_cd = request.getParameter("writer_cd");
+		String reporter_cd = request.getParameter("reporter_cd");
+		
+		// 최종 신고 사유, 신고 승인 여부는 select 선택이므로 배열으로 받을 준비
+		String rep_st_cd = "";
+		String rep_y_cd = "";
+		
+		String[] repSTarr = request.getParameterValues("rep_st_cd");   //-- 승인(1) 반려(2)
+		String[] repYarr = request.getParameterValues("rep_y_cd");	   //-- 최종 신고 사유
+
+		// 선택한 것 꺼내기
+		if(repSTarr != null)
+		{
+			for(String list : repSTarr)
+				rep_st_cd += list;
+		}
+		if(repYarr != null)
+		{
+			for(String list : repYarr)
+				rep_y_cd += list;
+		}
+		
+		// 가져온 정보 담기
+		DetailReport dr = new DetailReport();
+		dr.setRep_cd(rep_cd);
+		dr.setRep_st_cd(rep_st_cd);
+		dr.setRep_y_cd(rep_y_cd);
+		
+		// 리뷰 신고 처리 테이블에 insert
+		dao.reviewDone(dr);
+		
+		// 승인인 경우, 피신고자(글작성자) 포인트 차감
+		if(rep_st_cd=="1")
+			 dao.writerPointMinus(writer_cd);
+			
+		// 반려인 경우, 신고자 포인트 차감
+		if(rep_st_cd=="2")
+			dao.reporterPointMinus(reporter_cd);
+		
+		
+		return "redirect:donemanagerreport.action";
+	}
+	
+	// 신고된 좌석 리뷰 내에서 관리자가 확인 처리한 경우
+	@RequestMapping(value="/checkseatreport.action", method=RequestMethod.POST)
+	public String checkSeatReport(Model model, HttpServletRequest request)
+	{
+		IManagerReportDAO dao = sqlSession.getMapper(IManagerReportDAO.class);
+
+		// 이전 페이지로부터 정보 받아오기
+		String rep_cd = request.getParameter("rep_cd");
+		String writer_cd = request.getParameter("writer_cd");
+		String reporter_cd = request.getParameter("reporter_cd");
+		
+		// 최종 신고 사유, 신고 승인 여부는 select 선택이므로 배열으로 받을 준비
+		String rep_st_cd = "";
+		String rep_y_cd = "";
+		
+		String[] repSTarr = request.getParameterValues("rep_st_cd");   //-- 승인(1) 반려(2)
+		String[] repYarr = request.getParameterValues("rep_y_cd");	   //-- 최종 신고 사유
+
+		// 선택한 것 꺼내기
+		if(repSTarr != null)
+		{
+			for(String list : repSTarr)
+				rep_st_cd += list;
+		}
+		if(repYarr != null)
+		{
+			for(String list : repYarr)
+				rep_y_cd += list;
+		}
+		
+		// 가져온 정보 담기
+		DetailReport dr = new DetailReport();
+		dr.setRep_cd(rep_cd);
+		dr.setRep_st_cd(rep_st_cd);
+		dr.setRep_y_cd(rep_y_cd);
+		
+		// 좌석 리뷰 신고 처리 테이블에 insert
+		dao.seatDone(dr);
+		
+		// 승인인 경우, 피신고자(글작성자) 포인트 차감
+		if(rep_st_cd=="1")
+			 dao.writerPointMinus(writer_cd);
+			
+		// 반려인 경우, 신고자 포인트 차감
+		if(rep_st_cd=="2")
+			dao.reporterPointMinus(reporter_cd);
+		
+		return "redirect:donemanagerreport.action";
+	}
+	
+	// 신고된 5대 좌석 리뷰 내에서 관리자가 확인 처리한 경우
+	@RequestMapping(value="/checkmseatreport.action", method=RequestMethod.POST)
+	public String checkMseatReport(Model model, HttpServletRequest request)
+	{
+		IManagerReportDAO dao = sqlSession.getMapper(IManagerReportDAO.class);
+
+		// 이전 페이지로부터 정보 받아오기
+		String rep_cd = request.getParameter("rep_cd");
+		String writer_cd = request.getParameter("writer_cd");
+		String reporter_cd = request.getParameter("reporter_cd");
+		
+		// 최종 신고 사유, 신고 승인 여부는 select 선택이므로 배열으로 받을 준비
+		String rep_st_cd = "";
+		String rep_y_cd = "";
+		
+		String[] repSTarr = request.getParameterValues("rep_st_cd");   //-- 승인(1) 반려(2)
+		String[] repYarr = request.getParameterValues("rep_y_cd");	   //-- 최종 신고 사유
+
+		// 선택한 것 꺼내기
+		if(repSTarr != null)
+		{
+			for(String list : repSTarr)
+				rep_st_cd += list;
+		}
+		if(repYarr != null)
+		{
+			for(String list : repYarr)
+				rep_y_cd += list;
+		}
+		
+		// 가져온 정보 담기
+		DetailReport dr = new DetailReport();
+		dr.setRep_cd(rep_cd);
+		dr.setRep_st_cd(rep_st_cd);
+		dr.setRep_y_cd(rep_y_cd);
+		
+		// 5대 좌석 리뷰 신고 처리 테이블에 insert
+		dao.mseatDone(dr);
+		
+		// 승인인 경우, 피신고자(글작성자) 포인트 차감
+		if(rep_st_cd=="1")
+		   dao.writerPointMinus(writer_cd);
+		
+		// 반려인 경우, 신고자 포인트 차감
+		if(rep_st_cd=="2")
+			dao.reporterPointMinus(reporter_cd);
+		
+		return "redirect:donemanagerreport.action";
 	}
 }

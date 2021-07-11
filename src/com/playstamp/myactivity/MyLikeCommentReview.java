@@ -7,6 +7,8 @@ public class MyLikeCommentReview
 	//-- 나의 활동에서 좋아요 누른 or 댓글 단 리뷰 글 목록에서 보여줄 게시글들의 정보
 	//  : 목록에서 보여 줄 게시글 번호(rownum), 공연명, 제목, 작성자, 작성일, 조회수
 	private String bno;
+	private String playrev_cd;		//-- 공연 리뷰 상세글로 넘어가기 위해 필요한 파라미터1
+	private String play_cd;			//-- 공연 리뷰 상세글로 넘어가기 위해 필요한 파라미터2
 	private String play_nm;
 	private String title;
 	private String user_nick;
@@ -25,6 +27,22 @@ public class MyLikeCommentReview
 	public void setBno(String bno)
 	{
 		this.bno = bno;
+	}
+	public String getPlayrev_cd()
+	{
+		return playrev_cd;
+	}
+	public void setPlayrev_cd(String playrev_cd)
+	{
+		this.playrev_cd = playrev_cd;
+	}
+	public String getPlay_cd()
+	{
+		return play_cd;
+	}
+	public void setPlay_cd(String play_cd)
+	{
+		this.play_cd = play_cd;
 	}
 	public String getPlay_nm()
 	{

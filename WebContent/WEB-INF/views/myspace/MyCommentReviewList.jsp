@@ -97,7 +97,7 @@
 			<tr>	
 				<td>${reviewComm.bno }</td>
 				<td>${reviewComm.play_nm }</td>
-				<td><a href="">${reviewComm.title }</a></td>
+				<td><a href="playreviewdetail.action?playrev_cd=${reviewComm.playrev_cd }&play_cd=${reviewComm.play_cd }">${reviewComm.title }</a></td>
 				<td>${reviewComm.user_nick }</td>
 				<td>${reviewComm.playrev_dt }</td>
 				<td>${reviewComm.view_cnt }</td>
@@ -129,17 +129,11 @@
 			<input type="hidden" name="amount" value="${commentPageMaker.cri.amount }">
 		</form>
 	</div><!-- row -->
+	<div>
+		<button type="button" class="btn btn-info" onclick="location='mylikereviewlist.action'">내가 좋아요 한 리뷰 리스트</button>
+	</div>
 </div><!-- container -->
 
-
-<!-- 모달 content까지만 선언 -->
-
-<div id="modal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" style="width:1200px;height:700px">
-        <div class="modal-content">
-        </div>
-    </div>
-</div>
 
 
 <br><br><br><br>

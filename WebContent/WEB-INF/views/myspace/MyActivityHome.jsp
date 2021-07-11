@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>마이스페이스</title>
+<title>나의 활동내역</title>
 <link href="<%=cp%>/css/myspace.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -64,23 +64,19 @@
 		<div id="secondArea" class="container">
 			<div class="outBox">
 				<div id="box1" class="inBox inBox1">
-					<div class="sTitle"><a>나의 관람 리뷰></a></div>
-					<div class="aTitle"><a href="#">${userRev }개</a></div>
+					<div class="bTitle"><a href="mylikereviewlist.action" style="color: #444;">좋아요 한 리뷰 내역</a></div>
 				</div>
 				<div id="box2" class="inBox inBox2">
-					<div class="sTitle"><a>나의 찜리스트></a></div>
-
-					<div class="aTitle"><a href="myspacejjim.action">${userJjim }개</a></div>
-
+					<div class="bTitle"><a href="mycommentreviewlist.action" style="color: #444;">댓글 단 리뷰 내역</a></div>
 				</div>
 			</div>
 			<div class="outBox">
 				<div id="box1" class="inBox inBox1">
-					<div class="bTitle"><a href="myactivityhome.action" style="color: #444;">나의 활동 / 신고 관리</a></div>
+					<div class="bTitle"><a href="myreportinglist.action" style="color: #444;">나의 신고 내역</a></div>
 				</div>
 				
 				<div id="box2" class="inBox inBox2">
-					<div class="bTitle"><a href="mystatisticlist.action" style="color: #444;">나의 관람 통계</a></div>
+					<div class="bTitle"><a href="myreportedlist.action" style="color: #444;">나의 신고 당한 내역</a></div>
 				</div>
 			</div>
 		</div>

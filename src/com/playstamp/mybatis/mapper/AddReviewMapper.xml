@@ -195,5 +195,17 @@
 		SET PLAY_IMG='${play_img}'
 		WHERE REV_DISTIN_CD='${rev_distin_cd}'
  	</update>
+ 	
+ 	<!-- 리뷰 작성 시 포인트 추가 액션 -->
+ 	<update id="plusPoint">
+	 	INSERT INTO TBL_POINT(POINT_CD, USER_CD, POINT_Y_CD, POINT_DT)
+		VALUES('PT' || TO_CHAR(SEQ_POINT.NEXTVAL), '${user_cd}', 4, SYSDATE)
+ 	</update>
+ 	
+ 	<!-- 리뷰 삭제 시 포인트 삭제 액션 -->
+ 	<update id="minusPoint">
+	 	INSERT INTO TBL_POINT(POINT_CD, USER_CD, POINT_Y_CD, POINT_DT)
+		VALUES('PT' || TO_CHAR(SEQ_POINT.NEXTVAL), '${user_cd}', 8, SYSDATE)
+ 	</update>
 
 </mapper>
