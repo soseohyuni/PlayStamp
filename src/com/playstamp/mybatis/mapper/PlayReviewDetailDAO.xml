@@ -58,10 +58,20 @@
 	</select>
 	
 	<select id="getUserGrade" resultType="string" parameterType="string">
-		SELECT GRADE
-		FROM VIEW_MEMBERGRADE
-		WHERE USER_ID=#{user_id}
-	</select>
+      SELECT I.USER_ID, NVL(SUM(L.LIKE_COUNT),0) AS LIKE_COUNT, M.POINT
+      FROM TBL_USERINFO I LEFT JOIN TBL_USER U
+          ON U.USER_CD = I.USER_CD
+              LEFT JOIN TBL_REV_DISTIN D
+              ON D.USER_CD = U.USER_CD
+                  LEFT JOIN TBL_PLAY_REV P
+                  ON P.REV_DISTIN_CD = D.REV_DISTIN_CD
+                      LEFT JOIN VIEW_LIKECOUNT L
+                      ON L.PLAYREV_CD = P.PLAYREV_CD
+                          LEFT JOIN VIEW_MEMBERPOINT M
+                          ON I.USER_ID = M.USER_ID
+      WHERE USER_ID=#{user_id}
+      GROUP BY (I.USER_ID, M.POINT))
+   </select>
 	
 	<select id="getRatingAvg" resultType="integer" parameterType="string">
 		SELECT ROUND(SUM(RATING_CD)/COUNT(*))

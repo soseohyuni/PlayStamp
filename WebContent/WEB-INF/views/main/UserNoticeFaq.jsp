@@ -52,7 +52,7 @@
 	      </div>
 	    </div>
 	  </div>
-	t<c:set var="i" value="${i+1}"></c:set>
+	t <c:set var="i" value="${i+1}"></c:set>
 	</c:forEach>	  
 	</div>
 	<br><br><br>
