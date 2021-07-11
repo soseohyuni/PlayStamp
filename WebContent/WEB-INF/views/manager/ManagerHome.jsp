@@ -58,49 +58,51 @@
 					<thead>
 						<tr>
 							<th style="background-color: #eeeeee; text-align: center;">번호</th>
-							<th style="background-color: #eeeeee; text-align: center;">신고 분류</th>
 							<th style="background-color: #eeeeee; text-align: center;">내용</th>
+							<th style="background-color: #eeeeee; text-align: center;">신고 분류</th>
+							<th style="background-color: #eeeeee; text-align: center;">작성자</th>
+							<th style="background-color: #eeeeee; text-align: center;">신고자</th>
 							<th style="background-color: #eeeeee; text-align: center;">신고 일시</th>
 							<th style="background-color: #eeeeee; text-align: center;">게시판 분류</th>
 						</tr>
 					</thead>
 					<tbody>
-						<!-- c:foreach문으로 리스트 반복 뿌려주기 -->
+					<c:forEach var="checkList" items="${checkList }">
 						<tr>
-							<td>10001</td>
-							<td>욕설/비방</td>
-							<td><a href="">이런수박씨같은xx</a></td>
-							<td>2021.07.03 [10:10]</td>
-							<td>공연리뷰</td>
+							<td>${checkList.bno }</td>
+							<c:choose>
+								<c:when test="${checkList.boardCategory eq '댓글' }">
+									<td onclick="window.open('commentreport.action?rep_cd=${checkList.rep_cd }'
+									, '댓글 신고 내용', 'width=350,hieght=400,status=no, resizable=no, toolbar=no, menubar=no')">
+									${checkList.rep_contents }
+									</td>
+								</c:when>
+								<c:when test="${checkList.boardCategory eq '공연 리뷰' }">
+									<td onclick="window.open('reviewreport.action?rep_cd=${checkList.rep_cd }'
+									, '리뷰 신고 내용', 'width=350,hieght=400,status=no, resizable=no, toolbar=no, menubar=no')">
+									${checkList.rep_contents }
+									</td>
+								</c:when>
+								<c:when test="${checkList.boardCategory eq '좌석 리뷰' }">
+									<td onclick="window.open('seatreport.action?rep_cd=${checkList.rep_cd }'
+									, '좌석 리뷰 신고 내용', 'width=350,hieght=400,status=no, resizable=no, toolbar=no, menubar=no')">
+									${checkList.rep_contents }
+									</td>
+								</c:when>
+								<c:when test="${checkList.boardCategory eq '5대 좌석 리뷰' }">
+									<td onclick="window.open('mseatreport.action?rep_cd=${checkList.rep_cd }'
+									, '좌석 리뷰 신고 내용', 'width=350,hieght=400,status=no, resizable=no, toolbar=no, menubar=no')">
+									${checkList.rep_contents }
+									</td>
+								</c:when>
+							</c:choose>
+							<td>${checkList.rep_y }</td>
+							<td>${checkList.writer }</td>
+							<td>${checkList.reporter }</td>
+							<td>${checkList.rep_dt }</td>
+							<td>${checkList.boardCategory }</td>
 						</tr>
-						<tr>
-							<td>10002</td>
-							<td>욕설/비방</td>
-							<td><a href="">이런수박씨같은xx</a></td>
-							<td>2021.07.03 [10:10]</td>
-							<td>댓글</td>
-						</tr>
-						<tr>
-							<td>10003</td>
-							<td>욕설/비방</td>
-							<td><a href="">이런수박씨같은xx</a></td>
-							<td>2021.07.04 [10:10]</td>
-							<td>좌석정보</td>
-						</tr>
-						<tr>
-							<td>10004</td>
-							<td>욕설/비방</td>
-							<td><a href="">이런수박씨같은xx</a></td>
-							<td>2021.07.05 [10:10]</td>
-							<td>댓글</td>
-						</tr>
-						<tr>
-							<td>10004</td>
-							<td>욕설/비방</td>
-							<td><a href="">이런수박씨같은xx</a></td>
-							<td>2021.07.05 [10:10]</td>
-							<td>댓글</td>
-						</tr>
+					</c:forEach>
 					</tbody>
 				</table>
 			</div>

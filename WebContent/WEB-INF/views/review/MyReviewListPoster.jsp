@@ -11,6 +11,8 @@
 <title>MyReviewListPoster.jsp</title>
 <link rel="stylesheet" href="<%=cp %>/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=cp %>/css/myspace.css">
+<link rel="stylesheet" href="<%=cp %>/css/home.css">
+
 <link rel="stylesheet" href="css/header.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -139,6 +141,10 @@
 		align: left;
 		background-color: #fafafa;
 	}
+	.posterImg
+	{
+		height: 312px;
+	}
 	
 </style>
 <script type="text/javascript">
@@ -161,14 +167,13 @@
 
 	<!-- 사용자의 리뷰 목록: 사진 클릭 시 공연장코드, 리뷰 식별코드 넘겨주기 -->
     <div id="highReviewSorting" class="container">
-       	<div id="imgContainer" class="row">
        		<c:forEach var="myreviewposter" items="${myreviewposter }">
           	<div class="col-lg-3 col-xs-6 col-md-3">
              	<a href="myreviewdetail.action?play_cd=${myreviewposter.play_cd }&rev_distin_cd=${myreviewposter.rev_distin_cd}" 
              	class="thumbnail">
-               		<img src="${myreviewposter.play_img }">
+               		<img src="${myreviewposter.play_img }" class="playPoster" style="width: 100%; height: 100%;">
              	</a>
-             	<div class="caption">${myreviewposter.title }</div>
+             	<div class="playTitle">${myreviewposter.title }</div>
           	</div>
           	</c:forEach>
        	</div>

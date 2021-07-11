@@ -81,6 +81,7 @@ public class MyActivityController
       return "WEB-INF/views/myspace/MyActivityHome.jsp";
    }
 
+
 	
 	// 좋아요 누른 리뷰글 가져오기
 	@RequestMapping(value="/mylikereviewlist.action", method=RequestMethod.GET)

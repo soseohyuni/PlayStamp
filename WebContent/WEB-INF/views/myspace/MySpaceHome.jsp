@@ -65,7 +65,7 @@
 			<div class="outBox">
 				<div id="box1" class="inBox inBox1">
 					<div class="sTitle"><a>나의 관람 리뷰></a></div>
-					<div class="aTitle"><a href="#">${userRev }개</a></div>
+					<div class="aTitle"><a href="myreviewlistposter.action">${userRev }개</a></div>
 				</div>
 				<div id="box2" class="inBox inBox2">
 					<div class="sTitle"><a>나의 찜리스트></a></div>

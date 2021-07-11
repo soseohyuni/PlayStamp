@@ -46,21 +46,10 @@
 	{
 		padding: 3px;
 	}
-	select 
+	#seat_num 
 	{
-		width: 100%;
-		height: 29px;
-		font-size: 15px;
-		background: #fff
-			url(https://static.nid.naver.com/images/join/pc/sel_arr_2x.gif) 100%
-			50% no-repeat;
-		background-size: 20px 8px;
-		-webkit-appearance: none;
-		display: inline-block;
-		text-align: start;
-		border: none;
-		cursor: default;
-		font-family: Dotum, '돋움', Helvetica, sans-serif;
+		width: 9px;
+		height: 38px;
 	}
 	#highlight
 	{
@@ -162,7 +151,7 @@
 
 		}else if(theaterCd == 'FC000031')	//-- 블루스퀘어
 		{
-			$("#img").attr("src", "images/bs/blue.png");
+			$("#img").attr("src", "images/bs/blue_0.png");
 
 		}else if(theaterCd == 'FC000012')	//-- 샤롯데씨어터
 		{
@@ -226,30 +215,35 @@
 					</td>
 				</tr>
 				<tr>
-					<th colspan="3" style="text-align:right;">구역선택</th>
-					<td colspan="3" style="text-align:left;">
+					<th colspan="2" style="text-align:right;">구역선택</th>
+					<td colspan="2" style="text-align:left;">
 						<select class="form-control" id="mseat_sort_cd" name="mseat_sort_cd">
 						<c:forEach var="a" begin="1" end="14" step="1">
 							<option value="${a }">A${a }</option>
 						</c:forEach>
 						</select>
 					</td>
+					<td></td>
+					<td></td>
 				</tr>
 				<tr>
-					<th colspan="4">좌석 위치</th>
+					<th colspan="2">좌석 위치</th>
 					<th colspan="4">좌석 별점</th>
 				</tr>
 				<tr>
 					<td>
-						<select class="form-control" id="seat_flow" name="seat_flow">
-						<c:forEach var="a" begin="1" end="5" step="1">
-							<option value="${a }">${a }</option>
-						</c:forEach>
+						<div class="input-group">
+						<select class="form-control" id="seat_flow" name="seat_flow" aria-describedby="sizing-addon2">
+							<c:forEach var="a" begin="1" end="5" step="1">
+								<option value="${a }">${a }</option>
+							</c:forEach>
 						</select>
+						<span class="input-group-addon"> 층</span>
+						</div>
 					</td>
-					<td>층</td>
 					<td>
-						<select class="form-control" id="seat_area" name="seat_area">
+						<div class="input-group">
+						<select class="form-control" id="seat_area" name="seat_area" aria-describedby="sizing-addon2">
 							<option>-</option>
 							<option value="A">A</option>
 							<option value="B">B</option>
@@ -269,8 +263,9 @@
 							<option value="사">사</option>
 							<option value="아">아</option>
 						</select>
+						<span class="input-group-addon"> 구역</span>
+						</div>
 					</td>
-					<td>구역</td>
 					<td>시야</td>
 					<td>
 						<select id="view_rating" name="view_rating">
@@ -294,7 +289,8 @@
 				</tr>
 				<tr>
 					<td>
-						<select class="form-control" id="seat_line" name="seat_line">
+						<div class="input-group">
+						<select class="form-control" id="seat_line" name="seat_line"  aria-describedby="sizing-addon2">
 						<option>-</option>
 						<c:forEach var="a" begin="1" end="30" step="1">
 							<option value="${a }">${a }</option>
@@ -327,12 +323,15 @@
 							<option value="Z">Z</option>
 							<option value="OP">OP</option>
 						</select>
+						<span class="input-group-addon"> 열</span>
+						</div>
 					</td>
-					<td>열</td>
 					<td>
-						<input type="text" id="seat_num" name="seat_num" class="form-control" value="${mseatreview.seat_num }">
+						<div class="input-group">
+							<input type="text" id="seat_num" name="seat_num" class="form-control" value="${mseatreview.seat_num }">
+						<span class="input-group-addon"> 번호</span>
+						</div>
 					</td>
-					<td>번호</td>
 					<td>음향</td>
 					<td>
 						<select id="sound_rating" name="sound_rating">
@@ -355,10 +354,10 @@
 					</td>
 				</tr>
 				<tr>
-					<th colspan="8">좌석 리뷰</th>
+					<th colspan="6">좌석 리뷰</th>
 				</tr>
 				<tr>
-					<td colspan="8">
+					<td colspan="6">
 						<textarea id="seat_rev" name="seat_rev" cols="120" rows="5" style="resize: none;">${mseatreview.seat_rev }</textarea>
 					</td>
 				</tr>
