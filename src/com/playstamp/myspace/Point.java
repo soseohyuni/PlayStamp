@@ -10,7 +10,19 @@ import org.springframework.stereotype.Repository;
 public class Point
 {
 	// 포인트 적립/차감 사유, 포인트 적립/차감 날짜, 적립/차감된 포인트, 현재 사용자 포인트
+	private String bno;
 	private String point_y, point_dt, point, user_point;
+
+	
+	public String getBno()
+	{
+		return bno;
+	}
+
+	public void setBno(String bno)
+	{
+		this.bno = bno;
+	}
 
 	public String getPoint_y()
 	{
