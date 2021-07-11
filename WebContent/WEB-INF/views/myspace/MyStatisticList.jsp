@@ -98,6 +98,7 @@
 						  revTotal = data.revTotal;
 						  revUser = data.revUser;
 						  comp = data.comp;
+						  u = data.u;
 						  revMoney = data.revMoney;
 						  
 						  //alert(year  + "6월 : " + revTotal.jun);
@@ -125,9 +126,9 @@
 		});
 		
 		// 전체 사용자
-		myChart.data.datasets[0].data = [revTotal.jan, revTotal.feb, revTotal.mar, revTotal.apr
-			, revTotal.may, revTotal.jun, revTotal.jul, revTotal.aug, revTotal.sep, revTotal.oct,
-			revTotal.nov, revTotal.dec];
+		myChart.data.datasets[0].data = [revTotal.jan/u, revTotal.feb/u, revTotal.mar/u, revTotal.apr/u
+			, revTotal.may/u, revTotal.jun/u, revTotal.jul/u, revTotal.aug/u, revTotal.sep/u, revTotal.oct/u,
+			revTotal.nov/u, revTotal.dec/u];
 		
 		// 특정 사용자
 		myChart.data.datasets[1].data = [revUser.jan, revUser.feb, revUser.mar, revUser.apr

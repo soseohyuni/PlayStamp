@@ -420,8 +420,6 @@ public class UserController
 		session.invalidate();
 
 		result = "redirect:home.action";
-
-		
 		return result;
 	}
 	

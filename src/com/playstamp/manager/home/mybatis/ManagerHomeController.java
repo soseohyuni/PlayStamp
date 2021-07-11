@@ -41,7 +41,7 @@ public class ManagerHomeController
 			System.out.println(e.toString());
 		}
 		
-		return "WEB-INF/views/manager/ManagerHome.jsp";
+		return "/WEB-INF/views/manager/ManagerHome.jsp";
 	}
 	
 	

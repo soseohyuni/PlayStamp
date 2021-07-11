@@ -59,10 +59,26 @@
 		    SELECT BNO, POINT_Y, POINT_DT, POINT, USER_POINT
 		    FROM
 		    (
-		        SELECT ROW_NUMBER() OVER(ORDER BY POINT_DT) AS BNO, POINT_Y, POINT_DT, POINT, USER_POINT
-		        FROM VIEW_USER_PLIST
-		        WHERE USER_CD = #{user_cd}
-		        ORDER BY BNO DESC
+		        SELECT BNO, POINT_Y, POINT_DT, POINT, USER_POINT
+				FROM 
+				(
+				    SELECT ROW_NUMBER() OVER(ORDER BY POINT_DT) AS BNO, NVL(POINT_Y, '관리자 등록') AS POINT_Y, POINT_DT, POINT, SUM(POINT) OVER(ORDER BY POINT_DT) AS USER_POINT
+				    FROM 
+				    (
+				        SELECT POINT_Y, POINT_DT, POINT
+				        FROM TBL_POINT P LEFT JOIN TBL_POINT_Y PY
+				        ON PY.POINT_Y_CD = P.POINT_Y_CD
+				            LEFT JOIN TBL_USERINFO U
+				            ON P.USER_CD = U.USER_CD
+				        WHERE U.USER_CD = #{user_cd}
+				        UNION
+				        SELECT NULL, GTPOINT_DT AS POINT_DT, GTPOINT AS POINT
+				        FROM TBL_GTPOINT GT LEFT JOIN TBL_USERINFO U
+				        ON GT.USER_CD = U.USER_CD
+				        WHERE U.USER_CD = #{user_cd}
+				    )
+				    ORDER BY BNO DESC
+				)
 		    )
 		    WHERE BNO <= #{total} - ((#{pageNum}-1) * #{amount})
 		)

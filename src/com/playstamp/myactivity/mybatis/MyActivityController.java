@@ -38,6 +38,7 @@ public class MyActivityController
       String userId = (String)session.getAttribute("id");
       String userCode = (String)session.getAttribute("code");
 
+
       // 회원 정보 조회
       User userInfo = null;
       try
@@ -79,7 +80,7 @@ public class MyActivityController
       
       return "WEB-INF/views/myspace/MyActivityHome.jsp";
    }
-	
+
 	
 	// 좋아요 누른 리뷰글 가져오기
 	@RequestMapping(value="/mylikereviewlist.action", method=RequestMethod.GET)

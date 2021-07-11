@@ -42,8 +42,8 @@ public class PlayDetailController
 	{
 		IPlayDetailDAO dao = sqlSession.getMapper(IPlayDetailDAO.class);
 		String play_cd = request.getParameter("play_cd");
-		String user_cd = "비회원";
-		String user_id = "비회원";
+		String user_cd = "";
+		String user_id = "";
 		
 		if ((String)session.getAttribute("code") != null)
 			user_cd = (String)session.getAttribute("code");
@@ -199,18 +199,6 @@ public class PlayDetailController
 			return "WEB-INF/views/PlayDetailForNewDark.jsp";
 		}
 		
-		if (user_cd.equals("비회원"))
-		{
-			//@@ 신고되었는지 여부 확인하는 리스트를 모델에 담아 보낸다.
-			model.addAttribute("checkRepPlayList", checkRepPlayList);
-			//@@ 신고 처리 여부 확인하는 리스트를 모델에 담아 보낸다.
-			model.addAttribute("checkRepPlayStList", checkRepPlayStList);
-			model.addAttribute("playDetailList", dao.getPlayDetail(play_cd));
-			model.addAttribute("ratingAvg", dao.getRatingAvg(play_cd));
-			
-			return "WEB-INF/views/PlayDetailForNone.jsp";
-		}
-
 		
 		//@@ 신고되었는지 여부 확인하는 리스트를 모델에 담아 보낸다.
 		model.addAttribute("checkRepPlayList", checkRepPlayList);

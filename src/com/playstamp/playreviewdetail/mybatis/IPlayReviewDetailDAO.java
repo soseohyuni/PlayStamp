@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.playstamp.playdetail.SeatRevBlind;
 import com.playstamp.playreviewdetail.Comment;
 import com.playstamp.playreviewdetail.CommentBlind;
+import com.playstamp.playreviewdetail.CommentPoint;
 import com.playstamp.playreviewdetail.Like;
 import com.playstamp.playreviewdetail.PlayReviewDetail;
 
@@ -67,5 +68,5 @@ public interface IPlayReviewDetailDAO
 	public int countAddComment(String user_cd);
 	
 	// 해당 댓글로 포인트를 적립받았는지 확인하는 메소드
-	public String ifUserAddComment(@Param("comment_cd")String comment_cd);
+	public CommentPoint ifUserAddComment(@Param("comment_cd")String comment_cd);
 }

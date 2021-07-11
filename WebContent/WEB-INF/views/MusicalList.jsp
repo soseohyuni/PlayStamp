@@ -9,6 +9,10 @@
 <head>
 <meta charset="UTF-8">
 <title>MusicalList.jsp</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <style type="text/css">
 	.play
 	{
@@ -20,15 +24,17 @@
 		text-align: left;
 	}
 	
-	#sort
+	#selectpicker
 	{
 	 	float:right;
 	}
 	
 	#result
 	{
-		padding: 50px 175px;
-		text-align: center;
+		border-spacing: 20px;
+  		border-collapse: separate;
+  		margin-left: auto; margin-right: auto;
+
 	}
 	.playImg
 	{
@@ -36,8 +42,6 @@
 		height: 280px;
 	}
 </style>
-<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-
 <script type="text/javascript">
 	
 	var list = "";	// ajax 가 반환하는 list 객체 받을 변수
@@ -95,7 +99,7 @@
 								+ list[i].play_img + "' class='playImg'></a><td>").appendTo("#result");
 								
 						// 테스트 
-						$("<td>" + i + "<td>").appendTo("#result"); 
+						//$("<td>" + i + "<td>").appendTo("#result"); 
 						
 						if (i%5==4)
 							$("</tr>").appendTo("#result");	
@@ -127,11 +131,11 @@
 		$(window).scroll(function()
 		{					
 			var dheight = $(document).height();
-			var sheight = $(window).scrollTop() + $(window).height();
+			var sheight = parseInt($(window).scrollTop()) + $(window).height() + 5;
 			var length = list.length;
 			
 			// 스크롤이 바닥에 닿으면
-			if(dheight == sheight)
+			if(dheight <= sheight)
 			{		
 				for(var i=50*j ; i<(50*j)+50; i++)
 				{
@@ -149,7 +153,7 @@
 							+ list[i].play_img + "' class='playImg'></a><td>").appendTo("#result");
 					
 					// 테스트
-					$("<td>" + i + "<td>").appendTo("#result"); 
+					//$("<td>" + i + "<td>").appendTo("#result"); 
 					
 					if (i%5==4)
 						$("</tr>").appendTo("#result");	
@@ -161,12 +165,11 @@
 			
 		});
 	}
- 
-			
+
 </script>
 </head>
 <body>
-<div style="width: 1300;">
+<div style="width: 1300px; margin: 0 auto;">
 	<!-- 상단바 -->
 	<div>
 		<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
@@ -174,15 +177,15 @@
 	
 	<!-- 뮤지컬/연극 버튼 -->
 	<div class="play">
-		<input type="button" id="musical" name="musical" class="play" value="뮤지컬" onclick="location.href='musicallist.action'">
-		<input type="button" id="drama" name="drama" class="play" value="연극" onclick="location.href='dramalist.action'">
+		<input type="button" class="btn btn-default" id="musical" name="musical" class="play" value="뮤지컬" onclick="location.href='musicallist.action'">
+		<input type="button" class="btn btn-default" id="drama" name="drama" class="play" value="연극" onclick="location.href='dramalist.action'">
 	</div>
 	
 	<!-- 공연중/공연예정/공연완료 버튼 -->
 	<div>
-		<input type="button" id="ingPlay" name="ingPlay" class="playState" value="공연중">
-		<input type="button" id="willPlay" name="willPlay" class="playState" value="공연예정">
-		<input type="button" id="edPlay" name="edPlay" class="playState" value="공연완료">
+		<button type="button" class="btn btn-default playState" id="ingPlay" name="ingPlay" class="playState" value="공연중">공연중</button>
+		<button type="button" class="btn btn-default playState" id="ingPlay" name="willPlay" class="playState" value="공연예정">공연예정</button>
+		<button type="button" class="btn btn-default playState" id="ingPlay" name="edPlay" class="playState" value="공연완료">공연완료</button>
 	</div>
 	
 	<!-- 구분선 -->
@@ -193,12 +196,16 @@
 	</div>
 
 	<!-- 오 -->
-	<div>
-	<select id="sort">
+	<!-- <div>
+	<select id="sort" class="form-control">
 		<option value="val1">최신순</option>
 		<option value="val2">리뷰많은순</option>
-	</select>
-	</div>
+	</select> 
+	</div> -->
+	<select class="selectpicker">
+		<option value="val1">최신순</option>
+		<option value="val2">리뷰많은순</option>
+ 	</select>
 	
 	<!-- 리스트 출력 예정 -->
 	<div id="result">

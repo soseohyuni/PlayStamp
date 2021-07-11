@@ -50,37 +50,24 @@ $(document).ready(function()
 				<th>번호</th>
 				<th>적립/차감</th>
 				<th></th>
-				<th>적립/차감 포인트</th>
-				<th>총 포인트</th>
+				<th style="text-align: center;">적립/차감 포인트</th>
+				<th style="text-align: center;">총 포인트</th>
 			</tr>
-			
-			<!-- 
-			<c:forEach var="point" items="${pointList}">
-				<tr>
-					<td>${point.point_y }</td>
-					<td style="color: #bfbfbf;">${point.point_dt }</td>
-					<c:choose>
-
-						<c:when test = "${fn:contains(point.point, '-')}">
-					        <td style="color: red;">${point.point }</td>
-					    </c:when>
-					    <c:otherwise>
-					     	<td style="color: blue;">${point.point }</td>
-					    </c:otherwise>
-				    
-				    </c:choose>
-					<td style="font-weight: 500;">${point.user_point }</td>
-				</tr>
-			</c:forEach>
-			-->
 			
 			<c:forEach var="checkList" items="${checkList }">
 					<tr>
 						<td>${checkList.bno }</td>
 						<td>${checkList.point_y }</td>
-						<td>${checkList.point_dt }</td>
-						<td>${checkList.point }</td>
-						<td>${checkList.user_point }</td>
+						<td style="color: #bfbfbf;">${checkList.point_dt }</td>
+							<c:choose>
+							<c:when test = "${fn:contains(checkList.point, '-')}">
+						        <td style="color: red; text-align: center;">${checkList.point }</td>
+						    </c:when>
+						    <c:otherwise>
+						     	<td style="color: blue; text-align: center;">${checkList.point }</td>
+						    </c:otherwise>
+					    </c:choose>
+						<td style="text-align: center;">${checkList.user_point }</td>
 					</tr>
 			</c:forEach>
 			

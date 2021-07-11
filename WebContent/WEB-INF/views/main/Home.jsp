@@ -233,7 +233,7 @@
 	       	 <div class="col-lg-4 col-xs-6 col-md-3 secondLike" id="secondLike">
 	             <a href="playreviewdetail.action?playrev_cd=${listLike.playrev_cd }" class="thumbnail">
 	             	 <span class="user">
-			             <img id="userImage" src="${listLike.user_img }">
+			             <img id="userImage" onerror="this.src='<%=cp%>/images/default_profile.png'" src="<%=cp%>/profile/${listLike.user_img }">
 						 <input type="text" class="userName" value="${listLike.user_nick }" readonly="readonly"><br>
 					 </span>
 					 <input type="text" class="playName" value="${listLike.play_nm }" readonly="readonly"><br>
@@ -303,5 +303,7 @@
     
 </div><!-- close #wrapper -->
 
+<!-- 푸터 임포트 -->
+<c:import url="/WEB-INF/views/main/Footer.jsp"></c:import>
 </body>
 </html>
