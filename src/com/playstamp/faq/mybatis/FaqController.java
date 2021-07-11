@@ -24,13 +24,29 @@ public class FaqController
 		
 		model.addAttribute("list", dao.getFaqList());
 		
-		return "WEB-INF/views/Faq.jsp";
+		return "WEB-INF/views/manager/Faq.jsp";
 	}
+
+	@RequestMapping(value="/userfaq.action", method = RequestMethod.GET)
+	public String getUserFaqList(ModelMap model)
+	{
+		IFaqDAO dao = sqlSession.getMapper(IFaqDAO.class); 
+		
+		model.addAttribute("list", dao.getFaqList());
+		
+		return "WEB-INF/views/main/UserFaq.jsp";
+	}
+	
 	
 	@RequestMapping(value="faqinsert.action", method=RequestMethod.POST)
 	public String faqInsert(Faq faq)
 	{
 		IFaqDAO dao = sqlSession.getMapper(IFaqDAO.class);
+		
+		String contents = faq.getContents();
+		contents = contents.replace("\r\n","<br>");
+		
+		faq.setContents(contents);
 		
 		dao.addFaq(faq);
 		
@@ -70,7 +86,7 @@ public class FaqController
 	{
 		String result = "";
 		
-		result = "WEB-INF/views/FaqInsertForm.jsp";
+		result = "WEB-INF/views/manager/FaqInsertForm.jsp";
 				
 		return result;
 	}
@@ -81,7 +97,7 @@ public class FaqController
 		IFaqDAO dao = sqlSession.getMapper(IFaqDAO.class);
 		String result = "";
 			
-		result = "WEB-INF/views/FaqUpdateForm.jsp";
+		result = "WEB-INF/views/manager/FaqUpdateForm.jsp";
 		model.addAttribute("faq", dao.searchFaq(faq));
 		
 		return result;
