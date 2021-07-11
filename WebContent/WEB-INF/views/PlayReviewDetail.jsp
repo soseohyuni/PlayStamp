@@ -245,9 +245,7 @@
 	
 	//@@ 댓글 목록 출력 함수
 	function getComments()
-	{
-		test = 1;
-		
+	{		
 		$.getJSON("comment.action?playrev_cd=" + articleNo, function (data) {
 			   
 			console.log(data); 
@@ -277,6 +275,7 @@
 		                + "<br>";
 	
 				        $("#ccount").html(data.length);
+				        console.log(data.length);
 						$("#comments").html(str);
 					}
 		 	
@@ -294,7 +293,7 @@
 	
 				    	$("#ccount").html(data.length);
 						$("#comments").html(str);
-					}
+					
 				}
 				//@@ 블라인드 처리 하는 경우
 				else if ((check[i]==1 && checkSt[i]==1) || (check[i]==1 && checkSt[i]==0))
@@ -462,6 +461,7 @@
 			<span id="count">
 			<span style="color: #0080FF"><i class="fa fa-comment fa-lg" aria-hidden="true"></i></span>&nbsp;<span id="ccount"></span>
 			<span style="color: #FE2E2E"><i class="fas fa-heart fa-lg"></i></span>&nbsp;<span id="lcount">${playReviewDetail.lcount }</span>
+			console.log(${playReviewDetail.lcount })
 			&nbsp;&nbsp;작성자: ${playReviewDetail.user_nick }			
 			</span>
 			<!-- 리뷰 작성자가 본인일 경우 신고 버튼 뜨지 않도록 처리 -->
