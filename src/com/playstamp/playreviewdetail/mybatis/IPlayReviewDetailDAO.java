@@ -2,6 +2,8 @@ package com.playstamp.playreviewdetail.mybatis;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.playstamp.playdetail.SeatRevBlind;
 import com.playstamp.playreviewdetail.Comment;
 import com.playstamp.playreviewdetail.CommentBlind;
@@ -42,5 +44,28 @@ public interface IPlayReviewDetailDAO
 	
 	// 별점 평균 산출하는 메소드
 	public Integer getRatingAvg(String play_cd);
-
+	
+	// 좋아요 눌렀을 때 포인트 적립 메소드
+	public int addHeartPoint(String user_cd);
+	
+	// 좋아요 삭제했을 때 포인트 차감 메소드
+	public int delHeartPoint(String user_cd);
+	
+	// 좋아요 적립 제한 카운트 메소드
+	public int countAddHeart(String user_cd);
+	
+	// 해당 리뷰 좋아요로 포인트를 적립받았는지 확인하는 메소드
+	public String ifUserAddHeart(@Param("user_cd")String user_cd, @Param("playrev_cd")String playrev_cd);
+	
+	// 댓글 달았을 때 포인트 적립 메소드
+	public int addCommentPoint(String user_cd);
+	
+	// 댓글 삭제했을 때 포인트 차감 메소드
+	public int delCommentPoint(String user_cd);
+	
+	// 댓글 포인트 적립 제한 카운트 메소드
+	public int countAddComment(String user_cd);
+	
+	// 해당 댓글로 포인트를 적립받았는지 확인하는 메소드
+	public String ifUserAddComment(@Param("comment_cd")String comment_cd);
 }

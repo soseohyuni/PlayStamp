@@ -46,10 +46,10 @@ public class HomeController
 		
 		String result = "";
 		
-		int nonuser = 0;
+		//int nonuser = 0;
 		
-		HttpSession session = request.getSession();
-		session.setAttribute("nonuser", nonuser);
+		//HttpSession session = request.getSession();
+		//session.setAttribute("id", nonuser);
 		
 		result = "/WEB-INF/views/main/Home.jsp";
 

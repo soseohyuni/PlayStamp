@@ -5,6 +5,7 @@
     
 <mapper namespace="com.playstamp.user.mybatis.IUserDAO">
 
+
 	<!-- 유저 입력 아이디 중복체크 -->
 	<select id="userIdCheck" parameterType="String" resultType="int">
 		SELECT COUNT(*) AS COUNT 
@@ -84,5 +85,6 @@
 		SET USER_PW=#{arg0}
 		WHERE USER_ID=#{arg1}
 	</update>
-	
+
+  
 </mapper>
