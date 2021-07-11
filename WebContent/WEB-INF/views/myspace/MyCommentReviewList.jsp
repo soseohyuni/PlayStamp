@@ -88,7 +88,6 @@
 					<th>제목</th>
 					<th>작성자</th>
 					<th>작성일</th>
-					<th>조회수</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -100,7 +99,6 @@
 				<td><a href="playreviewdetail.action?playrev_cd=${reviewComm.playrev_cd }&play_cd=${reviewComm.play_cd }">${reviewComm.title }</a></td>
 				<td>${reviewComm.user_nick }</td>
 				<td>${reviewComm.playrev_dt }</td>
-				<td>${reviewComm.view_cnt }</td>
 			</tr>
 			</c:forEach>
 			</tbody>

@@ -71,6 +71,11 @@
 	table
 	{
 		border-spacing: 2px;
+		border-style: none;
+		border-right:none;
+		border-left:none;
+		border-top:none;
+		border-bottom:none;
 	}
 	.seat
 	{
@@ -142,9 +147,9 @@
 
 <div class="content">
 	<form action="addreviewdetail.action" method="post" class="content">
-		<table class="table table-borderless" id="reviewdetailtable">
+		<table class="table table_borderless" id="reviewdetailtable">
 			<tr>
-				<td colspan="2" rowspan="7" style="width:50px; margin:0 auto;">
+				<td colspan="2" rowspan="7"  style="width:50px; margin:0 auto;">
 					<!-- 포스터 사진 미리보기 -->
 					<div>
 						<img id="imagePreview" src="${play.play_img }">

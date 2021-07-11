@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.playstamp.manager.home.ManagerHome;
+import com.playstamp.manager.report.mybatis.IManagerReportDAO;
 import com.playstamp.myspace.MySpace;
 import com.playstamp.myspace.MySpaceComp;
 import com.playstamp.myspace.mybatis.IMyspaceDAO;
@@ -25,16 +26,19 @@ public class ManagerHomeController
 	@Autowired
 	private SqlSession sqlSession;
 	
-	// 관리자 홈페이지 로드 및 총 회원 수, 총 리뷰 수 조회
+	// 관리자 홈페이지 로드 및 총 회원 수, 총 리뷰 수 조회, 신고 처리 필요 리스트 조회
 	@RequestMapping(value = "/managerhome.action", method= {RequestMethod.GET, RequestMethod.POST})
 	public String managerhome(Model model)
 	{
 		IManagerHomeDAO dao = sqlSession.getMapper(IManagerHomeDAO.class);
 		
+		int total = dao.fiveCheckTotal();
+		
 		try
 		{
 			model.addAttribute("countUser", dao.countUser());
 			model.addAttribute("countPlayRev", dao.countPlayRev());
+			model.addAttribute("checkList", dao.fiveCheckList(total));  //-- 확인 필요 신고 리스트
 			
 		} catch (Exception e)
 		{
@@ -89,4 +93,5 @@ public class ManagerHomeController
 		
 		return map;
 	}
+	
 }

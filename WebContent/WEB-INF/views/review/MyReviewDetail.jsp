@@ -195,13 +195,13 @@
 	<form class="content" action="myreviewseatupdateform.action" method="post">
 		<table class="table table-borderless" id="reviewdetailtable">
 			<tr>
-				<td colspan="6" id="info">작성일자: ${reviewdetail.playrev_dt }  조회수: ${reviewdetail.view_cnt }</td>
+				<td colspan="6" id="info">작성일자: ${reviewdetail.playrev_dt }</td>
 			</tr>
 			<tr>
 				<td colspan="2" rowspan="7" style="width:50px; margin:0 auto;">
 					<!-- 포스터 사진 미리보기 -->
 					<div>
-						<img id="imagePreview" src="${play.play_img }">
+						<img id="imagePreview" src="${reviewdetail.play_img }">
 					</div>
 				</td>
 				<th colspan="4" id="reviewTitle" name="reviewTitle">${reviewdetail.title }</th>
