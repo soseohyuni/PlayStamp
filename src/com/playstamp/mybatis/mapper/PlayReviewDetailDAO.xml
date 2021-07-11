@@ -58,19 +58,21 @@
 	</select>
 	
 	<select id="getUserGrade" resultType="string" parameterType="string">
-      SELECT I.USER_ID, NVL(SUM(L.LIKE_COUNT),0) AS LIKE_COUNT, M.POINT
-      FROM TBL_USERINFO I LEFT JOIN TBL_USER U
-          ON U.USER_CD = I.USER_CD
+    <![CDATA[
+      SELECT CASE WHEN LIKE_COUNT>=20 AND POINT>=200 THEN '우수회원' WHEN LIKE_COUNT>=10 AND POINT>=100 THEN '일반회원' WHEN LIKE_COUNT>=3 AND POINT>=30 THEN '준회원' WHEN POINT<0 THEN '어둠회원' ELSE '뉴비' END AS GRADE
+      FROM
+      (SELECT I.USER_ID AS USER_ID, NVL(SUM(L.LIKE_COUNT),0) AS LIKE_COUNT, O.POINT AS POINT
+      FROM TBL_USERINFO I LEFT JOIN VIEW_MEMBERPOINT O
+          ON I.USER_ID = O.USER_ID
               LEFT JOIN TBL_REV_DISTIN D
-              ON D.USER_CD = U.USER_CD
+              ON D.USER_CD = O.USER_CD
                   LEFT JOIN TBL_PLAY_REV P
                   ON P.REV_DISTIN_CD = D.REV_DISTIN_CD
-                      LEFT JOIN VIEW_LIKECOUNT L
+                      FULL JOIN VIEW_LIKECOUNT L
                       ON L.PLAYREV_CD = P.PLAYREV_CD
-                          LEFT JOIN VIEW_MEMBERPOINT M
-                          ON I.USER_ID = M.USER_ID
-      WHERE USER_ID=#{user_id}
-      GROUP BY (I.USER_ID, M.POINT))
+                  WHERE I.USER_ID=#{user_id}
+      GROUP BY (I.USER_ID, O.POINT))
+   ]]>
    </select>
 	
 	<select id="getRatingAvg" resultType="integer" parameterType="string">

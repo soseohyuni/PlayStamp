@@ -34,7 +34,7 @@ public class MyspaceJjimController
 		jjim.setUser_cd(user_cd);
 		model.addAttribute("myspaceJjim", dao.getMyspaceJjimList(jjim));
 		
-		return "WEB-INF/views/MyspaceJjim.jsp";
+		return "WEB-INF/views/myspace/MyspaceJjim.jsp";
 	}	 
 }
 
