@@ -15,150 +15,119 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-
-<!-- 차트 -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style type="text/css">
-
-	.nav
-	{
-		flex-wrap:none; 
-		display: block;
-	}
-
-</style>
-
-<script type="text/javascript">
-
-	// 현재 날짜 기준 연도 구하기
-	now = new Date();	
-	year = now.getFullYear();
-	
-	$(function()
-	{
-		$(".year").val(year);
-		
-		$.ajax({
-					url: "statisticsmanager.action"
-				  , type: "GET"
-				  , data: {"userYear": year }
-				  , success : function(data)
-				    {
-					  userTotal = data.userTotal;
-					  
-					  createChart();
-					  
-				    },  
-					error : function(request,status,error)
-					{
-				        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-				    }
-			  	}); 
-		
-		$("#preBtn").on("click", function()
-		{
-		  
-			year = year - 1;
-			$(".year").val(year);
-			
-			$.ajax({
-				url: "statisticsmanager.action"
-			  , type: "GET"
-			  , data: {"userYear": year }
-			  , success : function(data)
-			    {
-				  userTotal = data.userTotal;
-				  
-				  myMChart.destroy();
-				  createChart();
-			    },  
-				error : function(request,status,error)
-				{
-			        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-			    }
-		  	}); 
-			
-		});
-		
-		$("#nextBtn").on("click", function()
-				{
-					year = year + 1;
-					$(".year").val(year);
-					
-					$.ajax({
-						url: "statisticsmanager.action"
-					  , type: "GET"
-					  , data: {"userYear": year }
-					  , success : function(data)
-					    {
-						  userTotal = data.userTotal;
-						  
-						  myMChart.destroy();
-						  createChart();
-					    },  
-						error : function(request,status,error)
-						{
-					        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-					    }
-				  	}); 
-					
-				});
-	});
-	
-	function createChart()
-	{
-		var ctx = $('#myMChart').get(0).getContext("2d");
-		window.myMChart = new Chart(ctx,
-		{
-			type : 'line',
-			data : lineChartData, plugins: { legend: { display: false }}
-		});
-		
-		myMChart.data.datasets[0].data = [userTotal.jan, userTotal.feb, userTotal.mar, userTotal.apr
-			, userTotal.may, userTotal.jun, userTotal.jul, userTotal.aug, userTotal.sep, userTotal.oct
-			, userTotal.nov, userTotal.dec];
-		myMChart.update();
-	}
-	
-
-	var lineChartData =
-	{
-		labels : [ "1월", "2월", "3월", "4월", "5월", "6월",
-				   "7월", "8월", "9월", "10월", "11월", "12월" ],
-		datasets : [
-				{
-					data : [],
-					label : 'user',
-					backgroundColor: [
-					      'rgb(255, 99, 132)'
-					    ],
-				}]
-	};
-
-</script>
 </head>
 <body>
-	<!-- 메뉴 영역 -->
-	<c:import url="/WEB-INF/views/manager/ManagerHeader.jsp"></c:import>
+<div style="width:60%">
 
-	<div id="wrapper">
-		<div class="container" style="align: left; width: 74%; height: 700px; top:30px;">
-			<h3 class="container"><b>방문 회원 통계</b></h3><hr>
-			
-			<div class="btn-group-lg" role="group" aria-label="..." style="width: 30%;">
-			  <button type="button" id="preBtn" class="btn btn-default">pre</button>
-			  <input type="button" class="btn btn-primary year" value="2021" style="width: 22%;">
-			  <button type="button" id="nextBtn" class="btn btn-default">next</button>
-			</div>
-			
-			<br>
-			<br>
-				<div class="chart-container" style="flex:1; margin-bottom: 30px; width: 85%;">
-					<div>
-						<canvas id="myMChart"></canvas>
-					</div>
-			</div>
-		</div>
+	<div>
+
+		<canvas id="canvas" height="450" width="600"></canvas>
+
 	</div>
+
+</div>
+
+<script
+
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script
+
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+
+<script>
+
+var chartLabels = [];
+
+var chartData = [];
+
+
+
+$.getJSON("http://localhost:8080/incomeList", function(data){
+
+	
+
+	$.each(data, function(inx, obj){
+
+		chartLabels.push(obj.dd);
+
+		chartData.push(obj.income);
+
+	});
+
+	createChart();
+
+	console.log("create Chart")
+
+});
+
+
+
+var lineChartData = {
+
+		labels : chartLabels,
+
+		datasets : [
+
+			{
+
+				label : "Date Income",
+
+				fillColor : "rbga(151,187,205,0.2)",
+
+				strokeColor : "rbga(151,187,205,1)",
+
+				pointColor : "rbga(151,187,205,1)",
+
+				pointStrokeColor : "#fff",
+
+				pointHighlightFill : "#fff",
+
+				pointHighlightStroke : "rbga(151,187,205,1)",
+
+				data : chartData
+
+			
+
+		}
+
+			]
+
+}
+
+
+
+function createChart(){
+
+	var ctx = document.getElementById("canvas").getContext("2d");
+
+	LineChartDemo = Chart.Line(ctx,{
+
+		data : lineChartData,
+
+		options :{
+
+			scales : {
+
+				yAxes : [{
+
+					ticks :{
+
+						beginAtZero : true
+
+					}
+
+				}]
+
+			}
+
+		}
+
+	})
+
+}
+
+</script>
+
 </body>
 </html>

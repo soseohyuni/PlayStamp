@@ -89,4 +89,16 @@ public class ManagerHomeController
 		
 		return map;
 	}
+	
+	// 관리자 로그아웃
+	@RequestMapping("/managerlogout.action")
+	public String managerLogout(HttpSession session)
+	{ 
+		String result = ""; 
+		session.invalidate();
+
+		result = "redirect:home.action";
+		
+		return result;
+	}
 }

@@ -171,7 +171,7 @@
        <div id="imgContainer" class="row">
        		<c:forEach var="listReview" items="${highReviewSorting }" begin="0" end="3">
 	          <div class="col-lg-3 col-xs-6 col-md-3 firstReview" id="firstReview">
-	             <a href="playdetail.action?play_cd=${listReview.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
+	             <a href="playdetail.action?play_cd=${listReview.play_cd }&playrev_cd=${listReview.playrev_cd}" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
 	               <img class="playPoster" src="${listReview.play_img }" style="width: 100%; height: 100%;">
 	             </a>
 	             <div class="playTitle">${listReview.play_nm }</div>
@@ -179,7 +179,7 @@
 	         </c:forEach>
 	         <c:forEach var="listReview" items="${highReviewSorting }" begin="4" end="7">
 	          <div class="col-lg-3 col-xs-6 col-md-3 secondReview" id="secondReview">
-	             <a href="playdetail.action?play_cd=${listReview.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
+	             <a href="playdetail.action?play_cd=${listReview.play_cd }&playrev_cd=${listReview.playrev_cd}" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
 	               <img class="playPoster"  src="${listReview.play_img }" style="width: 100%; height: 100%;">
 	             </a>
 	             <div class="playTitle">${listReview.play_nm }</div>

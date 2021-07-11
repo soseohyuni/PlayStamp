@@ -34,6 +34,12 @@
 		right: 130px;
 	}
 	
+	.mTitle
+	{
+		width:990px !important;
+		font-size: 15pt !important;
+	}
+	
 </style>
 
 <script type="text/javascript">
@@ -50,7 +56,7 @@
    //-- 실제 페이지를 클릭하면 동작하는 부분은 <form> 태그를 이용해 처리함
    $(document).ready(function()
    {
-      var likeForm = $("#likeForm");
+      var pointForm = $("#pointForm");
       
       $(".paginate_button a").on("click", function(e)
       {
@@ -58,8 +64,8 @@
          e.preventDefault();
          
          // <form> 태그 내 pageNum 속성 값은 href 속성값(클릭한 페이지 번호)으로 변경
-         likeForm.find("input[name='pageNum']").val($(this).attr("href"));
-         likeForm.submit();
+         pointForm.find("input[name='pageNum']").val($(this).attr("href"));
+         pointForm.submit();
       });
    });
 
@@ -126,7 +132,7 @@
             </ul>
          </div><!-- close .pull-right -->
          <!-- 페이지 번호 클릭시 이동을 위한 hidden form 구성 -->
-         <form id="likeForm" action="managingpointlist.action" method="get">
+         <form id="pointForm" action="managingpointlist.action" method="get">
             <input type="hidden" name="pageNum" value="${PageMaker.cri.pageNum }">
             <input type="hidden" name="amount" value="${PageMaker.cri.amount }">
             <input type="hidden" name="user_id" value="${user_id }">

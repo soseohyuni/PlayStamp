@@ -79,7 +79,7 @@ public class MyActivityController
       model.addAttribute("userJjim", userJjim);
       
       return "WEB-INF/views/myspace/MyActivityHome.jsp";
-  }
+   }
 
 	
 	// 좋아요 누른 리뷰글 가져오기

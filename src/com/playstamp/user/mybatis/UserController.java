@@ -171,6 +171,14 @@ public class UserController
 			if (str!=null)
 			{
 				System.out.println("관리자 로그인 성공");
+
+	            HttpSession session = request.getSession();
+	            session.setAttribute("id", id);
+	            session.setAttribute("nick", str);
+
+	            String code = userDao.userCode(id);
+	            session.setAttribute("code", code);
+	            
 				// 추후 관리자 페이지로 변경
 				result = "redirect:managerhome.action";
 			}
@@ -412,7 +420,6 @@ public class UserController
 		session.invalidate();
 
 		result = "redirect:home.action";
-		
 		return result;
 	}
 	

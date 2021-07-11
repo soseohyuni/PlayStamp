@@ -16,7 +16,17 @@ public class Interceptor extends HandlerInterceptorAdapter
 											, "/musicallist.action", "/dramalist.action", "/musicalprint.action", "/dramaprint.action"
 											, "/memberlist.action", "/modifypointpopup.action", "/modifypoint.action"
 											, "/mailcheck.action", "/completesignup.action", "/checkSignup.action", "/managingpointlist.action"
-											, "/managerhome.action", "/managerlist.action", "/faq.action", "/notice.action"};
+											, "/managerhome.action", "/faq.action", "/notice.action"
+											, "/findpw.action", "/selectidpw.action", "/userchangepwform.action", "/userchangepw.action"
+											, "/selectfindid.action", "/checkfindidpw.action", "/findid.action"
+											, "/statisticsvisitorview.action", "/statisticsuserview.action", "/statisticsmanager.action"
+											, "/myreviewlistposter.action", "/managerreport.action"
+											, "/checkmngid.action", "/managerinsertform.action", "/managerinsert.action"
+											, "/managerupdateform.action", "/managerupdate.action", "/managerdelete.action"
+											, "/donemanagerreport.action", "/commentreport.action", "/reviewreport.action"
+											, "/seatreport.action", "/mseatreport.action", "/checkcommreport.action"
+											, "/checkreviewreport.action", "/checkseatreport.action", "/checkmseatreport.action"
+											, "/managerlogout.action"};
 	
 	// → 고객센터, 검색 결과도 추가해야 함
 	
