@@ -173,22 +173,23 @@
     <div id="highReviewSorting" class="container">
        <div id="pageTitle1" class="container"><img src="images/smileicon.png" style="width:2%;"> 리뷰 많은 공연순</div>
        <div id="imgContainer" class="row">
-             <c:forEach var="listReview" items="${highReviewSorting }" begin="0" end="3">
-             <div class="col-lg-3 col-xs-6 col-md-3 firstReview" id="firstReview">
-                <a href="playdetail.action?play_cd=${listReview.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
-                  <img class="playPoster" src="${listReview.play_img }" style="width: 100%; height: 100%;">
-                </a>
-                <div class="playTitle">${listReview.play_nm }</div>
-             </div>
-            </c:forEach>
-            <c:forEach var="listReview" items="${highReviewSorting }" begin="4" end="7">
-             <div class="col-lg-3 col-xs-6 col-md-3 secondReview" id="secondReview">
-                <a href="playdetail.action?play_cd=${listReview.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
-                  <img class="playPoster"  src="${listReview.play_img }" style="width: 100%; height: 100%;">
-                </a>
-                <div class="playTitle">${listReview.play_nm }</div>
-             </div>
-            </c:forEach>
+       		<c:forEach var="listReview" items="${highReviewSorting }" begin="0" end="3">
+	          <div class="col-lg-3 col-xs-6 col-md-3 firstReview" id="firstReview">
+	             <a href="playdetail.action?play_cd=${listReview.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
+	               <img class="playPoster" src="${listReview.play_img }" style="width: 100%; height: 100%;">
+	             </a>
+	             <div class="playTitle">${listReview.play_nm }</div>
+	          </div>
+	         </c:forEach>
+	         <c:forEach var="listReview" items="${highReviewSorting }" begin="4" end="7">
+	          <div class="col-lg-3 col-xs-6 col-md-3 secondReview" id="secondReview">
+	             <a href="playdetail.action?play_cd=${listReview.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
+	               <img class="playPoster"  src="${listReview.play_img }" style="width: 100%; height: 100%;">
+	             </a>
+	             <div class="playTitle">${listReview.play_nm }</div>
+	          </div>
+	         </c:forEach>
+
        </div>
     </div>
     
@@ -205,6 +206,7 @@
     <div id="highLikeSorting" class="container">
        <div id="pageTitle2" class="container"><img src="images/hearticon.png" style="width:2%;"> 좋아요 많은 리뷰순<br><br></div>
        <div id="reviewContainer" class="row">
+
 
            <c:set var="i" value="0"></c:set>
            <c:forEach var="listLike" items="${highLikeSorting }" begin="0" end="2">
@@ -236,32 +238,32 @@
          </c:forEach>
          
          <c:set var="i" value="3"></c:set>
-           <c:forEach var="listLike" items="${highLikeSorting }" begin="3" end="5">
-              <div class="col-lg-4 col-xs-6 col-md-3 secondLike" id="secondLike">
-                <a href="playreviewdetail.action?playrev_cd=${listLike.playrev_cd }&play_cd=${listLike.play_cd}" class="thumbnail">
-                    <span class="user">
-                      <img id="userImage" onerror="this.src='<%=cp%>/images/default_profile.png'" src="<%=cp%>/profile/${listLike.user_img }">
-                   <input type="text" class="userName" value="${listLike.user_nick }" readonly="readonly"><br>
-                </span>
-                <input type="text" class="playName" value="${listLike.play_nm }" readonly="readonly"><br>
-                <input type="text" class="reviewTitle" value="${listLike.title }" readonly="readonly"><br>
-                <span class="ratingContainer" style="display: block">
-                <select id="rating${i}">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                </select>
-                </span>
-                <span class="reviewContent">${listLike.contents }</span><br>
-                <span class="likecomment">
-                   <img src="images/heartblack.png" style="width: 25px;"><input type="text" class="reviewLike" value="${listLike.like_count }" readonly="readonly">
-                   <img src="images/commenticon.png" style="width: 20px;"><input type="text" class="reviewComment" value="${listLike.comment_count }" readonly="readonly"><br>
-                </span>
-                </a>
-            </div>
-        <c:set var="i" value="${i+1}"></c:set>
+       	 <c:forEach var="listLike" items="${highLikeSorting }" begin="3" end="5">
+	       	 <div class="col-lg-4 col-xs-6 col-md-3 secondLike" id="secondLike">
+	             <a href="playreviewdetail.action?playrev_cd=${listLike.playrev_cd }&play_cd=${listLike.play_cd}" class="thumbnail">
+	             	 <span class="user">
+			             <img id="userImage" onerror="this.src='<%=cp%>/images/default_profile.png'" src="<%=cp%>/profile/${listLike.user_img }">
+						 <input type="text" class="userName" value="${listLike.user_nick }" readonly="readonly"><br>
+					 </span>
+					 <input type="text" class="playName" value="${listLike.play_nm }" readonly="readonly"><br>
+					 <input type="text" class="reviewTitle" value="${listLike.title }" readonly="readonly"><br>
+					 <span class="ratingContainer" style="display: block">
+					 <select id="rating${i}">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					 </select>
+					 </span>
+					 <span class="reviewContent">${listLike.contents }</span><br>
+					 <span class="likecomment">
+						 <img src="images/heartblack.png" style="width: 25px;"><input type="text" class="reviewLike" value="${listLike.like_count }" readonly="readonly">
+						 <img src="images/commenticon.png" style="width: 20px;"><input type="text" class="reviewComment" value="${listLike.comment_count }" readonly="readonly"><br>
+					 </span>
+	             </a>
+	         </div>
+	     <c:set var="i" value="${i+1}"></c:set>
 
          </c:forEach>
        </div>

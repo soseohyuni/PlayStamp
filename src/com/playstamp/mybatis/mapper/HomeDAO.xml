@@ -25,5 +25,5 @@
       FROM VIEW_HIGHRATING
       ORDER BY AVG_RATING DESC
    </select>
-   
+
 </mapper>
