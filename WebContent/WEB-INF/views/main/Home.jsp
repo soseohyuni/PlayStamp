@@ -162,10 +162,10 @@
         <p>공연 관람을 기록하고 공유해보세요</p>
 
         <p><a class="btn btn-primary btn-lg" href="addreviewsearchform.action" role="button">리뷰 작성하기</a></p>
-   	  </div>
-	</div><br><br>
+        </div>
+   </div><br><br>
 
-	<!-- 리뷰 많은 공연순 리스트 출력 -->
+   <!-- 리뷰 많은 공연순 리스트 출력 -->
     <div id="highReviewSorting" class="container">
        <div id="pageTitle1" class="container"><img src="images/smileicon.png" style="width:2%;"> 리뷰 많은 공연순</div>
        <div id="imgContainer" class="row">
@@ -185,12 +185,13 @@
 	             <div class="playTitle">${listReview.play_nm }</div>
 	          </div>
 	         </c:forEach>
+
        </div>
     </div>
     
-	<!-- 리뷰 많은 공연순 리스트를 컨트롤 할 엘리먼트 -->
-	<a href="#" class="prev" id="prevReview" onclick="moveReview(0);return false;">prev</a>
-	<a href="#" class="next" id="nextReview" onclick="moveReview(1);return false;">next</a>
+   <!-- 리뷰 많은 공연순 리스트를 컨트롤 할 엘리먼트 -->
+   <a href="#" class="prev" id="prevReview" onclick="moveReview(0);return false;">prev</a>
+   <a href="#" class="next" id="nextReview" onclick="moveReview(1);return false;">next</a>
 
     <br><br><br><br><br><br>
     
@@ -261,8 +262,8 @@
     </div><!-- clsoe #highLikeSorting -->
     
     <!-- 좋아요 많은 리뷰순 리스트를 컨트롤 할 엘리먼트 -->
-	<a href="#" class="prev" id="prevLike" onclick="moveLike(0);return false;">prev</a>
-	<a href="#" class="next" id="nextLike" onclick="moveLike(1);return false;">next</a>
+   <a href="#" class="prev" id="prevLike" onclick="moveLike(0);return false;">prev</a>
+   <a href="#" class="next" id="nextLike" onclick="moveLike(1);return false;">next</a>
 
     
     <br><br><br><br><br><br>
@@ -273,30 +274,30 @@
        <div id="imgContainer" class="row">
           <c:forEach var="listRate" items="${highRateSorting }" begin="0" end="3">
 
-	          <div class="col-lg-3 col-xs-6 col-md-3 firstRating" id="firstRating">
-	             <a href="playdetail.action?play_cd=${listRate.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
-	               <img class="playPoster"  src="${listRate.play_img }" style="width: 100%; height: 100%;">
-	             </a>
-	             <div class="playTitle">${listRate.play_nm }</div>
-	          </div>
-	      </c:forEach>
-	      
-	      <c:forEach var="listRate" items="${highRateSorting }" begin="4" end="7">
-	          <div class="col-lg-3 col-xs-6 col-md-3 secondRating" id="secondRating">
-	             <a href="playdetail.action?play_cd=${listRate.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
-	               <img class="playPoster"  src="${listRate.play_img }" style="width: 100%; height: 100%;">
-	             </a>
-	             <div class="playTitle">${listRate.play_nm }</div>
-	          </div>
-	      </c:forEach>
+             <div class="col-lg-3 col-xs-6 col-md-3 firstRating" id="firstRating">
+                <a href="playdetail.action?play_cd=${listRate.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
+                  <img class="playPoster"  src="${listRate.play_img }" style="width: 100%; height: 100%;">
+                </a>
+                <div class="playTitle">${listRate.play_nm }</div>
+             </div>
+         </c:forEach>
+         
+         <c:forEach var="listRate" items="${highRateSorting }" begin="4" end="7">
+             <div class="col-lg-3 col-xs-6 col-md-3 secondRating" id="secondRating">
+                <a href="playdetail.action?play_cd=${listRate.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
+                  <img class="playPoster"  src="${listRate.play_img }" style="width: 100%; height: 100%;">
+                </a>
+                <div class="playTitle">${listRate.play_nm }</div>
+             </div>
+         </c:forEach>
 
        </div>
     </div><!-- close #highRateSorting -->
     
     <!-- 평점 높은 공연순 리스트를 컨트롤 할 엘리먼트 -->
 
-	<a href="#" class="prev" id="prevRating" onclick="moveRating(0);return false;">prev</a>
-	<a href="#" class="next" id="nextRating" onclick="moveRating(1);return false;">next</a>
+   <a href="#" class="prev" id="prevRating" onclick="moveRating(0);return false;">prev</a>
+   <a href="#" class="next" id="nextRating" onclick="moveRating(1);return false;">next</a>
 
     
     <br><br><br>

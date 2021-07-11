@@ -67,7 +67,7 @@ public class MemberListController
 	@RequestMapping(value = "/modifypointpopup.action", method= {RequestMethod.GET, RequestMethod.POST})
 	public String modifypointpopup()
 	{	
-		return "WEB-INF/views/manager/ModifyPointPopup.jsp";
+		return "/WEB-INF/views/manager/ModifyPointPopup.jsp";
 	}
 	
 	
