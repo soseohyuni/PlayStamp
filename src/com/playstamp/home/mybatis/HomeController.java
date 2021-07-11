@@ -2,20 +2,13 @@ package com.playstamp.home.mybatis;
 
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
@@ -28,6 +21,7 @@ public class HomeController
 	public String mSeatMain(Model model, HttpServletRequest request)
 	{
 		IHomeDAO dao = sqlSession.getMapper(IHomeDAO.class);
+		
 		
 		model.addAttribute("highReviewSorting", dao.highReviewSorting());
 		model.addAttribute("highRateSorting", dao.highRateSorting());

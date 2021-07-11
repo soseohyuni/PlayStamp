@@ -10,7 +10,6 @@
 <meta charset="UTF-8">
 <title>AddReviewSearchForm.jsp</title>
 <!-- 부트스트랩, 제이쿼리 -->
-<link rel="stylesheet" href="css/bootstrap.css">
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -18,36 +17,33 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <link rel="stylesheet" href="css/header.css">
+<link href="<%=cp%>/css/myspace.css" rel="stylesheet">
 	
 <style type="text/css">
-#wrapper { 
-	width: 100%; 
-	height: 100%; 
-	align-content: center; 
-}
+
 #wrapper .container{
 	width:1300px;
 }
+
+#pageTitle { float: left; margin: 0; line-height: 60px;}	
+
 h3, div {
 	text-align: center;
 }
 
-h5 {
-	text-align: left;
-}
-
 #search {
-	width: 700px;
+	width: 95%;
 	margin: 0 auto;
 }
 #nextBtn{
-	width: 700px;
+	width: 95%;
 	margin: 0 auto;
 }
 
 #btn {
-	width: 500px;
+	width: 95%;
 	margin: auto;
 	display: block;
 }
@@ -102,21 +98,21 @@ h5 {
 	<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
 </div>
 
-<div id="textbox">
-	<h5>
-		<img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">리뷰 추가하기
-	</h5>
-	<hr>
-</div>
-<br><br><br><br><br>
+
 <div id="wrapper">
 	<div class="container">
+	
+	<div id="topBox" class="inBox" style="background-color: #fff;">
+		<div id="pageTitle">리뷰 추가하기</div>
+	</div>
+	
 			<!-- 다음 단계로 이동 버튼 클릭 시 사용자가 선택한 공연코드를 가지고 좌석 리뷰 작성 페이지로 이동 -->
 		<form action="addreviewseatform.action" method="post">
 			<h2>관람하신 공연명을 검색하여 선택해주세요</h2>
 		    <br>
 			<br>
-			<input type="text" id="search" class="form-control" placeholder="공연을 검색해보세요!">
+			<input type="text" id="search" class="form-control"
+			style="height: 48px; font-size: 18px; font-weight: 400;" placeholder="공연을 검색해보세요!">
 			
 			<!-- 스크립트 단에 전달할 공연정보 hidden 속성으로 구성 -->
 			 
@@ -127,12 +123,14 @@ h5 {
 			<input type="hidden" id="play_nm" name="play_nm">
 			<!-- 임시로 유저아이디 다음 페이지에 넘기기 -->
 			<input type="hidden" id="user_cd" name="user_cd" value="U00001">
-			<div>
-				<button type="submit" id="nextBtn" class="btn btn-info">다음 단계로</button>
-			</div>
+			
+			<button type="submit" id="nextBtn" style="height: 48px; font-size: 18px; font-weight: 400;" class="btn btn-primary btn-lg btn-block">다음 단계로</button>
 		</form>
 	</div>
 </div>
+
+<!-- 푸터 임포트 -->
+<c:import url="/WEB-INF/views/main/Footer.jsp"></c:import>
 
 </body>
 </html>

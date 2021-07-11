@@ -145,6 +145,7 @@
 	{
 		height: 312px;
 	}
+	#pageTitle { float: left; margin: 0; line-height: 60px;}
 	
 </style>
 <script type="text/javascript">
@@ -158,11 +159,8 @@
 </div>
 
 <div id="wrapper">
-
-	<div id="textbox">
-	<h5><img src="<%=cp%>/images/addReviewIcon.PNG" width="20px" height="20px">나의 관람 리뷰</h5>
-	<hr>
-	</div>
+<div class="container">
+	<div id="pageTitle" class="container">나의 관람 리뷰</div>
 	<br><br>
 
 	<!-- 사용자의 리뷰 목록: 사진 클릭 시 공연장코드, 리뷰 식별코드 넘겨주기 -->
@@ -177,10 +175,9 @@
           	</div>
           	</c:forEach>
        	</div>
-    </div>
+</div>
 	
     <br><br>
-    
 </div><!-- close #wrapper -->
 
 </body>

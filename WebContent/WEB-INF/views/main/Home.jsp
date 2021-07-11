@@ -139,6 +139,10 @@
    }
 
 </script>
+<style type="text/css">
+.reviewContent {height: 80px;}
+
+</style>
 </head>
 <body>
 
@@ -189,8 +193,11 @@
     </div>
     
    <!-- 리뷰 많은 공연순 리스트를 컨트롤 할 엘리먼트 -->
+   <div style="margin-left: 110px;">
    <a href="#" class="prev" id="prevReview" onclick="moveReview(0);return false;">prev</a>
    <a href="#" class="next" id="nextReview" onclick="moveReview(1);return false;">next</a>
+   </div>
+
 
     <br><br><br><br><br><br>
     
@@ -204,7 +211,7 @@
               <div class="col-lg-4 col-xs-6 col-md-3 firstLike" id="firstLike">
                 <a href="playreviewdetail.action?playrev_cd=${listLike.playrev_cd }&play_cd=${listLike.play_cd}" class="thumbnail">
                     <span class="user">
-                      <img id="userImage" src="${listLike.user_img }">
+                      <img id="userImage" onerror="this.src='<%=cp%>/images/default_profile.png'" src="<%=cp%>/profile/${listLike.user_img }">
                    <input type="text" class="userName" value="${listLike.user_nick }" readonly="readonly"><br>
                 </span>
                 <input type="text" class="playName" value="${listLike.play_nm }" readonly="readonly"><br>
@@ -261,8 +268,12 @@
     </div><!-- clsoe #highLikeSorting -->
     
     <!-- 좋아요 많은 리뷰순 리스트를 컨트롤 할 엘리먼트 -->
+
+    <div style="margin-left: 110px;">
    <a href="#" class="prev" id="prevLike" onclick="moveLike(0);return false;">prev</a>
    <a href="#" class="next" id="nextLike" onclick="moveLike(1);return false;">next</a>
+   </div>
+
 
     
     <br><br><br><br><br><br>
@@ -295,8 +306,11 @@
     
     <!-- 평점 높은 공연순 리스트를 컨트롤 할 엘리먼트 -->
 
-   <a href="#" class="prev" id="prevRating" onclick="moveRating(0);return false;">prev</a>
-   <a href="#" class="next" id="nextRating" onclick="moveRating(1);return false;">next</a>
+
+	<div style="margin-left: 110px;">
+	   <a href="#" class="prev" id="prevRating" onclick="moveRating(0);return false;">prev</a>
+	   <a href="#" class="next" id="nextRating" onclick="moveRating(1);return false;">next</a>
+            </div>
 
     
     <br><br><br>

@@ -21,10 +21,11 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 
 <style type="text/css">
+
 	#footer {
-		margin-top: 80px;
-		heiht : 100px;
-		padding-bottom: 64px;
+		margin: 80px 0 40px 0;
+		width:100%;
+		bottom:0;
 	}
 	
 	.footerText {
@@ -56,7 +57,7 @@
     vertical-align: -1px;
 }
 
-a {color: #a8afb5 !important; font-size: 14px;}
+a {color: #a8afb5; font-size: 14px;}
 </style>
 </head>
 <body>

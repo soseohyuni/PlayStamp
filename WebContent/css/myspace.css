@@ -1,15 +1,15 @@
 @charset "UTF-8";
 
+
 #wrapper { 
 
 	width: 100%; 
-	height: 100%; 
 	align-content: center;
+	min-height: 100%; 
 }
 #wrapper .container{
 	width:1300px;
 }
-
 
 #profile { width: 33%; }
 #listArea {  width: 33%; text-align: center;}
@@ -48,6 +48,15 @@
 #secondArea > div:first-child {margin-right: 30px;}
 
 .inBox { 
+	background-color: #999;  
+	height: 120px; 
+	border-radius: 20px; 
+	background-color: #fafafa; 
+	padding: 30px;
+	text-align: center;
+}
+
+.playinBox { 
 	background-color: #999;  
 	height: 120px; 
 	border-radius: 20px; 

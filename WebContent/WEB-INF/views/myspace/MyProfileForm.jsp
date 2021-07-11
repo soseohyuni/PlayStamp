@@ -90,17 +90,12 @@
 							src="<%=cp%>/profile/${userInfo.user_Img }">
 						</div>
 					
-						<div>
-							<input type="file" name="userImg" id="userUpImg">
+						<div style="margin-bottom: 20px;">
+							<input type="file" name="userImg" id="userUpImg" style="width:50%; float:left; margin-right: 20px;">
+							<input class="btn btn-primary" type="submit" value="변경하기" style="width:50%;">
 						</div>
 						
 						<input type="hidden" name="userId" value="${sessionScope.id }">
-						
-						<div>
-							<br>
-							<input class="btn btn-primary" type="submit" value="변경하기">
-						</div>
-					
 					</form>
 					
 					<div class="userInfo">${sessionScope.grade }</div>

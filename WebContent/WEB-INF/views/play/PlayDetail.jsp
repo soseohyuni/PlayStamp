@@ -262,11 +262,13 @@
 </head>
 
 <body>
-<div class="container">
+
 <!-- 상단바 -->
-	<div id="header">
-		<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
-	</div>
+<div>
+	<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
+</div>
+	
+<div class="container">
 <!-- 내용 출력 시작 -->	
 	<div id="wrapper">
 		<div>
