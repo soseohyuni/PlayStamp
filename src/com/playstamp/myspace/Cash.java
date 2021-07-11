@@ -10,7 +10,18 @@ import org.springframework.stereotype.Repository;
 public class Cash
 {
 	// 캐시 적립/차감 사유, 캐시 적립/차감 날짜, 적립/차감된 캐시, 현재 사용자 캐시
+	private String bno;
 	private String cash_y, cash_dt, cash, user_cash;
+
+	public String getBno()
+	{
+		return bno;
+	}
+
+	public void setBno(String bno)
+	{
+		this.bno = bno;
+	}
 
 	public String getCash_y()
 	{

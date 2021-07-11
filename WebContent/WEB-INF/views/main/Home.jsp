@@ -1,8 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-	request.setCharacterEncoding("UTF-8");
-	String cp = request.getContextPath();
+   request.setCharacterEncoding("UTF-8");
+   String cp = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
@@ -27,12 +27,12 @@
 
 <script type="text/javascript">
 
-	// 공연 평점을 담을 배열
-	var array = new Array();
-	    
+   // 공연 평점을 담을 배열
+   var array = new Array();
+       
     // 평점 값 list 에 담기
     <c:forEach var="list" items="${highLikeSorting}" begin="0" end="6">   
-    	array.push("${list.rating_cd}");
+       array.push("${list.rating_cd}");
     </c:forEach>
     
     // 별점 제이쿼리
@@ -49,117 +49,118 @@
            });
        }
     }); 
-	    
+       
 </script>
 <script type="text/javascript">
 
-	// 페이지를 처음 로드했을 때는 second 클래스와 prev 버튼을 숨김
-	 $( document ).ready( function() {
+   // 페이지를 처음 로드했을 때는 second 클래스와 prev 버튼을 숨김
+    $( document ).ready( function() {
        
-		$(".secondReview").hide();
-		$(".secondLike").hide();
-		$(".secondRating").hide();
-		
+      $(".secondReview").hide();
+      $(".secondLike").hide();
+      $(".secondRating").hide();
+      
+
         $("#prevReview").hide();
         $("#prevLike").hide();
         $("#prevRating").hide();
      });
 
-	// 리뷰 많은 공연순 리스트 prev/next 버튼 기능
-	function moveReview(menu_id)
-	{
-		// next 버튼 눌렀을 때
-		if(menu_id==1)
-		{
-			$(".secondReview").show();
-			$(".firstReview").hide();
-			
-			$("#prevReview").show();
-			$("#nextReview").hide();
-		}
-		
-		// prev 버튼 눌렀을 때
-		if(menu_id==0)
-		{
-			$(".firstReview").show();
-			$(".secondReview").hide();
-			
-			$("#nextReview").show();
-			$("#prevReview").hide();
-		}
-	}
-	
-	// 좋아요 많은 리뷰순 리스트 prev/next 버튼 기능
-	function moveLike(menu_id)
-	{
-		// next 버튼 눌렀을 때
-		if(menu_id==1)
-		{
-			$(".secondLike").show();
-			$(".firstLike").hide();
-			
-			$("#prevLike").show();
-			$("#nextLike").hide();
-		}
-		
-		// prev 버튼 눌렀을 때
-		if(menu_id==0)
-		{
-			$(".firstLike").show();
-			$(".secondLike").hide();
-			
- 			$("#nextLike").show();
-			$("#prevLike").hide();
-		}
-	}
-	
-	// 평점 높은 공연순 리스트 prev/next 버튼 기능
-	function moveRating(menu_id)
-	{
-		// next 버튼 눌렀을 때
-		if(menu_id==1)
-		{
-			$(".firstRating").hide();
-			$(".secondRating").show();
-			
-			$("#prevRating").show();
-			$("#nextRating").hide();
-		}
-		
-		// prev 버튼 눌렀을 때
-		if(menu_id==0)
-		{
-			$(".firstRating").show();
-			$(".secondRating").hide();
-			
-			$("#nextRating").show();
-			$("#prevRating").hide();
-		}
-	}
-	
+   // 리뷰 많은 공연순 리스트 prev/next 버튼 기능
+   function moveReview(menu_id)
+   {
+      // next 버튼 눌렀을 때
+      if(menu_id==1)
+      {
+         $(".secondReview").show();
+         $(".firstReview").hide();
+         
+         $("#prevReview").show();
+         $("#nextReview").hide();
+      }
+      
+      // prev 버튼 눌렀을 때
+      if(menu_id==0)
+      {
+         $(".firstReview").show();
+         $(".secondReview").hide();
+         
+         $("#nextReview").show();
+         $("#prevReview").hide();
+      }
+   }
+   
+   // 좋아요 많은 리뷰순 리스트 prev/next 버튼 기능
+   function moveLike(menu_id)
+   {
+      // next 버튼 눌렀을 때
+      if(menu_id==1)
+      {
+         $(".secondLike").show();
+         $(".firstLike").hide();
+         
+         $("#prevLike").show();
+         $("#nextLike").hide();
+      }
+      
+      // prev 버튼 눌렀을 때
+      if(menu_id==0)
+      {
+         $(".firstLike").show();
+         $(".secondLike").hide();
+         
+          $("#nextLike").show();
+         $("#prevLike").hide();
+      }
+   }
+   
+   // 평점 높은 공연순 리스트 prev/next 버튼 기능
+   function moveRating(menu_id)
+   {
+      // next 버튼 눌렀을 때
+      if(menu_id==1)
+      {
+         $(".firstRating").hide();
+         $(".secondRating").show();
+         
+         $("#prevRating").show();
+         $("#nextRating").hide();
+      }
+      
+      // prev 버튼 눌렀을 때
+      if(menu_id==0)
+      {
+         $(".firstRating").show();
+         $(".secondRating").hide();
+         
+         $("#nextRating").show();
+         $("#prevRating").hide();
+      }
+   }
+
 </script>
 </head>
 <body>
 
 <!-- 헤더 임포트 -->
 <c:import url="/WEB-INF/views/main/header.jsp"></c:import><br><br><br>
-
-	<%
-		Object user = session.getAttribute("id");
-		String userId = (String)user;
-		
-		Object nick = request.getAttribute("userNick");
-		String userNick = (String)nick;
-	
-	%>
+   <%
+      Object user = session.getAttribute("id");
+      String userId = (String)user;
+      
+      Object nick = request.getAttribute("userNick");
+      String userNick = (String)nick;
+   
+   %>
 
 <div id="wrapper">
 
-	<div class="container">
+   <div class="container">
       
       <div class="jumbotron" style="margin: 0 0 40px 0 !important;">
         <h1>Welcome to Play Stamp!</h1>
         <p>공연 관람을 기록하고 공유해보세요</p>
+
         <p><a class="btn btn-primary btn-lg" href="addreviewsearchform.action" role="button">리뷰 작성하기</a></p>
    	  </div>
 	</div><br><br>
@@ -190,14 +191,14 @@
 	<!-- 리뷰 많은 공연순 리스트를 컨트롤 할 엘리먼트 -->
 	<a href="#" class="prev" id="prevReview" onclick="moveReview(0);return false;">prev</a>
 	<a href="#" class="next" id="nextReview" onclick="moveReview(1);return false;">next</a>
-	
-    
+
     <br><br><br><br><br><br>
     
     <!-- 좋아요 많은 리뷰순 리스트 출력 -->
     <div id="highLikeSorting" class="container">
        <div id="pageTitle2" class="container"><img src="images/hearticon.png" style="width:2%;"> 좋아요 많은 리뷰순<br><br></div>
        <div id="reviewContainer" class="row">
+
        	 <c:set var="i" value="0"></c:set>
        	 <c:forEach var="listLike" items="${highLikeSorting }" begin="0" end="2">
 	       	 <div class="col-lg-4 col-xs-6 col-md-3 firstLike" id="firstLike">
@@ -254,6 +255,7 @@
 	             </a>
 	         </div>
 	     <c:set var="i" value="${i+1}"></c:set>
+
          </c:forEach>
        </div>
     </div><!-- clsoe #highLikeSorting -->
@@ -261,6 +263,7 @@
     <!-- 좋아요 많은 리뷰순 리스트를 컨트롤 할 엘리먼트 -->
 	<a href="#" class="prev" id="prevLike" onclick="moveLike(0);return false;">prev</a>
 	<a href="#" class="next" id="nextLike" onclick="moveLike(1);return false;">next</a>
+
     
     <br><br><br><br><br><br>
     
@@ -269,6 +272,7 @@
        <div id="pageTitle3" class="container"><img src="images/goodicon.png" style="width:2%;"> 평점 높은 공연순<br><br></div>
        <div id="imgContainer" class="row">
           <c:forEach var="listRate" items="${highRateSorting }" begin="0" end="3">
+
 	          <div class="col-lg-3 col-xs-6 col-md-3 firstRating" id="firstRating">
 	             <a href="playdetail.action?play_cd=${listRate.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
 	               <img class="playPoster"  src="${listRate.play_img }" style="width: 100%; height: 100%;">
@@ -285,12 +289,15 @@
 	             <div class="playTitle">${listRate.play_nm }</div>
 	          </div>
 	      </c:forEach>
+
        </div>
     </div><!-- close #highRateSorting -->
     
     <!-- 평점 높은 공연순 리스트를 컨트롤 할 엘리먼트 -->
+
 	<a href="#" class="prev" id="prevRating" onclick="moveRating(0);return false;">prev</a>
 	<a href="#" class="next" id="nextRating" onclick="moveRating(1);return false;">next</a>
+
     
     <br><br><br>
     

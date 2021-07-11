@@ -6,10 +6,19 @@
 <mapper namespace="com.playstamp.manager.manage.mybatis.IManager">
 
 	<!-- 관리자 리스트 조회 -->
+	<!-- 
 	<select id="managerList" resultType="com.playstamp.manager.manage.ManagerList">
 		SELECT ROWNUM, MNG_ID, MNG_NM, MNG_NICK, MNG_TEL 
 		FROM TBL_MANAGER
 	</select>
+	 -->
+	 
+	<!-- 관리자 리스트 조회(페이징 테스트) -->
+	<select id="managerList" resultType="com.playstamp.manager.manage.ManagerList">
+		SELECT ROWNUM, MNG_ID, MNG_NM, MNG_NICK, MNG_TEL 
+		FROM TBL_MANAGER
+	</select>
+	
 	
 	<!-- 유저 입력 아이디 중복체크 -->
 	<select id="managerdCheck" parameterType="String" resultType="int">
