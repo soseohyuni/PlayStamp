@@ -33,5 +33,8 @@
 		</div>
 	</div>
 	
+	<!-- 푸터 임포트 -->
+	<c:import url="/WEB-INF/views/main/Footer.jsp"></c:import>
+	
 </body>
 </html>

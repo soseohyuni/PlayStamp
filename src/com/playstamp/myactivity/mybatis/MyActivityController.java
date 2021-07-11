@@ -50,28 +50,25 @@ public class MyActivityController
 		}
 		
 		// 나의 포인트 조회
-		ArrayList<Point> pointList = new ArrayList<Point>();
-		pointList = dao.userPointList(userId);
-	
 		int userPoint = 0;
-		if( pointList.size()!=0){
-			userPoint = Integer.parseInt(pointList.get(0).getUser_point());
-		}
-		
+		if(dao.userPoint(userCode) != 0)
+			userPoint = dao.userPoint(userCode);
+
 		// 나의 캐시 조회
-		ArrayList<Cash> cashList = new ArrayList<Cash>();
-		cashList = dao.userCashList(userId);
-		
 		int userCash = 0;
-		if( cashList.size()!=0){
-			userCash = Integer.parseInt(cashList.get(0).getUser_cash());
-		}
-		
+		if(dao.userCash(userCode) != 0)
+			userCash = dao.userCash(userCode);
+
 		// 나의 리뷰 개수 조회
-		int userRev = dao.countingRev(userCode);
-		
-		// 나의 찜리스트 개수 조회
-		int userJjim = dao.countingJjim(userCode);
+		int userRev = 0;
+		if(dao.countingRev(userCode) != 0)
+			userRev = dao.countingRev(userCode);
+
+		// 나의 찜 개수 조회
+		int userJjim = 0;
+		if(dao.countingJjim(userCode) != 0)
+			userJjim = dao.countingJjim(userCode);
+
 		
 		// 얻어온 정보 저장
 		model.addAttribute("userInfo", userInfo);

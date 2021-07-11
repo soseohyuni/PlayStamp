@@ -312,16 +312,13 @@ String cp = request.getContextPath();
 				<div class="alert alert-success" id="mailCheckSuccess">인증번호가 일치합니다.</div>
 				<div class="alert alert-danger" id="mailCheckFail">인증번호가 일치하지 않습니다.</div>
 		
-				 
-				<div class="d-flex justify-content-between">
-			        <div class="form-check">
-			        <input type="checkbox" type="checkbox" name="chk" id="chk" value="1"><label for="admin"> &nbsp;이용약관, 개인정보 수집 및 이용에 모두 동의합니다.</label>
-			        </div>
-			    </div>
-				
+				<label for="chk" style="margin: 0 0 16px 0 !important;'">
+			    <input type="checkbox" type="checkbox" name="chk" id="chk" value="1" style="height: 16px !important; margin: 18px 0 0 0 !important;'">
+			    &nbsp;이용약관, 개인정보 수집 및 이용에 모두 동의합니다. </label>
 				<div>
-					<input id="signUpBtn" type="submit" class="btn" value="가입하기">
-					<input id="cancelBtn" type="button" class="btn" value="취소하기">
+					<input id="signUpBtn" type="submit" class="btn" 
+						   style="margin: 20px 0 16px 0;" value="가입하기">
+					<input id="cancelBtn" type="button" class="btn" onclick="location.href='home.action'" value="돌아가기">
 				</div>
 				<br>
 				<hr>
