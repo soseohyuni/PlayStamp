@@ -60,6 +60,7 @@
       $(".secondLike").hide();
       $(".secondRating").hide();
       
+
         $("#prevReview").hide();
         $("#prevLike").hide();
         $("#prevRating").hide();
@@ -136,14 +137,13 @@
          $("#prevRating").hide();
       }
    }
-   
+
 </script>
 </head>
 <body>
 
 <!-- 헤더 임포트 -->
 <c:import url="/WEB-INF/views/main/header.jsp"></c:import><br><br><br>
-
    <%
       Object user = session.getAttribute("id");
       String userId = (String)user;
@@ -160,107 +160,110 @@
       <div class="jumbotron" style="margin: 0 0 40px 0 !important;">
         <h1>Welcome to Play Stamp!</h1>
         <p>공연 관람을 기록하고 공유해보세요</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">리뷰 작성하기</a></p>
-        </div>
-   </div><br><br>
 
-   <!-- 리뷰 많은 공연순 리스트 출력 -->
+        <p><a class="btn btn-primary btn-lg" href="addreviewsearchform.action" role="button">리뷰 작성하기</a></p>
+   	  </div>
+	</div><br><br>
+
+	<!-- 리뷰 많은 공연순 리스트 출력 -->
     <div id="highReviewSorting" class="container">
        <div id="pageTitle1" class="container"><img src="images/smileicon.png" style="width:2%;"> 리뷰 많은 공연순</div>
        <div id="imgContainer" class="row">
-             <c:forEach var="listReview" items="${highReviewSorting }" begin="0" end="3">
-             <div class="col-lg-3 col-xs-6 col-md-3 firstReview" id="firstReview">
-                <a href="playdetail.action?play_cd=${listReview.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
-                  <img class="playPoster" src="${listReview.play_img }" style="width: 100%; height: 100%;">
-                </a>
-                <div class="playTitle">${listReview.play_nm }</div>
-             </div>
-            </c:forEach>
-            <c:forEach var="listReview" items="${highReviewSorting }" begin="4" end="7">
-             <div class="col-lg-3 col-xs-6 col-md-3 secondReview" id="secondReview">
-                <a href="playdetail.action?play_cd=${listReview.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
-                  <img class="playPoster"  src="${listReview.play_img }" style="width: 100%; height: 100%;">
-                </a>
-                <div class="playTitle">${listReview.play_nm }</div>
-             </div>
-            </c:forEach>
+       		<c:forEach var="listReview" items="${highReviewSorting }" begin="0" end="3">
+	          <div class="col-lg-3 col-xs-6 col-md-3 firstReview" id="firstReview">
+	             <a href="playdetail.action?play_cd=${listReview.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
+	               <img class="playPoster" src="${listReview.play_img }" style="width: 100%; height: 100%;">
+	             </a>
+	             <div class="playTitle">${listReview.play_nm }</div>
+	          </div>
+	         </c:forEach>
+	         <c:forEach var="listReview" items="${highReviewSorting }" begin="4" end="7">
+	          <div class="col-lg-3 col-xs-6 col-md-3 secondReview" id="secondReview">
+	             <a href="playdetail.action?play_cd=${listReview.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
+	               <img class="playPoster"  src="${listReview.play_img }" style="width: 100%; height: 100%;">
+	             </a>
+	             <div class="playTitle">${listReview.play_nm }</div>
+	          </div>
+	         </c:forEach>
        </div>
     </div>
     
-   <!-- 리뷰 많은 공연순 리스트를 컨트롤 할 엘리먼트 -->
-   <a href="#" class="prev" id="prevReview" onclick="moveReview(0);return false;">prev</a>
-   <a href="#" class="next" id="nextReview" onclick="moveReview(1);return false;">next</a>
-   
-    
+	<!-- 리뷰 많은 공연순 리스트를 컨트롤 할 엘리먼트 -->
+	<a href="#" class="prev" id="prevReview" onclick="moveReview(0);return false;">prev</a>
+	<a href="#" class="next" id="nextReview" onclick="moveReview(1);return false;">next</a>
+
     <br><br><br><br><br><br>
     
     <!-- 좋아요 많은 리뷰순 리스트 출력 -->
     <div id="highLikeSorting" class="container">
        <div id="pageTitle2" class="container"><img src="images/hearticon.png" style="width:2%;"> 좋아요 많은 리뷰순<br><br></div>
        <div id="reviewContainer" class="row">
-           <c:set var="i" value="0"></c:set>
-           <c:forEach var="listLike" items="${highLikeSorting }" begin="0" end="2">
-              <div class="col-lg-4 col-xs-6 col-md-3 firstLike" id="firstLike">
-                <a href="playreviewdetail.action?playrev_cd=${listLike.playrev_cd }" class="thumbnail">
-                    <span class="user">
-                      <img id="userImage" src="${listLike.user_img }">
-                   <input type="text" class="userName" value="${listLike.user_nick }" readonly="readonly"><br>
-                </span>
-                <input type="text" class="playName" value="${listLike.play_nm }" readonly="readonly"><br>
-                <input type="text" class="reviewTitle" value="${listLike.title }" readonly="readonly"><br>
-                <span class="ratingContainer" style="display: block">
-                <select id="rating${i}">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                </select>
-                </span>
-                <span class="reviewContent">${listLike.contents }</span><br>
-                <span class="likecomment">
-                   <img src="images/heartblack.png" style="width: 25px;"><input type="text" class="reviewLike" value="${listLike.like_count }" readonly="readonly">
-                   <img src="images/commenticon.png" style="width: 20px;"><input type="text" class="reviewComment" value="${listLike.comment_count }" readonly="readonly"><br>
-                </span>
-                </a>
-            </div>
-        <c:set var="i" value="${i+1}"></c:set>
+
+       	 <c:set var="i" value="0"></c:set>
+       	 <c:forEach var="listLike" items="${highLikeSorting }" begin="0" end="2">
+	       	 <div class="col-lg-4 col-xs-6 col-md-3 firstLike" id="firstLike">
+	             <a href="playreviewdetail.action?playrev_cd=${listLike.playrev_cd }" class="thumbnail">
+	             	 <span class="user">
+			             <img id="userImage" src="${listLike.user_img }">
+						 <input type="text" class="userName" value="${listLike.user_nick }" readonly="readonly"><br>
+					 </span>
+					 <input type="text" class="playName" value="${listLike.play_nm }" readonly="readonly"><br>
+					 <input type="text" class="reviewTitle" value="${listLike.title }" readonly="readonly"><br>
+					 <span class="ratingContainer" style="display: block">
+					 <select id="rating${i}">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					 </select>
+					 </span>
+					 <span class="reviewContent">${listLike.contents }</span><br>
+					 <span class="likecomment">
+						 <img src="images/heartblack.png" style="width: 25px;"><input type="text" class="reviewLike" value="${listLike.like_count }" readonly="readonly">
+						 <img src="images/commenticon.png" style="width: 20px;"><input type="text" class="reviewComment" value="${listLike.comment_count }" readonly="readonly"><br>
+					 </span>
+	             </a>
+	         </div>
+	     <c:set var="i" value="${i+1}"></c:set>
          </c:forEach>
          
          <c:set var="i" value="3"></c:set>
-           <c:forEach var="listLike" items="${highLikeSorting }" begin="3" end="5">
-              <div class="col-lg-4 col-xs-6 col-md-3 secondLike" id="secondLike">
-                <a href="playreviewdetail.action?playrev_cd=${listLike.playrev_cd }" class="thumbnail">
-                    <span class="user">
-                      <img id="userImage" src="${listLike.user_img }">
-                   <input type="text" class="userName" value="${listLike.user_nick }" readonly="readonly"><br>
-                </span>
-                <input type="text" class="playName" value="${listLike.play_nm }" readonly="readonly"><br>
-                <input type="text" class="reviewTitle" value="${listLike.title }" readonly="readonly"><br>
-                <span class="ratingContainer" style="display: block">
-                <select id="rating${i}">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                </select>
-                </span>
-                <span class="reviewContent">${listLike.contents }</span><br>
-                <span class="likecomment">
-                   <img src="images/heartblack.png" style="width: 25px;"><input type="text" class="reviewLike" value="${listLike.like_count }" readonly="readonly">
-                   <img src="images/commenticon.png" style="width: 20px;"><input type="text" class="reviewComment" value="${listLike.comment_count }" readonly="readonly"><br>
-                </span>
-                </a>
-            </div>
-        <c:set var="i" value="${i+1}"></c:set>
+       	 <c:forEach var="listLike" items="${highLikeSorting }" begin="3" end="5">
+	       	 <div class="col-lg-4 col-xs-6 col-md-3 secondLike" id="secondLike">
+	             <a href="playreviewdetail.action?playrev_cd=${listLike.playrev_cd }" class="thumbnail">
+	             	 <span class="user">
+			             <img id="userImage" src="${listLike.user_img }">
+						 <input type="text" class="userName" value="${listLike.user_nick }" readonly="readonly"><br>
+					 </span>
+					 <input type="text" class="playName" value="${listLike.play_nm }" readonly="readonly"><br>
+					 <input type="text" class="reviewTitle" value="${listLike.title }" readonly="readonly"><br>
+					 <span class="ratingContainer" style="display: block">
+					 <select id="rating${i}">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					 </select>
+					 </span>
+					 <span class="reviewContent">${listLike.contents }</span><br>
+					 <span class="likecomment">
+						 <img src="images/heartblack.png" style="width: 25px;"><input type="text" class="reviewLike" value="${listLike.like_count }" readonly="readonly">
+						 <img src="images/commenticon.png" style="width: 20px;"><input type="text" class="reviewComment" value="${listLike.comment_count }" readonly="readonly"><br>
+					 </span>
+	             </a>
+	         </div>
+	     <c:set var="i" value="${i+1}"></c:set>
+
          </c:forEach>
        </div>
     </div><!-- clsoe #highLikeSorting -->
     
     <!-- 좋아요 많은 리뷰순 리스트를 컨트롤 할 엘리먼트 -->
-   <a href="#" class="prev" id="prevLike" onclick="moveLike(0);return false;">prev</a>
-   <a href="#" class="next" id="nextLike" onclick="moveLike(1);return false;">next</a>
+	<a href="#" class="prev" id="prevLike" onclick="moveLike(0);return false;">prev</a>
+	<a href="#" class="next" id="nextLike" onclick="moveLike(1);return false;">next</a>
+
     
     <br><br><br><br><br><br>
     
@@ -269,28 +272,32 @@
        <div id="pageTitle3" class="container"><img src="images/goodicon.png" style="width:2%;"> 평점 높은 공연순<br><br></div>
        <div id="imgContainer" class="row">
           <c:forEach var="listRate" items="${highRateSorting }" begin="0" end="3">
-             <div class="col-lg-3 col-xs-6 col-md-3 firstRating" id="firstRating">
-                <a href="playdetail.action?play_cd=${listRate.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
-                  <img class="playPoster"  src="${listRate.play_img }" style="width: 100%; height: 100%;">
-                </a>
-                <div class="playTitle">${listRate.play_nm }</div>
-             </div>
-         </c:forEach>
-         
-         <c:forEach var="listRate" items="${highRateSorting }" begin="4" end="7">
-             <div class="col-lg-3 col-xs-6 col-md-3 secondRating" id="secondRating">
-                <a href="playdetail.action?play_cd=${listRate.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
-                  <img class="playPoster"  src="${listRate.play_img }" style="width: 100%; height: 100%;">
-                </a>
-                <div class="playTitle">${listRate.play_nm }</div>
-             </div>
-         </c:forEach>
+
+	          <div class="col-lg-3 col-xs-6 col-md-3 firstRating" id="firstRating">
+	             <a href="playdetail.action?play_cd=${listRate.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
+	               <img class="playPoster"  src="${listRate.play_img }" style="width: 100%; height: 100%;">
+	             </a>
+	             <div class="playTitle">${listRate.play_nm }</div>
+	          </div>
+	      </c:forEach>
+	      
+	      <c:forEach var="listRate" items="${highRateSorting }" begin="4" end="7">
+	          <div class="col-lg-3 col-xs-6 col-md-3 secondRating" id="secondRating">
+	             <a href="playdetail.action?play_cd=${listRate.play_cd }" class="thumbnail playthumbnail" style="width: 235px; height: 313.33px;">
+	               <img class="playPoster"  src="${listRate.play_img }" style="width: 100%; height: 100%;">
+	             </a>
+	             <div class="playTitle">${listRate.play_nm }</div>
+	          </div>
+	      </c:forEach>
+
        </div>
     </div><!-- close #highRateSorting -->
     
     <!-- 평점 높은 공연순 리스트를 컨트롤 할 엘리먼트 -->
-   <a href="#" class="prev" id="prevRating" onclick="moveRating(0);return false;">prev</a>
-   <a href="#" class="next" id="nextRating" onclick="moveRating(1);return false;">next</a>
+
+	<a href="#" class="prev" id="prevRating" onclick="moveRating(0);return false;">prev</a>
+	<a href="#" class="next" id="nextRating" onclick="moveRating(1);return false;">next</a>
+
     
     <br><br><br>
     

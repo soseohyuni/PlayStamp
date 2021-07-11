@@ -27,20 +27,20 @@
 			<div id="userInfoContainer" class="userInfo">
 				<div class="userInfo">
 					<div id="userTotal">총 회원 수</div>
-					<div id="userCount "><img class="graphicon" src="images/usericon.png">&emsp;100명</div>
+					<div id="userCount "><img class="graphicon" src="images/usericon.png">&emsp;${countUser }명</div>
 				</div>
 			</div>
 			<div id="reviewInfoContainer" class="userInfo">
 				<div class="userInfo">
 					<div id="reviewTotal">총 리뷰 수</div>
-					<div id="reviewCount"><img class="graphicon" src="images/boardicon.png">&emsp;1000개</div>
+					<div id="reviewCount"><img class="graphicon" src="images/boardicon.png">&emsp;${countPlayRev }개</div>
 				</div>
 			</div>
 		</div>
 		<table id="graphTable">
 			<tr>
-				<td><a href="#"><img class="graph" src="images/graph1.png"></a></td>
-				<td><a href="#"><img class="graph" src="images/graph2.png"></a></td>
+				<td><a href="statisticsuserview.action"><img class="graph" src="images/graph1.png"></a></td>
+				<td><a href="statisticsvisitorview.action"><img class="graph" src="images/graph2.png"></a></td>
 			</tr>
 			<tr>
 				<td>가입 회원 통계</td>

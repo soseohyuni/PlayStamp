@@ -26,6 +26,9 @@ import com.playstamp.myspace.Cash;
 import com.playstamp.myspace.MySpace;
 import com.playstamp.myspace.MySpaceComp;
 import com.playstamp.myspace.Point;
+import com.playstamp.paging.Criteria;
+import com.playstamp.paging.PageDTO;
+import com.playstamp.paging.ReverseCriteria;
 import com.playstamp.user.User;
 import com.playstamp.user.mybatis.IUserDAO;
 
@@ -49,30 +52,26 @@ public class MySpaceController
 		// 회원 정보 조회
 		IMyspaceDAO dao = sqlSession.getMapper(IMyspaceDAO.class);
 		User userInfo = dao.searchUserInfo(userId);
-		
-		// 나의 포인트 조회
-		ArrayList<Point> pointList = new ArrayList<Point>();
-		pointList = dao.userPointList(userId);
-	
+
 		int userPoint = 0;
-		if( pointList.size()!=0){
-			userPoint = Integer.parseInt(pointList.get(0).getUser_point());
-		}
-		
+		if(dao.userPoint(userCode) != 0)
+			userPoint = dao.userPoint(userCode);
+
 		// 나의 캐시 조회
-		ArrayList<Cash> cashList = new ArrayList<Cash>();
-		cashList = dao.userCashList(userId);
-		
 		int userCash = 0;
-		if( cashList.size()!=0){
-			userCash = Integer.parseInt(cashList.get(0).getUser_cash());
-		}
-		
+		if(dao.userCash(userCode) != 0)
+			userCash = dao.userCash(userCode);
+
 		// 나의 리뷰 개수 조회
-		int userRev = dao.countingRev(userCode);
-		
-		// 나의 찜리스트 개수 조회
-		int userJjim = dao.countingJjim(userCode);
+		int userRev = 0;
+		if(dao.countingRev(userCode) != 0)
+			userRev = dao.countingRev(userCode);
+		System.out.println("성공");
+
+		int userJjim = 0;
+		if(dao.countingJjim(userCode) != 0)
+			userJjim = dao.countingJjim(userCode);
+
 		
 		// 얻어온 정보 저장
 		model.addAttribute("userInfo", userInfo);
@@ -86,65 +85,102 @@ public class MySpaceController
 	}
 	
 	// 사용자 포인트 내역
-	@RequestMapping("/pointlist.action")
-	public String userPointList(HttpSession session, ModelMap model)
+	@RequestMapping(value="/pointlist.action", method=RequestMethod.GET)
+	public String userPointList(Criteria cri, Model model, HttpSession session, HttpServletRequest request)
 	{
-		String result = "";
-		
-		// 세션 객체 안에 있는 ID 얻어오기
-		String userId = (String)session.getAttribute("id");
-		//System.out.println("회원 세션에서 얻은 아이디 : " + userId);
-		
-		
 		// 포인트 리스트 받아오기
 		IMyspaceDAO dao = sqlSession.getMapper(IMyspaceDAO.class);
 		
-		ArrayList<Point> pointList = new ArrayList<Point>();
-		pointList = dao.userPointList(userId);
+		// 유저 코드 받아오기
+		String user_cd = (String)session.getAttribute("code");
 		
-		// 리스트 제일 앞에 있는 값 꺼내기 = 현재 포인트
+		// 포인트 총 개수 받아오기
+		int total = dao.userPointListTotal(user_cd);
+		
+		// 현재 포인트 받아오기
 		int userPoint = 0;
-		if( pointList.size()!=0){
-			userPoint = Integer.parseInt(pointList.get(0).getUser_point());
+		if(dao.userPoint(user_cd) != 0)
+			userPoint = dao.userPoint(user_cd);
+		
+		// 페이지로부터 pageNum, amount 받아오기
+		String pageNum = request.getParameter("pageNum");
+		String amount = request.getParameter("amount");
+						
+		// 처음 페이지가 로드되었을 때는 pageNum, amount가 null 이므로
+		// (사용자가 아직 페이지 번호를 누르지 않았기 때문에)
+		// 1페이지에 10개의 글이 보이도록 설정한다.
+		if(pageNum==null || amount==null)
+		{
+			pageNum="1";
+			amount="10";
 		}
 		
-		// addAttribute 를 통해 전송
-		model.addAttribute("pointList", pointList);
+		// 페이지 번호 누를 때마다 그에 해당하는 글을 가져오기 위한 객체 준비
+		ReverseCriteria rc = new ReverseCriteria();
+		
+		rc.setPageNum(Integer.parseInt(pageNum));
+		rc.setAmount(Integer.parseInt(amount));
+		rc.setTotal(total);
+		rc.setUser_cd(user_cd);
+		
+		ArrayList<Point> plist = dao.userPointList(rc);
+		
+		model.addAttribute("checkList", plist);
+		model.addAttribute("checkPageMaker", new PageDTO(cri, total));
 		model.addAttribute("userPoint", userPoint);
 				
-		result = "/WEB-INF/views/myspace/PointList.jsp";
+		return "/WEB-INF/views/myspace/PointList.jsp";
 
-		return result;
 	}
 	
 	// 사용자 캐시 내역
-	@RequestMapping("/cashlist.action")
-	public String userCashList(HttpSession session, ModelMap model)
+	@RequestMapping(value="/cashlist.action", method=RequestMethod.GET)
+	public String userCashList(Criteria cri, Model model, HttpSession session, HttpServletRequest request)
 	{
-		String result = "";
-		
-		// 세션 객체 안에 있는 ID 얻어오기
-		String userId = (String)session.getAttribute("id");
 		
 		// 캐시 리스트 받아오기
 		IMyspaceDAO dao = sqlSession.getMapper(IMyspaceDAO.class);
 		
-		ArrayList<Cash> cashList = new ArrayList<Cash>();
-		cashList = dao.userCashList(userId);
+		// 유저 코드 받아오기
+		String user_cd = (String)session.getAttribute("code");
 		
-		// 리스트 제일 앞에 있는 값 꺼내기 = 현재 캐시
+		// 캐시 총 개수 받아오기
+		int total = dao.userCashListTotal(user_cd);
+
+		// 현재 캐시 받아오기
 		int userCash = 0;
-		if( cashList.size()!=0){
-			userCash = Integer.parseInt(cashList.get(0).getUser_cash());
+		if(dao.userCash(user_cd) != 0)
+			userCash = dao.userCash(user_cd);
+		
+		// 페이지로부터 pageNum, amount 받아오기
+		String pageNum = request.getParameter("pageNum");
+		String amount = request.getParameter("amount");
+						
+		// 처음 페이지가 로드되었을 때는 pageNum, amount가 null 이므로
+		// (사용자가 아직 페이지 번호를 누르지 않았기 때문에)
+		// 1페이지에 10개의 글이 보이도록 설정한다.
+		if(pageNum==null || amount==null)
+		{
+			pageNum="1";
+			amount="10";
 		}
 		
-		// addAttribute 를 통해 전송
-		model.addAttribute("cashList", cashList);
+		// 페이지 번호 누를 때마다 그에 해당하는 글을 가져오기 위한 객체 준비
+		ReverseCriteria rc = new ReverseCriteria();
+		
+		rc.setPageNum(Integer.parseInt(pageNum));
+		rc.setAmount(Integer.parseInt(amount));
+		rc.setTotal(total);
+		rc.setUser_cd(user_cd);
+		
+		ArrayList<Cash> clist = dao.userCashList(rc);
+		
+		model.addAttribute("checkList", clist);
+		model.addAttribute("checkPageMaker", new PageDTO(cri, total));
 		model.addAttribute("userCash", userCash);
 		
-		result = "/WEB-INF/views/myspace/CashList.jsp";
+		return "/WEB-INF/views/myspace/CashList.jsp";
 
-		return result;
 	}
 	
 	// 사용자 정보 조회
@@ -155,6 +191,7 @@ public class MySpaceController
 		
 		// 세션 객체 안에 있는 ID 정보 저장
 		String userId = (String)session.getAttribute("id");
+		String userCode = (String)session.getAttribute("code");
 		//System.out.println("회원 세션에서 얻은 아이디 : " + userId);
 		
 		// 회원 정보 보기 호출
@@ -162,13 +199,9 @@ public class MySpaceController
 		User userInfo = dao.searchUserInfo(userId);
 		
 		// 나의 포인트 조회
-		ArrayList<Point> pointList = new ArrayList<Point>();
-		pointList = dao.userPointList(userId);
-	
 		int userPoint = 0;
-		if( pointList.size()!=0){
-			userPoint = Integer.parseInt(pointList.get(0).getUser_point());
-		}
+		userPoint = dao.userPoint(userCode);
+	
 				
 		// addAttribute 를 통해 전송
 		model.addAttribute("userInfo", userInfo);
@@ -180,6 +213,7 @@ public class MySpaceController
 	}
 	
 	// 사용자 정보 업데이트
+	@ResponseBody
 	@RequestMapping(value="/update.action", method=RequestMethod.POST)
 	public void updateUserInfo(User user, Model model, HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException
 	{
@@ -315,7 +349,7 @@ public class MySpaceController
 			
 			// 캐시 리스트 받아오기
 			ArrayList<Cash> cashList = new ArrayList<Cash>();
-			cashList = dao.userCashList(id);
+			//cashList = dao.userCashList(id);
 			
 			// 리스트 제일 앞에 있는 값 꺼내기 = 현재 캐시
 			int userCash = 0;

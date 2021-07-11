@@ -6,7 +6,7 @@
 <mapper namespace="com.playstamp.myspace.mybatis.IMyspaceDAO">
 
 	<!-- 사용자 수 -->
-	<select id="totalUser" resultType="int">
+	<select id="totalUser" resultType="Integer">
 		SELECT COUNT(*)
 		FROM TBL_USER
 	</select>
@@ -35,36 +35,78 @@
 	</update>
 	
 	
-	<!-- 유저 포인트 조회 -->
-	<select id="userPointList" parameterType="String" resultType="com.playstamp.myspace.Point">
-		SELECT NVL(POINT_Y, '관리자 등록') AS POINT_Y, POINT_DT, POINT, SUM(POINT) OVER(ORDER BY POINT_DT) AS USER_POINT
-		FROM 
-		(SELECT POINT_Y, POINT_DT, POINT
-		FROM TBL_POINT P LEFT JOIN TBL_POINT_Y PY
-		ON PY.POINT_Y_CD = P.POINT_Y_CD
-		    LEFT JOIN TBL_USERINFO U
-		    ON P.USER_CD = U.USER_CD
-		WHERE U.USER_ID = #{arg0}
-		UNION
-		SELECT NULL, GTPOINT_DT AS POINT_DT, GTPOINT AS POINT
-		FROM TBL_GTPOINT GT LEFT JOIN TBL_USERINFO U
-		ON GT.USER_CD = U.USER_CD
-		WHERE U.USER_ID = #{arg0}) I
-		ORDER BY POINT_DT DESC
+	<!-- 포인트 내역 총 개수 출력 -->
+	<select id="userPointListTotal" parameterType="String" resultType="Integer">
+		SELECT COUNT(*)
+		FROM VIEW_USER_PLIST
+		WHERE USER_CD=#{user_cd}
 	</select>
 	
-	<!-- 유저 캐시 조회 -->
-	<select id="userCashList" parameterType="String" resultType="com.playstamp.myspace.Cash">
-		SELECT USER_ID, CASH_Y, CASH_DT, CASH, USER_CASH
+	
+	<!-- 특정 유저의 현재 포인트 -->
+	<select id="userPoint" parameterType="String" resultType="Integer">
+		SELECT POINT
+		FROM VIEW_MEMBERPOINT
+		WHERE USER_CD = #{arg0}
+	</select>
+	
+	<!-- 유저 포인트 조회(페이징 적용) -->
+	<select id="userPointList" resultType="com.playstamp.myspace.Point">
+	<![CDATA[
+		SELECT BNO, POINT_Y, POINT_DT, POINT, USER_POINT
 		FROM
 		(
-		SELECT U.USER_ID USER_ID, CASH_Y, CASH_DT, CASH, SUM(CASH) OVER(ORDER BY CASH_DT) AS USER_CASH
-		FROM TBL_CASH C LEFT JOIN TBL_CASH_Y CY
-		ON CY.CASH_Y_CD = C.CASH_Y_CD
-		    LEFT JOIN TBL_USERINFO U
-		    ON C.USER_CD = U.USER_CD 
-		WHERE USER_ID = #{arg0}
-		ORDER BY CASH_DT DESC)
+		    SELECT BNO, POINT_Y, POINT_DT, POINT, USER_POINT
+		    FROM
+		    (
+		        SELECT ROW_NUMBER() OVER(ORDER BY POINT_DT) AS BNO, POINT_Y, POINT_DT, POINT, USER_POINT
+		        FROM VIEW_USER_PLIST
+		        WHERE USER_CD = #{user_cd}
+		        ORDER BY BNO DESC
+		    )
+		    WHERE BNO <= #{total} - ((#{pageNum}-1) * #{amount})
+		)
+		WHERE BNO > #{total} - (#{pageNum}*#{amount})
+	]]>	
+	</select>
+	
+	<!-- 특정 유저의 현재 캐시 -->
+	<select id="userCash" parameterType="String" resultType="int">
+		SELECT USER_CASH
+		FROM
+		    (SELECT USER_CD, ROW_NUMBER() OVER(ORDER BY CASH_DT) AS BNO, CASH_Y, CASH_DT, CASH, NVL(USER_CASH, 0) USER_CASH
+		     FROM VIEW_USER_CLIST
+		     ORDER BY BNO DESC)
+		WHERE USER_CD = #{arg0} 
+		AND ROWNUM = 1
+	</select>
+
+	<!-- 캐시내역 총 개수 출력 -->
+	<select id="userCashListTotal" parameterType="String" resultType="Integer">
+		SELECT COUNT(*)
+		FROM VIEW_USER_CLIST
+		WHERE USER_CD=#{user_cd}
+	</select>
+	
+	
+	<!-- 유저 캐시 조회(페이징 적용) -->
+	<select id="userCashList" resultType="com.playstamp.myspace.Cash">
+	<![CDATA[
+		SELECT BNO, CASH_Y, CASH_DT, CASH, USER_CASH
+		FROM
+		(
+		    SELECT BNO, CASH_Y, CASH_DT, CASH, USER_CASH
+		    FROM
+		    (
+		        SELECT ROW_NUMBER() OVER(ORDER BY CASH_DT) AS BNO, CASH_Y, CASH_DT, CASH, USER_CASH
+		        FROM VIEW_USER_CLIST
+		        WHERE USER_CD = #{user_cd}
+		        ORDER BY BNO DESC
+		    )
+		    WHERE BNO <= #{total} - ((#{pageNum}-1) * #{amount})
+		)
+		WHERE BNO > #{total} - (#{pageNum}*#{amount})
+	]]>
 	</select>
 	
 	

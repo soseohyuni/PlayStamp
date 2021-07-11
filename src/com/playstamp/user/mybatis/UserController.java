@@ -201,24 +201,26 @@ public class UserController
 	            String code = userDao.userCode(id);
 	            session.setAttribute("code", code);
 		
-				
+				/* 포인트 적립 */
+	            /* 로그인 테이블에 남기기 */
+	            int checkLogin = userDao.checkLogin(code);
+	            
+	            if(checkLogin==0)
+	            {
+	            	userDao.addLoginPoint(code);
+	            	userDao.addLogin(code);
+	            }
+
+	            
 				/* 등급 처리 */
-				
 				// 세션 객체 안에 있는 ID 얻어오기
 				String userId = (String)session.getAttribute("id");
 				
-				// 포인트 리스트 받아오기
+				// 현재 포인트 얻어오기
 				IMyspaceDAO dao = sqlSession.getMapper(IMyspaceDAO.class);
 				
-				ArrayList<Point> pointList = new ArrayList<Point>();
-				pointList = dao.userPointList(userId);
-				
 				int userPoint = 0;
-				
-				// 리스트 제일 앞에 있는 값 꺼내기 = 현재 포인트
-				if( pointList.size()!=0){
-					userPoint = Integer.parseInt(pointList.get(0).getUser_point());
-				}
+				userPoint = dao.userPoint(code);
 				
 				// 좋아요 개수 받아오기
 				int countingLike = dao.countingLike(userId);
@@ -238,6 +240,7 @@ public class UserController
 					grade = "뉴비";
 				
 				System.out.println("포인트 : " + userPoint + " | 좋아요 : " + countingLike + " | 등급 : " + grade);
+				
 				
 				// 세션에 담아놓기
 				session.setAttribute("grade", grade);

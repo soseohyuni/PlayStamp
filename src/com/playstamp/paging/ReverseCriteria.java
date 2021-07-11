@@ -9,17 +9,49 @@ public class ReverseCriteria
 	private int total;			//-- 총 페이지 수
 	
 	private String user_cd;		//-- 자신이 한 활동에 대해서만 보여주기 위해 받는 사용자 코드
+	private String user_id, grade, point;
 	
+	public String getGrade()
+	{
+		return grade;
+	}
+
+	public void setGrade(String grade)
+	{
+		this.grade = grade;
+	}
+
+	public String getPoint()
+	{
+		return point;
+	}
+
+	public void setPoint(String point)
+	{
+		this.point = point;
+	}
+
+	public String getUser_id()
+	{
+		return user_id;
+	}
+
+	public void setUser_id(String user_id)
+	{
+		this.user_id = user_id;
+	}
+
 	public ReverseCriteria()
 	{
 	}
 	
-	public ReverseCriteria(int pageNum, int amount, int total, String user_cd)
+	public ReverseCriteria(int pageNum, int amount, int total, String user_cd, String user_id)
 	{
 		this.pageNum = pageNum;
 		this.amount = amount;
 		this.total = total;
 		this.user_cd = user_cd;
+		this.user_id = user_id;
 	}
 	
 	// getter, setter 구성
@@ -62,6 +94,4 @@ public class ReverseCriteria
 	{
 		this.user_cd = user_cd;
 	}
-	
-	
 }

@@ -11,6 +11,26 @@
 <meta charset="UTF-8">
 <title>나의 포인트</title>
 <link href="<%=cp%>/css/myspace.css" rel="stylesheet">
+
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+// 페이지 번호만 속성값으로 가지도록 <a> 태그가 작동하지 못하도록 처리
+//-- 실제 페이지를 클릭하면 동작하는 부분은 <form> 태그를 이용해 처리함
+$(document).ready(function()
+{
+   var pointForm = $("#pointForm");
+   
+   $(".paginate_button a").on("click", function(e)
+   {
+      // <a> 태그 선택해도 페이지 이동 없도록 처리
+      e.preventDefault();
+      
+      // <form> 태그 내 pageNum 속성 값은 href 속성값(클릭한 페이지 번호)으로 변경
+      pointForm.find("input[name='pageNum']").val($(this).attr("href"));
+      pointForm.submit();
+   });
+});
+</script>
 </head>
 <body>
 <!-- 메뉴 영역 -->
@@ -27,12 +47,14 @@
 			</div>
 			<table id="cashTable" class="table table-hover">
 			<tr>
+				<th>번호</th>
 				<th>적립/차감</th>
 				<th></th>
 				<th>적립/차감 포인트</th>
 				<th>총 포인트</th>
 			</tr>
 			
+			<!-- 
 			<c:forEach var="point" items="${pointList}">
 				<tr>
 					<td>${point.point_y }</td>
@@ -50,21 +72,46 @@
 					<td style="font-weight: 500;">${point.user_point }</td>
 				</tr>
 			</c:forEach>
-
+			-->
+			
+			<c:forEach var="checkList" items="${checkList }">
+					<tr>
+						<td>${checkList.bno }</td>
+						<td>${checkList.point_y }</td>
+						<td>${checkList.point_dt }</td>
+						<td>${checkList.point }</td>
+						<td>${checkList.user_point }</td>
+					</tr>
+			</c:forEach>
+			
 			</table>
 			
 
-			<ul class="pagination">
-			    <li class="page-item"><a class="page-link" href="">이전</a></li>
-			    <li class="page-item"><a class="page-link" href="">1</a></li>
-			    <li class="page-item"><a class="page-link" href="">2</a></li>
-			    <li class="page-item"><a class="page-link" href="">3</a></li>
-			    <li><a class="page-link" href="">다음</a></li>
-			</ul>
-
+			<!--  페이징 추가 -->
+				<div class="pull-right">
+					<ul class="pagination">
+					<c:if test="${checkPageMaker.prev }">
+						<li class="paginate_button previous"><a href="${checkPageMaker.startPage-1 }">Previous</a>
+						</li>
+					</c:if>
+					
+					<c:forEach var="num" begin="${checkPageMaker.startPage }" end="${checkPageMaker.endPage }">
+						<li class="paginate_button"><a href="${num }">${num }</a></li>
+					</c:forEach>
+					
+					<c:if test="${checkPageMaker.next }">
+						<li class="paginate_button next"><a href="${checkPageMaker.endPage+1 }">Next</a></li>
+					</c:if>
+					</ul>
+				</div><!-- close .pull-right -->
+				<!-- 페이지 번호 클릭시 이동을 위한 hidden form 구성 -->
+				<form id="pointForm" action="pointlist.action" method="get">
+					<input type="hidden" name="pageNum" value="${checkPageMaker.cri.pageNum }">
+					<input type="hidden" name="amount" value="${checkPageMaker.cri.amount }">
+				</form>
+		    </div><!-- row -->
 
 		</div>
-	</div>
 	
 </body>
 </html>

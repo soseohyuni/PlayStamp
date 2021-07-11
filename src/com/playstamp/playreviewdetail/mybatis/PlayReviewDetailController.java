@@ -151,16 +151,27 @@ public class PlayReviewDetailController
 	
 	//@@ 댓글 추가
 	@RequestMapping(value="/commentadd.action", method= {RequestMethod.POST, RequestMethod.GET})
-	public @ResponseBody String addComment(@RequestBody Comment comment) throws SQLException
+	public @ResponseBody String addComment(@RequestBody Comment comment, HttpSession session) throws SQLException
 	{
 		IPlayReviewDetailDAO dao = sqlSession.getMapper(IPlayReviewDetailDAO.class);	
-
+		
 		//System.out.println("닉:" + comment.getUser_nick());
-
+		String user_cd = (String)session.getAttribute("code");
+		int count = 0;
+		
+		// 댓글을 추가할 경우 포인트 적립 횟수가 3회를 초과하지 않았는지 확인
 		try
-		{
-			dao.addComment(comment);
-		} catch (Exception e)
+		{	
+			count = dao.countAddComment(user_cd); 
+			
+			// 당일 적립 횟수가 3회를 초과하지 않았다면, 포인트 적립!
+			if (count < 3)
+				dao.addCommentPoint(user_cd);
+			
+			// 적립 횟수가 3회를 초과했다면, 포인트 적립하지 않고 코멘트만 추가
+			dao.addComment(comment);		
+		}
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -170,44 +181,85 @@ public class PlayReviewDetailController
 	
 	//@@ 댓글 삭제
 	@RequestMapping(value="/commentremove.action", method= {RequestMethod.POST, RequestMethod.GET})
-	public @ResponseBody String removeComment(@RequestBody Comment comment) throws SQLException
+	public @ResponseBody String removeComment(@RequestBody Comment comment, HttpSession session) throws SQLException
 	{
 		IPlayReviewDetailDAO dao = sqlSession.getMapper(IPlayReviewDetailDAO.class);	
+		String user_cd = (String)session.getAttribute("code");
+		String point_cd = "";
 		
 		//System.out.println("댓글코드: " + comment.getComment_cd());
 		
+		System.out.println(comment.getComment_cd());
+		//@@ 댓글을 삭제할 경우, 해당 댓글로 포인트를 적립받았었는지 확인
 		try
-		{
+		{	
+			point_cd = dao.ifUserAddComment(comment.getComment_cd());
+			
+			//@@ 적립받았다면 포인트 차감
+			if (!point_cd.equals("0"))
+				dao.delCommentPoint(user_cd);
+			
+			//@@ 적립받지 않았다면, 코멘트만 삭제
 			dao.removeComment(comment);
 		} catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 		
+		System.out.println("값 : " + point_cd);
 		return "success";
 	}	
 	
 	//@@ 좋아요 버튼 클릭시 
 	@RequestMapping(value="/heartclick.action", method= {RequestMethod.POST, RequestMethod.GET})
-	public @ResponseBody Map<String, Object> addHeart(@RequestBody Like like, HttpSession session) throws SQLException
+	public @ResponseBody Map<String, Object> addHeart(@RequestBody Like like, HttpSession session, HttpServletRequest request) throws SQLException
 	{
 		IPlayReviewDetailDAO dao = sqlSession.getMapper(IPlayReviewDetailDAO.class);	
 		Map<String, Object> result = new HashMap<String, Object>(); 
 		
+		String user_cd = (String)session.getAttribute("code");
+		//String playrev_cd = request.getParameter("playrev_cd");
+		
+		//System.out.println(like.getPlayrev_cd());
 		int returnValue = 0;
+		String point_cd = "";
+		int count = 0;
 		
 		try
 		{	
 			//@@ 이미 좋아요를 눌렀을 경우
 			if (dao.checkHeart(like)!=0)
 			{
+				// 해당 리뷰로 좋아요 적립받았는지 확인
+				point_cd = dao.ifUserAddHeart(user_cd, like.getPlayrev_cd());
+				
+				//System.out.println(like.getPlayrev_cd());
+				//@@ 적립받았다면
+				if (!point_cd.equals("0"))
+				{
+					// 포인트 차감
+					dao.delHeartPoint(user_cd);
+				}
+				
+				//@@ 적립받지 않았다면 포인트 차감 x
+				
 				// 좋아요를 삭제하고 
 				dao.delHeart(like);
 				// 0을 반환
 				returnValue = 0;
 			}
+			//@@ 좋아요를 처음 눌렀을 경우
 			else if(dao.checkHeart(like)==0)
 			{
+				// 오늘 3회를 소진했는지 확인
+				count = dao.countAddHeart(user_cd);
+				
+				//@@ 카운트가 3보다 작다면 
+				if (count < 3)
+					//@@ 포인트 추가
+					dao.addHeartPoint(user_cd);
+				
+				//@@ 아니라면 하트 추가만
 				dao.addHeart(like);
 				returnValue = 1;
 			}

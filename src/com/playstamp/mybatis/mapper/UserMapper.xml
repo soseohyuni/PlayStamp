@@ -5,6 +5,7 @@
     
 <mapper namespace="com.playstamp.user.mybatis.IUserDAO">
 
+
 	<!-- 유저 입력 아이디 중복체크 -->
 	<select id="userIdCheck" parameterType="String" resultType="int">
 		SELECT COUNT(*) AS COUNT 
@@ -20,6 +21,7 @@
 		}
 	</insert>
 	
+	
 	<!-- 유저 로그인 -->
 	<select id="userLogin" resultType="String">
 		SELECT USER_NICK
@@ -27,6 +29,25 @@
 		WHERE USER_ID = #{arg0} AND USER_PW = #{arg1}
 	</select>
 	
+	<!-- 로그인 테이블 인서트 -->
+	<insert id="addLogin" parameterType="String">
+		INSERT INTO TBL_LOGIN (LOGIN_CD, USER_CD, LOGIN_DT)
+		VALUES('LG' || TO_CHAR(SEQ_LOGIN.NEXTVAL), #{arg0}, SYSDATE)
+	</insert>
+	
+	<!-- 로그인 유무 확인 -->
+	<select id="checkLogin" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM TBL_LOGIN
+		WHERE LOGIN_DT > TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+		  AND USER_CD = #{arg1}
+	</select>
+	
+	<!-- 로그인 포인트 적립 -->
+	<insert id="addLoginPoint" parameterType="String">
+		INSERT INTO TBL_POINT(POINT_CD, USER_CD, POINT_Y_CD, POINT_DT)
+		VALUES('PT' || TO_CHAR(SEQ_POINT.NEXTVAL), #{arg1}, 1, SYSDATE)
+	</insert>
 	
 	<!-- 식별번호 조회 -->
 	<select id="userCode" resultType="String">
@@ -65,4 +86,5 @@
 		WHERE USER_ID=#{arg1}
 	</update>
 
+  
 </mapper>

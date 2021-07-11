@@ -13,8 +13,6 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
 
-
-
 	$(function ()
 	{
 		$("#userUpImg").on("change", handleImgFileSelect);
@@ -78,7 +76,7 @@
 		
 		<div class="container">
 		
-			 
+			 <div id="pageTitle" class="container">나의 프로필</div>
 			
 			<div id="pForm" >
 			
@@ -100,7 +98,7 @@
 						
 						<div>
 							<br>
-							<input class="btn btn-primary" type="submit" val="변경하기">
+							<input class="btn btn-primary" type="submit" value="변경하기">
 						</div>
 					
 					</form>
